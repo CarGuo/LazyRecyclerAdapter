@@ -12,9 +12,6 @@ android {
         minSdkVersion globalConfiguration.androidMinSdkVersion
         targetSdkVersion globalConfiguration.androidTargetSdkVersion
 
-        versionCode 1
-        versionName "1.0"
-
     }
 
     buildTypes {
@@ -28,10 +25,10 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     def androidDependencies = rootProject.ext.androidDependencies
-    compile androidDependencies.support_v4
-    compile androidDependencies.appcompat_v7
     compile androidDependencies.recyclerView
     compile androidDependencies.design
+    compile androidDependencies.support_v4
+    compile androidDependencies.appcompat_v7
 }
 
 apply from: '../bintray.gradle'

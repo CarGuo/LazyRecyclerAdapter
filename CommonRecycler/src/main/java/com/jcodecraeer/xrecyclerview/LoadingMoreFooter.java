@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 
 import com.jcodecraeer.xrecyclerview.progressindicator.AVLoadingIndicatorView;
-import com.shuyu.CommonRecyclerAdapter.R;
+import com.shuyu.common.R;
 
 public class LoadingMoreFooter extends LinearLayout {
 

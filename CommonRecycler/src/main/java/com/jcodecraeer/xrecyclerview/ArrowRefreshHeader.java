@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.progressindicator.AVLoadingIndicatorView;
-import com.shuyu.CommonRecyclerAdapter.R;
+import com.shuyu.common.R;
 
 import java.util.Date;
 

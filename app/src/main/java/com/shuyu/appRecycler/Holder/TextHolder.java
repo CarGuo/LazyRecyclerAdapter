@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.shuyu.CommonRecyclerAdapter.RecyclerBaseHolder;
-import com.shuyu.CommonRecyclerAdapter.model.RecyclerBaseModel;
+import com.shuyu.common.RecyclerBaseHolder;
+import com.shuyu.common.model.RecyclerBaseModel;
 import com.shuyu.apprecycler.Model.TextModel;
 import com.shuyu.apprecycler.R;
 

@@ -3,7 +3,6 @@ package com.shuyu.apprecycler;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.shuyu.CommonRecyclerAdapter.CommonRecyclerAdapter;
-import com.shuyu.CommonRecyclerAdapter.CommonRecyclerManager;
-import com.shuyu.CommonRecyclerAdapter.listener.LoadMoreScrollListener;
-import com.shuyu.CommonRecyclerAdapter.model.RecyclerBaseModel;
+import com.shuyu.common.CommonRecyclerAdapter;
+import com.shuyu.common.CommonRecyclerManager;
+import com.shuyu.common.listener.LoadMoreScrollListener;
+import com.shuyu.common.model.RecyclerBaseModel;
 import com.shuyu.apprecycler.Holder.ClickHolder;
 import com.shuyu.apprecycler.Holder.ImageHolder;
 import com.shuyu.apprecycler.Holder.TextHolder;

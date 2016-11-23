@@ -1,6 +1,6 @@
 package com.shuyu.apprecycler.Model;
 
-import com.shuyu.CommonRecyclerAdapter.model.RecyclerBaseModel;
+import com.shuyu.common.model.RecyclerBaseModel;
 
 /**
  * Created by shuyu on 2016/11/23.

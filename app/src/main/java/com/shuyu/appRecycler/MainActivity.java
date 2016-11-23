@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.shuyu.CommonRecyclerAdapter.model.RecyclerBaseModel;
+import com.shuyu.common.model.RecyclerBaseModel;
 import com.shuyu.apprecycler.Holder.ClickHolder;
 import com.shuyu.apprecycler.Holder.ImageHolder;
 import com.shuyu.apprecycler.Holder.TextHolder;
