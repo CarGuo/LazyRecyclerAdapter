@@ -60,9 +60,15 @@ public class ListFragment extends Fragment {
         commonRecyclerManager.addType(ClickHolder.ID, ClickHolder.class.getName());
 
         adapter = new CommonRecyclerAdapter(getActivity(), commonRecyclerManager, datas);
-        adapter.setNeedLoadMore(true);//需要加载更多
 
-        adapter.setShowNoData(true);//需要显示空数据页面
+        //需要加载更多
+        adapter.setNeedLoadMore(true);
+
+        //需要显示空数据页面
+        adapter.setShowNoData(true);
+
+        //设置动画支持打开
+        adapter.setNeedAnimation(true);
 
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycler.addItemDecoration(new DividerItemDecoration(dip2px(getActivity(), 10), DividerItemDecoration.LIST));

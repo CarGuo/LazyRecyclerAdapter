@@ -8,11 +8,14 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.shuyu.CommonRecyclerAdapter.CommonRecyclerAdapter;
 import com.shuyu.CommonRecyclerAdapter.CommonRecyclerManager;
+import com.shuyu.CommonRecyclerAdapter.listener.OnItemClickListener;
 import com.shuyu.CommonRecyclerAdapter.model.RecyclerBaseModel;
 import com.shuyu.apprecycler.Holder.ClickHolder;
 import com.shuyu.apprecycler.Holder.ImageHolder;
@@ -62,24 +65,43 @@ public class List2Fragment extends Fragment {
     }
 
     private void initView() {
+        //瀑布流管理器
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        //设置瀑布流管理器
         xRecycler.setLayoutManager(staggeredGridLayoutManager);
-        xRecycler.addItemDecoration(new DividerItemDecoration(dip2px(getActivity(),  10), DividerItemDecoration.GRID));
-        xRecycler.setPullRefreshEnabled(false);
-        xRecycler.setLoadingMoreProgressStyle(ProgressStyle.SysProgress);
+        //添加分割线，注意位置是会从下拉那个Item的实际位置开始的，所以如果支持下拉需要屏蔽下拉和HeaderView
+        xRecycler.addItemDecoration(new DividerItemDecoration(dip2px(getActivity(),  10), DividerItemDecoration.GRID, 2));
 
+        //是否屏蔽下拉
+        //xRecycler.setPullRefreshEnabled(false);
+        //上拉加载更多样式，也可以设置下拉
+        xRecycler.setLoadingMoreProgressStyle(ProgressStyle.SysProgress);
+        //设置管理器，关联布局与holder类名，不同id可以管理一个holder
         CommonRecyclerManager commonRecyclerManager = new CommonRecyclerManager();
         commonRecyclerManager.addType(ImageHolder.ID, ImageHolder.class.getName());
         commonRecyclerManager.addType(TextHolder.ID, TextHolder.class.getName());
         commonRecyclerManager.addType(ClickHolder.ID, ClickHolder.class.getName());
-
+        //初始化通用管理器
         commonRecyclerAdapter = new CommonRecyclerAdapter(getActivity(), commonRecyclerManager, dataList);
         xRecycler.setAdapter(commonRecyclerAdapter);
 
-
+        ImageView imageView = new ImageView(getActivity());
+        imageView.setImageResource(R.drawable.xxx1);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setMinimumHeight(dip2px(getActivity(), 100));
+        //添加头部
+        xRecycler.addHeaderView(imageView);
+        //本身也支持设置空局部
+        //xRecycler.setEmptyView();
         xRecycler.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
+                xRecycler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        xRecycler.refreshComplete();
+                    }
+                }, 2000);
             }
 
             @Override
@@ -90,6 +112,14 @@ public class List2Fragment extends Fragment {
                         loadMore();
                     }
                 }, 2000);
+            }
+        });
+
+        commonRecyclerAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(Context context, int position) {
+                //需要减去你的header和刷新的view的数量
+                Toast.makeText(getActivity(), "点击了！！　" + (position - 2), Toast.LENGTH_SHORT).show();
             }
         });
     }

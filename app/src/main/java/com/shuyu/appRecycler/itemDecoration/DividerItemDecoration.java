@@ -17,6 +17,8 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private int space;
 
+    private int startPosition; //根据你想要的屏蔽不需要的边距的。
+
     public DividerItemDecoration(int space) {
         this.space = space;
     }
@@ -26,20 +28,29 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         this.direct = direct;
     }
 
+    public DividerItemDecoration(int space, int direct, int startPosition) {
+        this.space = space;
+        this.direct = direct;
+        this.startPosition = startPosition;
+    }
+
+
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         if (direct == GRID) {
-            outRect.left = space;
-            outRect.bottom = space * 2;
-            outRect.right = space;
-            if (parent.getChildAdapterPosition(view) == 0 || parent.getChildAdapterPosition(view) == 1) {
-                outRect.top = space;
+            if ((parent.getChildAdapterPosition(view) >= startPosition || parent.getChildAdapterPosition(view) >= startPosition + 1) ){
+                outRect.left = space;
+                outRect.bottom = space * 2;
+                outRect.right = space;
+                if (parent.getChildAdapterPosition(view) == startPosition || parent.getChildAdapterPosition(view) == startPosition + 1) {
+                    outRect.top = space;
+                }
             }
         } else {
             outRect.left = space;
             outRect.bottom = space * 2;
             outRect.right = space;
-            if (parent.getChildAdapterPosition(view) == 0) {
+            if (parent.getChildAdapterPosition(view) == startPosition) {
                 outRect.top = space;
             }
         }
