@@ -1,19 +1,18 @@
 package com.shuyu.apprecycler;
 
-
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.shuyu.CommonRecyclerAdapter.CommonRecyclerAdapter;
 import com.shuyu.CommonRecyclerAdapter.CommonRecyclerManager;
-import com.shuyu.CommonRecyclerAdapter.listener.LoadMoreScrollListener;
 import com.shuyu.CommonRecyclerAdapter.model.RecyclerBaseModel;
 import com.shuyu.apprecycler.Holder.ClickHolder;
 import com.shuyu.apprecycler.Holder.ImageHolder;
@@ -29,21 +28,23 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 /**
- * A simple {@link Fragment} subclass.
+ * Created by shuyu on 2016/11/23.
  */
-public class ListFragment extends Fragment {
+
+public class List2Fragment extends Fragment {
 
 
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
+    @BindView(R.id.xRecycler)
+    XRecyclerView xRecycler;
 
-    private List<RecyclerBaseModel> datas = new ArrayList<>();
-    private CommonRecyclerAdapter adapter;
-    private boolean isLoadMore;
+    StaggeredGridLayoutManager staggeredGridLayoutManager;
 
-    public ListFragment() {
+    private List<RecyclerBaseModel> dataList = new ArrayList<>();
+
+    private CommonRecyclerAdapter commonRecyclerAdapter;
+
+    public List2Fragment() {
 
     }
 
@@ -51,59 +52,66 @@ public class ListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_list, container, false);
+        final View view = inflater.inflate(R.layout.fragment_list_2, container, false);
+
         ButterKnife.bind(this, view);
+
+        initView();
+
+        return view;
+    }
+
+    private void initView() {
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        xRecycler.setLayoutManager(staggeredGridLayoutManager);
+        xRecycler.addItemDecoration(new DividerItemDecoration(dip2px(getActivity(),  10), DividerItemDecoration.GRID));
+        xRecycler.setPullRefreshEnabled(false);
+        xRecycler.setLoadingMoreProgressStyle(ProgressStyle.SysProgress);
 
         CommonRecyclerManager commonRecyclerManager = new CommonRecyclerManager();
         commonRecyclerManager.addType(ImageHolder.ID, ImageHolder.class.getName());
         commonRecyclerManager.addType(TextHolder.ID, TextHolder.class.getName());
         commonRecyclerManager.addType(ClickHolder.ID, ClickHolder.class.getName());
 
-        adapter = new CommonRecyclerAdapter(getActivity(), commonRecyclerManager, datas);
-        adapter.setNeedLoadMore(true);//需要加载更多
+        commonRecyclerAdapter = new CommonRecyclerAdapter(getActivity(), commonRecyclerManager, dataList);
+        xRecycler.setAdapter(commonRecyclerAdapter);
 
-        adapter.setShowNoData(true);//需要显示空数据页面
 
-        recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recycler.addItemDecoration(new DividerItemDecoration(dip2px(getActivity(), 10), DividerItemDecoration.LIST));
-        recycler.setAdapter(adapter);
+        xRecycler.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+            }
 
-        recycler.addOnScrollListener(new LoadMoreScrollListener() {
             @Override
             public void onLoadMore() {
-                //注意加锁
-                if (!isLoadMore) {
-                    isLoadMore = true;
-                    recycler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadMore();
-                        }
-
-                    }, 2000);
-                }
-            }
-
-            @Override
-            public void onScrolled(int firstPosition) {
+                xRecycler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadMore();
+                    }
+                }, 2000);
             }
         });
-
-        return view;
+    }
+    /**
+     * dip转为PX
+     */
+    public static int dip2px(Context context, float dipValue) {
+        float fontScale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * fontScale + 0.5f);
     }
 
-
     public void setDatas(List datas) {
-        this.datas = datas;
-        if (adapter != null) {
-            adapter.setListData(datas);
+        this.dataList = datas;
+        if (commonRecyclerAdapter != null) {
+            commonRecyclerAdapter.setListData(datas);
         }
     }
 
     private void loadMore() {
         List<RecyclerBaseModel> list = new ArrayList<>();
-        for (int i = 0; i < datas.size(); i++) {
-            RecyclerBaseModel recyclerBaseModel = datas.get(i);
+        for (int i = 0; i < dataList.size(); i++) {
+            RecyclerBaseModel recyclerBaseModel = dataList.get(i);
             RecyclerBaseModel newModel;
             if (recyclerBaseModel instanceof ClickModel) {
                 newModel = new ClickModel();
@@ -125,16 +133,8 @@ public class ListFragment extends Fragment {
                 list.add(newModel);
             }
         }
-        isLoadMore = false;
-        adapter.addListData(list);
-    }
-
-    /**
-     * dip转为PX
-     */
-    public static int dip2px(Context context, float dipValue) {
-        float fontScale = context.getResources().getDisplayMetrics().density;
-        return (int) (dipValue * fontScale + 0.5f);
+        commonRecyclerAdapter.addListData(list);
+        xRecycler.loadMoreComplete();
     }
 
 }

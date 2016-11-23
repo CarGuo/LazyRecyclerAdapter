@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:minLines="8"
+        android:minLines="2"
+        android:padding="10dp"
         android:textSize="15sp" />
 </LinearLayout>
