@@ -8,7 +8,7 @@ android {
     buildToolsVersion globalConfiguration.androidBuildToolsVersion
 
     defaultConfig {
-        applicationId "com.shuyu.commonrecycleradapter"
+        applicationId "com.shuyu.apprecycler"
 
         minSdkVersion globalConfiguration.androidMinSdkVersion
         targetSdkVersion globalConfiguration.androidTargetSdkVersion

@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
         android:text="没有数据"
         android:textSize="18sp" />
 

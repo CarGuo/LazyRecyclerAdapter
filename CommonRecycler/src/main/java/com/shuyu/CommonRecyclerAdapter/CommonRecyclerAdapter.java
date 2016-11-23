@@ -306,11 +306,10 @@ public class CommonRecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-
+        //如果是显示没有数据，那么也要一个item作为显示
         if (showNoData && dataList.size() == 0) {
             return 1;
         }
-
         return (supportLoadMore) ? dataList.size() + 1 : dataList.size();
 
     }
@@ -318,19 +317,22 @@ public class CommonRecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-
+        //如果位置不对，就返回
         if (position < 0 || (!supportLoadMore && position > getItemCount() - 1
                 || (supportLoadMore && position > getItemCount())))
             return 0;
 
+        //如果没有数据，就显示空页面
         if (showNoData && dataList.size() == 0) {
             return R.layout.no_data;
         }
 
+        //如果是最后，就加载更多
         if (supportLoadMore && position + 1 == getItemCount()) {
             return LoadMoreHolder.LAYOUTID;
         }
 
+        //返回需要显示的ID
         int layoutId = dataList.get(position).getResLayoutId();
         if (-1 == layoutId || layoutId == 0 || layoutId == Integer.MAX_VALUE || layoutId == 0xffffffff) {
             try {
