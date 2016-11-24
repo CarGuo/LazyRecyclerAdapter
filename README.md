@@ -117,7 +117,6 @@ public class TextModel extends RecyclerBaseModel {
 ```
 
 ## 流程
-　
 1、实现你的Holder并继承RecyclerBaseHolder，这里是你实现需求的地方，相当于Item的逻辑。
 
 2、让你的数据model继承RecyclerBaseModel，设置Model的LayoutId(很重要)，这样model就会通过CommonRecyclerManager，找到LayoutId对应关联的Holder，并生成它。
