@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.shuyu.apprecycler.Holder.MutilHolder;
+import com.shuyu.apprecycler.Model.MutilModel;
 import com.shuyu.common.model.RecyclerBaseModel;
 import com.shuyu.apprecycler.Holder.ClickHolder;
 import com.shuyu.apprecycler.Holder.ImageHolder;
@@ -112,6 +114,13 @@ public class MainActivity extends AppCompatActivity {
         textModel.setText("你这个老司机，说好的文本呢1");
         allList.add(textModel);
 
+        MutilModel mutilModel = new MutilModel();
+        mutilModel.setResLayoutId(MutilHolder.ID);
+        mutilModel.setImage1(R.drawable.a1);
+        mutilModel.setImage2(R.drawable.a2);
+        allList.add(mutilModel);
+
+
         imageModel = new ImageModel();
         imageModel.setResLayoutId(ImageHolder.ID);
         imageModel.setResId(R.drawable.a2);
@@ -137,6 +146,12 @@ public class MainActivity extends AppCompatActivity {
         clickModel.setResLayoutId(ClickHolder.ID);
         clickModel.setBtnText("我是老按键，按啊按啊按啊····");
         allList.add(clickModel);
+
+        mutilModel = new MutilModel();
+        mutilModel.setResLayoutId(MutilHolder.ID);
+        mutilModel.setImage1(R.drawable.a1);
+        mutilModel.setImage2(R.drawable.a2);
+        allList.add(mutilModel);
 
         imageModel = new ImageModel();
         imageModel.setResLayoutId(ImageHolder.ID);

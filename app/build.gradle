@@ -28,6 +28,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':CommonRecycler')
+    //compile 'com.shuyu:CommonRecycler:1.0.0'
     def viewDependencies = rootProject.ext.viewDependencies
     apt viewDependencies.apt_butterKnife
     compile viewDependencies.butterKnife

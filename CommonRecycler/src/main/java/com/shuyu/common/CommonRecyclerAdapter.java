@@ -18,6 +18,12 @@ import java.util.List;
 
 /**
  * Created by Guo on 2015/11/23.
+ * 通用recyclerView的adapter
+ *
+ *
+ * 1、把你布局的LayoutID和对应的holder类名放到CommonRecyclerManager里面
+ * 2、为你的model继承RecyclerBaseModel,设置上面的LayoutID->resLayoutId;
+ * 3、把model的list数据和CommonRecyclerManager传给adapter
  */
 public class CommonRecyclerAdapter extends RecyclerView.Adapter {
 

@@ -5,14 +5,15 @@ import java.io.Serializable;
 
 /**
  * Created by Guo on 2015/11/23.
+ * 数据model必须继承
  */
 public class RecyclerBaseModel implements Serializable {
 
-    private Object extraObject;
+    private Object extraObject; //设置一些你需要的数据
 
-    private int resLayoutId = -1;
+    private int resLayoutId = -1; //必须设置的，布局ID
 
-    private int extraTag;
+    private int extraTag;//一些其他的标志位
 
     public int getResLayoutId() {
         return resLayoutId;

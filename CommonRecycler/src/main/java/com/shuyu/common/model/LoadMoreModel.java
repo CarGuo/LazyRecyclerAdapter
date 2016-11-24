@@ -8,9 +8,10 @@ import android.graphics.drawable.Drawable;
  */
 
 public class LoadMoreModel extends RecyclerBaseModel {
-    private int color = -11;
 
-    private Drawable progressColor;
+    private int color = -11; //文本颜色
+
+    private Drawable progressColor;//进度条样式
 
     private String loadText = "加载中···";
 

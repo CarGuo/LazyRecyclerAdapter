@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.shuyu.apprecycler.Holder.EmptyHolder;
+import com.shuyu.apprecycler.Holder.MutilHolder;
 import com.shuyu.common.CommonRecyclerAdapter;
 import com.shuyu.common.CommonRecyclerManager;
 import com.shuyu.common.listener.LoadMoreScrollListener;
@@ -57,6 +59,9 @@ public class ListFragment extends Fragment {
         commonRecyclerManager.addType(ImageHolder.ID, ImageHolder.class.getName());
         commonRecyclerManager.addType(TextHolder.ID, TextHolder.class.getName());
         commonRecyclerManager.addType(ClickHolder.ID, ClickHolder.class.getName());
+        commonRecyclerManager.addType(MutilHolder.ID, MutilHolder.class.getName());
+        //设置空页面的
+        commonRecyclerManager.addType(EmptyHolder.ID, EmptyHolder.class.getName());
 
         adapter = new CommonRecyclerAdapter(getActivity(), commonRecyclerManager, datas);
 
@@ -68,6 +73,12 @@ public class ListFragment extends Fragment {
 
         //设置动画支持打开
         adapter.setNeedAnimation(true);
+
+        //配置你自定义的空页面效果，不配置显示默认
+        adapter.setNoDataLayoutId(EmptyHolder.ID);
+        RecyclerBaseModel recyclerBaseModel = new RecyclerBaseModel();
+        recyclerBaseModel.setResLayoutId(EmptyHolder.ID);
+        adapter.setNoDataModel(recyclerBaseModel);
 
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycler.addItemDecoration(new DividerItemDecoration(dip2px(getActivity(), 10), DividerItemDecoration.LIST));

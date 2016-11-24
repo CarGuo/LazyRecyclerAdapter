@@ -11,6 +11,6 @@
         android:clipToPadding="false"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:paddingTop="5dp" />
+        android:paddingTop="55dp" />
 
 </LinearLayout>
