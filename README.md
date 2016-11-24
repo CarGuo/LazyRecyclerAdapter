@@ -33,6 +33,7 @@ dependencies {
 　只需要一个**Adapter** 你就可以实现各种类型的列表，在一个列表里兼容不同类型的Item，你需要做的仅仅是维护你的**Holder**（类似List里的一个Item）和**Model**，无需再关心其他，实现高复用与多样式逻辑，外带支持自定义动画，多种上下拉实现方式，不需要再写任何**Adapter**代码。
 
 1、 **CommonRecyclerManager** ：绑定**layoutId**和你的**Holder**类名。
+
 　这个管理类是用于绑定**Holder**和R.layout.xxx，这样在后面**CommonRecyclerAdapter** 用它通过数据**Model**的**layoutId**找到对应的**Holder**并创建它。
 
 ```
@@ -40,6 +41,7 @@ dependencies {
 commonRecyclerManager.addType(TextHolder.ID, TextHolder.class.getName());
 ```
 2、 **RecyclerBaseHolder** ：**继承**这个**Holder**，实现你的需求。
+
 　**RecyclerBaseHolder**的所有Holder的基类，他继承了**RecyclerView.ViewHolder**并定义写两个方法，所以你继承它就对了，在**createView**的时候找到控件，在**onBind**读取数据填充画面。这里就是实现你梦想的地方！
 
 ```
@@ -78,6 +80,7 @@ public class TextHolder extends RecyclerBaseHolder {
 ```
 
 3、 **CommonRecyclerAdapter** ：通过的适配器
+
 　只需要传入数据**List**和**CommonRecyclerManager**，就会根据**Model**的顺序，通过数据的**layoutId**在RecyclerView中自动生成对应的**Holder**，其他的功能只需要简单的配置即可。
 
 ```
@@ -95,6 +98,7 @@ adapter.setNeedAnimation(true);
 ```
 
 4、**RecyclerBaseModel** ：数据model的积累，必须继承它，不离不弃。
+
 　继承它的作用是因为整个**Adapter**都是以它为基类，你需要继承他，最终的是，你需要这个Model对应的布局Id，这样它才能找到属于自己的**Holder**。
 
 ```
@@ -127,7 +131,7 @@ public class TextModel extends RecyclerBaseModel {
 
 ###### 普通下拉刷新与上拉加载更多
 　
-普通的列表，直接使用系统的**SwipeRefreshLayout**就可以啦，简单有好用。下拉加载更多直接添加下方方法，轻松实现上下拉刷新<(￣︶￣)↗，简单粗暴，就是记得要加个锁避免重复进入。
+　普通的列表，直接使用系统的**SwipeRefreshLayout**就可以啦，简单有好用。下拉加载更多直接添加下方方法，轻松实现上下拉刷新<(￣︶￣)↗，简单粗暴，就是记得要加个锁避免重复进入。
 
 ```
 //打开支持需要加载更多
@@ -160,7 +164,7 @@ recycler.addOnScrollListener(new LoadMoreScrollListener() {
 
 ###### 其他配置
 　
-你还可以配置是否显示动画效果，配置上拉loading的颜色，单击和长按等，看下面。
+　你还可以配置是否显示动画效果，配置上拉loading的颜色，单击和长按等，看下面。
 
 ```
 //支持空数据显示 空页面
@@ -182,10 +186,11 @@ adapter.setOnItemClickListener();
 
 ##### [XRecyclerView兼容支持](https://github.com/jianghejie/XRecyclerView)
 　　
+　这里添加了**XRecyclerView**，并且对其进行了修改。
 
-这里添加了**XRecyclerView**，并且对其进行了修改。**XRecyclerView**内置了内部**Adapter**，使其支持添加头部，自带上下拉效果的控件，部分调整之后，全面支持**CommonRecyclerAdapter**。
+　**XRecyclerView**内置了内部**Adapter**，使其支持添加头部，自带上下拉效果的控件，部分调整之后，全面支持**CommonRecyclerAdapter**。
 
-这里使用方式和普通的RecyclerView一样，通过和CommonRecyclerAdapter的配合使用通用配置，而且它同样支持空页面显示，还支持添加各种头部，唯一需要注意的是，添加分割线类**addItemDecoration**和**点击**的时候，需要针对添加了头部和刷新的绝对的position位置换算成相对的位置。
+　这里使用方式和普通的RecyclerView一样，通过和CommonRecyclerAdapter的配合使用通用配置，而且它同样支持空页面显示，还支持添加各种头部，唯一需要注意的是，添加分割线类**addItemDecoration**和**点击**的时候，需要针对添加了头部和刷新的绝对的position位置换算成相对的位置。
 
 ```
 
