@@ -32,7 +32,7 @@ dependencies {
 
 　只需要一个**Adapter** 你就可以实现各种类型的列表，在一个列表里兼容不同类型的Item，你需要做的仅仅是维护你的**Holder**（类似List里的一个Item）和**Model**，无需再关心其他，实现高复用与多样式逻辑，外带支持自定义动画，多种上下拉实现方式，不需要再写任何**Adapter**代码。
 
-1、 **CommonRecyclerManager** ：绑定**layoutId**和你的**Holder**类名。
+#### 1、 **CommonRecyclerManager** ：绑定**layoutId**和你的**Holder**类名。
 
 　这个管理类是用于绑定**Holder**和R.layout.xxx，这样在后面**CommonRecyclerAdapter** 用它通过数据**Model**的**layoutId**找到对应的**Holder**并创建它。
 
@@ -40,7 +40,7 @@ dependencies {
 //将布局的ID和holder类型关联
 commonRecyclerManager.addType(TextHolder.ID, TextHolder.class.getName());
 ```
-2、 **RecyclerBaseHolder** ：**继承**这个**Holder**，实现你的需求。
+#### 2、 **RecyclerBaseHolder** ：**继承**这个**Holder**，实现你的需求。
 
 　**RecyclerBaseHolder**的所有Holder的基类，他继承了**RecyclerView.ViewHolder**并定义写两个方法，所以你继承它就对了，在**createView**的时候找到控件，在**onBind**读取数据填充画面。这里就是实现你梦想的地方！
 
@@ -79,7 +79,7 @@ public class TextHolder extends RecyclerBaseHolder {
 }
 ```
 
-3、 **CommonRecyclerAdapter** ：通过的适配器
+#### 3、 **CommonRecyclerAdapter** ：通过的适配器
 
 　只需要传入数据**List**和**CommonRecyclerManager**，就会根据**Model**的顺序，通过数据的**layoutId**在RecyclerView中自动生成对应的**Holder**，其他的功能只需要简单的配置即可。
 
@@ -97,7 +97,7 @@ adapter.setShowNoData(true);
 adapter.setNeedAnimation(true);
 ```
 
-4、**RecyclerBaseModel** ：数据model的积累，必须继承它，不离不弃。
+#### 4、**RecyclerBaseModel** ：数据model的积累，必须继承它，不离不弃。
 
 　继承它的作用是因为整个**Adapter**都是以它为基类，你需要继承他，最终的是，你需要这个Model对应的布局Id，这样它才能找到属于自己的**Holder**。
 
@@ -117,7 +117,6 @@ public class TextModel extends RecyclerBaseModel {
 ```
 
 ## 流程
-
 　
 1、实现你的**Holder**并继承**RecyclerBaseHolder**，这里是你实现需求的地方，相当于Item的逻辑。
 
@@ -188,7 +187,6 @@ adapter.setOnItemClickListener();
 
 ## [XRecyclerView兼容支持](https://github.com/jianghejie/XRecyclerView)
 
-　　
 　这里添加了**XRecyclerView**，并且对其进行了修改。
 
 　**XRecyclerView**内置了内部**Adapter**，使其支持添加头部，自带上下拉效果的控件，部分调整之后，全面支持**CommonRecyclerAdapter**。
