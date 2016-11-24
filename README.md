@@ -79,7 +79,7 @@ public class TextHolder extends RecyclerBaseHolder {
 }
 ```
 
-#### 3、 CommonRecyclerAdapter ：通过的适配器
+#### 3、 CommonRecyclerAdapter ：通用的适配器
 
 　只需要传入数据List和CommonRecyclerManager，就会根据Model的顺序，通过数据的layoutId在RecyclerView中自动生成对应的Holder，其他的功能只需要简单的配置即可。
 
