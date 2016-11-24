@@ -1,4 +1,4 @@
-##### 通用RecylerAdapter，内置XRecyclerView，兼容上下拉与空页面，高复用，一个Adapter通用所有页面，支持动画，懒人专属
+### 通用RecylerAdapter，内置XRecyclerView，兼容上下拉与空页面，高复用，一个Adapter通用所有页面，支持动画，懒人专属
 
 ```
 <dependency>
@@ -16,17 +16,17 @@ dependencies {
 ```
 
 
-##### 效果
+### 效果
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/01.jpg" width="120px" height="218px"/>
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/02.jpg" width="120px" height="218px"/>
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/03.jpg" width="120px" height="218px"/>
 
 
-##### GIF效果
+### GIF效果
 
 ![](https://github.com/CarGuo/CommonRecycler/blob/master/01.gif)
 
-#### 说明，可以对照Demo阅读
+## 说明，可以对照Demo阅读
 
 　**Holder**可以理解为列表中一个Item的逻辑处理类，每一种类型的Item有一种**Holder**。
 
@@ -115,7 +115,9 @@ public class TextModel extends RecyclerBaseModel {
     }
 }
 ```
-#### 流程
+
+## 流程
+
 　
 1、实现你的**Holder**并继承**RecyclerBaseHolder**，这里是你实现需求的地方，相当于Item的逻辑。
 
@@ -129,7 +131,7 @@ public class TextModel extends RecyclerBaseModel {
 
 
 
-###### 普通下拉刷新与上拉加载更多
+### 普通下拉刷新与上拉加载更多
 　
 　普通的列表，直接使用系统的**SwipeRefreshLayout**就可以啦，简单有好用。下拉加载更多直接添加下方方法，轻松实现上下拉刷新<(￣︶￣)↗，简单粗暴，就是记得要加个锁避免重复进入。
 
@@ -162,7 +164,7 @@ recycler.addOnScrollListener(new LoadMoreScrollListener() {
 
 ```
 
-###### 其他配置
+### 其他配置
 　
 　你还可以配置是否显示动画效果，配置上拉loading的颜色，单击和长按等，看下面。
 
@@ -184,7 +186,8 @@ adapter.setOnItemClickListener();
 
 ```
 
-##### [XRecyclerView兼容支持](https://github.com/jianghejie/XRecyclerView)
+## [XRecyclerView兼容支持](https://github.com/jianghejie/XRecyclerView)
+
 　　
 　这里添加了**XRecyclerView**，并且对其进行了修改。
 
