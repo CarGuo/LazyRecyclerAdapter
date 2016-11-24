@@ -1,4 +1,4 @@
-通用RecylerAdapter，内置XRecyclerView，兼容上下拉与空页面，高复用，一个Adapter通用所有页面，支持动画，懒人专属
+##### 通用RecylerAdapter，内置XRecyclerView，兼容上下拉与空页面，高复用，一个Adapter通用所有页面，支持动画，懒人专属
 
 ```
 <dependency>
@@ -16,20 +16,21 @@ dependencies {
 ```
 
 
-效果
+##### 效果
+<img src="https://github.com/CarGuo/CommonRecycler/blob/master/01.jpg" width="120px" height="218px"/>
+<img src="https://github.com/CarGuo/CommonRecycler/blob/master/02.jpg" width="120px" height="218px"/>
+<img src="https://github.com/CarGuo/CommonRecycler/blob/master/03.jpg" width="120px" height="218px"/>
 
-![](https://github.com/CarGuo/CommonRecycler/blob/master/01.jpg)
-![](https://github.com/CarGuo/CommonRecycler/blob/master/02.jpg)
-![](https://github.com/CarGuo/CommonRecycler/blob/master/03.jpg)
 
-GIF效果
+##### GIF效果
 
 ![](https://github.com/CarGuo/CommonRecycler/blob/master/01.gif)
 
 #### 说明，可以对照Demo阅读
 
-**Holder**可以理解为列表中一个Item的逻辑处理类，每一种类型的Item有一种**Holder**。
-只需要一个**Adapter** 你就可以实现各种类型的列表，在一个列表里兼容不同类型的Item，你需要做的仅仅是维护你的**Holder**（类似List里的一个Item）和**Model**，无需再关心其他，实现高复用与多样式逻辑，外带支持自定义动画，多种上下拉实现方式，不需要再写任何**Adapter**代码\(^o^)/。
+　**Holder**可以理解为列表中一个Item的逻辑处理类，每一种类型的Item有一种**Holder**。
+
+　只需要一个**Adapter** 你就可以实现各种类型的列表，在一个列表里兼容不同类型的Item，你需要做的仅仅是维护你的**Holder**（类似List里的一个Item）和**Model**，无需再关心其他，实现高复用与多样式逻辑，外带支持自定义动画，多种上下拉实现方式，不需要再写任何**Adapter**代码。
 
 1、 **CommonRecyclerManager** ：绑定**layoutId**和你的**Holder**类名。
 　这个管理类是用于绑定**Holder**和R.layout.xxx，这样在后面**CommonRecyclerAdapter** 用它通过数据**Model**的**layoutId**找到对应的**Holder**并创建它。
