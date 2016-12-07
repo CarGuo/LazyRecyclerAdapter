@@ -1,18 +1,23 @@
 ### 通用RecylerAdapter，内置XRecyclerView，兼容上下拉与空页面，高复用，一个Adapter通用所有页面，支持动画，懒人专属
 
+[![](https://jitpack.io/v/CarGuo/CommonRecycler.svg)](https://jitpack.io/#CarGuo/CommonRecycler)
+
+## 因为某些原因，现在使用jitpack.io，还请各位切换到jitpack。
+
 ```
-<dependency>
-  <groupId>com.shuyu</groupId>
-  <artifactId>CommonRecycler</artifactId>
-  <version>1.0.1</version>
-  <type>pom</type>
-</dependency>
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
 ```
 
 ```
 dependencies {
-    compile 'com.shuyu:CommonRecycler:1.0.1'
+    compile 'com.github.CarGuo:CommonRecycler:v1.0.1'
 }
+
 ```
 
 
