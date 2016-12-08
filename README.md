@@ -16,7 +16,7 @@ allprojects {
 
 ```
 dependencies {
-    compile 'com.github.CarGuo:CommonRecycler:v1.0.1'
+    compile 'com.github.CarGuo:CommonRecycler:v1.0.2'
 }
 
 ```
