@@ -3,7 +3,6 @@
 [![](https://jitpack.io/v/CarGuo/CommonRecycler.svg)](https://jitpack.io/#CarGuo/CommonRecycler)
 [![Build Status](https://travis-ci.org/CarGuo/CommonRecycler.svg?branch=master)](https://travis-ci.org/CarGuo/CommonRecycler)
 
-## 因为某些原因，现在使用jitpack.io，还请使用依赖的各位切换到jitpack。
 
 ```
 allprojects {
@@ -21,6 +20,7 @@ dependencies {
 
 ```
 
+### [简书说明](http://www.jianshu.com/p/9c9aede9a19a)
 
 ### 效果
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/01.jpg" width="120px" height="218px"/>
@@ -198,6 +198,7 @@ adapter.setOnItemClickListener();
 
 　这里使用方式和普通的RecyclerView一样，通过和CommonRecyclerAdapter的配合使用通用配置，而且它同样支持空页面显示，还支持添加各种头部，唯一需要注意的是，添加分割线类addItemDecoration和点击的时候，需要针对添加了头部和刷新的绝对的position位置换算成相对的位置。
 
+### 使用例子
 ```
 
 //是否屏蔽下拉
