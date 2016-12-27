@@ -1,4 +1,4 @@
-### 通用RecylerAdapter，内置XRecyclerView，兼容上下拉与空页面，高复用，一个Adapter通用所有页面，支持动画，懒人专属
+## 通用RecylerAdapter，内置XRecyclerView，兼容上下拉与空页面，高复用，一个Adapter通用所有页面，支持动画，懒人专属
 
 [![](https://jitpack.io/v/CarGuo/CommonRecycler.svg)](https://jitpack.io/#CarGuo/CommonRecycler)
 [![Build Status](https://travis-ci.org/CarGuo/CommonRecycler.svg?branch=master)](https://travis-ci.org/CarGuo/CommonRecycler)
@@ -20,7 +20,7 @@ dependencies {
 
 ```
 
-### [简书说明](http://www.jianshu.com/p/9c9aede9a19a)
+## [简书详解说明](http://www.jianshu.com/p/9c9aede9a19a)
 
 ### 效果
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/01.jpg" width="120px" height="218px"/>
