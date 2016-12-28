@@ -3,7 +3,7 @@
 [![](https://jitpack.io/v/CarGuo/LazyRecyclerAdapter.svg)](https://jitpack.io/#CarGuo/LazyRecyclerAdapter)
 [![Build Status](https://travis-ci.org/CarGuo/CommonRecycler.svg?branch=master)](https://travis-ci.org/CarGuo/CommonRecycler)
 
-
+#### 在你的项目project下的build.gradle添加
 ```
 allprojects {
 	repositories {
@@ -12,7 +12,7 @@ allprojects {
 	}
 }
 ```
-
+#### 在module下的build.gradle添加依赖
 ```
 dependencies {
     compile 'com.github.CarGuo:LazyRecyclerAdapter:v1.0.2'
