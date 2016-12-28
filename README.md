@@ -22,6 +22,12 @@ dependencies {
 
 ## [简书详解说明](http://www.jianshu.com/p/9c9aede9a19a)
 
+
+### QQ群，有兴趣的可以进来，无底线欢迎：174815284 。
+
+--------------------------------------------------------------------------------
+
+
 ### 效果
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/01.jpg" width="120px" height="218px"/>
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/02.jpg" width="120px" height="218px"/>
