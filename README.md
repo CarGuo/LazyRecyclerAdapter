@@ -22,6 +22,7 @@ dependencies {
 
 ## [简书详解说明](http://www.jianshu.com/p/9c9aede9a19a)
 
+### 目前wiki还没搭建起来，后面会把文档丰富好。
 
 ### QQ群，有兴趣的可以进来，无底线欢迎：174815284 。
 
