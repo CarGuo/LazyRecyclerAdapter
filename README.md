@@ -1,6 +1,6 @@
 ## 通用RecylerAdapter，内置XRecyclerView，兼容上下拉与空页面，高复用，一个Adapter通用所有页面，支持动画，懒人专属
 
-[![](https://jitpack.io/v/CarGuo/CommonRecycler.svg)](https://jitpack.io/#CarGuo/CommonRecycler)
+[![](https://jitpack.io/v/CarGuo/LazyRecyclerAdapter.svg)](https://jitpack.io/#CarGuo/LazyRecyclerAdapter)
 [![Build Status](https://travis-ci.org/CarGuo/CommonRecycler.svg?branch=master)](https://travis-ci.org/CarGuo/CommonRecycler)
 
 
@@ -15,7 +15,7 @@ allprojects {
 
 ```
 dependencies {
-    compile 'com.github.CarGuo:CommonRecycler:v1.0.2'
+    compile 'com.github.CarGuo:LazyRecyclerAdapter:v1.0.2'
 }
 
 ```
