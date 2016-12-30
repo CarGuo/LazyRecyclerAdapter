@@ -14,7 +14,6 @@ import com.shuyu.apprecycler.Holder.EmptyHolder;
 import com.shuyu.apprecycler.Holder.MutilHolder;
 import com.shuyu.common.CommonRecyclerAdapter;
 import com.shuyu.common.CommonRecyclerManager;
-import com.shuyu.common.holder.LoadMoreHolder;
 import com.shuyu.common.listener.LoadMoreScrollListener;
 import com.shuyu.common.model.RecyclerBaseModel;
 import com.shuyu.apprecycler.Holder.ClickHolder;
@@ -144,7 +143,6 @@ public class ListFragment extends Fragment {
         }
         isLoadMore = false;
         adapter.addListData(list);
-        adapter.setLoadMoreState(LoadMoreHolder.NULL_DATA_STATE);
     }
 
     /**
