@@ -46,6 +46,8 @@ public class List2Fragment extends Fragment {
 
     private CommonRecyclerAdapter commonRecyclerAdapter;
 
+    private final Object lock = new Object();
+
     public List2Fragment() {
 
     }
@@ -69,7 +71,7 @@ public class List2Fragment extends Fragment {
         //设置瀑布流管理器
         xRecycler.setLayoutManager(staggeredGridLayoutManager);
         //添加分割线，注意位置是会从下拉那个Item的实际位置开始的，所以如果支持下拉需要屏蔽下拉和HeaderView
-        xRecycler.addItemDecoration(new DividerItemDecoration(dip2px(getActivity(),  10), DividerItemDecoration.GRID, 2));
+        xRecycler.addItemDecoration(new DividerItemDecoration(dip2px(getActivity(), 10), DividerItemDecoration.GRID, 2));
 
         //是否屏蔽下拉
         //xRecycler.setPullRefreshEnabled(false);
@@ -98,7 +100,7 @@ public class List2Fragment extends Fragment {
                 xRecycler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        xRecycler.refreshComplete();
+                        refresh();
                     }
                 }, 2000);
             }
@@ -110,7 +112,7 @@ public class List2Fragment extends Fragment {
                     public void run() {
                         loadMore();
                     }
-                }, 2000);
+                }, 1000);
             }
         });
 
@@ -122,6 +124,7 @@ public class List2Fragment extends Fragment {
             }
         });
     }
+
     /**
      * dip转为PX
      */
@@ -135,6 +138,87 @@ public class List2Fragment extends Fragment {
         if (commonRecyclerAdapter != null) {
             commonRecyclerAdapter.setListData(datas);
         }
+    }
+
+
+    private void refresh() {
+        List<RecyclerBaseModel> list = new ArrayList<>();
+
+        ImageModel imageModel = new ImageModel();
+        imageModel.setResLayoutId(ImageHolder.ID);
+        imageModel.setResId(R.drawable.a1);
+        list.add(imageModel);
+
+        TextModel textModel = new TextModel();
+        textModel.setResLayoutId(TextHolder.ID);
+        textModel.setText("你这个老司机，说好的文本呢1");
+        list.add(textModel);
+
+        imageModel = new ImageModel();
+        imageModel.setResLayoutId(ImageHolder.ID);
+        imageModel.setResId(R.drawable.a2);
+        list.add(imageModel);
+
+        ClickModel clickModel = new ClickModel();
+        clickModel.setResLayoutId(ClickHolder.ID);
+        clickModel.setBtnText("我是老按键，按啊按啊按啊····");
+        list.add(clickModel);
+
+
+        textModel = new TextModel();
+        textModel.setResLayoutId(TextHolder.ID);
+        textModel.setText("你这个老司机，说好的文本呢1");
+        list.add(textModel);
+
+        imageModel = new ImageModel();
+        imageModel.setResLayoutId(ImageHolder.ID);
+        imageModel.setResId(R.drawable.a1);
+        list.add(imageModel);
+
+        clickModel = new ClickModel();
+        clickModel.setResLayoutId(ClickHolder.ID);
+        clickModel.setBtnText("我是老按键，按啊按啊按啊····");
+        list.add(clickModel);
+
+        imageModel = new ImageModel();
+        imageModel.setResLayoutId(ImageHolder.ID);
+        imageModel.setResId(R.drawable.a2);
+        list.add(imageModel);
+
+        textModel = new TextModel();
+        textModel.setResLayoutId(TextHolder.ID);
+        textModel.setText("你这个老司机，说好的文本呢1");
+        list.add(textModel);
+
+        imageModel = new ImageModel();
+        imageModel.setResLayoutId(ImageHolder.ID);
+        imageModel.setResId(R.drawable.a1);
+        list.add(imageModel);
+
+
+        clickModel = new ClickModel();
+        clickModel.setResLayoutId(ClickHolder.ID);
+        clickModel.setBtnText("我是老按键，按啊按啊按啊····");
+        list.add(clickModel);
+
+
+        textModel = new TextModel();
+        textModel.setResLayoutId(TextHolder.ID);
+        textModel.setText("你这个老司机，说好的文本呢1");
+        list.add(textModel);
+
+        clickModel = new ClickModel();
+        clickModel.setResLayoutId(ClickHolder.ID);
+        clickModel.setBtnText("我是老按键，按啊按啊按啊····");
+        list.add(clickModel);
+        //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
+        //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
+        synchronized (lock) {
+            dataList = list;
+            commonRecyclerAdapter.setListData(list);
+            xRecycler.refreshComplete();
+        }
+
     }
 
     private void loadMore() {
@@ -162,8 +246,12 @@ public class List2Fragment extends Fragment {
                 list.add(newModel);
             }
         }
-        commonRecyclerAdapter.addListData(list);
-        xRecycler.loadMoreComplete();
+        //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
+        //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
+        synchronized (lock) {
+            commonRecyclerAdapter.addListData(list);
+            xRecycler.loadMoreComplete();
+        }
     }
 
 }

@@ -15,7 +15,7 @@ allprojects {
 #### 在module下的build.gradle添加依赖
 ```
 dependencies {
-    compile 'com.github.CarGuo:LazyRecyclerAdapter:v1.0.2'
+    compile 'com.github.CarGuo:LazyRecyclerAdapter:v1.0.3'
 }
 
 ```
