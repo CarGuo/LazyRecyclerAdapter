@@ -1,19 +1,31 @@
 package com.jcodecraeer.xrecyclerview;
 
+import android.content.Context;
+import android.util.AttributeSet;
+import android.widget.LinearLayout;
+
 /**
  * Created by jianghejie on 15/11/22.
  */
-interface BaseRefreshHeader {
+public abstract class BaseRefreshHeader extends LinearLayout implements BaseRefreshInterface{
 
-    int STATE_NORMAL = 0;
-    int STATE_RELEASE_TO_REFRESH = 1;
-    int STATE_REFRESHING = 2;
-    int STATE_DONE = 3;
+    public final static int STATE_NORMAL = 0;
 
-    void onMove(float delta);
+    public final static int STATE_RELEASE_TO_REFRESH = 1;
 
-    boolean releaseAction();
+    public final static int STATE_REFRESHING = 2;
 
-    void refreshComplete();
+    public final static int STATE_DONE = 3;
 
+    public BaseRefreshHeader(Context context) {
+        super(context);
+    }
+
+    public BaseRefreshHeader(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public BaseRefreshHeader(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
 }

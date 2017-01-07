@@ -15,12 +15,10 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.progressindicator.AVLoadingIndicatorView;
 import com.shuyu.common.R;
 
-public class LoadingMoreFooter extends LinearLayout {
+public class LoadingMoreFooter extends BaseLoadMoreFooter {
 
     private SimpleViewSwitcher progressCon;
-    public final static int STATE_LOADING = 0;
-    public final static int STATE_COMPLETE = 1;
-    public final static int STATE_NOMORE = 2;
+
     private TextView mText;
 
 
@@ -65,6 +63,7 @@ public class LoadingMoreFooter extends LinearLayout {
         addView(mText);
     }
 
+    @Override
     public void setProgressStyle(int style) {
         if (style == ProgressStyle.SysProgress) {
             progressCon.setView(new ProgressBar(getContext(), null, android.R.attr.progressBarStyleSmall));
@@ -76,6 +75,7 @@ public class LoadingMoreFooter extends LinearLayout {
         }
     }
 
+    @Override
     public void setState(int state) {
         switch (state) {
             case STATE_LOADING:

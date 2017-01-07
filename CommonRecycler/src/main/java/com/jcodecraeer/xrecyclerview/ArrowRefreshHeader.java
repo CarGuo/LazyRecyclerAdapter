@@ -20,20 +20,25 @@ import com.shuyu.common.R;
 
 import java.util.Date;
 
-public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeader {
+public class ArrowRefreshHeader extends BaseRefreshHeader {
 
     private LinearLayout mContainer;
+
     private ImageView mArrowImageView;
+
     private SimpleViewSwitcher mProgressBar;
+
     private TextView mStatusTextView;
-    private int mState = STATE_NORMAL;
 
     private TextView mHeaderTimeView;
 
     private Animation mRotateUpAnim;
+
     private Animation mRotateDownAnim;
 
     private static final int ROTATE_ANIM_DURATION = 180;
+
+    private int mState = STATE_NORMAL;
 
     public int mMeasuredHeight;
 
@@ -88,6 +93,7 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
         mMeasuredHeight = getMeasuredHeight();
     }
 
+    @Override
     public void setProgressStyle(int style) {
         if (style == ProgressStyle.SysProgress) {
             mProgressBar.setView(new ProgressBar(getContext(), null, android.R.attr.progressBarStyle));
@@ -99,10 +105,12 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
         }
     }
 
+    @Override
     public void setArrowImageView(int resid) {
         mArrowImageView.setImageResource(resid);
     }
 
+    @Override
     public void setState(int state) {
         if (state == mState) return;
 
@@ -147,6 +155,7 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
         mState = state;
     }
 
+    @Override
     public int getState() {
         return mState;
     }
@@ -162,6 +171,7 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
         }, 200);
     }
 
+    @Override
     public void setVisibleHeight(int height) {
         if (height < 0) height = 0;
         LayoutParams lp = (LayoutParams) mContainer.getLayoutParams();
@@ -169,6 +179,7 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
         mContainer.setLayoutParams(lp);
     }
 
+    @Override
     public int getVisibleHeight() {
         LayoutParams lp = (LayoutParams) mContainer.getLayoutParams();
         return lp.height;
@@ -213,6 +224,7 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
         return isOnRefresh;
     }
 
+    @Override
     public void reset() {
         smoothScrollTo(0);
         new Handler().postDelayed(new Runnable() {

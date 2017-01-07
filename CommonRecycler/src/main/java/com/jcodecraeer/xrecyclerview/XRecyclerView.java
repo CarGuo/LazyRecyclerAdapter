@@ -18,50 +18,75 @@ import java.util.List;
 
 public class XRecyclerView extends RecyclerView {
 
-    //下面的ItemViewType是保留值(ReservedItemViewType),如果用户的adapter与它们重复将会强制抛出异常。不过为了简化,我们检测到重复时对用户的提示是ItemViewType必须小于10000
-    private static final int TYPE_REFRESH_HEADER = 10000;//设置一个很大的数字,尽可能避免和用户的adapter冲突
+
+    public interface LoadingListener {
+        void onRefresh();
+
+        void onLoadMore();
+    }
+
+    //下面的ItemViewType是保留值(ReservedItemViewType),如果用户的adapter与它们重复将会强制抛出异常。
+    //不过为了简化,我们检测到重复时对用户的提示是ItemViewType必须小于10000
+    //设置一个很大的数字,尽可能避免和用户的adapter冲突
+    private static final int TYPE_REFRESH_HEADER = 10000;
 
     private static final int TYPE_FOOTER = 10001;
 
     private static final int HEADER_INIT_INDEX = 10002;
 
+    //下拉刷新的loading样式,默认系统
     private int mRefreshProgressStyle = ProgressStyle.SysProgress;
 
+    //上拉加载更多的loading样式，默认系统
     private int mLoadingMoreProgressStyle = ProgressStyle.SysProgress;
 
+    //下拉刷新的移动系数
     private static final float DRAG_RATE = 3;
 
+    //触摸下拉移动的距离
     private float mLastY = -1;
 
+    //是否使能下拉刷新
     private boolean pullRefreshEnabled = true;
 
+    //是否使能加载更多
     private boolean loadingMoreEnabled = true;
 
+    //是否正在加载数据
     private boolean isLoadingData = false;
 
+    //是否没有更多数据了
     private boolean isNoMore = false;
 
+    //用在内外数据变化更新的同步更新
     private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
 
+    //
     private static List<Integer> sHeaderTypes = new ArrayList<>();//每个header必须有不同的type,不然滚动的时候顺序会变化
 
     //adapter没有数据的时候显示,类似于listView的emptyView
     private View mEmptyView;
 
-    private View mFootView;
+    //底部footer
+    private BaseLoadMoreFooter mFootView;
 
+    //头部刷新类型
+    private BaseRefreshHeader mRefreshHeader;
+
+    //兼容 appbar
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
 
+    //滚动监听
     private RecyclerView.OnScrollListener onScrollListener;
 
+    //loading监听
     private LoadingListener mLoadingListener;
 
-    private ArrowRefreshHeader mRefreshHeader;
-
+    //headerView列表
     private ArrayList<View> mHeaderViews = new ArrayList<>();
 
+    //内部和外部adapter的切换
     private WrapAdapter mWrapAdapter;
-
 
     public XRecyclerView(Context context) {
         this(context, null);
@@ -85,113 +110,6 @@ public class XRecyclerView extends RecyclerView {
         footView.setProgressStyle(mLoadingMoreProgressStyle);
         mFootView = footView;
         mFootView.setVisibility(GONE);
-    }
-
-    public void addHeaderView(View view) {
-        sHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
-        mHeaderViews.add(view);
-    }
-
-    //根据header的ViewType判断是哪个header
-    private View getHeaderViewByType(int itemType) {
-        if (!isHeaderType(itemType)) {
-            return null;
-        }
-        return mHeaderViews.get(itemType - HEADER_INIT_INDEX);
-    }
-
-    //判断一个type是否为HeaderType
-    private boolean isHeaderType(int itemViewType) {
-        return mHeaderViews.size() > 0 && sHeaderTypes.contains(itemViewType);
-    }
-
-    //判断是否是XRecyclerView保留的itemViewType
-    private boolean isReservedItemViewType(int itemViewType) {
-        if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_FOOTER || sHeaderTypes.contains(itemViewType)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void setFootView(final View view) {
-        mFootView = view;
-    }
-
-    public void loadMoreComplete() {
-        isLoadingData = false;
-        if (mFootView instanceof LoadingMoreFooter) {
-            ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_COMPLETE);
-        } else {
-            mFootView.setVisibility(View.GONE);
-        }
-    }
-
-    public void setNoMore(boolean noMore) {
-        isLoadingData = false;
-        isNoMore = noMore;
-        if (mFootView instanceof LoadingMoreFooter) {
-            ((LoadingMoreFooter) mFootView).setState(isNoMore ? LoadingMoreFooter.STATE_NOMORE : LoadingMoreFooter.STATE_COMPLETE);
-        } else {
-            mFootView.setVisibility(View.GONE);
-        }
-    }
-
-    public void reset() {
-        setNoMore(false);
-        loadMoreComplete();
-        refreshComplete();
-    }
-
-    public void refreshComplete() {
-        mRefreshHeader.refreshComplete();
-        setNoMore(false);
-    }
-
-    public void setRefreshHeader(ArrowRefreshHeader refreshHeader) {
-        mRefreshHeader = refreshHeader;
-    }
-
-    public void setPullRefreshEnabled(boolean enabled) {
-        pullRefreshEnabled = enabled;
-    }
-
-    public void setLoadingMoreEnabled(boolean enabled) {
-        loadingMoreEnabled = enabled;
-        if (!enabled) {
-            if (mFootView instanceof LoadingMoreFooter) {
-                ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_COMPLETE);
-            }
-        }
-    }
-
-    public void setRefreshProgressStyle(int style) {
-        mRefreshProgressStyle = style;
-        if (mRefreshHeader != null) {
-            mRefreshHeader.setProgressStyle(style);
-        }
-    }
-
-    public void setLoadingMoreProgressStyle(int style) {
-        mLoadingMoreProgressStyle = style;
-        if (mFootView instanceof LoadingMoreFooter) {
-            ((LoadingMoreFooter) mFootView).setProgressStyle(style);
-        }
-    }
-
-    public void setArrowImageView(int resId) {
-        if (mRefreshHeader != null) {
-            mRefreshHeader.setArrowImageView(resId);
-        }
-    }
-
-    public void setEmptyView(View emptyView) {
-        this.mEmptyView = emptyView;
-        mDataObserver.onChanged();
-    }
-
-    public View getEmptyView() {
-        return mEmptyView;
     }
 
     @Override
@@ -223,11 +141,7 @@ public class XRecyclerView extends RecyclerView {
             if (layoutManager.getChildCount() > 0
                     && lastVisibleItemPosition >= layoutManager.getItemCount() - 1 && layoutManager.getItemCount() > layoutManager.getChildCount() && !isNoMore && mRefreshHeader.getState() < ArrowRefreshHeader.STATE_REFRESHING) {
                 isLoadingData = true;
-                if (mFootView instanceof LoadingMoreFooter) {
-                    ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_LOADING);
-                } else {
-                    mFootView.setVisibility(View.VISIBLE);
-                }
+                mFootView.setState(LoadingMoreFooter.STATE_LOADING);
                 mLoadingListener.onLoadMore();
             }
         }
@@ -266,6 +180,71 @@ public class XRecyclerView extends RecyclerView {
         return super.onTouchEvent(ev);
     }
 
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        //解决和CollapsingToolbarLayout冲突的问题
+        AppBarLayout appBarLayout = null;
+        ViewParent p = getParent();
+        while (p != null) {
+            if (p instanceof CoordinatorLayout) {
+                break;
+            }
+            p = p.getParent();
+        }
+        if (p instanceof CoordinatorLayout) {
+            CoordinatorLayout coordinatorLayout = (CoordinatorLayout) p;
+            final int childCount = coordinatorLayout.getChildCount();
+            for (int i = childCount - 1; i >= 0; i--) {
+                final View child = coordinatorLayout.getChildAt(i);
+                if (child instanceof AppBarLayout) {
+                    appBarLayout = (AppBarLayout) child;
+                    break;
+                }
+            }
+            if (appBarLayout != null) {
+                appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+                    @Override
+                    public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                        appbarState = state;
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * 根据header的ViewType判断是哪个header
+     */
+    private View getHeaderViewByType(int itemType) {
+        if (!isHeaderType(itemType)) {
+            return null;
+        }
+        return mHeaderViews.get(itemType - HEADER_INIT_INDEX);
+    }
+
+    /**
+     * 判断一个type是否为HeaderType
+     */
+    private boolean isHeaderType(int itemViewType) {
+        return mHeaderViews.size() > 0 && sHeaderTypes.contains(itemViewType);
+    }
+
+    /**
+     * 判断是否是XRecyclerView保留的itemViewType
+     */
+    private boolean isReservedItemViewType(int itemViewType) {
+        if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_FOOTER || sHeaderTypes.contains(itemViewType)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 瀑布流里最后的一个item的位置
+     */
     private int findMax(int[] lastPositions) {
         int max = lastPositions[0];
         for (int value : lastPositions) {
@@ -276,6 +255,9 @@ public class XRecyclerView extends RecyclerView {
         return max;
     }
 
+    /**
+     * 是否顶部
+     */
     private boolean isOnTop() {
         if (mRefreshHeader.getParent() != null) {
             return true;
@@ -284,6 +266,9 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
+    /**
+     * 外部adapter更新的时候，同步更新内部adapter
+     */
     private class DataObserver extends RecyclerView.AdapterDataObserver {
         @Override
         public void onChanged() {
@@ -319,11 +304,6 @@ public class XRecyclerView extends RecyclerView {
             mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount);
         }
 
-        /*@Override
-        public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-            mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount, payload);
-        }*/
-
         @Override
         public void onItemRangeRemoved(int positionStart, int itemCount) {
             mWrapAdapter.notifyItemRangeRemoved(positionStart, itemCount);
@@ -335,8 +315,10 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
-    ;
 
+    /**
+     * 内部adapter
+     */
     public class WrapAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private RecyclerView.Adapter adapter;
@@ -518,17 +500,46 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
-    public void setLoadingListener(LoadingListener listener) {
-        mLoadingListener = listener;
+
+    /**
+     * 添加头部list
+     */
+    public void addHeaderView(View view) {
+        sHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
+        mHeaderViews.add(view);
     }
 
-    public interface LoadingListener {
-
-        void onRefresh();
-
-        void onLoadMore();
+    /**
+     * 上拉加载更多完成
+     */
+    public void loadMoreComplete() {
+        isLoadingData = false;
+        mFootView.setState(LoadingMoreFooter.STATE_COMPLETE);
     }
 
+    /**
+     * 是否没有更多数据
+     *
+     * @param noMore 上拉是否已经没有更多数据了
+     */
+    public void setNoMore(boolean noMore) {
+        isLoadingData = false;
+        isNoMore = noMore;
+        mFootView.setState(isNoMore ? LoadingMoreFooter.STATE_NOMORE : LoadingMoreFooter.STATE_COMPLETE);
+    }
+
+    /**
+     * 重置上下拉
+     */
+    public void reset() {
+        setNoMore(false);
+        loadMoreComplete();
+        refreshComplete();
+    }
+
+    /**
+     * 是否正在刷新
+     */
     public void setRefreshing(boolean refreshing) {
         if (refreshing && pullRefreshEnabled && mLoadingListener != null) {
             mRefreshHeader.setState(ArrowRefreshHeader.STATE_REFRESHING);
@@ -537,39 +548,95 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        //解决和CollapsingToolbarLayout冲突的问题
-        AppBarLayout appBarLayout = null;
-        ViewParent p = getParent();
-        while (p != null) {
-            if (p instanceof CoordinatorLayout) {
-                break;
-            }
-            p = p.getParent();
-        }
-        if (p instanceof CoordinatorLayout) {
-            CoordinatorLayout coordinatorLayout = (CoordinatorLayout) p;
-            final int childCount = coordinatorLayout.getChildCount();
-            for (int i = childCount - 1; i >= 0; i--) {
-                final View child = coordinatorLayout.getChildAt(i);
-                if (child instanceof AppBarLayout) {
-                    appBarLayout = (AppBarLayout) child;
-                    break;
-                }
-            }
-            if (appBarLayout != null) {
-                appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
-                    @Override
-                    public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                        appbarState = state;
-                    }
-                });
-            }
+    /**
+     * 刷新结束
+     */
+    public void refreshComplete() {
+        mRefreshHeader.refreshComplete();
+        setNoMore(false);
+    }
+
+    /**
+     * 设置刷新的view
+     */
+    public void setRefreshHeader(BaseRefreshHeader refreshHeader) {
+        mRefreshHeader = refreshHeader;
+    }
+
+    /**
+     * 设置上拉加载更多view
+     */
+    public void setFootView(BaseLoadMoreFooter footView) {
+        this.mFootView = footView;
+    }
+
+    /**
+     * 是否使能下拉刷新
+     */
+    public void setPullRefreshEnabled(boolean enabled) {
+        pullRefreshEnabled = enabled;
+    }
+
+    /**
+     * 是否使能上拉加载更多
+     */
+    public void setLoadingMoreEnabled(boolean enabled) {
+        loadingMoreEnabled = enabled;
+        if (!enabled) {
+            mFootView.setState(LoadingMoreFooter.STATE_COMPLETE);
         }
     }
 
+    /**
+     * 刷新loading的样式
+     */
+    public void setRefreshProgressStyle(int style) {
+        mRefreshProgressStyle = style;
+        if (mRefreshHeader != null) {
+            mRefreshHeader.setProgressStyle(style);
+        }
+    }
+
+    /**
+     * 加载更多的loading样式
+     */
+    public void setLoadingMoreProgressStyle(int style) {
+        mLoadingMoreProgressStyle = style;
+        mFootView.setProgressStyle(style);
+
+    }
+
+    /**
+     * 下拉刷新loading的图标
+     */
+    public void setArrowImageView(int resId) {
+        if (mRefreshHeader != null) {
+            mRefreshHeader.setArrowImageView(resId);
+        }
+    }
+
+    /**
+     * 没有数据的时候空view
+     */
+    public void setEmptyView(View emptyView) {
+        this.mEmptyView = emptyView;
+        mDataObserver.onChanged();
+    }
+
+    public View getEmptyView() {
+        return mEmptyView;
+    }
+
+    /**
+     * 刷新与加载更多的监听回调
+     */
+    public void setLoadingListener(LoadingListener listener) {
+        mLoadingListener = listener;
+    }
+
+    /**
+     * 滚动监听
+     */
     public void setAddOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
         this.onScrollListener = onScrollListener;
     }
