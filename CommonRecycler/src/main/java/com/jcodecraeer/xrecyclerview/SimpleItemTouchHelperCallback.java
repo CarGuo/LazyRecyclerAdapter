@@ -15,7 +15,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public static final float ALPHA_FULL = 1.0f;
 
     private final ItemTouchHelperAdapter mAdapter;
-    private  XRecyclerView mXrecyclerView;
+    private XRecyclerView mXrecyclerView;
 
     public SimpleItemTouchHelperCallback(ItemTouchHelperAdapter adapter, XRecyclerView recyclerView) {
         mAdapter = adapter;

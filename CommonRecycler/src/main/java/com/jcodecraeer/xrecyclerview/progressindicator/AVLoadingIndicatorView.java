@@ -45,7 +45,7 @@ import com.shuyu.common.R;
 
 /**
  * Created by Jack on 2015/10/15
- *
+ * <p>
  * BallPulse,
  * BallGridPulse,
  * BallClipRotate,

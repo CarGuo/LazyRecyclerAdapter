@@ -17,30 +17,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XRecyclerView extends RecyclerView {
-    private boolean isLoadingData = false;
-    private boolean isNoMore = false;
-    private int mRefreshProgressStyle = ProgressStyle.SysProgress;
-    private int mLoadingMoreProgressStyle = ProgressStyle.SysProgress;
-    private ArrayList<View> mHeaderViews = new ArrayList<>();
-    private WrapAdapter mWrapAdapter;
-    private float mLastY = -1;
-    private static final float DRAG_RATE = 3;
-    private LoadingListener mLoadingListener;
-    private ArrowRefreshHeader mRefreshHeader;
-    private boolean pullRefreshEnabled = true;
-    private boolean loadingMoreEnabled = true;
+
     //下面的ItemViewType是保留值(ReservedItemViewType),如果用户的adapter与它们重复将会强制抛出异常。不过为了简化,我们检测到重复时对用户的提示是ItemViewType必须小于10000
     private static final int TYPE_REFRESH_HEADER = 10000;//设置一个很大的数字,尽可能避免和用户的adapter冲突
+
     private static final int TYPE_FOOTER = 10001;
+
     private static final int HEADER_INIT_INDEX = 10002;
+
+    private int mRefreshProgressStyle = ProgressStyle.SysProgress;
+
+    private int mLoadingMoreProgressStyle = ProgressStyle.SysProgress;
+
+    private static final float DRAG_RATE = 3;
+
+    private float mLastY = -1;
+
+    private boolean pullRefreshEnabled = true;
+
+    private boolean loadingMoreEnabled = true;
+
+    private boolean isLoadingData = false;
+
+    private boolean isNoMore = false;
+
+    private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
+
     private static List<Integer> sHeaderTypes = new ArrayList<>();//每个header必须有不同的type,不然滚动的时候顺序会变化
-    private int mPageCount = 0;
+
     //adapter没有数据的时候显示,类似于listView的emptyView
     private View mEmptyView;
+
     private View mFootView;
-    private final RecyclerView.AdapterDataObserver mDataObserver = new DataObserver();
+
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
+
     private RecyclerView.OnScrollListener onScrollListener;
+
+    private LoadingListener mLoadingListener;
+
+    private ArrowRefreshHeader mRefreshHeader;
+
+    private ArrayList<View> mHeaderViews = new ArrayList<>();
+
+    private WrapAdapter mWrapAdapter;
+
 
     public XRecyclerView(Context context) {
         this(context, null);
@@ -549,7 +570,7 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
-    public void setAddOnScrollListener(RecyclerView.OnScrollListener onScrollListener){
+    public void setAddOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
         this.onScrollListener = onScrollListener;
     }
 }

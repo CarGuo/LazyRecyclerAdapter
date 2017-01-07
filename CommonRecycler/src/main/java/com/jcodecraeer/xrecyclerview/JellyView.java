@@ -15,14 +15,14 @@ import android.util.Log;
 import android.view.View;
 
 
-public class JellyView extends View  implements BaseRefreshHeader{
+public class JellyView extends View implements BaseRefreshHeader {
     Path path;
 
     Paint paint;
 
     private int minimumHeight = 0;
 
-    private int jellyHeight =0;
+    private int jellyHeight = 0;
 
     public JellyView(Context context) {
         super(context);
@@ -90,19 +90,19 @@ public class JellyView extends View  implements BaseRefreshHeader{
 
 
     @Override
-    public void refreshComplete(){
+    public void refreshComplete() {
 
     }
 
     @Override
     public void onMove(float delta) {
-        jellyHeight = jellyHeight + (int)delta;
+        jellyHeight = jellyHeight + (int) delta;
         Log.i("jellyHeight", "delta = " + delta);
         this.invalidate();
     }
 
     @Override
     public boolean releaseAction() {
-       return false;
+        return false;
     }
 }
