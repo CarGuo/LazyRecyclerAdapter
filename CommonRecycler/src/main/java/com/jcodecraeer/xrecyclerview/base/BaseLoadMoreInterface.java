@@ -1,4 +1,4 @@
-package com.jcodecraeer.xrecyclerview;
+package com.jcodecraeer.xrecyclerview.base;
 
 /**
  * Created by guoshuyu on 2017/1/7.

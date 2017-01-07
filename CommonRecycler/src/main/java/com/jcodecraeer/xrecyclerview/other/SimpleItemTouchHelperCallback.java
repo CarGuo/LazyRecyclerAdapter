@@ -1,10 +1,12 @@
-package com.jcodecraeer.xrecyclerview;
+package com.jcodecraeer.xrecyclerview.other;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 /**
  * Created by jianghejie on 16/6/20.

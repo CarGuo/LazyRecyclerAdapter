@@ -7,11 +7,13 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
+import com.jcodecraeer.xrecyclerview.base.BaseLoadMoreFooter;
+import com.jcodecraeer.xrecyclerview.other.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.other.SimpleViewSwitcher;
 import com.jcodecraeer.xrecyclerview.progressindicator.AVLoadingIndicatorView;
 import com.shuyu.common.R;
 

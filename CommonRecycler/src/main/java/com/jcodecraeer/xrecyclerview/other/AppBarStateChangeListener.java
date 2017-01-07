@@ -1,4 +1,4 @@
-package com.jcodecraeer.xrecyclerview;
+package com.jcodecraeer.xrecyclerview.other;
 
 import android.support.design.widget.AppBarLayout;
 

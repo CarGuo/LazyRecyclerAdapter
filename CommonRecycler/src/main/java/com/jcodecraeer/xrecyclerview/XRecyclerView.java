@@ -13,6 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import com.jcodecraeer.xrecyclerview.base.BaseLoadMoreFooter;
+import com.jcodecraeer.xrecyclerview.base.BaseRefreshHeader;
+import com.jcodecraeer.xrecyclerview.other.AppBarStateChangeListener;
+import com.jcodecraeer.xrecyclerview.other.ProgressStyle;
+
 import java.util.ArrayList;
 import java.util.List;
 

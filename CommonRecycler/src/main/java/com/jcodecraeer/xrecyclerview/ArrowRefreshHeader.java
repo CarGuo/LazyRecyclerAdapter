@@ -15,6 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.jcodecraeer.xrecyclerview.base.BaseRefreshHeader;
+import com.jcodecraeer.xrecyclerview.other.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.other.SimpleViewSwitcher;
 import com.jcodecraeer.xrecyclerview.progressindicator.AVLoadingIndicatorView;
 import com.shuyu.common.R;
 
