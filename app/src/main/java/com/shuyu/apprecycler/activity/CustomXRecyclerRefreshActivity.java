@@ -16,6 +16,7 @@ import com.shuyu.apprecycler.Holder.TextHolder;
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
 import com.shuyu.apprecycler.utils.DataUtils;
+import com.shuyu.apprecycler.view.CustomRefreshHeader;
 import com.shuyu.common.CommonRecyclerAdapter;
 import com.shuyu.common.CommonRecyclerManager;
 import com.shuyu.common.listener.OnItemClickListener;
@@ -27,12 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * 使用CommonRecyclerAdapter实现多样式的recycler
- * 使用 XRecyclerView 实现上下拉更新
- * 瀑布流
- */
-public class StaggeredXRecyclerActivity extends AppCompatActivity {
+public class CustomXRecyclerRefreshActivity extends AppCompatActivity {
 
     @BindView(R.id.xRecycler)
     XRecyclerView xRecycler;
@@ -48,7 +44,7 @@ public class StaggeredXRecyclerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_staggered_xrecycler);
+        setContentView(R.layout.activity_custom_xrecycler_refresh);
 
         ButterKnife.bind(this);
 
@@ -69,7 +65,10 @@ public class StaggeredXRecyclerActivity extends AppCompatActivity {
         //是否屏蔽下拉
         //xRecycler.setPullRefreshEnabled(false);
         //上拉加载更多样式，也可以设置下拉
-        xRecycler.setLoadingMoreProgressStyle(ProgressStyle.SysProgress);
+        //xRecycler.setLoadingMoreProgressStyle(ProgressStyle.SysProgress);
+
+        xRecycler.setRefreshHeader(new CustomRefreshHeader(this));
+
         //设置管理器，关联布局与holder类名，不同id可以管理一个holder
         CommonRecyclerManager commonRecyclerManager = new CommonRecyclerManager();
         commonRecyclerManager.addType(ImageHolder.ID, ImageHolder.class.getName());

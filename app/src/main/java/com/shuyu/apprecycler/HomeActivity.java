@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.shuyu.apprecycler.activity.CustomRefreshActivity;
+import com.shuyu.apprecycler.activity.CustomXRecyclerRefreshActivity;
 import com.shuyu.apprecycler.activity.NormalActivity;
 import com.shuyu.apprecycler.activity.NormalXRecyclerActivity;
 import com.shuyu.apprecycler.activity.RefreshXRecyclerActivity;
@@ -80,7 +80,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             }
             case 6: {
-                Intent intent = new Intent(HomeActivity.this, CustomRefreshActivity.class);
+                Intent intent = new Intent(HomeActivity.this, CustomXRecyclerRefreshActivity.class);
                 startActivity(intent);
                 break;
             }

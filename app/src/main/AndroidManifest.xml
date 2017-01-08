@@ -23,11 +23,21 @@
         <activity
             android:name=".activity.SystemRefreshActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.StaggeredSystemRefreshActivity" />
-        <activity android:name=".activity.NormalXRecyclerActivity" />
-        <activity android:name=".activity.RefreshXRecyclerActivity" />
-        <activity android:name=".activity.StaggeredXRecyclerActivity" />
-        <activity android:name=".activity.CustomRefreshActivity"></activity>
+        <activity
+            android:name=".activity.StaggeredSystemRefreshActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NormalXRecyclerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RefreshXRecyclerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.StaggeredXRecyclerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CustomXRecyclerRefreshActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
