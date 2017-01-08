@@ -1,4 +1,4 @@
-## 通用RecylerAdapter，内置XRecyclerView，兼容上下拉与空页面，高复用，一个Adapter通用所有页面，支持动画，懒人专属
+## 通用RecylerAdapter，内置XRecyclerView，兼容上下拉与空页面，高复用，一个Adapter通用所有页面，支持动画，多种类型搭配。
 
 [![](https://jitpack.io/v/CarGuo/LazyRecyclerAdapter.svg)](https://jitpack.io/#CarGuo/LazyRecyclerAdapter)
 [![Build Status](https://travis-ci.org/CarGuo/CommonRecycler.svg?branch=master)](https://travis-ci.org/CarGuo/CommonRecycler)
@@ -15,7 +15,7 @@ allprojects {
 #### 在module下的build.gradle添加依赖
 ```
 dependencies {
-    compile 'com.github.CarGuo:LazyRecyclerAdapter:v1.0.3'
+    compile 'com.github.CarGuo:LazyRecyclerAdapter:v2.0.0'
 }
 
 ```
@@ -23,6 +23,8 @@ dependencies {
 ## [简书详解说明](http://www.jianshu.com/p/9c9aede9a19a)
 
 ### 目前wiki还没搭建起来，后面会把文档丰富好。
+
+### 新版本 2.0.0 优化了代码，修复了bug，更新了多种demo。
 
 ### QQ群，有兴趣的可以进来，无底线欢迎：174815284 。
 
