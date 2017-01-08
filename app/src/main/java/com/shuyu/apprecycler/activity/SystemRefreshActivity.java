@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.shuyu.apprecycler.Holder.ClickHolder;
 import com.shuyu.apprecycler.Holder.EmptyHolder;
@@ -18,6 +19,7 @@ import com.shuyu.apprecycler.utils.DataUtils;
 import com.shuyu.common.CommonRecyclerAdapter;
 import com.shuyu.common.CommonRecyclerManager;
 import com.shuyu.common.listener.LoadMoreScrollListener;
+import com.shuyu.common.listener.OnItemClickListener;
 import com.shuyu.common.model.RecyclerBaseModel;
 
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by guoshuyu on 2017/1/7.
- *
+ * <p>
  * 使用CommonRecyclerAdapter实现多样式的recycler
  * 系统的下拉刷新
  * CommonRecyclerAdapter的上拉加载更多
@@ -54,7 +56,7 @@ public class SystemRefreshActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.system_refresh_recycler_layout);
+        setContentView(R.layout.activity_system_refresh_recycler_layout);
         ButterKnife.bind(this);
         init();
         refresh();
@@ -126,10 +128,16 @@ public class SystemRefreshActivity extends AppCompatActivity {
                     }, 2000);
                 }
             }
-        }
+        });
 
-    );
-}
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(Context context, int position) {
+                //需要减去你的header和刷新的view的数量
+                Toast.makeText(context, "点击了！！　" + (position - 2), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     /**
      * dip转为PX

@@ -1,4 +1,4 @@
-package com.shuyu.apprecycler;
+package com.shuyu.apprecycler.fragment;
 
 
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import com.shuyu.apprecycler.Holder.EmptyHolder;
 import com.shuyu.apprecycler.Holder.MutilHolder;
+import com.shuyu.apprecycler.R;
+import com.shuyu.apprecycler.utils.DataUtils;
 import com.shuyu.common.CommonRecyclerAdapter;
 import com.shuyu.common.CommonRecyclerManager;
 import com.shuyu.common.listener.LoadMoreScrollListener;
@@ -117,30 +119,7 @@ public class ListFragment extends Fragment {
     }
 
     private void loadMore() {
-        List<RecyclerBaseModel> list = new ArrayList<>();
-        for (int i = 0; i < datas.size(); i++) {
-            RecyclerBaseModel recyclerBaseModel = datas.get(i);
-            RecyclerBaseModel newModel;
-            if (recyclerBaseModel instanceof ClickModel) {
-                newModel = new ClickModel();
-                ClickModel clickModel = (ClickModel) newModel;
-                clickModel.setResLayoutId(recyclerBaseModel.getResLayoutId());
-                clickModel.setBtnText("我就老按键哈哈哈哈！！！！！ " + i);
-                list.add(newModel);
-            } else if (recyclerBaseModel instanceof TextModel) {
-                newModel = new TextModel();
-                TextModel textModel = (TextModel) newModel;
-                textModel.setResLayoutId(recyclerBaseModel.getResLayoutId());
-                textModel.setText("我就老文本哈哈哈哈！！！！！ " + i);
-                list.add(newModel);
-            } else if (recyclerBaseModel instanceof ImageModel) {
-                newModel = new ImageModel();
-                ImageModel imageModel = (ImageModel) newModel;
-                imageModel.setResLayoutId(recyclerBaseModel.getResLayoutId());
-                imageModel.setResId(((ImageModel) recyclerBaseModel).getResId());
-                list.add(newModel);
-            }
-        }
+        List<RecyclerBaseModel> list = DataUtils.getLoadMoreData(datas);
         isLoadMore = false;
         adapter.addListData(list);
     }

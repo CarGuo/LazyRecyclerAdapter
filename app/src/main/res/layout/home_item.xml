@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingTop="10dp"
+    android:textStyle="bold"
+    android:padding="10dp"
     android:textColor="#999999">
 
 </TextView>

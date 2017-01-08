@@ -55,7 +55,6 @@ public class LoadingMoreFooter extends BaseLoadMoreFooter {
 
         addView(progressCon);
         mText = new TextView(getContext());
-        mText.setTextColor(Color.WHITE);
         mText.setText("正在加载...");
 
         LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

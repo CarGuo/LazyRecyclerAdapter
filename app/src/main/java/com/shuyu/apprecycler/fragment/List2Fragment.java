@@ -1,4 +1,4 @@
-package com.shuyu.apprecycler;
+package com.shuyu.apprecycler.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.other.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.shuyu.apprecycler.R;
+import com.shuyu.apprecycler.utils.DataUtils;
 import com.shuyu.common.CommonRecyclerAdapter;
 import com.shuyu.common.CommonRecyclerManager;
 import com.shuyu.common.listener.OnItemClickListener;
@@ -142,75 +144,7 @@ public class List2Fragment extends Fragment {
 
 
     private void refresh() {
-        List<RecyclerBaseModel> list = new ArrayList<>();
-
-        ImageModel imageModel = new ImageModel();
-        imageModel.setResLayoutId(ImageHolder.ID);
-        imageModel.setResId(R.drawable.a1);
-        list.add(imageModel);
-
-        TextModel textModel = new TextModel();
-        textModel.setResLayoutId(TextHolder.ID);
-        textModel.setText("你这个老司机，说好的文本呢1");
-        list.add(textModel);
-
-        imageModel = new ImageModel();
-        imageModel.setResLayoutId(ImageHolder.ID);
-        imageModel.setResId(R.drawable.a2);
-        list.add(imageModel);
-
-        ClickModel clickModel = new ClickModel();
-        clickModel.setResLayoutId(ClickHolder.ID);
-        clickModel.setBtnText("我是老按键，按啊按啊按啊····");
-        list.add(clickModel);
-
-
-        textModel = new TextModel();
-        textModel.setResLayoutId(TextHolder.ID);
-        textModel.setText("你这个老司机，说好的文本呢1");
-        list.add(textModel);
-
-        imageModel = new ImageModel();
-        imageModel.setResLayoutId(ImageHolder.ID);
-        imageModel.setResId(R.drawable.a1);
-        list.add(imageModel);
-
-        clickModel = new ClickModel();
-        clickModel.setResLayoutId(ClickHolder.ID);
-        clickModel.setBtnText("我是老按键，按啊按啊按啊····");
-        list.add(clickModel);
-
-        imageModel = new ImageModel();
-        imageModel.setResLayoutId(ImageHolder.ID);
-        imageModel.setResId(R.drawable.a2);
-        list.add(imageModel);
-
-        textModel = new TextModel();
-        textModel.setResLayoutId(TextHolder.ID);
-        textModel.setText("你这个老司机，说好的文本呢1");
-        list.add(textModel);
-
-        imageModel = new ImageModel();
-        imageModel.setResLayoutId(ImageHolder.ID);
-        imageModel.setResId(R.drawable.a1);
-        list.add(imageModel);
-
-
-        clickModel = new ClickModel();
-        clickModel.setResLayoutId(ClickHolder.ID);
-        clickModel.setBtnText("我是老按键，按啊按啊按啊····");
-        list.add(clickModel);
-
-
-        textModel = new TextModel();
-        textModel.setResLayoutId(TextHolder.ID);
-        textModel.setText("你这个老司机，说好的文本呢1");
-        list.add(textModel);
-
-        clickModel = new ClickModel();
-        clickModel.setResLayoutId(ClickHolder.ID);
-        clickModel.setBtnText("我是老按键，按啊按啊按啊····");
-        list.add(clickModel);
+        List<RecyclerBaseModel> list = DataUtils.getRefreshData();
         //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized (lock) {
@@ -222,30 +156,7 @@ public class List2Fragment extends Fragment {
     }
 
     private void loadMore() {
-        List<RecyclerBaseModel> list = new ArrayList<>();
-        for (int i = 0; i < dataList.size(); i++) {
-            RecyclerBaseModel recyclerBaseModel = dataList.get(i);
-            RecyclerBaseModel newModel;
-            if (recyclerBaseModel instanceof ClickModel) {
-                newModel = new ClickModel();
-                ClickModel clickModel = (ClickModel) newModel;
-                clickModel.setResLayoutId(recyclerBaseModel.getResLayoutId());
-                clickModel.setBtnText("我就老按键哈哈哈哈！！！！！ " + i);
-                list.add(newModel);
-            } else if (recyclerBaseModel instanceof TextModel) {
-                newModel = new TextModel();
-                TextModel textModel = (TextModel) newModel;
-                textModel.setResLayoutId(recyclerBaseModel.getResLayoutId());
-                textModel.setText("我就老文本哈哈哈哈！！！！！ " + i);
-                list.add(newModel);
-            } else if (recyclerBaseModel instanceof ImageModel) {
-                newModel = new ImageModel();
-                ImageModel imageModel = (ImageModel) newModel;
-                imageModel.setResLayoutId(recyclerBaseModel.getResLayoutId());
-                imageModel.setResId(((ImageModel) recyclerBaseModel).getResId());
-                list.add(newModel);
-            }
-        }
+        List<RecyclerBaseModel> list = DataUtils.getLoadMoreData(dataList);
         //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized (lock) {

@@ -8,7 +8,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait">
@@ -18,15 +17,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.NormalActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.SystemRefreshActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".activity.StaggeredSystemRefreshActivity" />
+        <activity android:name=".activity.NormalXRecyclerActivity" />
+        <activity android:name=".activity.RefreshXRecyclerActivity" />
+        <activity android:name=".activity.StaggeredXRecyclerActivity" />
+        <activity android:name=".activity.CustomRefreshActivity"></activity>
     </application>
 
 </manifest>

@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.shuyu.apprecycler.activity.CustomRefreshActivity;
 import com.shuyu.apprecycler.activity.NormalActivity;
+import com.shuyu.apprecycler.activity.NormalXRecyclerActivity;
+import com.shuyu.apprecycler.activity.RefreshXRecyclerActivity;
+import com.shuyu.apprecycler.activity.StaggeredSystemRefreshActivity;
+import com.shuyu.apprecycler.activity.StaggeredXRecyclerActivity;
 import com.shuyu.apprecycler.activity.SystemRefreshActivity;
+import com.shuyu.apprecycler.activity.ViewPagerActivity;
 import com.shuyu.apprecycler.utils.DataUtils;
 
 import butterknife.BindView;
@@ -51,6 +56,36 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             case 1: {
                 Intent intent = new Intent(HomeActivity.this, SystemRefreshActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case 2: {
+                Intent intent = new Intent(HomeActivity.this, StaggeredSystemRefreshActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case 3: {
+                Intent intent = new Intent(HomeActivity.this, NormalXRecyclerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case 4: {
+                Intent intent = new Intent(HomeActivity.this, RefreshXRecyclerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case 5: {
+                Intent intent = new Intent(HomeActivity.this, StaggeredXRecyclerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case 6: {
+                Intent intent = new Intent(HomeActivity.this, CustomRefreshActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case 7: {
+                Intent intent = new Intent(HomeActivity.this, ViewPagerActivity.class);
                 startActivity(intent);
                 break;
             }

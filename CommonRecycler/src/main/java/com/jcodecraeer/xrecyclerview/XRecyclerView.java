@@ -333,7 +333,9 @@ public class XRecyclerView extends RecyclerView {
         }
 
         public boolean isHeader(int position) {
-            return position >= 1 && position < mHeaderViews.size() + 1;
+            int startHeader = (pullRefreshEnabled ? 1 : 0);
+            int endHeader =  (pullRefreshEnabled ? mHeaderViews.size() + 1: mHeaderViews.size());
+            return position >= startHeader && position < endHeader;
         }
 
         public boolean isFooter(int position) {
@@ -393,7 +395,11 @@ public class XRecyclerView extends RecyclerView {
                 }
             } else {
                 if (adapter != null) {
-                    return getHeadersCount() + adapter.getItemCount() + 1;
+                    if (pullRefreshEnabled) {
+                        return getHeadersCount() + adapter.getItemCount() + 1;
+                    } else {
+                        return getHeadersCount() + adapter.getItemCount();
+                    }
                 } else {
                     return getHeadersCount() + 1;
                 }
@@ -410,7 +416,9 @@ public class XRecyclerView extends RecyclerView {
                 return TYPE_REFRESH_HEADER;
             }
             if (isHeader(position)) {
-                position = position - 1;
+                if (pullRefreshEnabled) {
+                    position = position - 1;
+                }
                 return sHeaderTypes.get(position);
             }
             if (isFooter(position)) {

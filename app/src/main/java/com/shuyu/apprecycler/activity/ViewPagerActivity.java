@@ -1,4 +1,4 @@
-package com.shuyu.apprecycler;
+package com.shuyu.apprecycler.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,7 +7,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.shuyu.apprecycler.Holder.MutilHolder;
+import com.shuyu.apprecycler.fragment.List2Fragment;
+import com.shuyu.apprecycler.fragment.ListFragment;
 import com.shuyu.apprecycler.Model.MutilModel;
+import com.shuyu.apprecycler.R;
 import com.shuyu.common.model.RecyclerBaseModel;
 import com.shuyu.apprecycler.Holder.ClickHolder;
 import com.shuyu.apprecycler.Holder.ImageHolder;
@@ -24,7 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class ViewPagerActivity extends AppCompatActivity {
 
     @BindView(R.id.layouttabStrip)
     PagerSlidingTabStrip tabStrip;
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_viewpager);
         ButterKnife.bind(this);
 
         allList();
