@@ -1,7 +1,7 @@
 ## 通用RecylerAdapter，内置XRecyclerView，兼容上下拉与空页面，高复用，一个Adapter通用所有页面，支持动画，多种类型搭配。
 
 [![](https://jitpack.io/v/CarGuo/LazyRecyclerAdapter.svg)](https://jitpack.io/#CarGuo/LazyRecyclerAdapter)
-[![Build Status](https://travis-ci.org/CarGuo/CommonRecycler.svg?branch=master)](https://travis-ci.org/CarGuo/CommonRecycler)
+[![Build Status](https://travis-ci.org/CarGuo/LazyRecyclerAdapter.svg?branch=master)](https://travis-ci.org/CarGuo/LazyRecyclerAdapter)
 
 #### 在你的项目project下的build.gradle添加
 ```
