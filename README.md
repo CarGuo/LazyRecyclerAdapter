@@ -1,4 +1,4 @@
-### 项目拥有一个通过的RecyclerAdapter，支持一个列表多种Item类型，让你无需维护和编写任何Adapter代码，参考项目配置逻辑，你可以快速集成拥有点击，动画，自定义刷新，自定义上拉，自定义空页面显示等多种配置模式的RecyclerView效果。高复用，你只需要编写维护Holder代码，通过Model来管理你的Holder显示，一个Holder可处理多种布局，存在多个RecyclerView逻辑里。
+### 项目拥有一个通用的RecyclerAdapter，支持一个列表多种Item类型，让你无需维护和编写任何Adapter代码，参考项目配置逻辑，你可以快速集成拥有点击，动画，自定义刷新，自定义上拉，自定义空页面显示等多种配置模式的RecyclerView效果。高复用，你只需要编写维护Holder代码，通过Model来管理你的Holder显示，一个Holder可处理多种布局，存在多个RecyclerView逻辑里。
 
 [![](https://jitpack.io/v/CarGuo/LazyRecyclerAdapter.svg)](https://jitpack.io/#CarGuo/LazyRecyclerAdapter)
 [![Build Status](https://travis-ci.org/CarGuo/LazyRecyclerAdapter.svg?branch=master)](https://travis-ci.org/CarGuo/LazyRecyclerAdapter)
