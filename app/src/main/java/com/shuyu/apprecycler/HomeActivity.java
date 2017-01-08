@@ -12,12 +12,14 @@ import android.widget.ListView;
 
 import com.shuyu.apprecycler.activity.CustomXRecyclerRefreshActivity;
 import com.shuyu.apprecycler.activity.NormalActivity;
+import com.shuyu.apprecycler.activity.NormalEmptyActivity;
 import com.shuyu.apprecycler.activity.NormalXRecyclerActivity;
 import com.shuyu.apprecycler.activity.RefreshXRecyclerActivity;
 import com.shuyu.apprecycler.activity.StaggeredSystemRefreshActivity;
 import com.shuyu.apprecycler.activity.StaggeredXRecyclerActivity;
 import com.shuyu.apprecycler.activity.SystemRefreshActivity;
 import com.shuyu.apprecycler.activity.ViewPagerActivity;
+import com.shuyu.apprecycler.activity.XRecyclerEmptyActivity;
 import com.shuyu.apprecycler.utils.DataUtils;
 
 import butterknife.BindView;
@@ -86,6 +88,16 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             case 7: {
                 Intent intent = new Intent(HomeActivity.this, ViewPagerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case 8: {
+                Intent intent = new Intent(HomeActivity.this, NormalEmptyActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case 9: {
+                Intent intent = new Intent(HomeActivity.this, XRecyclerEmptyActivity.class);
                 startActivity(intent);
                 break;
             }

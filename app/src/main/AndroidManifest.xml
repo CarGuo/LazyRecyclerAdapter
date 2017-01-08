@@ -38,6 +38,15 @@
         <activity
             android:name=".activity.CustomXRecyclerRefreshActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ViewPagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NormalEmptyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.XRecyclerEmptyActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

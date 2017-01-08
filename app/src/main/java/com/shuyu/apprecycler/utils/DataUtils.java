@@ -29,6 +29,8 @@ public class DataUtils {
         list.add("瀑布流 + XRecycler + 上下拉");
         list.add("瀑布流 + XRecycler + 自定义上下拉");
         list.add("ViewPager下");
+        list.add("adapter 实现空页面");
+        list.add("XRecycler 实现空页面");
 
         return list;
     }

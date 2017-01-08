@@ -2,7 +2,6 @@ package com.shuyu.apprecycler.view;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.RotateDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.Gravity;

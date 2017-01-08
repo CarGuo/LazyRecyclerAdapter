@@ -16,8 +16,6 @@ import com.shuyu.apprecycler.Holder.TextHolder;
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
 import com.shuyu.apprecycler.utils.DataUtils;
-import com.shuyu.apprecycler.view.CustomLoadMoreFooter;
-import com.shuyu.apprecycler.view.CustomRefreshHeader;
 import com.shuyu.common.CommonRecyclerAdapter;
 import com.shuyu.common.CommonRecyclerManager;
 import com.shuyu.common.listener.OnItemClickListener;
@@ -30,14 +28,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 使用CommonRecyclerAdapter实现多样式的recycler
- * 使用 XRecyclerView 实现自定义上下拉刷新
- * 瀑布流
+ * Created by guoshuyu on 2017/1/8.
+ * 利用 XRecyclerView 实现空页面
  */
-public class CustomXRecyclerRefreshActivity extends AppCompatActivity {
+public class XRecyclerEmptyActivity extends AppCompatActivity {
 
     @BindView(R.id.xRecycler)
     XRecyclerView xRecycler;
+
+    @BindView(R.id.emptyView)
+    View emptyView;
 
     StaggeredGridLayoutManager staggeredGridLayoutManager;
 
@@ -50,13 +50,11 @@ public class CustomXRecyclerRefreshActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_xrecycler_refresh);
+        setContentView(R.layout.activity_xrecycer_empty);
 
         ButterKnife.bind(this);
 
         initView();
-
-        refresh();
     }
 
 
@@ -71,24 +69,19 @@ public class CustomXRecyclerRefreshActivity extends AppCompatActivity {
         //是否屏蔽下拉
         //xRecycler.setPullRefreshEnabled(false);
         //上拉加载更多样式，也可以设置下拉
-        //xRecycler.setLoadingMoreProgressStyle(ProgressStyle.SysProgress);
-
-        xRecycler.setRefreshHeader(new CustomRefreshHeader(this));
-        xRecycler.setFootView(new CustomLoadMoreFooter(this));
-
+        xRecycler.setLoadingMoreProgressStyle(ProgressStyle.SysProgress);
         //设置管理器，关联布局与holder类名，不同id可以管理一个holder
         CommonRecyclerManager commonRecyclerManager = new CommonRecyclerManager();
         commonRecyclerManager.addType(ImageHolder.ID, ImageHolder.class.getName());
         commonRecyclerManager.addType(TextHolder.ID, TextHolder.class.getName());
         commonRecyclerManager.addType(ClickHolder.ID, ClickHolder.class.getName());
+
+        //添加空
+        xRecycler.setEmptyView(emptyView);
+
         //初始化通用管理器
         commonRecyclerAdapter = new CommonRecyclerAdapter(this, commonRecyclerManager, dataList);
         xRecycler.setAdapter(commonRecyclerAdapter);
-
-        //添加头部
-        View header = LayoutInflater.from(this).inflate(R.layout.layout_header, null);
-        //添加头部
-        xRecycler.addHeaderView(header);
 
 
         //本身也支持设置空局部
