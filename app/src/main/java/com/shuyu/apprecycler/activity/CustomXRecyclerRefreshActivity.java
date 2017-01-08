@@ -16,6 +16,7 @@ import com.shuyu.apprecycler.Holder.TextHolder;
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
 import com.shuyu.apprecycler.utils.DataUtils;
+import com.shuyu.apprecycler.view.CustomLoadMoreFooter;
 import com.shuyu.apprecycler.view.CustomRefreshHeader;
 import com.shuyu.common.CommonRecyclerAdapter;
 import com.shuyu.common.CommonRecyclerManager;
@@ -68,6 +69,7 @@ public class CustomXRecyclerRefreshActivity extends AppCompatActivity {
         //xRecycler.setLoadingMoreProgressStyle(ProgressStyle.SysProgress);
 
         xRecycler.setRefreshHeader(new CustomRefreshHeader(this));
+        xRecycler.setFootView(new CustomLoadMoreFooter(this));
 
         //设置管理器，关联布局与holder类名，不同id可以管理一个holder
         CommonRecyclerManager commonRecyclerManager = new CommonRecyclerManager();
