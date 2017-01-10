@@ -61,7 +61,8 @@ public class RefreshXRecyclerActivity extends AppCompatActivity {
         //设置瀑布流管理器
         xRecycler.setLayoutManager(linearLayoutManager);
         //添加分割线，注意位置是会从下拉那个Item的实际位置开始的，所以如果支持下拉需要屏蔽下拉和HeaderView
-        xRecycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST));
+        //因为集成了下拉item，所以需要从下拉item之后开始计算分割
+        xRecycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST, 1));
 
         //是否屏蔽下拉
         //xRecycler.setPullRefreshEnabled(false);

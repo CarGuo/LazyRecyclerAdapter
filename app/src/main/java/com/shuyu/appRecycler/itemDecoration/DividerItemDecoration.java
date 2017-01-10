@@ -47,11 +47,13 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
                 }
             }
         } else {
-            outRect.left = space;
-            outRect.bottom = space * 2;
-            outRect.right = space;
-            if (parent.getChildAdapterPosition(view) == startPosition) {
-                outRect.top = space;
+            if (parent.getChildAdapterPosition(view) >= startPosition){
+                outRect.left = space;
+                outRect.bottom = space * 2;
+                outRect.right = space;
+                if (parent.getChildAdapterPosition(view) == startPosition) {
+                    outRect.top = space * 2;
+                }
             }
         }
     }
