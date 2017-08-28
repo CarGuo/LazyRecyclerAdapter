@@ -50,6 +50,9 @@
         <activity
             android:name=".activity.GridXRecyclerActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GridSystemRefreshActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

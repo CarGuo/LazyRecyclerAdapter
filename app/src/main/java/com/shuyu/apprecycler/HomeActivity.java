@@ -11,6 +11,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.shuyu.apprecycler.activity.CustomXRecyclerRefreshActivity;
+import com.shuyu.apprecycler.activity.GridSystemRefreshActivity;
 import com.shuyu.apprecycler.activity.GridXRecyclerActivity;
 import com.shuyu.apprecycler.activity.NormalActivity;
 import com.shuyu.apprecycler.activity.NormalEmptyActivity;
@@ -104,6 +105,11 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             case 10: {
                 Intent intent = new Intent(HomeActivity.this, GridXRecyclerActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case 11: {
+                Intent intent = new Intent(HomeActivity.this, GridSystemRefreshActivity.class);
                 startActivity(intent);
                 break;
             }
