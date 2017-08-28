@@ -31,6 +31,7 @@ public class DataUtils {
         list.add("ViewPager下");
         list.add("adapter 实现空页面");
         list.add("XRecycler 实现空页面");
+        list.add("Grid + XRecycler + 上下拉");
 
         return list;
     }

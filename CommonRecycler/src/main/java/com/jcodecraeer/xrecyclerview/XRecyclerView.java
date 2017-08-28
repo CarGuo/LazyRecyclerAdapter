@@ -449,6 +449,7 @@ public class XRecyclerView extends RecyclerView {
         @Override
         public void onAttachedToRecyclerView(RecyclerView recyclerView) {
             super.onAttachedToRecyclerView(recyclerView);
+            adapter.onAttachedToRecyclerView(recyclerView);
             RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
             if (manager instanceof GridLayoutManager) {
                 final GridLayoutManager gridManager = ((GridLayoutManager) manager);
@@ -460,7 +461,6 @@ public class XRecyclerView extends RecyclerView {
                     }
                 });
             }
-            adapter.onAttachedToRecyclerView(recyclerView);
         }
 
         @Override

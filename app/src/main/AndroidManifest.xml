@@ -47,6 +47,9 @@
         <activity
             android:name=".activity.XRecyclerEmptyActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GridXRecyclerActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
