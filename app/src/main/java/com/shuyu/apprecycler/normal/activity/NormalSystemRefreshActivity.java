@@ -77,7 +77,12 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
                     @Override
                     public int getCurrentDataLayoutId(Object object, Class classType, int position, List<Integer> ids) {
                         if (object instanceof MutliModel && ids.size() > 1) {
-                            return ids.get(position % 2);
+                            MutliModel mutliModel = (MutliModel) object;
+                            if (mutliModel.getType() > 1) {
+                                return MutliHolder.ID;
+                            } else {
+                                return ImageHolder.ID;
+                            }
                         }
                         return ids.get(ids.size() - 1);
                     }
@@ -153,6 +158,7 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
         return (int) (dipValue * fontScale + 0.5f);
     }
 
+    @SuppressWarnings("unchecked")
     private void refresh() {
         List list = DataUtils.getRefreshData();
 
@@ -160,25 +166,28 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
 
         mutliModel.setResId(R.drawable.a1);
         mutliModel.setRes2(R.drawable.a2);
+        mutliModel.setType(1);
         list.add(0, mutliModel);
 
         mutliModel = new MutliModel();
 
         mutliModel.setResId(R.drawable.a1);
         mutliModel.setRes2(R.drawable.a2);
+        mutliModel.setType(2);
         list.add(1, mutliModel);
 
         mutliModel = new MutliModel();
 
         mutliModel.setResId(R.drawable.a1);
         mutliModel.setRes2(R.drawable.a2);
+        mutliModel.setType(1);
         list.add(4, mutliModel);
 
 
         mutliModel = new MutliModel();
-
         mutliModel.setResId(R.drawable.a1);
         mutliModel.setRes2(R.drawable.a2);
+        mutliModel.setType(2);
         list.add(7, mutliModel);
 
         //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
