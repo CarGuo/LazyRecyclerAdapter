@@ -23,7 +23,7 @@
         android:layout_below="@+id/layouttabStrip"
         android:layout_marginTop="-50dp" />
 
-    <com.shuyu.apprecycler.view.PagerSlidingTabStrip
+    <com.shuyu.apprecycler.special.view.PagerSlidingTabStrip
         android:id="@+id/layouttabStrip"
         android:layout_width="match_parent"
         android:layout_height="50dp"

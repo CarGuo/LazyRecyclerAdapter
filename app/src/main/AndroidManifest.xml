@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".HomeActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,45 +18,50 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.NormalActivity"
+            android:name=".special.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SystemRefreshActivity"
+            android:name=".special.activity.NormalActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.StaggeredSystemRefreshActivity"
+            android:name=".special.activity.SystemRefreshActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.NormalXRecyclerActivity"
+            android:name=".special.activity.StaggeredSystemRefreshActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.RefreshXRecyclerActivity"
+            android:name=".special.activity.NormalXRecyclerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.StaggeredXRecyclerActivity"
+            android:name=".special.activity.RefreshXRecyclerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.CustomXRecyclerRefreshActivity"
+            android:name=".special.activity.StaggeredXRecyclerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ViewPagerActivity"
+            android:name=".special.activity.CustomXRecyclerRefreshActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.NormalEmptyActivity"
+            android:name=".special.activity.ViewPagerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.XRecyclerEmptyActivity"
+            android:name=".special.activity.NormalEmptyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.GridXRecyclerActivity"
+            android:name=".special.activity.XRecyclerEmptyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.GridSystemRefreshActivity"
+            android:name=".special.activity.GridXRecyclerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".special.activity.GridSystemRefreshActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".normal.activity.NormalSystemRefreshActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".normal.NormalHomeActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
