@@ -293,7 +293,7 @@ public class NormalCommonRecyclerAdapter extends RecyclerView.Adapter {
         //返回需要显示的ID
         Object object = dataList.get(position);
         List<Integer> modelToId = normalAdapterManager.getModelToId().get(object.getClass().getName());
-        //todo 判断list是不是空的
+        //todo 判断list是不是空的,返回一种空类型，对应holder 创建提醒用户
         int layoutId = modelToId.get(modelToId.size() - 1);
         if (normalAdapterManager.getNormalBindDataChooseListener() != null && modelToId.size() > 1) {
             layoutId = normalAdapterManager.getNormalBindDataChooseListener().

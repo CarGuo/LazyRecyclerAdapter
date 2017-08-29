@@ -1,6 +1,7 @@
 package com.shuyu.common.normal;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import java.util.List;
  */
 
 public class NormalAdapterManager {
+
+    private final String TAG = NormalAdapterManager.class.getName();
 
     //根据model类名绑定layoutId
     private HashMap<String, List<Integer>> modelToId = new HashMap<>();
@@ -41,14 +44,15 @@ public class NormalAdapterManager {
     //没有数据的holder
     private Class<? extends NormalRecyclerBaseHolder> noDataHolder;
 
-    //一个model对应多种Holder的数据的筛选
+    //一个model对应多种Holder的数据的筛选，不设置默认使用最后一个
     private NormalBindDataChooseListener normalBindDataChooseListener;
 
     /**
      * 绑定加载更多模块显示
-     * @param modelClass 数据实体类名
-     * @param layoutId 布局id
-     * @param holderClass holder类名
+     *
+     * @param modelClass  数据实体类名，一个model可以对用多个布局和Holder
+     * @param layoutId    布局id，一个manager中，一个id只能对应一个holder。
+     * @param holderClass holder类名，一个manager中，一个holder只能对应一个id。
      */
     public NormalAdapterManager bind(Class modelClass, int layoutId, Class<? extends NormalRecyclerBaseHolder> holderClass) {
 
@@ -65,14 +69,17 @@ public class NormalAdapterManager {
         }
         if (!idToHolder.containsKey(layoutId)) {
             idToHolder.put(layoutId, holderClass);
+        } else {
+            Log.e(TAG, "*******************layoutId had bind Holder******************* \n" + holderClass.getName());
         }
         return this;
     }
 
     /**
      * 绑定空数据显示
+     *
      * @param noDataModel 数据实体
-     * @param layoutId 布局id
+     * @param layoutId    布局id
      * @param holderClass holder类名
      */
     public NormalAdapterManager bindEmpty(Object noDataModel, int layoutId, Class<NormalRecyclerBaseHolder> holderClass) {
@@ -84,9 +91,10 @@ public class NormalAdapterManager {
 
     /**
      * 绑定加载更多模块显示
+     *
      * @param loadMoreModel 数据实体
-     * @param layoutId 布局id
-     * @param holderClass holder类名
+     * @param layoutId      布局id
+     * @param holderClass   holder类名
      */
     public NormalAdapterManager bindLoadMore(Object loadMoreModel, int layoutId, Class<? extends NormalLoadMoreHolder> holderClass) {
         loadmoreId = layoutId;
@@ -97,6 +105,7 @@ public class NormalAdapterManager {
 
     /**
      * 一个model对应多种Holder的数据的筛选回调
+     * 不设置默认使用最后一个
      */
     public NormalAdapterManager bingChooseListener(NormalBindDataChooseListener listener) {
         normalBindDataChooseListener = listener;
@@ -170,6 +179,7 @@ public class NormalAdapterManager {
         }
         return null;
     }
+
     /**
      * 创建空数据的holder
      */
@@ -185,6 +195,7 @@ public class NormalAdapterManager {
         }
         return null;
     }
+
     /**
      * 创建加载更多的holder
      */

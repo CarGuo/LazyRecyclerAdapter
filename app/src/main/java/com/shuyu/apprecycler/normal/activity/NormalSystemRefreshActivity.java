@@ -67,6 +67,8 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
 
         NormalAdapterManager normalAdapterManager = new NormalAdapterManager();
 
+        //注意，一个manager中，一个id只能绑定一个holder
+        //一个model class可以绑定多对id + Holder
         normalAdapterManager.bind(TextModel.class, TextHolder.ID, TextHolder.class)
                 .bind(ImageModel.class, ImageHolder.ID, ImageHolder.class)
                 .bind(MutliModel.class, ImageHolder.ID, ImageHolder.class)
