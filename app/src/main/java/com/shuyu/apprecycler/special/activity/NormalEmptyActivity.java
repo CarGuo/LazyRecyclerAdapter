@@ -16,7 +16,7 @@ import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
 import com.shuyu.common.CommonRecyclerAdapter;
 import com.shuyu.common.CommonRecyclerManager;
-import com.shuyu.listener.OnItemClickListener;
+import com.shuyu.common.listener.OnItemClickListener;
 import com.shuyu.common.model.RecyclerBaseModel;
 
 import java.util.ArrayList;

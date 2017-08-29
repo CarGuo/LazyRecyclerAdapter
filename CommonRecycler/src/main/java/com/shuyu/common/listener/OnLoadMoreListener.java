@@ -1,4 +1,4 @@
-package com.shuyu.listener;
+package com.shuyu.common.listener;
 
 
 public interface OnLoadMoreListener {

@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.shuyu.listener.OnItemClickListener;
-import com.shuyu.listener.OnItemLongClickListener;
+import com.shuyu.normal.listener.OnItemClickListener;
+import com.shuyu.normal.listener.OnItemLongClickListener;
 
 import java.util.List;
 

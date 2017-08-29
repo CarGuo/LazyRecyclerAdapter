@@ -21,7 +21,7 @@ import com.shuyu.apprecycler.normal.model.ImageModel;
 import com.shuyu.apprecycler.normal.model.MutliModel;
 import com.shuyu.apprecycler.normal.model.TextModel;
 import com.shuyu.apprecycler.normal.utils.DataUtils;
-import com.shuyu.listener.OnItemClickListener;
+import com.shuyu.normal.listener.OnItemClickListener;
 import com.shuyu.normal.NormalAdapterManager;
 import com.shuyu.normal.NormalCommonRecyclerAdapter;
 

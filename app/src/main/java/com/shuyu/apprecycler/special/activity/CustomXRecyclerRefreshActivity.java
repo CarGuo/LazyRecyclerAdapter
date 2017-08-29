@@ -19,7 +19,7 @@ import com.shuyu.apprecycler.special.view.CustomLoadMoreFooter;
 import com.shuyu.apprecycler.special.view.CustomRefreshHeader;
 import com.shuyu.common.CommonRecyclerAdapter;
 import com.shuyu.common.CommonRecyclerManager;
-import com.shuyu.listener.OnItemClickListener;
+import com.shuyu.common.listener.OnItemClickListener;
 import com.shuyu.common.model.RecyclerBaseModel;
 
 import java.util.ArrayList;

@@ -20,7 +20,7 @@ import com.shuyu.apprecycler.normal.model.TextModel;
 import com.shuyu.apprecycler.normal.utils.DataUtils;
 import com.shuyu.apprecycler.special.view.CustomLoadMoreFooter;
 import com.shuyu.apprecycler.special.view.CustomRefreshHeader;
-import com.shuyu.listener.OnItemClickListener;
+import com.shuyu.normal.listener.OnItemClickListener;
 import com.shuyu.normal.NormalAdapterManager;
 import com.shuyu.normal.NormalCommonRecyclerAdapter;
 

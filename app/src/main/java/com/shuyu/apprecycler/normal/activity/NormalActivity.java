@@ -11,7 +11,6 @@ import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
 import com.shuyu.apprecycler.normal.holder.ClickHolder;
 import com.shuyu.apprecycler.normal.holder.ImageHolder;
-import com.shuyu.apprecycler.normal.holder.LoadMoreHolder;
 import com.shuyu.apprecycler.normal.holder.MutliHolder;
 import com.shuyu.apprecycler.normal.holder.NoDataHolder;
 import com.shuyu.apprecycler.normal.holder.TextHolder;
@@ -20,7 +19,7 @@ import com.shuyu.apprecycler.normal.model.ImageModel;
 import com.shuyu.apprecycler.normal.model.MutliModel;
 import com.shuyu.apprecycler.normal.model.TextModel;
 import com.shuyu.apprecycler.normal.utils.DataUtils;
-import com.shuyu.listener.OnItemClickListener;
+import com.shuyu.normal.listener.OnItemClickListener;
 import com.shuyu.normal.NormalAdapterManager;
 import com.shuyu.normal.NormalCommonRecyclerAdapter;
 

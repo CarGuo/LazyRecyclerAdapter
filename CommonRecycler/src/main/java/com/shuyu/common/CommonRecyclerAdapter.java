@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import com.shuyu.common.holder.LoadMoreHolder;
 import com.shuyu.common.holder.NoDataHolder;
-import com.shuyu.listener.OnItemClickListener;
-import com.shuyu.listener.OnItemLongClickListener;
+import com.shuyu.common.listener.OnItemClickListener;
+import com.shuyu.common.listener.OnItemLongClickListener;
 import com.shuyu.common.model.LoadMoreModel;
 import com.shuyu.common.model.RecyclerBaseModel;
 
