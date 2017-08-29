@@ -21,7 +21,7 @@ import com.shuyu.apprecycler.bind.activity.StaggeredSystemRefreshActivity;
 import com.shuyu.apprecycler.bind.activity.StaggeredXRecyclerActivity;
 import com.shuyu.apprecycler.bind.activity.SystemRefreshActivity;
 import com.shuyu.apprecycler.bind.activity.XRecyclerEmptyActivity;
-import com.shuyu.apprecycler.bind.utils.DataUtils;
+import com.shuyu.apprecycler.bind.utils.BindDataUtils;
 
 /**
  * Created by guoshuyu on 2017/8/29.
@@ -40,7 +40,7 @@ public class NormalHomeActivity extends AppCompatActivity implements ListView.On
 
         homeList.setOnItemClickListener(this);
 
-        ListAdapter listAdapter = new ArrayAdapter<>(this, R.layout.home_item, DataUtils.getHomeList());
+        ListAdapter listAdapter = new ArrayAdapter<>(this, R.layout.home_item, BindDataUtils.getHomeList());
 
         homeList.setAdapter(listAdapter);
 

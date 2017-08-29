@@ -13,7 +13,7 @@ import java.util.List;
  * Created by guoshuyu on 2017/1/7.
  */
 
-public class DataUtils {
+public class BindDataUtils {
 
     public static List<String> getHomeList() {
         List<String> list = new ArrayList<>();

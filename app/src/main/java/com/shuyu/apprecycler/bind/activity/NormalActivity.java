@@ -18,7 +18,7 @@ import com.shuyu.apprecycler.bind.model.ClickModel;
 import com.shuyu.apprecycler.bind.model.ImageModel;
 import com.shuyu.apprecycler.bind.model.MutliModel;
 import com.shuyu.apprecycler.bind.model.TextModel;
-import com.shuyu.apprecycler.bind.utils.DataUtils;
+import com.shuyu.apprecycler.bind.utils.BindDataUtils;
 import com.shuyu.bind.NormalBindRecyclerAdapter;
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.NormalBindAdapterManager;
@@ -93,7 +93,7 @@ public class NormalActivity extends AppCompatActivity {
 
 
     public void initDatas() {
-        List list = DataUtils.getRefreshData();
+        List list = BindDataUtils.getRefreshData();
         this.datas = list;
         if (adapter != null) {
             adapter.setListData(datas);

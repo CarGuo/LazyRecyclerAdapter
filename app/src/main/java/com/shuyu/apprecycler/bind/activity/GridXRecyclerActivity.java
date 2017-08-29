@@ -20,7 +20,7 @@ import com.shuyu.apprecycler.bind.model.ClickModel;
 import com.shuyu.apprecycler.bind.model.ImageModel;
 import com.shuyu.apprecycler.bind.model.MutliModel;
 import com.shuyu.apprecycler.bind.model.TextModel;
-import com.shuyu.apprecycler.bind.utils.DataUtils;
+import com.shuyu.apprecycler.bind.utils.BindDataUtils;
 import com.shuyu.bind.NormalBindRecyclerAdapter;
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.NormalBindAdapterManager;
@@ -138,7 +138,7 @@ public class GridXRecyclerActivity extends AppCompatActivity {
 
 
     private void refresh() {
-        List list = DataUtils.getRefreshData();
+        List list = BindDataUtils.getRefreshData();
         //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized (lock) {
@@ -150,7 +150,7 @@ public class GridXRecyclerActivity extends AppCompatActivity {
     }
 
     private void loadMore() {
-        List list = DataUtils.getLoadMoreData(dataList);
+        List list = BindDataUtils.getLoadMoreData(dataList);
         //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized (lock) {
