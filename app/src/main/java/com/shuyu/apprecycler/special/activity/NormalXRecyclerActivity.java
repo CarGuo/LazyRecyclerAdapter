@@ -84,8 +84,8 @@ public class NormalXRecyclerActivity extends AppCompatActivity {
         commonRecyclerAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(Context context, int position) {
-                //需要减去你的header和刷新的view的数量
-                Toast.makeText(context, "点击了！！　" + (position - 2), Toast.LENGTH_SHORT).show();
+                //需要减去你的header
+                Toast.makeText(context, "点击了！！　" + (position - 1), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -97,7 +97,6 @@ public class NormalXRecyclerActivity extends AppCompatActivity {
         float fontScale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * fontScale + 0.5f);
     }
-
 
 
     private void refresh() {
