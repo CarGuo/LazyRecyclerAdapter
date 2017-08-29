@@ -1,26 +1,26 @@
-package com.shuyu.apprecycler.normal.activity;
+package com.shuyu.apprecycler.bind.activity;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
-import com.shuyu.apprecycler.normal.holder.ClickHolder;
-import com.shuyu.apprecycler.normal.holder.ImageHolder;
-import com.shuyu.apprecycler.normal.holder.LoadMoreHolder;
-import com.shuyu.apprecycler.normal.holder.MutliHolder;
-import com.shuyu.apprecycler.normal.holder.NoDataHolder;
-import com.shuyu.apprecycler.normal.holder.TextHolder;
-import com.shuyu.apprecycler.normal.model.ClickModel;
-import com.shuyu.apprecycler.normal.model.ImageModel;
-import com.shuyu.apprecycler.normal.model.MutliModel;
-import com.shuyu.apprecycler.normal.model.TextModel;
-import com.shuyu.apprecycler.normal.utils.DataUtils;
+import com.shuyu.apprecycler.bind.holder.ClickHolder;
+import com.shuyu.apprecycler.bind.holder.ImageHolder;
+import com.shuyu.apprecycler.bind.holder.LoadMoreHolder;
+import com.shuyu.apprecycler.bind.holder.MutliHolder;
+import com.shuyu.apprecycler.bind.holder.NoDataHolder;
+import com.shuyu.apprecycler.bind.holder.TextHolder;
+import com.shuyu.apprecycler.bind.model.ClickModel;
+import com.shuyu.apprecycler.bind.model.ImageModel;
+import com.shuyu.apprecycler.bind.model.MutliModel;
+import com.shuyu.apprecycler.bind.model.TextModel;
+import com.shuyu.apprecycler.bind.utils.DataUtils;
 import com.shuyu.bind.listener.LoadMoreScrollListener;
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.NormalAdapterManager;
@@ -38,9 +38,9 @@ import butterknife.ButterKnife;
  * 使用CommonRecyclerAdapter实现多样式的recycler
  * 系统的下拉刷新
  * CommonRecyclerAdapter的上拉加载更多
+ * 瀑布流
  */
-
-public class SystemRefreshActivity extends AppCompatActivity {
+public class GridSystemRefreshActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
@@ -60,11 +60,12 @@ public class SystemRefreshActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_system_refresh_recycler_layout);
+        setContentView(R.layout.activity_grid_system_refresh);
         ButterKnife.bind(this);
         init();
         refresh();
     }
+
 
     public void init() {
 
@@ -78,13 +79,16 @@ public class SystemRefreshActivity extends AppCompatActivity {
                 .bindEmpty(NoDataHolder.NoDataModel.class, NoDataHolder.ID, NoDataHolder.class);
 
 
+
         adapter = new NormalCommonRecyclerAdapter(this, normalAdapterManager, datas);
 
         //设置动画支持打开
         adapter.setNeedAnimation(true);
 
-        recycler.setLayoutManager(new LinearLayoutManager(this));
-        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST));
+        GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 2);
+
+        recycler.setLayoutManager(staggeredGridLayoutManager);
+        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.GRID));
         recycler.setAdapter(adapter);
 
         recycler.addOnScrollListener(new LoadMoreScrollListener() {
@@ -109,6 +113,7 @@ public class SystemRefreshActivity extends AppCompatActivity {
         });
 
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
             @Override
             public void onRefresh() {
                 if (!isfresh) {
@@ -128,7 +133,7 @@ public class SystemRefreshActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Context context, int position) {
                 //需要减去你的header和刷新的view的数量
-                Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "点击了！！　" + (position - 2), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -164,4 +169,6 @@ public class SystemRefreshActivity extends AppCompatActivity {
             isfresh = false;
         }
     }
+
+
 }

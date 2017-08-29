@@ -1,4 +1,4 @@
-package com.shuyu.apprecycler.normal.holder;
+package com.shuyu.apprecycler.bind.holder;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -9,7 +9,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.normal.model.ImageModel;
+import com.shuyu.apprecycler.bind.model.ImageModel;
 import com.shuyu.bind.NormalRecyclerBaseHolder;
 
 /**

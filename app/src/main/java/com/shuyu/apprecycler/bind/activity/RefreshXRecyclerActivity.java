@@ -1,25 +1,24 @@
-package com.shuyu.apprecycler.normal.activity;
+package com.shuyu.apprecycler.bind.activity;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.View;
+import android.support.v7.widget.LinearLayoutManager;
 import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcodecraeer.xrecyclerview.other.ProgressStyle;
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
-import com.shuyu.apprecycler.normal.holder.ClickHolder;
-import com.shuyu.apprecycler.normal.holder.ImageHolder;
-import com.shuyu.apprecycler.normal.holder.MutliHolder;
-import com.shuyu.apprecycler.normal.holder.TextHolder;
-import com.shuyu.apprecycler.normal.model.ClickModel;
-import com.shuyu.apprecycler.normal.model.ImageModel;
-import com.shuyu.apprecycler.normal.model.MutliModel;
-import com.shuyu.apprecycler.normal.model.TextModel;
-import com.shuyu.apprecycler.normal.utils.DataUtils;
+import com.shuyu.apprecycler.bind.holder.ClickHolder;
+import com.shuyu.apprecycler.bind.holder.ImageHolder;
+import com.shuyu.apprecycler.bind.holder.MutliHolder;
+import com.shuyu.apprecycler.bind.holder.TextHolder;
+import com.shuyu.apprecycler.bind.model.ClickModel;
+import com.shuyu.apprecycler.bind.model.ImageModel;
+import com.shuyu.apprecycler.bind.model.MutliModel;
+import com.shuyu.apprecycler.bind.model.TextModel;
+import com.shuyu.apprecycler.bind.utils.DataUtils;
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.NormalAdapterManager;
 import com.shuyu.bind.NormalCommonRecyclerAdapter;
@@ -31,18 +30,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by guoshuyu on 2017/1/8.
- * 利用 XRecyclerView 实现空页面
+ * 使用CommonRecyclerAdapter实现多样式的recycler
+ * 使用 XRecyclerView 实现上下拉更新
  */
-public class XRecyclerEmptyActivity extends AppCompatActivity {
+public class RefreshXRecyclerActivity extends AppCompatActivity {
 
     @BindView(R.id.xRecycler)
     XRecyclerView xRecycler;
 
-    @BindView(R.id.emptyView)
-    View emptyView;
-
-    StaggeredGridLayoutManager staggeredGridLayoutManager;
+    LinearLayoutManager linearLayoutManager;
 
     private List dataList = new ArrayList<>();
 
@@ -53,42 +49,43 @@ public class XRecyclerEmptyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_xrecycer_empty);
+        setContentView(R.layout.activity_refresh_xrecycler);
 
         ButterKnife.bind(this);
 
         initView();
+
+        refresh();
     }
 
 
     private void initView() {
-        //瀑布流管理器
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         //设置瀑布流管理器
-        xRecycler.setLayoutManager(staggeredGridLayoutManager);
+        xRecycler.setLayoutManager(linearLayoutManager);
         //添加分割线，注意位置是会从下拉那个Item的实际位置开始的，所以如果支持下拉需要屏蔽下拉和HeaderView
-        xRecycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.GRID, 2));
+        //因为集成了下拉item，所以需要从下拉item之后开始计算分割
+        xRecycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST, 1));
 
         //是否屏蔽下拉
         //xRecycler.setPullRefreshEnabled(false);
+
         //上拉加载更多样式，也可以设置下拉
-        xRecycler.setLoadingMoreProgressStyle(ProgressStyle.SysProgress);
+        xRecycler.setLoadingMoreProgressStyle(ProgressStyle.BallClipRotatePulse);
+
+        xRecycler.setRefreshProgressStyle(ProgressStyle.BallScaleRippleMultiple);
+
         //设置管理器，关联布局与holder类名，不同id可以管理一个holder
+        //设置管理器，关联布局与holder类名，不同id可以管理一个holder    NormalAdapterManager normalAdapterManager = new NormalAdapterManager();
         NormalAdapterManager normalAdapterManager = new NormalAdapterManager();
         normalAdapterManager
                 .bind(ImageModel.class, ImageHolder.ID, ImageHolder.class)
                 .bind(TextModel.class, TextHolder.ID, TextHolder.class)
                 .bind(MutliModel.class, MutliHolder.ID, MutliHolder.class)
                 .bind(ClickModel.class, ClickHolder.ID, ClickHolder.class);
-
-
-        //添加空
-        xRecycler.setEmptyView(emptyView);
-
         //初始化通用管理器
         commonRecyclerAdapter = new NormalCommonRecyclerAdapter(this, normalAdapterManager, dataList);
         xRecycler.setAdapter(commonRecyclerAdapter);
-
 
         //本身也支持设置空局部
         //xRecycler.setEmptyView();
@@ -153,4 +150,5 @@ public class XRecyclerEmptyActivity extends AppCompatActivity {
             xRecycler.loadMoreComplete();
         }
     }
+
 }

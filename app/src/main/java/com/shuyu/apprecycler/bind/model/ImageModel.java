@@ -1,4 +1,4 @@
-package com.shuyu.apprecycler.normal.model;
+package com.shuyu.apprecycler.bind.model;
 
 /**
  * Created by shuyu on 2016/11/23.

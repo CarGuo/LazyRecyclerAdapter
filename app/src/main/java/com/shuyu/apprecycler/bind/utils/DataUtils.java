@@ -1,10 +1,10 @@
-package com.shuyu.apprecycler.normal.utils;
+package com.shuyu.apprecycler.bind.utils;
 
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.normal.model.ClickModel;
-import com.shuyu.apprecycler.normal.model.ImageModel;
-import com.shuyu.apprecycler.normal.model.TextModel;
+import com.shuyu.apprecycler.bind.model.ClickModel;
+import com.shuyu.apprecycler.bind.model.ImageModel;
+import com.shuyu.apprecycler.bind.model.TextModel;
 
 import java.util.ArrayList;
 import java.util.List;

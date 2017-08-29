@@ -1,4 +1,4 @@
-package com.shuyu.apprecycler.normal;
+package com.shuyu.apprecycler.bind;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,20 +10,18 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.normal.activity.CustomXRecyclerRefreshActivity;
-import com.shuyu.apprecycler.normal.activity.GridXRecyclerActivity;
-import com.shuyu.apprecycler.normal.activity.NormalActivity;
-import com.shuyu.apprecycler.normal.activity.NormalEmptyActivity;
-import com.shuyu.apprecycler.normal.activity.NormalSystemRefreshActivity;
-import com.shuyu.apprecycler.normal.activity.NormalXRecyclerActivity;
-import com.shuyu.apprecycler.normal.activity.RefreshXRecyclerActivity;
-import com.shuyu.apprecycler.normal.activity.StaggeredSystemRefreshActivity;
-import com.shuyu.apprecycler.normal.activity.StaggeredXRecyclerActivity;
-import com.shuyu.apprecycler.normal.activity.SystemRefreshActivity;
-import com.shuyu.apprecycler.normal.activity.XRecyclerEmptyActivity;
-import com.shuyu.apprecycler.normal.utils.DataUtils;
-
-import butterknife.ButterKnife;
+import com.shuyu.apprecycler.bind.activity.CustomXRecyclerRefreshActivity;
+import com.shuyu.apprecycler.bind.activity.GridXRecyclerActivity;
+import com.shuyu.apprecycler.bind.activity.NormalActivity;
+import com.shuyu.apprecycler.bind.activity.NormalEmptyActivity;
+import com.shuyu.apprecycler.bind.activity.NormalSystemRefreshActivity;
+import com.shuyu.apprecycler.bind.activity.NormalXRecyclerActivity;
+import com.shuyu.apprecycler.bind.activity.RefreshXRecyclerActivity;
+import com.shuyu.apprecycler.bind.activity.StaggeredSystemRefreshActivity;
+import com.shuyu.apprecycler.bind.activity.StaggeredXRecyclerActivity;
+import com.shuyu.apprecycler.bind.activity.SystemRefreshActivity;
+import com.shuyu.apprecycler.bind.activity.XRecyclerEmptyActivity;
+import com.shuyu.apprecycler.bind.utils.DataUtils;
 
 /**
  * Created by guoshuyu on 2017/8/29.

@@ -1,11 +1,11 @@
-package com.shuyu.apprecycler.normal.holder;
+package com.shuyu.apprecycler.bind.holder;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.normal.model.ClickModel;
+import com.shuyu.apprecycler.bind.model.ClickModel;
 import com.shuyu.bind.NormalRecyclerBaseHolder;
 
 /**

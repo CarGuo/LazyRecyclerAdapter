@@ -1,11 +1,11 @@
-package com.shuyu.apprecycler.normal.holder;
+package com.shuyu.apprecycler.bind.holder;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.normal.model.TextModel;
+import com.shuyu.apprecycler.bind.model.TextModel;
 import com.shuyu.bind.NormalRecyclerBaseHolder;
 /**
  * Created by guoshuyu on 2017/8/29.

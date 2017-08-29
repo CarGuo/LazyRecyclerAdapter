@@ -1,4 +1,4 @@
-package com.shuyu.apprecycler.normal.activity;
+package com.shuyu.apprecycler.bind.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,16 +9,16 @@ import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
-import com.shuyu.apprecycler.normal.holder.ClickHolder;
-import com.shuyu.apprecycler.normal.holder.ImageHolder;
-import com.shuyu.apprecycler.normal.holder.MutliHolder;
-import com.shuyu.apprecycler.normal.holder.NoDataHolder;
-import com.shuyu.apprecycler.normal.holder.TextHolder;
-import com.shuyu.apprecycler.normal.model.ClickModel;
-import com.shuyu.apprecycler.normal.model.ImageModel;
-import com.shuyu.apprecycler.normal.model.MutliModel;
-import com.shuyu.apprecycler.normal.model.TextModel;
-import com.shuyu.apprecycler.normal.utils.DataUtils;
+import com.shuyu.apprecycler.bind.holder.ClickHolder;
+import com.shuyu.apprecycler.bind.holder.ImageHolder;
+import com.shuyu.apprecycler.bind.holder.MutliHolder;
+import com.shuyu.apprecycler.bind.holder.NoDataHolder;
+import com.shuyu.apprecycler.bind.holder.TextHolder;
+import com.shuyu.apprecycler.bind.model.ClickModel;
+import com.shuyu.apprecycler.bind.model.ImageModel;
+import com.shuyu.apprecycler.bind.model.MutliModel;
+import com.shuyu.apprecycler.bind.model.TextModel;
+import com.shuyu.apprecycler.bind.utils.DataUtils;
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.NormalAdapterManager;
 import com.shuyu.bind.NormalCommonRecyclerAdapter;

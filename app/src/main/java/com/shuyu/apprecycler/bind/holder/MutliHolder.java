@@ -1,11 +1,11 @@
-package com.shuyu.apprecycler.normal.holder;
+package com.shuyu.apprecycler.bind.holder;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.normal.model.MutliModel;
+import com.shuyu.apprecycler.bind.model.MutliModel;
 import com.shuyu.bind.NormalRecyclerBaseHolder;
 
 /**

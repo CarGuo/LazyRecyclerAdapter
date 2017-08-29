@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.shuyu.apprecycler.normal.NormalHomeActivity;
+import com.shuyu.apprecycler.bind.NormalHomeActivity;
 import com.shuyu.apprecycler.special.HomeActivity;
 
 /**

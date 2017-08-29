@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.special.activity.CustomXRecyclerRefreshActivity;
+import com.shuyu.apprecycler.special.activity.GridSystemRefreshActivity;
 import com.shuyu.apprecycler.special.activity.GridXRecyclerActivity;
 import com.shuyu.apprecycler.special.activity.NormalActivity;
 import com.shuyu.apprecycler.special.activity.NormalEmptyActivity;
@@ -22,7 +23,6 @@ import com.shuyu.apprecycler.special.activity.StaggeredXRecyclerActivity;
 import com.shuyu.apprecycler.special.activity.SystemRefreshActivity;
 import com.shuyu.apprecycler.special.activity.ViewPagerActivity;
 import com.shuyu.apprecycler.special.activity.XRecyclerEmptyActivity;
-import com.shuyu.apprecycler.normal.activity.NormalSystemRefreshActivity;
 import com.shuyu.apprecycler.special.utils.DataUtils;
 
 import butterknife.BindView;
@@ -110,7 +110,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             }
             case 11: {
-                Intent intent = new Intent(HomeActivity.this, NormalSystemRefreshActivity.class);
+                Intent intent = new Intent(HomeActivity.this, GridSystemRefreshActivity.class);
                 startActivity(intent);
                 break;
             }
