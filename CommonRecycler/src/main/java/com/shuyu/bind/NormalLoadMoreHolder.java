@@ -1,4 +1,4 @@
-package com.shuyu.normal;
+package com.shuyu.bind;
 
 import android.content.Context;
 import android.view.View;

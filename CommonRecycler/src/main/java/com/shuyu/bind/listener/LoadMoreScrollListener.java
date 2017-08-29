@@ -1,4 +1,4 @@
-package com.shuyu.normal.listener;
+package com.shuyu.bind.listener;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;

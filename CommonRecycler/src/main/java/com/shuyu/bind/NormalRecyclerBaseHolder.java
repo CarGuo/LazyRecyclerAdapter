@@ -1,4 +1,4 @@
-package com.shuyu.normal;
+package com.shuyu.bind;
 
 import android.animation.AnimatorSet;
 import android.content.Context;

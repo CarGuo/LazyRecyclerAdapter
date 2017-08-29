@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.normal.model.TextModel;
-import com.shuyu.normal.NormalRecyclerBaseHolder;
+import com.shuyu.bind.NormalRecyclerBaseHolder;
 /**
  * Created by guoshuyu on 2017/8/29.
  */

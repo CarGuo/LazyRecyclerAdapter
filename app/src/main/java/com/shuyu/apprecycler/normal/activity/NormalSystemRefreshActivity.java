@@ -20,11 +20,11 @@ import com.shuyu.apprecycler.normal.model.ImageModel;
 import com.shuyu.apprecycler.normal.model.MutliModel;
 import com.shuyu.apprecycler.normal.model.TextModel;
 import com.shuyu.apprecycler.normal.utils.DataUtils;
-import com.shuyu.normal.listener.LoadMoreScrollListener;
-import com.shuyu.normal.listener.OnItemClickListener;
-import com.shuyu.normal.NormalAdapterManager;
-import com.shuyu.normal.NormalBindDataChooseListener;
-import com.shuyu.normal.NormalCommonRecyclerAdapter;
+import com.shuyu.bind.listener.LoadMoreScrollListener;
+import com.shuyu.bind.listener.OnItemClickListener;
+import com.shuyu.bind.NormalAdapterManager;
+import com.shuyu.bind.NormalBindDataChooseListener;
+import com.shuyu.bind.NormalCommonRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
