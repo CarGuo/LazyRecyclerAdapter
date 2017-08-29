@@ -16,9 +16,9 @@ import java.util.List;
 /**
  * 普通的通用adapter
  */
-public class NormalCommonRecyclerAdapter extends RecyclerView.Adapter {
+public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
 
-    private final static String TAG = "NormalCommonRecyclerAdapter";
+    private final static String TAG = "NormalBindRecyclerAdapter";
 
     private Context context = null;
 
@@ -26,7 +26,7 @@ public class NormalCommonRecyclerAdapter extends RecyclerView.Adapter {
     private List dataList = null;
 
     //管理器
-    private NormalAdapterManager normalAdapterManager;
+    private NormalBindAdapterManager normalAdapterManager;
 
     //单击
     private OnItemClickListener itemClickListener;
@@ -43,7 +43,7 @@ public class NormalCommonRecyclerAdapter extends RecyclerView.Adapter {
     //最后的位置
     private int lastPosition = -1;
 
-    public NormalCommonRecyclerAdapter(Context context, NormalAdapterManager normalAdapterManager, List dataList) {
+    public NormalBindRecyclerAdapter(Context context, NormalBindAdapterManager normalAdapterManager, List dataList) {
         this.normalAdapterManager = normalAdapterManager;
         this.dataList = dataList;
         this.context = context;

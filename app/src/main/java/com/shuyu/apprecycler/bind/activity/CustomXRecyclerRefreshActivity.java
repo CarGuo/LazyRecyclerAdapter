@@ -20,9 +20,9 @@ import com.shuyu.apprecycler.bind.model.TextModel;
 import com.shuyu.apprecycler.bind.utils.DataUtils;
 import com.shuyu.apprecycler.special.view.CustomLoadMoreFooter;
 import com.shuyu.apprecycler.special.view.CustomRefreshHeader;
+import com.shuyu.bind.NormalBindRecyclerAdapter;
 import com.shuyu.bind.listener.OnItemClickListener;
-import com.shuyu.bind.NormalAdapterManager;
-import com.shuyu.bind.NormalCommonRecyclerAdapter;
+import com.shuyu.bind.NormalBindAdapterManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class CustomXRecyclerRefreshActivity extends AppCompatActivity {
 
     private List dataList = new ArrayList<>();
 
-    private NormalCommonRecyclerAdapter normalCommonRecyclerAdapter;
+    private NormalBindRecyclerAdapter normalCommonRecyclerAdapter;
 
     private final Object lock = new Object();
 
@@ -78,14 +78,14 @@ public class CustomXRecyclerRefreshActivity extends AppCompatActivity {
         xRecycler.setFootView(new CustomLoadMoreFooter(this));
 
 
-        NormalAdapterManager normalAdapterManager = new NormalAdapterManager();
+        NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
         normalAdapterManager
                 .bind(ImageModel.class, ImageHolder.ID, ImageHolder.class)
                 .bind(TextModel.class, TextHolder.ID, TextHolder.class)
                 .bind(ClickModel.class, ClickHolder.ID, ClickHolder.class);
 
         //初始化通用管理器
-        normalCommonRecyclerAdapter = new NormalCommonRecyclerAdapter(this, normalAdapterManager, dataList);
+        normalCommonRecyclerAdapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, dataList);
         xRecycler.setAdapter(normalCommonRecyclerAdapter);
 
         //添加头部

@@ -21,9 +21,9 @@ import com.shuyu.apprecycler.bind.model.ImageModel;
 import com.shuyu.apprecycler.bind.model.MutliModel;
 import com.shuyu.apprecycler.bind.model.TextModel;
 import com.shuyu.apprecycler.bind.utils.DataUtils;
+import com.shuyu.bind.NormalBindAdapterManager;
 import com.shuyu.bind.listener.OnItemClickListener;
-import com.shuyu.bind.NormalAdapterManager;
-import com.shuyu.bind.NormalCommonRecyclerAdapter;
+import com.shuyu.bind.NormalBindRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class StaggeredXRecyclerActivity extends AppCompatActivity {
 
     private List dataList = new ArrayList<>();
 
-    private NormalCommonRecyclerAdapter commonRecyclerAdapter;
+    private NormalBindRecyclerAdapter commonRecyclerAdapter;
 
     private final Object lock = new Object();
 
@@ -75,14 +75,14 @@ public class StaggeredXRecyclerActivity extends AppCompatActivity {
         //上拉加载更多样式，也可以设置下拉
         xRecycler.setLoadingMoreProgressStyle(ProgressStyle.SysProgress);
         //设置管理器，关联布局与holder类名，不同id可以管理一个holder
-        NormalAdapterManager normalAdapterManager = new NormalAdapterManager();
+        NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
         normalAdapterManager
                 .bind(ImageModel.class, ImageHolder.ID, ImageHolder.class)
                 .bind(TextModel.class, TextHolder.ID, TextHolder.class)
                 .bind(MutliModel.class, MutliHolder.ID, MutliHolder.class)
                 .bind(ClickModel.class, ClickHolder.ID, ClickHolder.class);
         //初始化通用管理器
-        commonRecyclerAdapter = new NormalCommonRecyclerAdapter(this, normalAdapterManager, dataList);
+        commonRecyclerAdapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, dataList);
         xRecycler.setAdapter(commonRecyclerAdapter);
 
         //添加头部

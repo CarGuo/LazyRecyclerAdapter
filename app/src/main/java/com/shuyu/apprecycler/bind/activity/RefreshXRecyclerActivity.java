@@ -19,9 +19,9 @@ import com.shuyu.apprecycler.bind.model.ImageModel;
 import com.shuyu.apprecycler.bind.model.MutliModel;
 import com.shuyu.apprecycler.bind.model.TextModel;
 import com.shuyu.apprecycler.bind.utils.DataUtils;
+import com.shuyu.bind.NormalBindAdapterManager;
+import com.shuyu.bind.NormalBindRecyclerAdapter;
 import com.shuyu.bind.listener.OnItemClickListener;
-import com.shuyu.bind.NormalAdapterManager;
-import com.shuyu.bind.NormalCommonRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class RefreshXRecyclerActivity extends AppCompatActivity {
 
     private List dataList = new ArrayList<>();
 
-    private NormalCommonRecyclerAdapter commonRecyclerAdapter;
+    private NormalBindRecyclerAdapter commonRecyclerAdapter;
 
     private final Object lock = new Object();
 
@@ -76,15 +76,15 @@ public class RefreshXRecyclerActivity extends AppCompatActivity {
         xRecycler.setRefreshProgressStyle(ProgressStyle.BallScaleRippleMultiple);
 
         //设置管理器，关联布局与holder类名，不同id可以管理一个holder
-        //设置管理器，关联布局与holder类名，不同id可以管理一个holder    NormalAdapterManager normalAdapterManager = new NormalAdapterManager();
-        NormalAdapterManager normalAdapterManager = new NormalAdapterManager();
+        //设置管理器，关联布局与holder类名，不同id可以管理一个holder    NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
+        NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
         normalAdapterManager
                 .bind(ImageModel.class, ImageHolder.ID, ImageHolder.class)
                 .bind(TextModel.class, TextHolder.ID, TextHolder.class)
                 .bind(MutliModel.class, MutliHolder.ID, MutliHolder.class)
                 .bind(ClickModel.class, ClickHolder.ID, ClickHolder.class);
         //初始化通用管理器
-        commonRecyclerAdapter = new NormalCommonRecyclerAdapter(this, normalAdapterManager, dataList);
+        commonRecyclerAdapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, dataList);
         xRecycler.setAdapter(commonRecyclerAdapter);
 
         //本身也支持设置空局部

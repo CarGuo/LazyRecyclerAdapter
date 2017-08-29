@@ -16,9 +16,9 @@ import java.util.List;
  * Created by guoshuyu on 2017/8/28.
  */
 
-public class NormalAdapterManager {
+public class NormalBindAdapterManager {
 
-    private final String TAG = NormalAdapterManager.class.getName();
+    private final String TAG = NormalBindAdapterManager.class.getName();
 
     //根据model类名绑定layoutId
     private HashMap<String, List<Integer>> modelToId = new HashMap<>();
@@ -54,7 +54,7 @@ public class NormalAdapterManager {
      * @param layoutId    布局id，一个manager中，一个id只能对应一个holder。
      * @param holderClass holder类名，一个manager中，一个holder只能对应一个id。
      */
-    public NormalAdapterManager bind(Class modelClass, int layoutId, Class<? extends NormalRecyclerBaseHolder> holderClass) {
+    public NormalBindAdapterManager bind(Class modelClass, int layoutId, Class<? extends NormalRecyclerBaseHolder> holderClass) {
 
         if (!modelToId.containsKey(modelClass.getName())) {
             List<Integer> list = new ArrayList<>();
@@ -82,7 +82,7 @@ public class NormalAdapterManager {
      * @param layoutId    布局id
      * @param holderClass holder类名
      */
-    public NormalAdapterManager bindEmpty(Object noDataModel, int layoutId, Class<? extends NormalRecyclerBaseHolder> holderClass) {
+    public NormalBindAdapterManager bindEmpty(Object noDataModel, int layoutId, Class<? extends NormalRecyclerBaseHolder> holderClass) {
         noDataHolder = holderClass;
         noDataObject = noDataModel;
         noDataLayoutId = layoutId;
@@ -96,7 +96,7 @@ public class NormalAdapterManager {
      * @param layoutId      布局id
      * @param holderClass   holder类名
      */
-    public NormalAdapterManager bindLoadMore(Object loadMoreModel, int layoutId, Class<? extends NormalLoadMoreHolder> holderClass) {
+    public NormalBindAdapterManager bindLoadMore(Object loadMoreModel, int layoutId, Class<? extends NormalLoadMoreHolder> holderClass) {
         loadmoreId = layoutId;
         loadmoreHolder = holderClass;
         loadmoreObject = loadMoreModel;
@@ -107,7 +107,7 @@ public class NormalAdapterManager {
      * 一个model对应多种Holder的数据的筛选回调
      * 不设置默认使用最后一个
      */
-    public NormalAdapterManager bingChooseListener(NormalBindDataChooseListener listener) {
+    public NormalBindAdapterManager bingChooseListener(NormalBindDataChooseListener listener) {
         normalBindDataChooseListener = listener;
         return this;
     }

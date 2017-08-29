@@ -19,9 +19,9 @@ import com.shuyu.apprecycler.bind.model.ImageModel;
 import com.shuyu.apprecycler.bind.model.MutliModel;
 import com.shuyu.apprecycler.bind.model.TextModel;
 import com.shuyu.apprecycler.bind.utils.DataUtils;
+import com.shuyu.bind.NormalBindRecyclerAdapter;
 import com.shuyu.bind.listener.OnItemClickListener;
-import com.shuyu.bind.NormalAdapterManager;
-import com.shuyu.bind.NormalCommonRecyclerAdapter;
+import com.shuyu.bind.NormalBindAdapterManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class NormalActivity extends AppCompatActivity {
 
     private List datas = new ArrayList<>();
 
-    private NormalCommonRecyclerAdapter adapter;
+    private NormalBindRecyclerAdapter adapter;
 
     private boolean isLoadMore;
 
@@ -56,7 +56,7 @@ public class NormalActivity extends AppCompatActivity {
 
     public void init() {
 
-        NormalAdapterManager normalAdapterManager = new NormalAdapterManager();
+        NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
         normalAdapterManager
                 .bind(ImageModel.class, ImageHolder.ID, ImageHolder.class)
                 .bind(TextModel.class, TextHolder.ID, TextHolder.class)
@@ -66,7 +66,7 @@ public class NormalActivity extends AppCompatActivity {
 
 
 
-        adapter = new NormalCommonRecyclerAdapter(this, normalAdapterManager, datas);
+        adapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, datas);
 
         //设置动画支持打开
         adapter.setNeedAnimation(true);

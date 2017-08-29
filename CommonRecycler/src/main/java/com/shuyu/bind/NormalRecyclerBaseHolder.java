@@ -12,7 +12,7 @@ public abstract class NormalRecyclerBaseHolder extends RecyclerView.ViewHolder {
 
     protected Context context = null;
 
-    protected NormalCommonRecyclerAdapter normalCommonRecyclerAdapter = null;
+    protected NormalBindRecyclerAdapter normalCommonRecyclerAdapter = null;
 
     public NormalRecyclerBaseHolder(Context context, View v) {
         super(v);
@@ -24,7 +24,7 @@ public abstract class NormalRecyclerBaseHolder extends RecyclerView.ViewHolder {
         return context;
     }
 
-    public void setAdapter(NormalCommonRecyclerAdapter commonRecyclerAdapter) {
+    public void setAdapter(NormalBindRecyclerAdapter commonRecyclerAdapter) {
         this.normalCommonRecyclerAdapter = commonRecyclerAdapter;
     }
 
