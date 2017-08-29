@@ -6,18 +6,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.shuyu.apprecycler.special.Holder.MutilHolder;
+import com.shuyu.apprecycler.special.holder.MutilHolder;
 import com.shuyu.apprecycler.special.fragment.List2Fragment;
 import com.shuyu.apprecycler.special.fragment.ListFragment;
-import com.shuyu.apprecycler.special.Model.MutilModel;
+import com.shuyu.apprecycler.special.model.MutilModel;
 import com.shuyu.apprecycler.R;
 import com.shuyu.common.model.RecyclerBaseModel;
-import com.shuyu.apprecycler.special.Holder.ClickHolder;
-import com.shuyu.apprecycler.special.Holder.ImageHolder;
-import com.shuyu.apprecycler.special.Holder.TextHolder;
-import com.shuyu.apprecycler.special.Model.ClickModel;
-import com.shuyu.apprecycler.special.Model.ImageModel;
-import com.shuyu.apprecycler.special.Model.TextModel;
+import com.shuyu.apprecycler.special.holder.ClickHolder;
+import com.shuyu.apprecycler.special.holder.ImageHolder;
+import com.shuyu.apprecycler.special.holder.TextHolder;
+import com.shuyu.apprecycler.special.model.ClickModel;
+import com.shuyu.apprecycler.special.model.ImageModel;
+import com.shuyu.apprecycler.special.model.TextModel;
 import com.shuyu.apprecycler.special.adapter.ListFragmentPagerAdapter;
 import com.shuyu.apprecycler.special.view.PagerSlidingTabStrip;
 

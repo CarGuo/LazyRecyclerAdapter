@@ -1,4 +1,4 @@
-package com.shuyu.apprecycler.special.Holder;
+package com.shuyu.apprecycler.special.holder;
 
 import android.content.Context;
 import android.view.View;

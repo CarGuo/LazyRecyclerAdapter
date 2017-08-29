@@ -1,4 +1,4 @@
-package com.shuyu.apprecycler.special.Holder;
+package com.shuyu.apprecycler.special.holder;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.shuyu.common.RecyclerBaseHolder;
 import com.shuyu.common.model.RecyclerBaseModel;
-import com.shuyu.apprecycler.special.Model.ImageModel;
+import com.shuyu.apprecycler.special.model.ImageModel;
 import com.shuyu.apprecycler.R;
 
 import butterknife.BindView;

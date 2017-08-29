@@ -1,11 +1,11 @@
 package com.shuyu.apprecycler.special.utils;
 
-import com.shuyu.apprecycler.special.Holder.ClickHolder;
-import com.shuyu.apprecycler.special.Holder.ImageHolder;
-import com.shuyu.apprecycler.special.Holder.TextHolder;
-import com.shuyu.apprecycler.special.Model.ClickModel;
-import com.shuyu.apprecycler.special.Model.ImageModel;
-import com.shuyu.apprecycler.special.Model.TextModel;
+import com.shuyu.apprecycler.special.holder.ClickHolder;
+import com.shuyu.apprecycler.special.holder.ImageHolder;
+import com.shuyu.apprecycler.special.holder.TextHolder;
+import com.shuyu.apprecycler.special.model.ClickModel;
+import com.shuyu.apprecycler.special.model.ImageModel;
+import com.shuyu.apprecycler.special.model.TextModel;
 import com.shuyu.apprecycler.R;
 import com.shuyu.common.model.RecyclerBaseModel;
 

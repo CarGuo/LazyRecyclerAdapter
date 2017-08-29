@@ -1,10 +1,10 @@
-package com.shuyu.apprecycler.special.Holder;
+package com.shuyu.apprecycler.special.holder;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.shuyu.apprecycler.special.Model.MutilModel;
+import com.shuyu.apprecycler.special.model.MutilModel;
 import com.shuyu.apprecycler.R;
 import com.shuyu.common.RecyclerBaseHolder;
 import com.shuyu.common.model.RecyclerBaseModel;

@@ -10,17 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.shuyu.apprecycler.special.Holder.EmptyHolder;
-import com.shuyu.apprecycler.special.Holder.MutilHolder;
+import com.shuyu.apprecycler.special.holder.EmptyHolder;
+import com.shuyu.apprecycler.special.holder.MutilHolder;
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.special.utils.DataUtils;
 import com.shuyu.common.CommonRecyclerAdapter;
 import com.shuyu.common.CommonRecyclerManager;
 import com.shuyu.common.listener.LoadMoreScrollListener;
 import com.shuyu.common.model.RecyclerBaseModel;
-import com.shuyu.apprecycler.special.Holder.ClickHolder;
-import com.shuyu.apprecycler.special.Holder.ImageHolder;
-import com.shuyu.apprecycler.special.Holder.TextHolder;
+import com.shuyu.apprecycler.special.holder.ClickHolder;
+import com.shuyu.apprecycler.special.holder.ImageHolder;
+import com.shuyu.apprecycler.special.holder.TextHolder;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
 
 import java.util.ArrayList;

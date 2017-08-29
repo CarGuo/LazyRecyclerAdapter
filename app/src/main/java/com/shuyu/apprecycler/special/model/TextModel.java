@@ -1,4 +1,4 @@
-package com.shuyu.apprecycler.special.Model;
+package com.shuyu.apprecycler.special.model;
 
 import com.shuyu.common.model.RecyclerBaseModel;
 

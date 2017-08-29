@@ -8,11 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.Toast;
 
-import com.shuyu.apprecycler.special.Holder.ClickHolder;
-import com.shuyu.apprecycler.special.Holder.EmptyHolder;
-import com.shuyu.apprecycler.special.Holder.ImageHolder;
-import com.shuyu.apprecycler.special.Holder.MutilHolder;
-import com.shuyu.apprecycler.special.Holder.TextHolder;
+import com.shuyu.apprecycler.special.holder.ClickHolder;
+import com.shuyu.apprecycler.special.holder.EmptyHolder;
+import com.shuyu.apprecycler.special.holder.ImageHolder;
+import com.shuyu.apprecycler.special.holder.MutilHolder;
+import com.shuyu.apprecycler.special.holder.TextHolder;
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
 import com.shuyu.apprecycler.special.utils.DataUtils;
