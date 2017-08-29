@@ -53,6 +53,11 @@
         <activity
             android:name=".activity.GridSystemRefreshActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".normal.activity.NormalSystemRefreshActivity"
+            android:screenOrientation="portrait" />
+
+
     </application>
 
 </manifest>

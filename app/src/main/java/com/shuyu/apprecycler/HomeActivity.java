@@ -22,6 +22,7 @@ import com.shuyu.apprecycler.activity.StaggeredXRecyclerActivity;
 import com.shuyu.apprecycler.activity.SystemRefreshActivity;
 import com.shuyu.apprecycler.activity.ViewPagerActivity;
 import com.shuyu.apprecycler.activity.XRecyclerEmptyActivity;
+import com.shuyu.apprecycler.normal.activity.NormalSystemRefreshActivity;
 import com.shuyu.apprecycler.utils.DataUtils;
 
 import butterknife.BindView;
@@ -109,7 +110,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             }
             case 11: {
-                Intent intent = new Intent(HomeActivity.this, GridSystemRefreshActivity.class);
+                Intent intent = new Intent(HomeActivity.this, NormalSystemRefreshActivity.class);
                 startActivity(intent);
                 break;
             }

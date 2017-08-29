@@ -1,0 +1,324 @@
+package com.shuyu.common.normal;
+
+import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.shuyu.common.listener.OnItemClickListener;
+import com.shuyu.common.listener.OnItemLongClickListener;
+
+import java.util.List;
+
+/**
+ * 普通的通用adapter
+ */
+public class NormalCommonRecyclerAdapter extends RecyclerView.Adapter {
+
+    private final static String TAG = "NormalCommonRecyclerAdapter";
+
+    private Context context = null;
+
+    //数据
+    private List dataList = null;
+
+    //管理器
+    private NormalAdapterManager normalAdapterManager;
+
+    //单击
+    private OnItemClickListener itemClickListener;
+
+    //长按
+    private OnItemLongClickListener itemLongClickListener;
+
+    //加载状态
+    private NormalLoadMoreHolder.LoadMoreState loadMoreState = NormalLoadMoreHolder.LoadMoreState.LOAD_MORE_STATE;
+
+    //是否支持动画
+    private boolean needAnimation = false;
+
+    //最后的位置
+    private int lastPosition = -1;
+
+    public NormalCommonRecyclerAdapter(Context context, NormalAdapterManager normalAdapterManager, List dataList) {
+        this.normalAdapterManager = normalAdapterManager;
+        this.dataList = dataList;
+        this.context = context;
+    }
+
+    /**
+     * 更新
+     */
+    public void notifychange() {
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 删除
+     */
+    public void remove(int position) {
+        dataList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    /**
+     * 增加
+     */
+    public void add(Object object, int position) {
+        dataList.add(position, object);
+        notifyItemInserted(position);
+    }
+
+    /**
+     * 往后添加数据
+     */
+    public synchronized void addListData(List data) {
+        dataList.addAll(data);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 设置新数据
+     */
+    public void setListData(List data) {
+        dataList = data;
+        lastPosition = -1;
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 获取列表数据
+     */
+    public List getDataList() {
+        return dataList;
+    }
+
+    /**
+     * 设置加载更多的状态
+     */
+    public void setLoadMoreState(NormalLoadMoreHolder.LoadMoreState loadMoreState) {
+        this.loadMoreState = loadMoreState;
+    }
+
+    /**
+     * 获取加载更多的状态
+     */
+    public NormalLoadMoreHolder.LoadMoreState getLoadMoreState() {
+        return loadMoreState;
+    }
+
+    /**
+     * 设置点击
+     */
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.itemClickListener = listener;
+    }
+
+    /**
+     * 设置长按
+     */
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        this.itemLongClickListener = listener;
+    }
+
+    /**
+     * 获取最后一个位置
+     */
+    public int getLastPosition() {
+        return lastPosition;
+    }
+
+    /**
+     * 最后一个的位置
+     */
+    public void setLastPosition(int lastPosition) {
+        this.lastPosition = lastPosition;
+    }
+
+    /**
+     * 是否支持动画
+     */
+    public boolean isNeedAnimation() {
+        return needAnimation;
+    }
+
+    /**
+     * 设置是否需要动画
+     */
+    public void setNeedAnimation(boolean needAnimation) {
+        this.needAnimation = needAnimation;
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+        if (manager instanceof GridLayoutManager) {
+            final GridLayoutManager gridManager = ((GridLayoutManager) manager);
+            gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    return (isFooter(position))
+                            ? gridManager.getSpanCount() : 1;
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
+        if (lp != null
+                && lp instanceof StaggeredGridLayoutManager.LayoutParams
+                && (isFooter(holder.getLayoutPosition()))) {
+            StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
+            p.setFullSpan(true);
+        }
+    }
+
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        //是否显示没有数据页面
+        if (normalAdapterManager.isShowNoData() && dataList != null && dataList.size() == 0) {
+            return normalAdapterManager.getNoDataViewTypeHolder(context, parent);
+        }
+
+        //如果有加载更多
+        if (normalAdapterManager.isSupportLoadMore() && viewType == normalAdapterManager.getLoadMoreId()) {
+            return normalAdapterManager.getLoadMoreViewTypeHolder(context, parent);
+        }
+
+        final RecyclerView.ViewHolder holder = normalAdapterManager.getViewTypeHolder(context, parent, viewType);
+
+        //itemView 的点击事件
+        if (itemClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemClickListener.onItemClick(holder.itemView.getContext(), holder.getPosition());
+                }
+            });
+        }
+
+        if (itemLongClickListener != null) {
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return itemLongClickListener.onItemClick(holder.itemView.getContext(), holder.getPosition());
+                }
+            });
+        }
+
+
+        return holder;
+
+    }
+
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+
+        if (position < 0)
+            return;
+
+        Object model;
+
+        if (normalAdapterManager.isShowNoData() && dataList != null && dataList.size() == 0) {
+            NormalRecyclerBaseHolder recyclerHolder = (NormalRecyclerBaseHolder) holder;
+            recyclerHolder.setAdapter(this);
+            recyclerHolder.onBind(normalAdapterManager.getNoDataObject(), position);
+            return;
+        }
+
+        if (normalAdapterManager.isSupportLoadMore() && position + 1 == getItemCount()) {
+            model = normalAdapterManager.getLoadMoreObject();
+            NormalLoadMoreHolder normalLoadMoreHolder = (NormalLoadMoreHolder) holder;
+            normalLoadMoreHolder.switchLoadMore(model, loadMoreState);
+        } else {
+            model = dataList.get(position);
+        }
+
+        NormalRecyclerBaseHolder recyclerHolder = (NormalRecyclerBaseHolder) holder;
+
+        recyclerHolder.setAdapter(this);
+
+        recyclerHolder.onBind(model, position);
+
+        if (needAnimation && recyclerHolder.getAnimator(recyclerHolder.itemView) != null
+                && position > lastPosition) {
+
+            recyclerHolder.getAnimator(recyclerHolder.itemView).start();
+            lastPosition = position;
+
+        } else if (position > lastPosition) {
+
+            lastPosition = position;
+
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        //如果是显示没有数据，那么也要一个item作为显示
+        if (normalAdapterManager.isShowNoData() && dataList.size() == 0) {
+            return 1;
+        }
+        return (normalAdapterManager.isSupportLoadMore()) ? dataList.size() + 1 : dataList.size();
+
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        //如果位置不对，就返回
+        if (position < 0 || (!normalAdapterManager.isSupportLoadMore() && position > getItemCount() - 1
+                || (normalAdapterManager.isSupportLoadMore() && position > getItemCount())))
+            return 0;
+
+        //如果没有数据，就显示空页面
+        if (normalAdapterManager.isShowNoData() && dataList.size() == 0) {
+            return normalAdapterManager.getNoDataLayoutId();
+        }
+
+        //如果是最后，就加载更多
+        if (normalAdapterManager.isSupportLoadMore() && position + 1 == getItemCount()) {
+            return normalAdapterManager.getLoadMoreId();
+        }
+
+        //返回需要显示的ID
+        Object object = dataList.get(position);
+        List<Integer> modelToId = normalAdapterManager.getModelToId().get(object.getClass().getName());
+        //todo 判断list是不是空的
+        int layoutId = modelToId.get(modelToId.size() - 1);
+        if (normalAdapterManager.getNormalBindDataChooseListener() != null && modelToId.size() > 1) {
+            layoutId = normalAdapterManager.getNormalBindDataChooseListener().
+                    getCurrentDataLayoutId(object, object.getClass(), position, modelToId);
+        }
+
+        if (-1 == layoutId || layoutId == 0 || layoutId == Integer.MAX_VALUE) {
+            try {
+                String error = TAG + " Null LayoutId = " + position + " ： Model Layout Id Error  " + layoutId;
+                Toast.makeText(context, error, Toast.LENGTH_LONG).show();
+                throw new Exception(error);
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        }
+        return layoutId;
+    }
+
+    private boolean isFooter(int position) {
+        if (normalAdapterManager.isSupportLoadMore()) {
+            return position == getItemCount() - 1;
+        } else {
+            return false;
+        }
+    }
+
+}
