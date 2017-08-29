@@ -7,7 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.common.normal.NormalLoadMoreHolder;
+import com.shuyu.normal.NormalLoadMoreHolder;
 
 /**
  * Created by guoshuyu on 2017/8/29.

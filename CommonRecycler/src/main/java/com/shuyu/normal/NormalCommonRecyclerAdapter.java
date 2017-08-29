@@ -1,4 +1,4 @@
-package com.shuyu.common.normal;
+package com.shuyu.normal;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.shuyu.common.listener.OnItemClickListener;
-import com.shuyu.common.listener.OnItemLongClickListener;
+import com.shuyu.listener.OnItemClickListener;
+import com.shuyu.listener.OnItemLongClickListener;
 
 import java.util.List;
 

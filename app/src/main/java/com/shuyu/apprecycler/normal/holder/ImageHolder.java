@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.normal.model.ImageModel;
-import com.shuyu.common.normal.NormalRecyclerBaseHolder;
+import com.shuyu.normal.NormalRecyclerBaseHolder;
 
 /**
  * Created by guoshuyu on 2017/8/29.

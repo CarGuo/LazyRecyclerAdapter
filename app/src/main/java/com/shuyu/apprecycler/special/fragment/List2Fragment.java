@@ -16,7 +16,7 @@ import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.special.utils.DataUtils;
 import com.shuyu.common.CommonRecyclerAdapter;
 import com.shuyu.common.CommonRecyclerManager;
-import com.shuyu.common.listener.OnItemClickListener;
+import com.shuyu.listener.OnItemClickListener;
 import com.shuyu.common.model.RecyclerBaseModel;
 import com.shuyu.apprecycler.special.holder.ClickHolder;
 import com.shuyu.apprecycler.special.holder.ImageHolder;

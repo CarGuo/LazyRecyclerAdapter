@@ -1,4 +1,4 @@
-package com.shuyu.common.normal;
+package com.shuyu.normal;
 
 import android.content.Context;
 import android.util.Log;
