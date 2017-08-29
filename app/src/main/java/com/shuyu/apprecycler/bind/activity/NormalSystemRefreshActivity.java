@@ -13,8 +13,8 @@ import com.shuyu.apprecycler.bind.holder.BindLoadMoreHolder;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
 import com.shuyu.apprecycler.bind.holder.BindClickHolder;
 import com.shuyu.apprecycler.bind.holder.BindImageHolder;
-import com.shuyu.apprecycler.bind.holder.MutliHolder;
-import com.shuyu.apprecycler.bind.holder.TextHolder;
+import com.shuyu.apprecycler.bind.holder.BindMutliHolder;
+import com.shuyu.apprecycler.bind.holder.BindTextHolder;
 import com.shuyu.apprecycler.bind.model.ClickModel;
 import com.shuyu.apprecycler.bind.model.ImageModel;
 import com.shuyu.apprecycler.bind.model.MutliModel;
@@ -69,10 +69,10 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
 
         //注意，一个manager中，一个id只能绑定一个holder
         //一个model class可以绑定多对id + Holder
-        normalAdapterManager.bind(TextModel.class, TextHolder.ID, TextHolder.class)
+        normalAdapterManager.bind(TextModel.class, BindTextHolder.ID, BindTextHolder.class)
                 .bind(ImageModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(MutliModel.class, BindImageHolder.ID, BindImageHolder.class)
-                .bind(MutliModel.class, MutliHolder.ID, MutliHolder.class)
+                .bind(MutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
                 .bind(ClickModel.class, BindClickHolder.ID, BindClickHolder.class)
                 .bindLoadMore(BindLoadMoreHolder.LoadMoreModel.class, BindLoadMoreHolder.ID, BindLoadMoreHolder.class)
                 .bingChooseListener(new NormalBindDataChooseListener() {
@@ -81,7 +81,7 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
                         if (object instanceof MutliModel && ids.size() > 1) {
                             MutliModel mutliModel = (MutliModel) object;
                             if (mutliModel.getType() > 1) {
-                                return MutliHolder.ID;
+                                return BindMutliHolder.ID;
                             } else {
                                 return BindImageHolder.ID;
                             }

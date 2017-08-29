@@ -11,13 +11,13 @@ import com.shuyu.bind.NormalRecyclerBaseHolder;
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class TextHolder extends NormalRecyclerBaseHolder {
+public class BindTextHolder extends NormalRecyclerBaseHolder {
 
     public final static int ID = R.layout.text_item;
 
     TextView itemText;
 
-    public TextHolder(Context context, View v) {
+    public BindTextHolder(Context context, View v) {
         super(context, v);
     }
 

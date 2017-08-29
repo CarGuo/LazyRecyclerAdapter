@@ -14,8 +14,8 @@ import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
 import com.shuyu.apprecycler.bind.holder.BindClickHolder;
 import com.shuyu.apprecycler.bind.holder.BindImageHolder;
-import com.shuyu.apprecycler.bind.holder.MutliHolder;
-import com.shuyu.apprecycler.bind.holder.TextHolder;
+import com.shuyu.apprecycler.bind.holder.BindMutliHolder;
+import com.shuyu.apprecycler.bind.holder.BindTextHolder;
 import com.shuyu.apprecycler.bind.model.ClickModel;
 import com.shuyu.apprecycler.bind.model.ImageModel;
 import com.shuyu.apprecycler.bind.model.MutliModel;
@@ -80,8 +80,8 @@ public class GridXRecyclerActivity extends AppCompatActivity {
         NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
         normalAdapterManager
                 .bind(ImageModel.class, BindImageHolder.ID, BindImageHolder.class)
-                .bind(TextModel.class, TextHolder.ID, TextHolder.class)
-                .bind(MutliModel.class, MutliHolder.ID, MutliHolder.class)
+                .bind(TextModel.class, BindTextHolder.ID, BindTextHolder.class)
+                .bind(MutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
                 .bind(ClickModel.class, BindClickHolder.ID, BindClickHolder.class);
 
         //初始化通用管理器

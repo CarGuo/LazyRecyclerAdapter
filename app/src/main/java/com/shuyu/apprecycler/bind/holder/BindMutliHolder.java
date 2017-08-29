@@ -12,7 +12,7 @@ import com.shuyu.bind.NormalRecyclerBaseHolder;
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class MutliHolder extends NormalRecyclerBaseHolder {
+public class BindMutliHolder extends NormalRecyclerBaseHolder {
 
     public final static int ID = R.layout.mutil_item;
 
@@ -20,7 +20,7 @@ public class MutliHolder extends NormalRecyclerBaseHolder {
 
     ImageView itemImage2;
 
-    public MutliHolder(Context context, View v) {
+    public BindMutliHolder(Context context, View v) {
         super(context, v);
     }
 

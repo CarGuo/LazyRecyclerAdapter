@@ -11,11 +11,11 @@ import com.shuyu.bind.NormalRecyclerBaseHolder;
  * 没有数据
  */
 
-public class NoDataHolder extends NormalRecyclerBaseHolder {
+public class BindNoDataHolder extends NormalRecyclerBaseHolder {
 
     public final static int ID = R.layout.no_data;
 
-    public NoDataHolder(Context context, View v) {
+    public BindNoDataHolder(Context context, View v) {
         super(context, v);
     }
 
