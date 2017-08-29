@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
+ * 必须继承的BaseHolder
  * Created by Guo on 2015/11/23.
  */
 public abstract class NormalBindRecyclerBaseHolder extends RecyclerView.ViewHolder {

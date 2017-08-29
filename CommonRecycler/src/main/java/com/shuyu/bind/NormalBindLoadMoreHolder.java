@@ -4,12 +4,13 @@ import android.content.Context;
 import android.view.View;
 
 /**
+ * 普通recycler加载更多的基类holder
  * Created by guoshuyu on 2017/8/29.
  */
 
 public abstract class NormalBindLoadMoreHolder extends NormalBindRecyclerBaseHolder {
 
-    public enum LoadMoreState{
+    public enum LoadMoreState {
         LOAD_MORE_STATE,
         NULL_DATA_STATE,
         FAIL_STATE
@@ -34,10 +35,17 @@ public abstract class NormalBindLoadMoreHolder extends NormalBindRecyclerBaseHol
         }
     }
 
+    /**
+     * 加载中
+     */
     public abstract void loadingState(Object object);
-
+    /**
+     * 已经全部加载
+     */
     public abstract void loadedAllState(Object object);
-
+    /**
+     * 加载失败
+     */
     public abstract void loadedFailState(Object object);
 
 }

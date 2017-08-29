@@ -9,6 +9,7 @@ import com.shuyu.bind.NormalBindRecyclerBaseHolder;
 import com.shuyu.common.R;
 
 /**
+ * 数据为绑定等错误提示
  * Created by guoshuyu on 2017/8/29.
  */
 

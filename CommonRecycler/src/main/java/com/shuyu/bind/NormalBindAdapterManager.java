@@ -165,6 +165,7 @@ public class NormalBindAdapterManager {
     /**
      * 创建正常数据的holder
      */
+    @SuppressWarnings("all")
     NormalBindRecyclerBaseHolder getViewTypeHolder(Context context, ViewGroup parent, int viewType) {
         Class<? extends NormalBindRecyclerBaseHolder> idToHolder = getIdToHolder().get(viewType);
 
@@ -183,6 +184,7 @@ public class NormalBindAdapterManager {
     /**
      * 创建空数据的holder
      */
+    @SuppressWarnings("all")
     NormalBindRecyclerBaseHolder getNoDataViewTypeHolder(Context context, ViewGroup parent) {
         Constructor object;
         try {
@@ -199,6 +201,7 @@ public class NormalBindAdapterManager {
     /**
      * 创建加载更多的holder
      */
+    @SuppressWarnings("all")
     NormalBindLoadMoreHolder getLoadMoreViewTypeHolder(Context context, ViewGroup parent) {
         Constructor object;
         try {

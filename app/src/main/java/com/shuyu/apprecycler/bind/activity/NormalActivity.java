@@ -94,7 +94,6 @@ public class NormalActivity extends AppCompatActivity {
 
     public void initDatas() {
         List list = BindDataUtils.getRefreshData();
-        list.add(new ImageModel());
         this.datas = list;
         if (adapter != null) {
             adapter.setListData(datas);

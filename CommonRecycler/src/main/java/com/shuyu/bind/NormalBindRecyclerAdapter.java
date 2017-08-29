@@ -16,7 +16,7 @@ import com.shuyu.bind.listener.OnItemLongClickListener;
 import java.util.List;
 
 /**
- * 普通的通用adapter
+ * 通用绑定的adapter
  */
 public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
 
@@ -69,6 +69,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     /**
      * 增加
      */
+    @SuppressWarnings("unchecked")
     public void add(Object object, int position) {
         dataList.add(position, object);
         notifyItemInserted(position);
@@ -77,6 +78,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     /**
      * 往后添加数据
      */
+    @SuppressWarnings("unchecked")
     public synchronized void addListData(List data) {
         dataList.addAll(data);
         notifyDataSetChanged();
@@ -171,6 +173,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
