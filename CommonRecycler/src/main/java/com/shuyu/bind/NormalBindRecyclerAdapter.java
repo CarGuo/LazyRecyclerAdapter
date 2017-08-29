@@ -35,7 +35,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     private OnItemLongClickListener itemLongClickListener;
 
     //加载状态
-    private NormalLoadMoreHolder.LoadMoreState loadMoreState = NormalLoadMoreHolder.LoadMoreState.LOAD_MORE_STATE;
+    private NormalBindLoadMoreHolder.LoadMoreState loadMoreState = NormalBindLoadMoreHolder.LoadMoreState.LOAD_MORE_STATE;
 
     //是否支持动画
     private boolean needAnimation = false;
@@ -99,14 +99,14 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     /**
      * 设置加载更多的状态
      */
-    public void setLoadMoreState(NormalLoadMoreHolder.LoadMoreState loadMoreState) {
+    public void setLoadMoreState(NormalBindLoadMoreHolder.LoadMoreState loadMoreState) {
         this.loadMoreState = loadMoreState;
     }
 
     /**
      * 获取加载更多的状态
      */
-    public NormalLoadMoreHolder.LoadMoreState getLoadMoreState() {
+    public NormalBindLoadMoreHolder.LoadMoreState getLoadMoreState() {
         return loadMoreState;
     }
 
@@ -229,7 +229,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
         Object model;
 
         if (normalAdapterManager.isShowNoData() && dataList != null && dataList.size() == 0) {
-            NormalRecyclerBaseHolder recyclerHolder = (NormalRecyclerBaseHolder) holder;
+            NormalBindRecyclerBaseHolder recyclerHolder = (NormalBindRecyclerBaseHolder) holder;
             recyclerHolder.setAdapter(this);
             recyclerHolder.onBind(normalAdapterManager.getNoDataObject(), position);
             return;
@@ -237,13 +237,13 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
 
         if (normalAdapterManager.isSupportLoadMore() && position + 1 == getItemCount()) {
             model = normalAdapterManager.getLoadMoreObject();
-            NormalLoadMoreHolder normalLoadMoreHolder = (NormalLoadMoreHolder) holder;
+            NormalBindLoadMoreHolder normalLoadMoreHolder = (NormalBindLoadMoreHolder) holder;
             normalLoadMoreHolder.switchLoadMore(model, loadMoreState);
         } else {
             model = dataList.get(position);
         }
 
-        NormalRecyclerBaseHolder recyclerHolder = (NormalRecyclerBaseHolder) holder;
+        NormalBindRecyclerBaseHolder recyclerHolder = (NormalBindRecyclerBaseHolder) holder;
 
         recyclerHolder.setAdapter(this);
 

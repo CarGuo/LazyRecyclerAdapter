@@ -8,13 +8,13 @@ import android.view.View;
 /**
  * Created by Guo on 2015/11/23.
  */
-public abstract class NormalRecyclerBaseHolder extends RecyclerView.ViewHolder {
+public abstract class NormalBindRecyclerBaseHolder extends RecyclerView.ViewHolder {
 
     protected Context context = null;
 
     protected NormalBindRecyclerAdapter normalCommonRecyclerAdapter = null;
 
-    public NormalRecyclerBaseHolder(Context context, View v) {
+    public NormalBindRecyclerBaseHolder(Context context, View v) {
         super(v);
         createView(v);
         this.context = context;

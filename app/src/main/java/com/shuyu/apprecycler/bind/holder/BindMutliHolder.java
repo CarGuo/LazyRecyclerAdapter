@@ -6,13 +6,13 @@ import android.widget.ImageView;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
-import com.shuyu.bind.NormalRecyclerBaseHolder;
+import com.shuyu.bind.NormalBindRecyclerBaseHolder;
 
 /**
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class BindMutliHolder extends NormalRecyclerBaseHolder {
+public class BindMutliHolder extends NormalBindRecyclerBaseHolder {
 
     public final static int ID = R.layout.mutil_item;
 

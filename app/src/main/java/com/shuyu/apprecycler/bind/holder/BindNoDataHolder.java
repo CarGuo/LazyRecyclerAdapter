@@ -4,14 +4,14 @@ import android.content.Context;
 import android.view.View;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.bind.NormalRecyclerBaseHolder;
+import com.shuyu.bind.NormalBindRecyclerBaseHolder;
 
 /**
  * Created by shuyu on 2016/11/23.
  * 没有数据
  */
 
-public class BindNoDataHolder extends NormalRecyclerBaseHolder {
+public class BindNoDataHolder extends NormalBindRecyclerBaseHolder {
 
     public final static int ID = R.layout.no_data;
 

@@ -7,13 +7,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.bind.NormalLoadMoreHolder;
+import com.shuyu.bind.NormalBindLoadMoreHolder;
 
 /**
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class BindLoadMoreHolder extends NormalLoadMoreHolder {
+public class BindLoadMoreHolder extends NormalBindLoadMoreHolder {
 
     public static final int ID = R.layout.load_more;
 

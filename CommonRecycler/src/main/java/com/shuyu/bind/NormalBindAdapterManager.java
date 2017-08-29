@@ -24,7 +24,7 @@ public class NormalBindAdapterManager {
     private HashMap<String, List<Integer>> modelToId = new HashMap<>();
 
     //根据id类名绑定holder
-    private HashMap<Integer, Class<? extends NormalRecyclerBaseHolder>> idToHolder = new HashMap<>();
+    private HashMap<Integer, Class<? extends NormalBindRecyclerBaseHolder>> idToHolder = new HashMap<>();
 
     //没有数据的布局id
     private int noDataLayoutId = -1;
@@ -39,10 +39,10 @@ public class NormalBindAdapterManager {
     private Object loadmoreObject;
 
     //加载更多的holder
-    private Class<? extends NormalLoadMoreHolder> loadmoreHolder;
+    private Class<? extends NormalBindLoadMoreHolder> loadmoreHolder;
 
     //没有数据的holder
-    private Class<? extends NormalRecyclerBaseHolder> noDataHolder;
+    private Class<? extends NormalBindRecyclerBaseHolder> noDataHolder;
 
     //一个model对应多种Holder的数据的筛选，不设置默认使用最后一个
     private NormalBindDataChooseListener normalBindDataChooseListener;
@@ -54,7 +54,7 @@ public class NormalBindAdapterManager {
      * @param layoutId    布局id，一个manager中，一个id只能对应一个holder。
      * @param holderClass holder类名，一个manager中，一个holder只能对应一个id。
      */
-    public NormalBindAdapterManager bind(Class modelClass, int layoutId, Class<? extends NormalRecyclerBaseHolder> holderClass) {
+    public NormalBindAdapterManager bind(Class modelClass, int layoutId, Class<? extends NormalBindRecyclerBaseHolder> holderClass) {
 
         if (!modelToId.containsKey(modelClass.getName())) {
             List<Integer> list = new ArrayList<>();
@@ -82,7 +82,7 @@ public class NormalBindAdapterManager {
      * @param layoutId    布局id
      * @param holderClass holder类名
      */
-    public NormalBindAdapterManager bindEmpty(Object noDataModel, int layoutId, Class<? extends NormalRecyclerBaseHolder> holderClass) {
+    public NormalBindAdapterManager bindEmpty(Object noDataModel, int layoutId, Class<? extends NormalBindRecyclerBaseHolder> holderClass) {
         noDataHolder = holderClass;
         noDataObject = noDataModel;
         noDataLayoutId = layoutId;
@@ -96,7 +96,7 @@ public class NormalBindAdapterManager {
      * @param layoutId      布局id
      * @param holderClass   holder类名
      */
-    public NormalBindAdapterManager bindLoadMore(Object loadMoreModel, int layoutId, Class<? extends NormalLoadMoreHolder> holderClass) {
+    public NormalBindAdapterManager bindLoadMore(Object loadMoreModel, int layoutId, Class<? extends NormalBindLoadMoreHolder> holderClass) {
         loadmoreId = layoutId;
         loadmoreHolder = holderClass;
         loadmoreObject = loadMoreModel;
@@ -116,7 +116,7 @@ public class NormalBindAdapterManager {
         return modelToId;
     }
 
-    HashMap<Integer, Class<? extends NormalRecyclerBaseHolder>> getIdToHolder() {
+    HashMap<Integer, Class<? extends NormalBindRecyclerBaseHolder>> getIdToHolder() {
         return idToHolder;
     }
 
@@ -128,11 +128,11 @@ public class NormalBindAdapterManager {
         return loadmoreObject;
     }
 
-    Class<? extends NormalRecyclerBaseHolder> getNoDataHolder() {
+    Class<? extends NormalBindRecyclerBaseHolder> getNoDataHolder() {
         return noDataHolder;
     }
 
-    Class<? extends NormalLoadMoreHolder> getLoadMoreHolder() {
+    Class<? extends NormalBindLoadMoreHolder> getLoadMoreHolder() {
         return loadmoreHolder;
     }
 
@@ -165,15 +165,15 @@ public class NormalBindAdapterManager {
     /**
      * 创建正常数据的holder
      */
-    NormalRecyclerBaseHolder getViewTypeHolder(Context context, ViewGroup parent, int viewType) {
-        Class<? extends NormalRecyclerBaseHolder> idToHolder = getIdToHolder().get(viewType);
+    NormalBindRecyclerBaseHolder getViewTypeHolder(Context context, ViewGroup parent, int viewType) {
+        Class<? extends NormalBindRecyclerBaseHolder> idToHolder = getIdToHolder().get(viewType);
 
         Constructor object = null;
         try {
             View v = LayoutInflater.from(context).inflate(viewType, parent, false);
             object = idToHolder.getDeclaredConstructor(new Class[]{Context.class, View.class});
             object.setAccessible(true);
-            return (NormalRecyclerBaseHolder) object.newInstance(context, v);
+            return (NormalBindRecyclerBaseHolder) object.newInstance(context, v);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -183,13 +183,13 @@ public class NormalBindAdapterManager {
     /**
      * 创建空数据的holder
      */
-    NormalRecyclerBaseHolder getNoDataViewTypeHolder(Context context, ViewGroup parent) {
+    NormalBindRecyclerBaseHolder getNoDataViewTypeHolder(Context context, ViewGroup parent) {
         Constructor object;
         try {
             View v = LayoutInflater.from(context).inflate(noDataLayoutId, parent, false);
             object = getNoDataHolder().getDeclaredConstructor(new Class[]{Context.class, View.class});
             object.setAccessible(true);
-            return (NormalRecyclerBaseHolder) object.newInstance(context, v);
+            return (NormalBindRecyclerBaseHolder) object.newInstance(context, v);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -199,13 +199,13 @@ public class NormalBindAdapterManager {
     /**
      * 创建加载更多的holder
      */
-    NormalLoadMoreHolder getLoadMoreViewTypeHolder(Context context, ViewGroup parent) {
+    NormalBindLoadMoreHolder getLoadMoreViewTypeHolder(Context context, ViewGroup parent) {
         Constructor object;
         try {
             View v = LayoutInflater.from(context).inflate(loadmoreId, parent, false);
             object = getLoadMoreHolder().getDeclaredConstructor(new Class[]{Context.class, View.class});
             object.setAccessible(true);
-            return (NormalLoadMoreHolder) object.newInstance(context, v);
+            return (NormalBindLoadMoreHolder) object.newInstance(context, v);
         } catch (Exception e) {
             e.printStackTrace();
         }

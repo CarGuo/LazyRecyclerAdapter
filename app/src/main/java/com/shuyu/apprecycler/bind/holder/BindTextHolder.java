@@ -6,12 +6,12 @@ import android.widget.TextView;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
-import com.shuyu.bind.NormalRecyclerBaseHolder;
+import com.shuyu.bind.NormalBindRecyclerBaseHolder;
 /**
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class BindTextHolder extends NormalRecyclerBaseHolder {
+public class BindTextHolder extends NormalBindRecyclerBaseHolder {
 
     public final static int ID = R.layout.text_item;
 

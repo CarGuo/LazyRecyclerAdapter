@@ -7,7 +7,7 @@ import android.view.View;
  * Created by guoshuyu on 2017/8/29.
  */
 
-public abstract class NormalLoadMoreHolder extends NormalRecyclerBaseHolder {
+public abstract class NormalBindLoadMoreHolder extends NormalBindRecyclerBaseHolder {
 
     public enum LoadMoreState{
         LOAD_MORE_STATE,
@@ -16,7 +16,7 @@ public abstract class NormalLoadMoreHolder extends NormalRecyclerBaseHolder {
     }
 
 
-    public NormalLoadMoreHolder(Context context, View v) {
+    public NormalBindLoadMoreHolder(Context context, View v) {
         super(context, v);
     }
 
