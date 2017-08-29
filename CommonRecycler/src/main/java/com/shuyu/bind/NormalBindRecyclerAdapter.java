@@ -4,10 +4,12 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.shuyu.bind.holder.NormalBindErrorHolder;
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.listener.OnItemLongClickListener;
 
@@ -184,6 +186,12 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+        //错误数据
+        if (viewType == NormalBindErrorHolder.ID) {
+            View v = LayoutInflater.from(context).inflate(NormalBindErrorHolder.ID, parent, false);
+            return new NormalBindErrorHolder(context, v);
+        }
+
         //是否显示没有数据页面
         if (normalAdapterManager.isShowNoData() && dataList != null && dataList.size() == 0) {
             return normalAdapterManager.getNoDataViewTypeHolder(context, parent);
@@ -243,6 +251,13 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
             model = dataList.get(position);
         }
 
+
+        if (holder instanceof NormalBindErrorHolder) {
+            ((NormalBindErrorHolder) (holder)).onBind(model, position);
+            return;
+        }
+
+
         NormalBindRecyclerBaseHolder recyclerHolder = (NormalBindRecyclerBaseHolder) holder;
 
         recyclerHolder.setAdapter(this);
@@ -293,22 +308,19 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
         //返回需要显示的ID
         Object object = dataList.get(position);
         List<Integer> modelToId = normalAdapterManager.getModelToId().get(object.getClass().getName());
-        //todo 判断list是不是空的,返回一种空类型，对应holder 创建提醒用户
+
+
+        if (modelToId == null || modelToId.size() == 0) {
+            return NormalBindErrorHolder.ID;
+        }
+
         int layoutId = modelToId.get(modelToId.size() - 1);
         if (normalAdapterManager.getNormalBindDataChooseListener() != null && modelToId.size() > 1) {
             layoutId = normalAdapterManager.getNormalBindDataChooseListener().
                     getCurrentDataLayoutId(object, object.getClass(), position, modelToId);
         }
-
         if (-1 == layoutId || layoutId == 0 || layoutId == Integer.MAX_VALUE) {
-            try {
-                String error = TAG + " Null LayoutId = " + position + " ： Model Layout Id Error  " + layoutId;
-                Toast.makeText(context, error, Toast.LENGTH_LONG).show();
-                throw new Exception(error);
-            } catch (Exception e) {
-                e.printStackTrace();
-
-            }
+            return NormalBindErrorHolder.ID;
         }
         return layoutId;
     }
