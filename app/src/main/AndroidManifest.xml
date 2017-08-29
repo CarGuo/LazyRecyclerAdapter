@@ -56,8 +56,42 @@
         <activity
             android:name=".special.activity.GridSystemRefreshActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".normal.activity.NormalSystemRefreshActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".normal.activity.NormalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".normal.activity.SystemRefreshActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".normal.activity.StaggeredSystemRefreshActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".normal.activity.NormalXRecyclerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".normal.activity.RefreshXRecyclerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".normal.activity.StaggeredXRecyclerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".normal.activity.CustomXRecyclerRefreshActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".normal.activity.NormalEmptyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".normal.activity.XRecyclerEmptyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".normal.activity.GridXRecyclerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".normal.activity.GridSystemRefreshActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".normal.NormalHomeActivity"

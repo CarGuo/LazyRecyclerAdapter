@@ -82,7 +82,7 @@ public class NormalAdapterManager {
      * @param layoutId    布局id
      * @param holderClass holder类名
      */
-    public NormalAdapterManager bindEmpty(Object noDataModel, int layoutId, Class<NormalRecyclerBaseHolder> holderClass) {
+    public NormalAdapterManager bindEmpty(Object noDataModel, int layoutId, Class<? extends NormalRecyclerBaseHolder> holderClass) {
         noDataHolder = holderClass;
         noDataObject = noDataModel;
         noDataLayoutId = layoutId;

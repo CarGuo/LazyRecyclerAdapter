@@ -17,8 +17,18 @@ public class DataUtils {
 
     public static List<String> getHomeList() {
         List<String> list = new ArrayList<>();
+
         list.add("普通列表 不刷新");
         list.add("普通列表 + 系统下拉 + Adapter上拉");
+        list.add("瀑布流 + 系统下拉 + Adapter上拉");
+        list.add("普通列表 xRecycler 不刷新");
+        list.add("普通列表 + XRecycler + 上下拉");
+        list.add("瀑布流 + XRecycler + 上下拉");
+        list.add("瀑布流 + XRecycler + 自定义上下拉");
+        list.add("adapter 实现空页面");
+        list.add("XRecycler 实现空页面");
+        list.add("Grid + XRecycler + 上下拉");
+        list.add("Grid + 普通上下拉");
         return list;
     }
 

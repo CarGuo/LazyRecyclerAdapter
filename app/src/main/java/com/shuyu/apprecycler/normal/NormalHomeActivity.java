@@ -10,7 +10,17 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.shuyu.apprecycler.R;
+import com.shuyu.apprecycler.normal.activity.CustomXRecyclerRefreshActivity;
+import com.shuyu.apprecycler.normal.activity.GridXRecyclerActivity;
+import com.shuyu.apprecycler.normal.activity.NormalActivity;
+import com.shuyu.apprecycler.normal.activity.NormalEmptyActivity;
 import com.shuyu.apprecycler.normal.activity.NormalSystemRefreshActivity;
+import com.shuyu.apprecycler.normal.activity.NormalXRecyclerActivity;
+import com.shuyu.apprecycler.normal.activity.RefreshXRecyclerActivity;
+import com.shuyu.apprecycler.normal.activity.StaggeredSystemRefreshActivity;
+import com.shuyu.apprecycler.normal.activity.StaggeredXRecyclerActivity;
+import com.shuyu.apprecycler.normal.activity.SystemRefreshActivity;
+import com.shuyu.apprecycler.normal.activity.XRecyclerEmptyActivity;
 import com.shuyu.apprecycler.normal.utils.DataUtils;
 
 import butterknife.ButterKnife;
@@ -42,16 +52,16 @@ public class NormalHomeActivity extends AppCompatActivity implements ListView.On
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case 0: {
-                Intent intent = new Intent(NormalHomeActivity.this, NormalSystemRefreshActivity.class);
+                Intent intent = new Intent(NormalHomeActivity.this, NormalActivity.class);
                 startActivity(intent);
                 break;
             }
             case 1: {
-                Intent intent = new Intent(NormalHomeActivity.this, NormalSystemRefreshActivity.class);
+                Intent intent = new Intent(NormalHomeActivity.this, SystemRefreshActivity.class);
                 startActivity(intent);
                 break;
             }
-            /*case 2: {
+            case 2: {
                 Intent intent = new Intent(NormalHomeActivity.this, StaggeredSystemRefreshActivity.class);
                 startActivity(intent);
                 break;
@@ -77,30 +87,25 @@ public class NormalHomeActivity extends AppCompatActivity implements ListView.On
                 break;
             }
             case 7: {
-                Intent intent = new Intent(NormalHomeActivity.this, ViewPagerActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case 8: {
                 Intent intent = new Intent(NormalHomeActivity.this, NormalEmptyActivity.class);
                 startActivity(intent);
                 break;
             }
-            case 9: {
+            case 8: {
                 Intent intent = new Intent(NormalHomeActivity.this, XRecyclerEmptyActivity.class);
                 startActivity(intent);
                 break;
             }
-            case 10: {
+            case 9: {
                 Intent intent = new Intent(NormalHomeActivity.this, GridXRecyclerActivity.class);
                 startActivity(intent);
                 break;
             }
-            case 11: {
+            case 10: {
                 Intent intent = new Intent(NormalHomeActivity.this, NormalSystemRefreshActivity.class);
                 startActivity(intent);
                 break;
-            }*/
+            }
         }
     }
 }
