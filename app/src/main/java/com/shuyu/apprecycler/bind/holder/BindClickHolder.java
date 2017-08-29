@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.bind.model.ClickModel;
+import com.shuyu.apprecycler.bind.model.BindClickModel;
 import com.shuyu.bind.NormalRecyclerBaseHolder;
 
 /**
@@ -29,7 +29,7 @@ public class BindClickHolder extends NormalRecyclerBaseHolder {
 
     @Override
     public void onBind(Object model, int position) {
-        ClickModel clickModel = (ClickModel) model;
+        BindClickModel clickModel = (BindClickModel) model;
         itemButton.setText(clickModel.getBtnText());
     }
 }

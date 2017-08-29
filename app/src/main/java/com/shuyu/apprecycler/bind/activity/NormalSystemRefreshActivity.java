@@ -15,10 +15,10 @@ import com.shuyu.apprecycler.bind.holder.BindClickHolder;
 import com.shuyu.apprecycler.bind.holder.BindImageHolder;
 import com.shuyu.apprecycler.bind.holder.BindMutliHolder;
 import com.shuyu.apprecycler.bind.holder.BindTextHolder;
-import com.shuyu.apprecycler.bind.model.ClickModel;
-import com.shuyu.apprecycler.bind.model.ImageModel;
-import com.shuyu.apprecycler.bind.model.MutliModel;
-import com.shuyu.apprecycler.bind.model.TextModel;
+import com.shuyu.apprecycler.bind.model.BindClickModel;
+import com.shuyu.apprecycler.bind.model.BindImageModel;
+import com.shuyu.apprecycler.bind.model.BindMutliModel;
+import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
 import com.shuyu.bind.NormalBindAdapterManager;
 import com.shuyu.bind.NormalBindRecyclerAdapter;
@@ -69,17 +69,17 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
 
         //注意，一个manager中，一个id只能绑定一个holder
         //一个model class可以绑定多对id + Holder
-        normalAdapterManager.bind(TextModel.class, BindTextHolder.ID, BindTextHolder.class)
-                .bind(ImageModel.class, BindImageHolder.ID, BindImageHolder.class)
-                .bind(MutliModel.class, BindImageHolder.ID, BindImageHolder.class)
-                .bind(MutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
-                .bind(ClickModel.class, BindClickHolder.ID, BindClickHolder.class)
+        normalAdapterManager.bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
+                .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
+                .bind(BindMutliModel.class, BindImageHolder.ID, BindImageHolder.class)
+                .bind(BindMutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
+                .bind(BindClickModel.class, BindClickHolder.ID, BindClickHolder.class)
                 .bindLoadMore(BindLoadMoreHolder.LoadMoreModel.class, BindLoadMoreHolder.ID, BindLoadMoreHolder.class)
                 .bingChooseListener(new NormalBindDataChooseListener() {
                     @Override
                     public int getCurrentDataLayoutId(Object object, Class classType, int position, List<Integer> ids) {
-                        if (object instanceof MutliModel && ids.size() > 1) {
-                            MutliModel mutliModel = (MutliModel) object;
+                        if (object instanceof BindMutliModel && ids.size() > 1) {
+                            BindMutliModel mutliModel = (BindMutliModel) object;
                             if (mutliModel.getType() > 1) {
                                 return BindMutliHolder.ID;
                             } else {
@@ -164,21 +164,21 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
     private void refresh() {
         List list = BindDataUtils.getRefreshData();
 
-        MutliModel mutliModel = new MutliModel();
+        BindMutliModel mutliModel = new BindMutliModel();
 
         mutliModel.setResId(R.drawable.a1);
         mutliModel.setRes2(R.drawable.a2);
         mutliModel.setType(1);
         list.add(0, mutliModel);
 
-        mutliModel = new MutliModel();
+        mutliModel = new BindMutliModel();
 
         mutliModel.setResId(R.drawable.a1);
         mutliModel.setRes2(R.drawable.a2);
         mutliModel.setType(2);
         list.add(1, mutliModel);
 
-        mutliModel = new MutliModel();
+        mutliModel = new BindMutliModel();
 
         mutliModel.setResId(R.drawable.a1);
         mutliModel.setRes2(R.drawable.a2);
@@ -186,7 +186,7 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
         list.add(4, mutliModel);
 
 
-        mutliModel = new MutliModel();
+        mutliModel = new BindMutliModel();
         mutliModel.setResId(R.drawable.a1);
         mutliModel.setRes2(R.drawable.a2);
         mutliModel.setType(2);

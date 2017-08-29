@@ -2,9 +2,9 @@ package com.shuyu.apprecycler.bind.utils;
 
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.bind.model.ClickModel;
-import com.shuyu.apprecycler.bind.model.ImageModel;
-import com.shuyu.apprecycler.bind.model.TextModel;
+import com.shuyu.apprecycler.bind.model.BindClickModel;
+import com.shuyu.apprecycler.bind.model.BindImageModel;
+import com.shuyu.apprecycler.bind.model.BindTextModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,58 +37,58 @@ public class BindDataUtils {
 
         List list = new ArrayList<>();
 
-        ImageModel imageModel = new ImageModel();
+        BindImageModel imageModel = new BindImageModel();
         imageModel.setResId(R.drawable.a1);
         list.add(imageModel);
 
-        TextModel textModel = new TextModel();
+        BindTextModel textModel = new BindTextModel();
         textModel.setText("你这个老司机，说好的文本呢1");
         list.add(textModel);
 
-        imageModel = new ImageModel();
+        imageModel = new BindImageModel();
         imageModel.setResId(R.drawable.a2);
         list.add(imageModel);
 
-        ClickModel clickModel = new ClickModel();
+        BindClickModel clickModel = new BindClickModel();
         clickModel.setBtnText("我是老按键，按啊按啊按啊····");
         list.add(clickModel);
 
 
-        textModel = new TextModel();
+        textModel = new BindTextModel();
         textModel.setText("你这个老司机，说好的文本呢1");
         list.add(textModel);
 
-        imageModel = new ImageModel();
+        imageModel = new BindImageModel();
         imageModel.setResId(R.drawable.a1);
         list.add(imageModel);
 
-        clickModel = new ClickModel();
+        clickModel = new BindClickModel();
         clickModel.setBtnText("我是老按键，按啊按啊按啊····");
         list.add(clickModel);
 
-        imageModel = new ImageModel();
+        imageModel = new BindImageModel();
         imageModel.setResId(R.drawable.a2);
         list.add(imageModel);
 
-        textModel = new TextModel();
+        textModel = new BindTextModel();
         textModel.setText("你这个老司机，说好的文本呢1");
         list.add(textModel);
 
-        imageModel = new ImageModel();
+        imageModel = new BindImageModel();
         imageModel.setResId(R.drawable.a1);
         list.add(imageModel);
 
 
-        clickModel = new ClickModel();
+        clickModel = new BindClickModel();
         clickModel.setBtnText("我是老按键，按啊按啊按啊····");
         list.add(clickModel);
 
 
-        textModel = new TextModel();
+        textModel = new BindTextModel();
         textModel.setText("你这个老司机，说好的文本呢1");
         list.add(textModel);
 
-        clickModel = new ClickModel();
+        clickModel = new BindClickModel();
         clickModel.setBtnText("我是老按键，按啊按啊按啊····");
         list.add(clickModel);
 
@@ -100,20 +100,20 @@ public class BindDataUtils {
         for (int i = 0; i < datas.size(); i++) {
             Object object = datas.get(i);
             Object newModel;
-            if (object instanceof ClickModel) {
-                newModel = new ClickModel();
-                ClickModel clickModel = (ClickModel) newModel;
+            if (object instanceof BindClickModel) {
+                newModel = new BindClickModel();
+                BindClickModel clickModel = (BindClickModel) newModel;
                 clickModel.setBtnText("我就老按键哈哈哈哈！！！！！ " + i);
                 list.add(newModel);
-            } else if (object instanceof TextModel) {
-                newModel = new TextModel();
-                TextModel textModel = (TextModel) newModel;
+            } else if (object instanceof BindTextModel) {
+                newModel = new BindTextModel();
+                BindTextModel textModel = (BindTextModel) newModel;
                 textModel.setText("我就老文本哈哈哈哈！！！！！ " + i);
                 list.add(newModel);
-            } else if (object instanceof ImageModel) {
-                newModel = new ImageModel();
-                ImageModel imageModel = (ImageModel) newModel;
-                imageModel.setResId(((ImageModel) object).getResId());
+            } else if (object instanceof BindImageModel) {
+                newModel = new BindImageModel();
+                BindImageModel imageModel = (BindImageModel) newModel;
+                imageModel.setResId(((BindImageModel) object).getResId());
                 list.add(newModel);
             }
         }

@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.bind.model.TextModel;
+import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.bind.NormalRecyclerBaseHolder;
 /**
  * Created by guoshuyu on 2017/8/29.
@@ -28,7 +28,7 @@ public class BindTextHolder extends NormalRecyclerBaseHolder {
 
     @Override
     public void onBind(Object model, int position) {
-        TextModel textModel = (TextModel) (model);
+        BindTextModel textModel = (BindTextModel) (model);
         itemText.setText(textModel.getText());
     }
 }

@@ -4,7 +4,7 @@ package com.shuyu.apprecycler.bind.model;
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class ClickModel {
+public class BindClickModel {
     private String btnText;
 
     public String getBtnText() {

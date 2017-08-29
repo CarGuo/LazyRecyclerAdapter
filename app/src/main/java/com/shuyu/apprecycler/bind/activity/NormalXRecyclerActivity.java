@@ -15,10 +15,10 @@ import com.shuyu.apprecycler.bind.holder.BindClickHolder;
 import com.shuyu.apprecycler.bind.holder.BindImageHolder;
 import com.shuyu.apprecycler.bind.holder.BindMutliHolder;
 import com.shuyu.apprecycler.bind.holder.BindTextHolder;
-import com.shuyu.apprecycler.bind.model.ClickModel;
-import com.shuyu.apprecycler.bind.model.ImageModel;
-import com.shuyu.apprecycler.bind.model.MutliModel;
-import com.shuyu.apprecycler.bind.model.TextModel;
+import com.shuyu.apprecycler.bind.model.BindClickModel;
+import com.shuyu.apprecycler.bind.model.BindImageModel;
+import com.shuyu.apprecycler.bind.model.BindMutliModel;
+import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.NormalBindAdapterManager;
@@ -41,7 +41,7 @@ public class NormalXRecyclerActivity extends AppCompatActivity {
 
     LinearLayoutManager linearLayoutManager;
 
-    private List  dataList = new ArrayList<>();
+    private List dataList = new ArrayList<>();
 
     private NormalBindRecyclerAdapter commonRecyclerAdapter;
 
@@ -75,10 +75,10 @@ public class NormalXRecyclerActivity extends AppCompatActivity {
         //设置管理器，关联布局与holder类名，不同id可以管理一个holder    NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
         NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
         normalAdapterManager
-                .bind(ImageModel.class, BindImageHolder.ID, BindImageHolder.class)
-                .bind(TextModel.class, BindTextHolder.ID, BindTextHolder.class)
-                .bind(MutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
-                .bind(ClickModel.class, BindClickHolder.ID, BindClickHolder.class);
+                .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
+                .bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
+                .bind(BindMutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
+                .bind(BindClickModel.class, BindClickHolder.ID, BindClickHolder.class);
 
         //初始化通用管理器
         commonRecyclerAdapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, dataList);

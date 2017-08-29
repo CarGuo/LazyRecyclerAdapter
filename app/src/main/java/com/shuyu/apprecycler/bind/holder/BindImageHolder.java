@@ -9,7 +9,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.bind.model.ImageModel;
+import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.bind.NormalRecyclerBaseHolder;
 
 /**
@@ -34,7 +34,7 @@ public class BindImageHolder extends NormalRecyclerBaseHolder {
 
     @Override
     public void onBind(Object model, int position) {
-        ImageModel imageModel = (ImageModel) model;
+        BindImageModel imageModel = (BindImageModel) model;
         itemImage.setImageResource(imageModel.getResId());
     }
 

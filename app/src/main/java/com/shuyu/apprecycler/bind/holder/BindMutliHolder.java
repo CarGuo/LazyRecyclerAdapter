@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.bind.model.MutliModel;
+import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.bind.NormalRecyclerBaseHolder;
 
 /**
@@ -33,7 +33,7 @@ public class BindMutliHolder extends NormalRecyclerBaseHolder {
 
     @Override
     public void onBind(Object model, int position) {
-        MutliModel mutliModel = (MutliModel) model;
+        BindMutliModel mutliModel = (BindMutliModel) model;
         itemImage1.setImageResource(mutliModel.getResId());
         itemImage2.setImageResource(mutliModel.getRes2());
     }

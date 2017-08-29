@@ -5,7 +5,7 @@ package com.shuyu.apprecycler.bind.model;
  * Created by shuyu on 2016/11/23.
  */
 
-public class TextModel {
+public class BindTextModel {
     private String text = "";
 
     public String getText() {

@@ -4,7 +4,7 @@ package com.shuyu.apprecycler.bind.model;
  * Created by shuyu on 2016/11/23.
  */
 
-public class ImageModel {
+public class BindImageModel {
     private int resId;
 
     public int getResId() {

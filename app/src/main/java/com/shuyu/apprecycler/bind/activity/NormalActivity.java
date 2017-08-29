@@ -14,10 +14,10 @@ import com.shuyu.apprecycler.bind.holder.BindImageHolder;
 import com.shuyu.apprecycler.bind.holder.BindMutliHolder;
 import com.shuyu.apprecycler.bind.holder.BindNoDataHolder;
 import com.shuyu.apprecycler.bind.holder.BindTextHolder;
-import com.shuyu.apprecycler.bind.model.ClickModel;
-import com.shuyu.apprecycler.bind.model.ImageModel;
-import com.shuyu.apprecycler.bind.model.MutliModel;
-import com.shuyu.apprecycler.bind.model.TextModel;
+import com.shuyu.apprecycler.bind.model.BindClickModel;
+import com.shuyu.apprecycler.bind.model.BindImageModel;
+import com.shuyu.apprecycler.bind.model.BindMutliModel;
+import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
 import com.shuyu.bind.NormalBindRecyclerAdapter;
 import com.shuyu.bind.listener.OnItemClickListener;
@@ -58,12 +58,11 @@ public class NormalActivity extends AppCompatActivity {
 
         NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
         normalAdapterManager
-                .bind(ImageModel.class, BindImageHolder.ID, BindImageHolder.class)
-                .bind(TextModel.class, BindTextHolder.ID, BindTextHolder.class)
-                .bind(MutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
-                .bind(ClickModel.class, BindClickHolder.ID, BindClickHolder.class)
+                .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
+                .bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
+                .bind(BindMutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
+                .bind(BindClickModel.class, BindClickHolder.ID, BindClickHolder.class)
                 .bindEmpty(BindNoDataHolder.NoDataModel.class, BindNoDataHolder.ID, BindNoDataHolder.class);
-
 
 
         adapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, datas);
