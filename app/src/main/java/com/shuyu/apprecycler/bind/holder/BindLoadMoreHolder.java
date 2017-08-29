@@ -13,7 +13,7 @@ import com.shuyu.bind.NormalLoadMoreHolder;
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class LoadMoreHolder extends NormalLoadMoreHolder {
+public class BindLoadMoreHolder extends NormalLoadMoreHolder {
 
     public static final int ID = R.layout.load_more;
 
@@ -25,7 +25,7 @@ public class LoadMoreHolder extends NormalLoadMoreHolder {
 
     private TextView loadMoreStatusText;
 
-    public LoadMoreHolder(Context context, View v) {
+    public BindLoadMoreHolder(Context context, View v) {
         super(context, v);
         this.context = context;
     }

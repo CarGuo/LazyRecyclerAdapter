@@ -11,8 +11,8 @@ import android.widget.Toast;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
-import com.shuyu.apprecycler.bind.holder.ClickHolder;
-import com.shuyu.apprecycler.bind.holder.ImageHolder;
+import com.shuyu.apprecycler.bind.holder.BindClickHolder;
+import com.shuyu.apprecycler.bind.holder.BindImageHolder;
 import com.shuyu.apprecycler.bind.holder.MutliHolder;
 import com.shuyu.apprecycler.bind.holder.TextHolder;
 import com.shuyu.apprecycler.bind.model.ClickModel;
@@ -75,10 +75,10 @@ public class NormalXRecyclerActivity extends AppCompatActivity {
         //设置管理器，关联布局与holder类名，不同id可以管理一个holder    NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
         NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
         normalAdapterManager
-                .bind(ImageModel.class, ImageHolder.ID, ImageHolder.class)
+                .bind(ImageModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(TextModel.class, TextHolder.ID, TextHolder.class)
                 .bind(MutliModel.class, MutliHolder.ID, MutliHolder.class)
-                .bind(ClickModel.class, ClickHolder.ID, ClickHolder.class);
+                .bind(ClickModel.class, BindClickHolder.ID, BindClickHolder.class);
 
         //初始化通用管理器
         commonRecyclerAdapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, dataList);

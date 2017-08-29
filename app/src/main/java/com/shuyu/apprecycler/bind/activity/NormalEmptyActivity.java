@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
-import com.shuyu.apprecycler.bind.holder.ClickHolder;
-import com.shuyu.apprecycler.bind.holder.ImageHolder;
+import com.shuyu.apprecycler.bind.holder.BindClickHolder;
+import com.shuyu.apprecycler.bind.holder.BindImageHolder;
 import com.shuyu.apprecycler.bind.holder.MutliHolder;
 import com.shuyu.apprecycler.bind.holder.NoDataHolder;
 import com.shuyu.apprecycler.bind.holder.TextHolder;
@@ -55,10 +55,10 @@ public class NormalEmptyActivity extends AppCompatActivity {
 
         NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
         normalAdapterManager
-                .bind(ImageModel.class, ImageHolder.ID, ImageHolder.class)
+                .bind(ImageModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(TextModel.class, TextHolder.ID, TextHolder.class)
                 .bind(MutliModel.class, MutliHolder.ID, MutliHolder.class)
-                .bind(ClickModel.class, ClickHolder.ID, ClickHolder.class)
+                .bind(ClickModel.class, BindClickHolder.ID, BindClickHolder.class)
                 .bindEmpty(NoDataHolder.NoDataModel.class, NoDataHolder.ID, NoDataHolder.class);
 
 

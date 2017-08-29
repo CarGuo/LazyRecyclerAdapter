@@ -16,13 +16,13 @@ import com.shuyu.bind.NormalRecyclerBaseHolder;
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class ImageHolder extends NormalRecyclerBaseHolder {
+public class BindImageHolder extends NormalRecyclerBaseHolder {
 
     public final static int ID = R.layout.image_item;
 
     private ImageView itemImage;
 
-    public ImageHolder(Context context, View v) {
+    public BindImageHolder(Context context, View v) {
         super(context, v);
     }
 

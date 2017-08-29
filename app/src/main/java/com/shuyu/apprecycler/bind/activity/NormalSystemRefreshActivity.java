@@ -9,10 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
+import com.shuyu.apprecycler.bind.holder.BindLoadMoreHolder;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
-import com.shuyu.apprecycler.bind.holder.ClickHolder;
-import com.shuyu.apprecycler.bind.holder.ImageHolder;
-import com.shuyu.apprecycler.bind.holder.LoadMoreHolder;
+import com.shuyu.apprecycler.bind.holder.BindClickHolder;
+import com.shuyu.apprecycler.bind.holder.BindImageHolder;
 import com.shuyu.apprecycler.bind.holder.MutliHolder;
 import com.shuyu.apprecycler.bind.holder.TextHolder;
 import com.shuyu.apprecycler.bind.model.ClickModel;
@@ -70,11 +70,11 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
         //注意，一个manager中，一个id只能绑定一个holder
         //一个model class可以绑定多对id + Holder
         normalAdapterManager.bind(TextModel.class, TextHolder.ID, TextHolder.class)
-                .bind(ImageModel.class, ImageHolder.ID, ImageHolder.class)
-                .bind(MutliModel.class, ImageHolder.ID, ImageHolder.class)
+                .bind(ImageModel.class, BindImageHolder.ID, BindImageHolder.class)
+                .bind(MutliModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(MutliModel.class, MutliHolder.ID, MutliHolder.class)
-                .bind(ClickModel.class, ClickHolder.ID, ClickHolder.class)
-                .bindLoadMore(LoadMoreHolder.LoadMoreModel.class, LoadMoreHolder.ID, LoadMoreHolder.class)
+                .bind(ClickModel.class, BindClickHolder.ID, BindClickHolder.class)
+                .bindLoadMore(BindLoadMoreHolder.LoadMoreModel.class, BindLoadMoreHolder.ID, BindLoadMoreHolder.class)
                 .bingChooseListener(new NormalBindDataChooseListener() {
                     @Override
                     public int getCurrentDataLayoutId(Object object, Class classType, int position, List<Integer> ids) {
@@ -83,7 +83,7 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
                             if (mutliModel.getType() > 1) {
                                 return MutliHolder.ID;
                             } else {
-                                return ImageHolder.ID;
+                                return BindImageHolder.ID;
                             }
                         }
                         return ids.get(ids.size() - 1);
@@ -208,7 +208,7 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
         //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized (lock) {
-            //adapter.setLoadMoreState(LoadMoreHolder.NULL_DATA_STATE);
+            //adapter.setLoadMoreState(BindLoadMoreHolder.NULL_DATA_STATE);
             adapter.addListData(list);
             isfresh = false;
         }

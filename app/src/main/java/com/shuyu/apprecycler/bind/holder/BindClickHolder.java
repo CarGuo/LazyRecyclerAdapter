@@ -12,13 +12,13 @@ import com.shuyu.bind.NormalRecyclerBaseHolder;
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class ClickHolder extends NormalRecyclerBaseHolder {
+public class BindClickHolder extends NormalRecyclerBaseHolder {
 
     public final static int ID = R.layout.click_item;
 
     Button itemButton;
 
-    public ClickHolder(Context context, View v) {
+    public BindClickHolder(Context context, View v) {
         super(context, v);
     }
 

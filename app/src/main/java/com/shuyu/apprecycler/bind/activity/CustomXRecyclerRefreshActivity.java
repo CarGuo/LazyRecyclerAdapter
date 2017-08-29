@@ -11,8 +11,8 @@ import android.widget.Toast;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
-import com.shuyu.apprecycler.bind.holder.ClickHolder;
-import com.shuyu.apprecycler.bind.holder.ImageHolder;
+import com.shuyu.apprecycler.bind.holder.BindClickHolder;
+import com.shuyu.apprecycler.bind.holder.BindImageHolder;
 import com.shuyu.apprecycler.bind.holder.TextHolder;
 import com.shuyu.apprecycler.bind.model.ClickModel;
 import com.shuyu.apprecycler.bind.model.ImageModel;
@@ -80,9 +80,9 @@ public class CustomXRecyclerRefreshActivity extends AppCompatActivity {
 
         NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
         normalAdapterManager
-                .bind(ImageModel.class, ImageHolder.ID, ImageHolder.class)
+                .bind(ImageModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(TextModel.class, TextHolder.ID, TextHolder.class)
-                .bind(ClickModel.class, ClickHolder.ID, ClickHolder.class);
+                .bind(ClickModel.class, BindClickHolder.ID, BindClickHolder.class);
 
         //初始化通用管理器
         normalCommonRecyclerAdapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, dataList);
