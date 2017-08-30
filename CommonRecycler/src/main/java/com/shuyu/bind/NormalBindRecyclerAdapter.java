@@ -7,12 +7,9 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.shuyu.bind.holder.NormalBindErrorHolder;
-import com.shuyu.bind.listener.OnItemClickListener;
-import com.shuyu.bind.listener.OnItemLongClickListener;
 
 import java.util.List;
 
@@ -29,7 +26,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     private List dataList = null;
 
     //管理器
-    private BaseBindAdapterManager normalAdapterManager;
+    private BindBaseAdapterManager normalAdapterManager;
 
     //当前RecyclerView
     private RecyclerView curRecyclerView;
@@ -37,7 +34,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     //最后的位置
     private int lastPosition = -1;
 
-    public NormalBindRecyclerAdapter(Context context, BaseBindAdapterManager normalAdapterManager, List dataList) {
+    public NormalBindRecyclerAdapter(Context context, BindBaseAdapterManager normalAdapterManager, List dataList) {
         this.normalAdapterManager = normalAdapterManager;
         this.dataList = dataList;
         this.context = context;

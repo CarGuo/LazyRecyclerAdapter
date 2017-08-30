@@ -53,6 +53,10 @@ public class NormalActivity extends AppCompatActivity {
 
     private boolean isLoadMore;
 
+    private final Object lock = new Object();
+
+    private NormalBindSuperAdapterManager normalAdapterManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +68,7 @@ public class NormalActivity extends AppCompatActivity {
 
     public void init() {
         View header = LayoutInflater.from(this).inflate(R.layout.layout_header, null);
-        final NormalBindSuperAdapterManager normalAdapterManager = new NormalBindSuperAdapterManager();
+        normalAdapterManager = new NormalBindSuperAdapterManager();
         normalAdapterManager
                 .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
@@ -89,7 +93,7 @@ public class NormalActivity extends AppCompatActivity {
                         recycler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                normalAdapterManager.refreshComplete();
+                                refresh();
                             }
                         }, 1000);
                     }
@@ -99,7 +103,7 @@ public class NormalActivity extends AppCompatActivity {
                         recycler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                normalAdapterManager.loadMoreComplete();
+                                loadMore();
                             }
                         }, 1000);
                     }
@@ -128,6 +132,29 @@ public class NormalActivity extends AppCompatActivity {
         this.datas = list;
         if (adapter != null) {
             adapter.setListData(datas);
+        }
+    }
+
+
+    private void refresh() {
+        List list = BindDataUtils.getRefreshData();
+        //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
+        //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
+        synchronized (lock) {
+            datas = list;
+            adapter.setListData(list);
+            normalAdapterManager.refreshComplete();
+        }
+
+    }
+
+    private void loadMore() {
+        List list = BindDataUtils.getLoadMoreData(datas);
+        //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
+        //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
+        synchronized (lock) {
+            adapter.addListData(list);
+            normalAdapterManager.loadMoreComplete();
         }
     }
 

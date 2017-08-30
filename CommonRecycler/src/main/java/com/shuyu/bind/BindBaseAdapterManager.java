@@ -19,9 +19,9 @@ import java.util.List;
  * Created by guoshuyu on 2017/8/28.
  */
 
-public abstract class BaseBindAdapterManager<T extends BaseBindAdapterManager> {
+public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
 
-    private final String TAG = BaseBindAdapterManager.class.getName();
+    private final String TAG = BindBaseAdapterManager.class.getName();
 
     //根据model类名绑定layoutId
     private HashMap<String, List<Integer>> modelToId = new HashMap<>();

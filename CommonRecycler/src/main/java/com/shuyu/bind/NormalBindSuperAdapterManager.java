@@ -17,7 +17,7 @@ import java.util.List;
  * Created by guoshuyu on 2017/8/30.
  */
 
-public class NormalBindSuperAdapterManager extends BaseBindAdapterManager<NormalBindSuperAdapterManager> {
+public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<NormalBindSuperAdapterManager> {
 
     public static final int HEADER_INIT_INDEX = 10002;
 

@@ -6,6 +6,6 @@ package com.shuyu.bind;
  * Created by guoshuyu on 2017/8/28.
  */
 
-public class NormalBindAdapterManager extends BaseBindAdapterManager<NormalBindAdapterManager> {
+public class NormalBindAdapterManager extends BindBaseAdapterManager<NormalBindAdapterManager> {
 
 }
