@@ -99,7 +99,7 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
                             public void run() {
                                 refresh();
                             }
-                        }, 1000);
+                        }, 3000);
                     }
 
                     @Override
@@ -109,7 +109,7 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
                             public void run() {
                                 loadMore();
                             }
-                        }, 1000);
+                        }, 2000);
                     }
                 });
         ;

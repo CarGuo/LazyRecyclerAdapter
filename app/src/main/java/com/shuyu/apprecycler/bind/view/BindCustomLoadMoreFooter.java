@@ -14,6 +14,7 @@ import com.jcodecraeer.xrecyclerview.base.BaseLoadMoreFooter;
 import com.shuyu.apprecycler.R;
 
 /**
+ * 继承BaseLoadMoreFooter的LoadMore控件
  * Created by guoshuyu on 2017/1/8.
  */
 
@@ -32,16 +33,51 @@ public class BindCustomLoadMoreFooter extends BaseLoadMoreFooter {
         initView();
     }
 
-    /**
-     * @param context
-     * @param attrs
-     */
     public BindCustomLoadMoreFooter(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
 
-    public void initView() {
+
+    /**
+     * 继承，必须要时需要实现样式
+     * @param style
+     */
+    @Override
+    public void setProgressStyle(int style) {
+    }
+
+    /**
+     * 继承，根据状态调整显示效果
+     * @param state
+     */
+    @Override
+    public void setState(int state) {
+        switch (state) {
+            case STATE_LOADING:
+                mImageView.setVisibility(View.VISIBLE);
+                mText.setText(getContext().getText(R.string.listview_loading));
+                this.setVisibility(View.VISIBLE);
+                mAnimationDrawable.start();
+                break;
+            case STATE_COMPLETE:
+                mText.setText(getContext().getText(R.string.listview_loading));
+                this.setVisibility(View.GONE);
+                mAnimationDrawable.stop();
+                break;
+            case STATE_NOMORE:
+                mText.setText(getContext().getText(R.string.nomore_loading));
+                mImageView.setVisibility(View.GONE);
+                this.setVisibility(View.VISIBLE);
+                mAnimationDrawable.stop();
+                break;
+        }
+    }
+
+    /**
+     * 初始化view
+     */
+    void initView() {
         setGravity(Gravity.CENTER);
         setLayoutParams(new RecyclerView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -68,32 +104,5 @@ public class BindCustomLoadMoreFooter extends BaseLoadMoreFooter {
         addView(mText);
 
         mAnimationDrawable = (AnimationDrawable) mImageView.getDrawable();
-    }
-
-    @Override
-    public void setProgressStyle(int style) {
-    }
-
-    @Override
-    public void setState(int state) {
-        switch (state) {
-            case STATE_LOADING:
-                mImageView.setVisibility(View.VISIBLE);
-                mText.setText(getContext().getText(R.string.listview_loading));
-                this.setVisibility(View.VISIBLE);
-                mAnimationDrawable.start();
-                break;
-            case STATE_COMPLETE:
-                mText.setText(getContext().getText(R.string.listview_loading));
-                this.setVisibility(View.GONE);
-                mAnimationDrawable.stop();
-                break;
-            case STATE_NOMORE:
-                mText.setText(getContext().getText(R.string.nomore_loading));
-                mImageView.setVisibility(View.GONE);
-                this.setVisibility(View.VISIBLE);
-                mAnimationDrawable.stop();
-                break;
-        }
     }
 }
