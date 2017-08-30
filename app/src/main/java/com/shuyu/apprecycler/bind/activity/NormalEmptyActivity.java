@@ -19,8 +19,8 @@ import com.shuyu.apprecycler.bind.model.BindClickModel;
 import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
-import com.shuyu.bind.NormalBindSuperAdapter;
-import com.shuyu.bind.NormalBindSuperAdapterManager;
+import com.shuyu.bind.BindSuperAdapter;
+import com.shuyu.bind.BindSuperAdapterManager;
 import com.shuyu.bind.listener.OnLoadingListener;
 import com.shuyu.bind.listener.OnItemClickListener;
 
@@ -45,9 +45,9 @@ public class NormalEmptyActivity extends AppCompatActivity {
 
     private final Object lock = new Object();
 
-    private NormalBindSuperAdapter adapter;
+    private BindSuperAdapter adapter;
 
-    private NormalBindSuperAdapterManager normalAdapterManager;
+    private BindSuperAdapterManager normalAdapterManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class NormalEmptyActivity extends AppCompatActivity {
 
     public void init() {
 
-        normalAdapterManager = new NormalBindSuperAdapterManager();
+        normalAdapterManager = new BindSuperAdapterManager();
         normalAdapterManager
                 .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
@@ -99,7 +99,7 @@ public class NormalEmptyActivity extends AppCompatActivity {
                 });
 
 
-        adapter = new NormalBindSuperAdapter(this, normalAdapterManager, datas);
+        adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST, adapter));

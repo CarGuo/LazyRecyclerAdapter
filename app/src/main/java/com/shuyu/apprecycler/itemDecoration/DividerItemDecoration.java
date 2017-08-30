@@ -5,7 +5,7 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.shuyu.bind.NormalBindSuperAdapter;
+import com.shuyu.bind.BindSuperAdapter;
 
 /**
  * 实现分割线
@@ -36,7 +36,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         this.startPosition = startPosition;
     }
 
-    public DividerItemDecoration(int space, int direct, NormalBindSuperAdapter normalBindSuperAdapter) {
+    public DividerItemDecoration(int space, int direct, BindSuperAdapter normalBindSuperAdapter) {
         this.space = space;
         this.direct = direct;
         this.startPosition = normalBindSuperAdapter.absFirstPositionWithoutHeader();

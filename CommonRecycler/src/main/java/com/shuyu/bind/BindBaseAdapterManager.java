@@ -20,7 +20,7 @@ import java.util.List;
  * Created by guoshuyu on 2017/8/28.
  */
 
-public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
+abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
 
     private final String TAG = BindBaseAdapterManager.class.getName();
 
@@ -28,7 +28,7 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
     private HashMap<String, List<Integer>> modelToId = new HashMap<>();
 
     //根据id类名绑定holder
-    private HashMap<Integer, Class<? extends NormalBindRecyclerBaseHolder>> idToHolder = new HashMap<>();
+    private HashMap<Integer, Class<? extends BindRecyclerBaseHolder>> idToHolder = new HashMap<>();
 
     //没有数据的布局id
     private int noDataLayoutId = -1;
@@ -37,7 +37,7 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
     private Object noDataObject;
 
     //没有数据的holder
-    private Class<? extends NormalBindRecyclerBaseHolder> noDataHolder;
+    private Class<? extends BindRecyclerBaseHolder> noDataHolder;
 
     //一个model对应多种Holder的数据的筛选，不设置默认使用最后一个
     private OnBindDataChooseListener normalBindDataChooseListener;
@@ -58,7 +58,7 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
      * @param layoutId    布局id，一个manager中，一个id只能对应一个holder。
      * @param holderClass holder类名，一个manager中，一个holder只能对应一个id。
      */
-    public T bind(Class modelClass, int layoutId, Class<? extends NormalBindRecyclerBaseHolder> holderClass) {
+    public T bind(Class modelClass, int layoutId, Class<? extends BindRecyclerBaseHolder> holderClass) {
 
         if (!modelToId.containsKey(modelClass.getName())) {
             List<Integer> list = new ArrayList<>();
@@ -86,7 +86,7 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
      * @param layoutId    布局id
      * @param holderClass holder类名
      */
-    public T bindEmpty(Object noDataModel, int layoutId, Class<? extends NormalBindRecyclerBaseHolder> holderClass) {
+    public T bindEmpty(Object noDataModel, int layoutId, Class<? extends BindRecyclerBaseHolder> holderClass) {
         noDataHolder = holderClass;
         noDataObject = noDataModel;
         noDataLayoutId = layoutId;
@@ -141,7 +141,7 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
         return modelToId;
     }
 
-    HashMap<Integer, Class<? extends NormalBindRecyclerBaseHolder>> getIdToHolder() {
+    HashMap<Integer, Class<? extends BindRecyclerBaseHolder>> getIdToHolder() {
         return idToHolder;
     }
 
@@ -149,7 +149,7 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
         return noDataObject;
     }
 
-    Class<? extends NormalBindRecyclerBaseHolder> getNoDataHolder() {
+    Class<? extends BindRecyclerBaseHolder> getNoDataHolder() {
         return noDataHolder;
     }
 
@@ -171,15 +171,15 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
     /**
      * 创建正常数据的holder
      */
-    NormalBindRecyclerBaseHolder getViewTypeHolder(Context context, ViewGroup parent, int viewType) {
-        Class<? extends NormalBindRecyclerBaseHolder> idToHolder = getIdToHolder().get(viewType);
+    BindRecyclerBaseHolder getViewTypeHolder(Context context, ViewGroup parent, int viewType) {
+        Class<? extends BindRecyclerBaseHolder> idToHolder = getIdToHolder().get(viewType);
         return contructorHolder(context, parent, idToHolder, viewType);
     }
 
     /**
      * 创建空数据的holder
      */
-    NormalBindRecyclerBaseHolder getNoDataViewTypeHolder(Context context, ViewGroup parent) {
+    BindRecyclerBaseHolder getNoDataViewTypeHolder(Context context, ViewGroup parent) {
         return contructorHolder(context, parent, getNoDataHolder(), noDataLayoutId);
     }
 

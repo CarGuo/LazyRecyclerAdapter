@@ -19,13 +19,13 @@ import com.jcodecraeer.xrecyclerview.other.AppBarStateChangeListener;
 import java.util.List;
 
 import static android.view.View.GONE;
-import static com.shuyu.bind.NormalBindSuperAdapterManager.HEADER_INIT_INDEX;
+import static com.shuyu.bind.BindSuperAdapterManager.HEADER_INIT_INDEX;
 
 /**
  * Created by guoshuyu on 2017/8/30.
  */
 
-public class NormalBindSuperAdapter extends NormalBindRecyclerAdapter implements View.OnTouchListener {
+public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouchListener {
 
     //下面的ItemViewType是保留值(ReservedItemViewType),如果用户的adapter与它们重复将会强制抛出异常。
     //不过为了简化,我们检测到重复时对用户的提示是ItemViewType必须小于10000
@@ -49,12 +49,12 @@ public class NormalBindSuperAdapter extends NormalBindRecyclerAdapter implements
 
     private Context context;
 
-    private NormalBindSuperAdapterManager normalAdapterManager;
+    private BindSuperAdapterManager normalAdapterManager;
 
     //触摸下拉移动的距离
     private float mLastY = -1;
 
-    public NormalBindSuperAdapter(Context context, NormalBindSuperAdapterManager normalAdapterManager, List dataList) {
+    public BindSuperAdapter(Context context, BindSuperAdapterManager normalAdapterManager, List dataList) {
         super(context, normalAdapterManager, dataList);
         this.normalAdapterManager = normalAdapterManager;
         this.context = context;
@@ -79,7 +79,7 @@ public class NormalBindSuperAdapter extends NormalBindRecyclerAdapter implements
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         mRecyclerView = recyclerView;
-        if (adapter instanceof NormalBindSuperAdapter) {
+        if (adapter instanceof BindSuperAdapter) {
             mWrapAdapter = new WrapAdapter(adapter);
             recyclerView.setAdapter(mWrapAdapter);
             recyclerView.setOnTouchListener(this);

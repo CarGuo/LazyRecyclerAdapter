@@ -16,9 +16,9 @@ import java.util.List;
 /**
  * 通用绑定的adapter
  */
-public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
+public class BindRecyclerAdapter extends RecyclerView.Adapter {
 
-    private final static String TAG = "NormalBindRecyclerAdapter";
+    private final static String TAG = "BindRecyclerAdapter";
 
     private Context context = null;
 
@@ -34,7 +34,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     //最后的位置
     private int lastPosition = -1;
 
-    public NormalBindRecyclerAdapter(Context context, BindBaseAdapterManager normalAdapterManager, List dataList) {
+    public BindRecyclerAdapter(Context context, BindBaseAdapterManager normalAdapterManager, List dataList) {
         this.normalAdapterManager = normalAdapterManager;
         this.dataList = dataList;
         this.context = context;
@@ -183,7 +183,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
         Object model;
 
         if (normalAdapterManager.isShowNoData() && dataList != null && dataList.size() == 0) {
-            NormalBindRecyclerBaseHolder recyclerHolder = (NormalBindRecyclerBaseHolder) holder;
+            BindRecyclerBaseHolder recyclerHolder = (BindRecyclerBaseHolder) holder;
             recyclerHolder.setAdapter(this);
             recyclerHolder.onBind(normalAdapterManager.getNoDataObject(), position);
             return;
@@ -202,7 +202,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
         }
 
 
-        NormalBindRecyclerBaseHolder recyclerHolder = (NormalBindRecyclerBaseHolder) holder;
+        BindRecyclerBaseHolder recyclerHolder = (BindRecyclerBaseHolder) holder;
 
         recyclerHolder.setAdapter(this);
 

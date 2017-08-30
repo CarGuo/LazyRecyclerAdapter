@@ -9,23 +9,23 @@ import android.view.View;
  * 必须继承的BaseHolder
  * Created by Guo on 2015/11/23.
  */
-public abstract class NormalBindRecyclerBaseHolder extends RecyclerView.ViewHolder {
+public abstract class BindRecyclerBaseHolder extends RecyclerView.ViewHolder {
 
     protected Context context = null;
 
-    protected NormalBindRecyclerAdapter normalCommonRecyclerAdapter = null;
+    protected BindRecyclerAdapter normalCommonRecyclerAdapter = null;
 
     /**
      * 必须继承其中之一
      */
-    public NormalBindRecyclerBaseHolder(View v) {
+    public BindRecyclerBaseHolder(View v) {
         this(v.getContext(), v);
     }
 
     /**
      * 必须继承其中之一
      */
-    public NormalBindRecyclerBaseHolder(Context context, View v) {
+    public BindRecyclerBaseHolder(Context context, View v) {
         super(v);
         createView(v);
         this.context = context;
@@ -52,11 +52,11 @@ public abstract class NormalBindRecyclerBaseHolder extends RecyclerView.ViewHold
         return context;
     }
 
-    public NormalBindRecyclerAdapter getNormalCommonRecyclerAdapter() {
+    public BindRecyclerAdapter getNormalCommonRecyclerAdapter() {
         return normalCommonRecyclerAdapter;
     }
 
-    void setAdapter(NormalBindRecyclerAdapter commonRecyclerAdapter) {
+    void setAdapter(BindRecyclerAdapter commonRecyclerAdapter) {
         this.normalCommonRecyclerAdapter = commonRecyclerAdapter;
     }
 

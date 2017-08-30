@@ -5,13 +5,13 @@ import android.widget.Button;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.model.BindClickModel;
-import com.shuyu.bind.NormalBindRecyclerBaseHolder;
+import com.shuyu.bind.BindRecyclerBaseHolder;
 
 /**
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class BindClickHolder extends NormalBindRecyclerBaseHolder {
+public class BindClickHolder extends BindRecyclerBaseHolder {
 
     public final static int ID = R.layout.click_item;
 

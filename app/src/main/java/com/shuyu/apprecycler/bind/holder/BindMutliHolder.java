@@ -1,18 +1,17 @@
 package com.shuyu.apprecycler.bind.holder;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
-import com.shuyu.bind.NormalBindRecyclerBaseHolder;
+import com.shuyu.bind.BindRecyclerBaseHolder;
 
 /**
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class BindMutliHolder extends NormalBindRecyclerBaseHolder {
+public class BindMutliHolder extends BindRecyclerBaseHolder {
 
     public final static int ID = R.layout.mutil_item;
 

@@ -17,7 +17,7 @@ import java.util.List;
  * Created by guoshuyu on 2017/8/30.
  */
 
-public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<NormalBindSuperAdapterManager> {
+public class BindSuperAdapterManager extends BindBaseAdapterManager<BindSuperAdapterManager> {
 
     public static final int HEADER_INIT_INDEX = 10002;
 
@@ -140,7 +140,7 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
     /**
      * 添加头部list
      */
-    public NormalBindSuperAdapterManager addHeaderView(View view) {
+    public BindSuperAdapterManager addHeaderView(View view) {
         sHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
         mHeaderViews.add(view);
         return this;
@@ -149,7 +149,7 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
     /**
      * 设置刷新的view
      */
-    public NormalBindSuperAdapterManager setRefreshHeader(BaseRefreshHeader refreshHeader) {
+    public BindSuperAdapterManager setRefreshHeader(BaseRefreshHeader refreshHeader) {
         mRefreshHeader = refreshHeader;
         return this;
     }
@@ -157,7 +157,7 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
     /**
      * 设置上拉加载更多view
      */
-    public NormalBindSuperAdapterManager setFootView(BaseLoadMoreFooter footView) {
+    public BindSuperAdapterManager setFootView(BaseLoadMoreFooter footView) {
         this.mFootView = footView;
         return this;
     }
@@ -165,7 +165,7 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
     /**
      * 是否使能下拉刷新
      */
-    public NormalBindSuperAdapterManager setPullRefreshEnabled(boolean enabled) {
+    public BindSuperAdapterManager setPullRefreshEnabled(boolean enabled) {
         pullRefreshEnabled = enabled;
         return this;
     }
@@ -173,7 +173,7 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
     /**
      * 是否使能上拉加载更多
      */
-    public NormalBindSuperAdapterManager setLoadingMoreEnabled(boolean enabled) {
+    public BindSuperAdapterManager setLoadingMoreEnabled(boolean enabled) {
         loadingMoreEnabled = enabled;
         if (!enabled && mFootView != null) {
             mFootView.setState(LoadingMoreFooter.STATE_COMPLETE);
@@ -181,7 +181,7 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
         return this;
     }
 
-    public NormalBindSuperAdapterManager setLoadingMoreEmptyEnabled(boolean enabled) {
+    public BindSuperAdapterManager setLoadingMoreEmptyEnabled(boolean enabled) {
         loadingMoreEmptyEnabled = enabled;
         return this;
     }
@@ -189,7 +189,7 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
     /**
      * 刷新loading的样式
      */
-    public NormalBindSuperAdapterManager setRefreshProgressStyle(int style) {
+    public BindSuperAdapterManager setRefreshProgressStyle(int style) {
         mRefreshProgressStyle = style;
         if (mRefreshHeader != null) {
             mRefreshHeader.setProgressStyle(style);
@@ -200,7 +200,7 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
     /**
      * 加载更多的loading样式
      */
-    public NormalBindSuperAdapterManager setLoadingMoreProgressStyle(int style) {
+    public BindSuperAdapterManager setLoadingMoreProgressStyle(int style) {
         mLoadingMoreProgressStyle = style;
         if (mFootView != null) {
             mFootView.setProgressStyle(style);
@@ -211,7 +211,7 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
     /**
      * 下拉刷新loading的图标
      */
-    public NormalBindSuperAdapterManager setArrowImageView(int resId) {
+    public BindSuperAdapterManager setArrowImageView(int resId) {
         if (mRefreshHeader != null) {
             mRefreshHeader.setArrowImageView(resId);
         }
@@ -225,7 +225,7 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
     /**
      * 刷新与加载更多的监听回调
      */
-    public NormalBindSuperAdapterManager setLoadingListener(OnLoadingListener listener) {
+    public BindSuperAdapterManager setLoadingListener(OnLoadingListener listener) {
         mLoadingListener = listener;
         return this;
     }
@@ -233,7 +233,7 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
     /**
      * 滚动监听
      */
-    public NormalBindSuperAdapterManager setAddOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
+    public BindSuperAdapterManager setAddOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
         this.onScrollListener = onScrollListener;
         return this;
     }

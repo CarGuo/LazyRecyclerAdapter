@@ -1,17 +1,16 @@
 package com.shuyu.apprecycler.bind.holder;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
-import com.shuyu.bind.NormalBindRecyclerBaseHolder;
+import com.shuyu.bind.BindRecyclerBaseHolder;
 /**
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class BindTextHolder extends NormalBindRecyclerBaseHolder {
+public class BindTextHolder extends BindRecyclerBaseHolder {
 
     public final static int ID = R.layout.text_item;
 

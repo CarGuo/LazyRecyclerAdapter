@@ -19,8 +19,8 @@ import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
-import com.shuyu.bind.NormalBindSuperAdapter;
-import com.shuyu.bind.NormalBindSuperAdapterManager;
+import com.shuyu.bind.BindSuperAdapter;
+import com.shuyu.bind.BindSuperAdapterManager;
 import com.shuyu.bind.listener.OnLoadingListener;
 import com.shuyu.bind.listener.OnItemClickListener;
 
@@ -45,11 +45,11 @@ public class GridSystemRefreshActivity extends AppCompatActivity {
 
     private List datas = new ArrayList<>();
 
-    private NormalBindSuperAdapter adapter;
+    private BindSuperAdapter adapter;
 
     private final Object lock = new Object();
 
-    private NormalBindSuperAdapterManager normalAdapterManager;
+    private BindSuperAdapterManager normalAdapterManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class GridSystemRefreshActivity extends AppCompatActivity {
 
     public void init() {
 
-        normalAdapterManager = new NormalBindSuperAdapterManager();
+        normalAdapterManager = new BindSuperAdapterManager();
         normalAdapterManager
                 .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
@@ -110,7 +110,7 @@ public class GridSystemRefreshActivity extends AppCompatActivity {
         ;
 
 
-        adapter = new NormalBindSuperAdapter(this, normalAdapterManager, datas);
+        adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
 
         GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 2);
 

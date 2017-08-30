@@ -10,13 +10,13 @@ import android.widget.ImageView;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.model.BindImageModel;
-import com.shuyu.bind.NormalBindRecyclerBaseHolder;
+import com.shuyu.bind.BindRecyclerBaseHolder;
 
 /**
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class BindImageHolder extends NormalBindRecyclerBaseHolder {
+public class BindImageHolder extends BindRecyclerBaseHolder {
 
     public final static int ID = R.layout.image_item;
 

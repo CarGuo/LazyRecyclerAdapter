@@ -5,7 +5,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
-import com.shuyu.bind.NormalBindRecyclerBaseHolder;
+import com.shuyu.bind.BindRecyclerBaseHolder;
 import com.shuyu.common.R;
 
 /**
@@ -13,7 +13,7 @@ import com.shuyu.common.R;
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class NormalBindErrorHolder extends NormalBindRecyclerBaseHolder {
+public class NormalBindErrorHolder extends BindRecyclerBaseHolder {
 
     public final static int ID = R.layout.error_item;
 
