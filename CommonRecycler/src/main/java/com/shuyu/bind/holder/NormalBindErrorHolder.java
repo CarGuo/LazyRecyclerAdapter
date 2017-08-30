@@ -19,6 +19,10 @@ public class NormalBindErrorHolder extends NormalBindRecyclerBaseHolder {
 
     private TextView errorText;
 
+    public NormalBindErrorHolder(View v) {
+        super(v);
+    }
+
     public NormalBindErrorHolder(Context context, View v) {
         super(context, v);
     }

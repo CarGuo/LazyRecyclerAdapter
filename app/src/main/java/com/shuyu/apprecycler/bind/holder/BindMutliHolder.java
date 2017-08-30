@@ -20,8 +20,8 @@ public class BindMutliHolder extends NormalBindRecyclerBaseHolder {
 
     ImageView itemImage2;
 
-    public BindMutliHolder(Context context, View v) {
-        super(context, v);
+    public BindMutliHolder(View v) {
+        super(v);
     }
 
     @Override

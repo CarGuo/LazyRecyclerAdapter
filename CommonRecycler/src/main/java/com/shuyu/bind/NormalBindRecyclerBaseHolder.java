@@ -15,6 +15,10 @@ public abstract class NormalBindRecyclerBaseHolder extends RecyclerView.ViewHold
 
     protected NormalBindRecyclerAdapter normalCommonRecyclerAdapter = null;
 
+    public NormalBindRecyclerBaseHolder(View v) {
+        this(v.getContext(), v);
+    }
+
     public NormalBindRecyclerBaseHolder(Context context, View v) {
         super(v);
         createView(v);

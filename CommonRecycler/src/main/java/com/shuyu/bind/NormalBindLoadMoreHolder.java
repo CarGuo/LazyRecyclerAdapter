@@ -16,6 +16,9 @@ public abstract class NormalBindLoadMoreHolder extends NormalBindRecyclerBaseHol
         FAIL_STATE
     }
 
+    public NormalBindLoadMoreHolder(View v) {
+        super(v);
+    }
 
     public NormalBindLoadMoreHolder(Context context, View v) {
         super(context, v);

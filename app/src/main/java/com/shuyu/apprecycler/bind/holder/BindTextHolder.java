@@ -17,8 +17,8 @@ public class BindTextHolder extends NormalBindRecyclerBaseHolder {
 
     TextView itemText;
 
-    public BindTextHolder(Context context, View v) {
-        super(context, v);
+    public BindTextHolder(View v) {
+        super(v);
     }
 
     @Override

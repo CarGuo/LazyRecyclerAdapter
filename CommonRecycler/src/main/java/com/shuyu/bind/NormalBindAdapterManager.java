@@ -165,55 +165,61 @@ public class NormalBindAdapterManager {
     /**
      * 创建正常数据的holder
      */
-    @SuppressWarnings("all")
     NormalBindRecyclerBaseHolder getViewTypeHolder(Context context, ViewGroup parent, int viewType) {
         Class<? extends NormalBindRecyclerBaseHolder> idToHolder = getIdToHolder().get(viewType);
-
-        Constructor object = null;
-        try {
-            View v = LayoutInflater.from(context).inflate(viewType, parent, false);
-            object = idToHolder.getDeclaredConstructor(new Class[]{Context.class, View.class});
-            object.setAccessible(true);
-            return (NormalBindRecyclerBaseHolder) object.newInstance(context, v);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return contructorHolder(context, parent, idToHolder, viewType);
     }
 
     /**
      * 创建空数据的holder
      */
-    @SuppressWarnings("all")
     NormalBindRecyclerBaseHolder getNoDataViewTypeHolder(Context context, ViewGroup parent) {
-        Constructor object;
+        return contructorHolder(context, parent, getNoDataHolder(), noDataLayoutId);
+    }
+
+    /**
+     * 创建加载更多的holder
+     */
+    NormalBindLoadMoreHolder getLoadMoreViewTypeHolder(Context context, ViewGroup parent) {
+        return contructorHolder(context, parent, getLoadMoreHolder(), loadmoreId);
+    }
+
+    /**
+     * 根据参数构造
+     */
+    @SuppressWarnings("all")
+    private <T> T contructorHolder(Context context, ViewGroup parent, Class<T> classType, int layoutId) {
+        Constructor object = null;
+        boolean constructorFirst = true;
+
+        View v = LayoutInflater.from(context).inflate(layoutId, parent, false);
+
         try {
-            View v = LayoutInflater.from(context).inflate(noDataLayoutId, parent, false);
-            object = getNoDataHolder().getDeclaredConstructor(new Class[]{Context.class, View.class});
+            object = classType.getDeclaredConstructor(new Class[]{Context.class, View.class});
+        } catch (NoSuchMethodException e) {
+            constructorFirst = false;
+            e.printStackTrace();
+        }
+        if (!constructorFirst) {
+            try {
+                object = classType.getDeclaredConstructor(new Class[]{View.class});
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
             object.setAccessible(true);
-            return (NormalBindRecyclerBaseHolder) object.newInstance(context, v);
+            if (constructorFirst) {
+                return (T) object.newInstance(context, v);
+            } else {
+                return (T) object.newInstance(v);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    /**
-     * 创建加载更多的holder
-     */
-    @SuppressWarnings("all")
-    NormalBindLoadMoreHolder getLoadMoreViewTypeHolder(Context context, ViewGroup parent) {
-        Constructor object;
-        try {
-            View v = LayoutInflater.from(context).inflate(loadmoreId, parent, false);
-            object = getLoadMoreHolder().getDeclaredConstructor(new Class[]{Context.class, View.class});
-            object.setAccessible(true);
-            return (NormalBindLoadMoreHolder) object.newInstance(context, v);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     private boolean queryIdIn(List<Integer> list, int id) {
         for (int i : list) {
