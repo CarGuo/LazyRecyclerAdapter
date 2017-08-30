@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.shuyu.bind.holder.NormalBindErrorHolder;
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.listener.OnItemLongClickListener;
@@ -29,6 +30,9 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
 
     //管理器
     private NormalBindAdapterManager normalAdapterManager;
+
+    //当前RecyclerView
+    private RecyclerView curRecyclerView;
 
     //最后的位置
     private int lastPosition = -1;
@@ -105,6 +109,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+        curRecyclerView = recyclerView;
         RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
         if (manager instanceof GridLayoutManager) {
             final GridLayoutManager gridManager = ((GridLayoutManager) manager);
@@ -158,7 +163,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    normalAdapterManager.itemClickListener.onItemClick(holder.itemView.getContext(), holder.getPosition());
+                    normalAdapterManager.itemClickListener.onItemClick(holder.itemView.getContext(), curPosition(holder.getPosition()));
                 }
             });
         }
@@ -167,7 +172,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    return normalAdapterManager.itemLongClickListener.onItemClick(holder.itemView.getContext(), holder.getPosition());
+                    return normalAdapterManager.itemLongClickListener.onItemClick(holder.itemView.getContext(), curPosition(holder.getPosition()));
                 }
             });
         }
@@ -279,6 +284,17 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
             return position == getItemCount() - 1;
         } else {
             return false;
+        }
+    }
+
+    private int curPosition(int position) {
+        if (curRecyclerView instanceof XRecyclerView) {
+            XRecyclerView xRecyclerView = (XRecyclerView) curRecyclerView;
+            int count = xRecyclerView.getHeadersCount();
+            boolean refresh = xRecyclerView.isPullRefreshEnabled();
+            return position - count - ((refresh) ? 1 : 0);
+        } else {
+            return position;
         }
     }
 

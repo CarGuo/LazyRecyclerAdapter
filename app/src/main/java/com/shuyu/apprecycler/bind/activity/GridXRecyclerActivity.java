@@ -87,7 +87,7 @@ public class GridXRecyclerActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(Context context, int position) {
                         //需要减去你的header和刷新的view的数量
-                        Toast.makeText(context, "点击了！！　" + (position - 2), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "点击了！！　" + (position), Toast.LENGTH_SHORT).show();
                     }
                 });
         //初始化通用管理器

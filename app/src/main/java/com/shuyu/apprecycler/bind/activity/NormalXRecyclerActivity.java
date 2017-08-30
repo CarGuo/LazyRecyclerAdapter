@@ -83,7 +83,7 @@ public class NormalXRecyclerActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(Context context, int position) {
                         //需要减去你的header
-                        Toast.makeText(context, "点击了！！　" + (position - 1), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "点击了！！　" + (position), Toast.LENGTH_SHORT).show();
                     }
                 });
 

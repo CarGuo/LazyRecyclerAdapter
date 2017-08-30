@@ -514,6 +514,18 @@ public class XRecyclerView extends RecyclerView {
     }
 
 
+    public int getHeadersCount() {
+        return mHeaderViews.size();
+    }
+
+    public boolean isPullRefreshEnabled() {
+        return pullRefreshEnabled;
+    }
+
+    public boolean isLoadingMoreEnabled() {
+        return loadingMoreEnabled;
+    }
+
     /**
      * 添加头部list
      */
