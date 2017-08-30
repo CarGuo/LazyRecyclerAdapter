@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.view.BindCustomLoadMoreFooter;
 import com.shuyu.apprecycler.bind.view.BindCustomRefreshHeader;
-import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
+import com.shuyu.apprecycler.bind.itemDecoration.DividerItemDecoration;
 
 import com.shuyu.apprecycler.bind.holder.BindClickHolder;
 import com.shuyu.apprecycler.bind.holder.BindImageHolder;

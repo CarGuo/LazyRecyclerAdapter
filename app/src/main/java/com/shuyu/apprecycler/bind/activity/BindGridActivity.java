@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
+import com.shuyu.apprecycler.bind.itemDecoration.DividerItemDecoration;
 import com.shuyu.apprecycler.bind.holder.BindClickHolder;
 import com.shuyu.apprecycler.bind.holder.BindImageHolder;
 import com.shuyu.apprecycler.bind.holder.BindMutliHolder;
