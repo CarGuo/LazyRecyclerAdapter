@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
+import com.shuyu.apprecycler.bind.view.BindCustomLoadMoreFooter;
+import com.shuyu.apprecycler.bind.view.BindCustomRefreshHeader;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
 
 import com.shuyu.apprecycler.bind.holder.BindClickHolder;
@@ -87,6 +89,8 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
                 .addHeaderView(header)
                 .setPullRefreshEnabled(true)
                 .setLoadingMoreEnabled(true)
+                .setFootView(new BindCustomLoadMoreFooter(this))
+                .setRefreshHeader(new BindCustomRefreshHeader(this))
                 .setLoadingListener(new OnLoadingListener() {
                     @Override
                     public void onRefresh() {

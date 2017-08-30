@@ -18,8 +18,8 @@ import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
-import com.shuyu.apprecycler.special.view.CustomLoadMoreFooter;
-import com.shuyu.apprecycler.special.view.CustomRefreshHeader;
+import com.shuyu.apprecycler.bind.view.BindCustomRefreshHeader;
+import com.shuyu.apprecycler.bind.view.BindCustomLoadMoreFooter;
 import com.shuyu.bind.BindSuperAdapter;
 import com.shuyu.bind.BindSuperAdapterManager;
 import com.shuyu.bind.listener.OnLoadingListener;
@@ -88,8 +88,8 @@ public class BindRefreshLoadActivity extends AppCompatActivity {
                 })
                 .setPullRefreshEnabled(true)
                 .setLoadingMoreEnabled(true)
-                .setFootView(new CustomLoadMoreFooter(this))
-                .setRefreshHeader(new CustomRefreshHeader(this))
+                .setFootView(new BindCustomLoadMoreFooter(this))
+                .setRefreshHeader(new BindCustomRefreshHeader(this))
                 .setNeedAnimation(true)
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
