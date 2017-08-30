@@ -51,8 +51,6 @@ public class NormalActivity extends AppCompatActivity {
 
     private NormalBindSuperAdapter adapter;
 
-    private boolean isLoadMore;
-
     private final Object lock = new Object();
 
     private NormalBindSuperAdapterManager normalAdapterManager;

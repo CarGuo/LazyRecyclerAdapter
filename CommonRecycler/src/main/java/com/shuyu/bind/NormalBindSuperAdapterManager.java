@@ -33,6 +33,9 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
     //是否使能加载更多
     boolean loadingMoreEnabled = true;
 
+    //沒有数据时是否使能加载更多
+    boolean loadingMoreEmptyEnabled = false;
+
     //是否正在加载数据
     boolean isLoadingData = false;
 
@@ -175,6 +178,11 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
         if (!enabled && mFootView != null) {
             mFootView.setState(LoadingMoreFooter.STATE_COMPLETE);
         }
+        return this;
+    }
+
+    public NormalBindSuperAdapterManager setLoadingMoreEmptyEnabled(boolean enabled) {
+        loadingMoreEmptyEnabled = enabled;
         return this;
     }
 

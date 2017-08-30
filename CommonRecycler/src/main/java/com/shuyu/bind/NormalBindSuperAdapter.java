@@ -198,6 +198,9 @@ public class NormalBindSuperAdapter extends NormalBindRecyclerAdapter implements
                 }
                 if (layoutManager.getChildCount() > 0
                         && lastVisibleItemPosition >= layoutManager.getItemCount() - 1 && layoutManager.getItemCount() > layoutManager.getChildCount() && !normalAdapterManager.isNoMore && normalAdapterManager.mRefreshHeader.getState() < ArrowRefreshHeader.STATE_REFRESHING) {
+                    if ((getDataList() == null ||getDataList().size() == 0) && !normalAdapterManager.loadingMoreEmptyEnabled) {
+                        return;
+                    }
                     normalAdapterManager.isLoadingData = true;
                     normalAdapterManager.mFootView.setState(LoadingMoreFooter.STATE_LOADING);
                     normalAdapterManager.mLoadingListener.onLoadMore();
