@@ -32,17 +32,8 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
     //没有数据的布局id
     private int noDataLayoutId = -1;
 
-    //加载更多的布局id
-    private int loadmoreId = -1;
-
     //没有数据的object
     private Object noDataObject;
-
-    //加载更多的object
-    private Object loadmoreObject;
-
-    //加载更多的holder
-    private Class<? extends NormalBindLoadMoreHolder> loadmoreHolder;
 
     //没有数据的holder
     private Class<? extends NormalBindRecyclerBaseHolder> noDataHolder;
@@ -55,9 +46,6 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
 
     //长按
     OnItemLongClickListener itemLongClickListener;
-
-    //加载状态
-    NormalBindLoadMoreHolder.LoadMoreState loadMoreState = NormalBindLoadMoreHolder.LoadMoreState.LOAD_MORE_STATE;
 
     //是否支持动画
     boolean needAnimation = false;
@@ -105,41 +93,12 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
     }
 
     /**
-     * 绑定加载更多模块显示
-     *
-     * @param loadMoreModel 数据实体
-     * @param layoutId      布局id
-     * @param holderClass   holder类名
-     */
-    public T bindLoadMore(Object loadMoreModel, int layoutId, Class<? extends NormalBindLoadMoreHolder> holderClass) {
-        loadmoreId = layoutId;
-        loadmoreHolder = holderClass;
-        loadmoreObject = loadMoreModel;
-        return (T)this;
-    }
-
-    /**
      * 一个model对应多种Holder的数据的筛选回调
      * 不设置默认使用最后一个
      */
     public T bingChooseListener(NormalBindDataChooseListener listener) {
         normalBindDataChooseListener = listener;
         return (T)this;
-    }
-
-    /**
-     * 设置加载更多的状态
-     */
-    public T setLoadMoreState(NormalBindLoadMoreHolder.LoadMoreState loadMoreState) {
-        this.loadMoreState = loadMoreState;
-        return (T)this;
-    }
-
-    /**
-     * 获取加载更多的状态
-     */
-    public NormalBindLoadMoreHolder.LoadMoreState getLoadMoreState() {
-        return loadMoreState;
     }
 
     /**
@@ -173,6 +132,10 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
         return (T)this;
     }
 
+    boolean isSupportLoadMore() {
+        return false;
+    }
+
     HashMap<String, List<Integer>> getModelToId() {
         return modelToId;
     }
@@ -185,24 +148,12 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
         return noDataObject;
     }
 
-    Object getLoadMoreObject() {
-        return loadmoreObject;
-    }
-
     Class<? extends NormalBindRecyclerBaseHolder> getNoDataHolder() {
         return noDataHolder;
     }
 
-    Class<? extends NormalBindLoadMoreHolder> getLoadMoreHolder() {
-        return loadmoreHolder;
-    }
-
     int getNoDataLayoutId() {
         return noDataLayoutId;
-    }
-
-    int getLoadMoreId() {
-        return loadmoreId;
     }
 
     /**
@@ -210,13 +161,6 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
      */
     boolean isShowNoData() {
         return noDataLayoutId != -1 && noDataHolder != null && noDataObject != null;
-    }
-
-    /**
-     * 是否支持加载更多
-     */
-    boolean isSupportLoadMore() {
-        return loadmoreId != -1 && loadmoreHolder != null && loadmoreObject != null;
     }
 
     NormalBindDataChooseListener getNormalBindDataChooseListener() {
@@ -236,13 +180,6 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
      */
     NormalBindRecyclerBaseHolder getNoDataViewTypeHolder(Context context, ViewGroup parent) {
         return contructorHolder(context, parent, getNoDataHolder(), noDataLayoutId);
-    }
-
-    /**
-     * 创建加载更多的holder
-     */
-    NormalBindLoadMoreHolder getLoadMoreViewTypeHolder(Context context, ViewGroup parent) {
-        return contructorHolder(context, parent, getLoadMoreHolder(), loadmoreId);
     }
 
     /**

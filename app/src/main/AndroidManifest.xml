@@ -68,31 +68,10 @@
             android:name=".bind.activity.NormalActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".bind.activity.SystemRefreshActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".bind.activity.StaggeredSystemRefreshActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".bind.activity.NormalXRecyclerActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".bind.activity.RefreshXRecyclerActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".bind.activity.StaggeredXRecyclerActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".bind.activity.CustomXRecyclerRefreshActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".bind.activity.NormalEmptyActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".bind.activity.XRecyclerEmptyActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".bind.activity.GridXRecyclerActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".bind.activity.GridSystemRefreshActivity"

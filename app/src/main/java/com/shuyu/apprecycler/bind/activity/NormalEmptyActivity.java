@@ -19,12 +19,10 @@ import com.shuyu.apprecycler.bind.model.BindClickModel;
 import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
-import com.shuyu.bind.NormalBindAdapterManager;
 import com.shuyu.bind.NormalBindSuperAdapter;
 import com.shuyu.bind.NormalBindSuperAdapterManager;
 import com.shuyu.bind.listener.LoadingListener;
 import com.shuyu.bind.listener.OnItemClickListener;
-import com.shuyu.bind.NormalBindRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

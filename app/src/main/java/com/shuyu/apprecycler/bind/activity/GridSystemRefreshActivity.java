@@ -2,14 +2,12 @@ package com.shuyu.apprecycler.bind.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.bind.holder.BindLoadMoreHolder;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
 import com.shuyu.apprecycler.bind.holder.BindClickHolder;
 import com.shuyu.apprecycler.bind.holder.BindImageHolder;
@@ -21,9 +19,10 @@ import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
-import com.shuyu.bind.NormalBindAdapterManager;
 import com.shuyu.bind.NormalBindRecyclerAdapter;
-import com.shuyu.bind.listener.LoadMoreScrollListener;
+import com.shuyu.bind.NormalBindSuperAdapter;
+import com.shuyu.bind.NormalBindSuperAdapterManager;
+import com.shuyu.bind.listener.LoadingListener;
 import com.shuyu.bind.listener.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -45,22 +44,18 @@ public class GridSystemRefreshActivity extends AppCompatActivity {
     @BindView(R.id.recycler)
     RecyclerView recycler;
 
-    @BindView(R.id.refresh)
-    SwipeRefreshLayout refresh;
-
-
     private List datas = new ArrayList<>();
 
-    private NormalBindRecyclerAdapter adapter;
+    private NormalBindSuperAdapter adapter;
 
     private final Object lock = new Object();
 
-    private boolean isfresh;
+    private NormalBindSuperAdapterManager normalAdapterManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grid_system_refresh);
+        setContentView(R.layout.activity_normal_recycler_layout);
         ButterKnife.bind(this);
         init();
         refresh();
@@ -69,13 +64,12 @@ public class GridSystemRefreshActivity extends AppCompatActivity {
 
     public void init() {
 
-        NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
+        normalAdapterManager = new NormalBindSuperAdapterManager();
         normalAdapterManager
                 .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
                 .bind(BindMutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
                 .bind(BindClickModel.class, BindClickHolder.ID, BindClickHolder.class)
-                .bindLoadMore(BindLoadMoreHolder.LoadMoreModel.class, BindLoadMoreHolder.ID, BindLoadMoreHolder.class)
                 .bindEmpty(BindNoDataHolder.NoDataModel.class, BindNoDataHolder.ID, BindNoDataHolder.class)
                 .setNeedAnimation(true)
                 .setOnItemClickListener(new OnItemClickListener() {
@@ -84,10 +78,40 @@ public class GridSystemRefreshActivity extends AppCompatActivity {
                         //需要减去你的header和刷新的view的数量
                         Toast.makeText(context, "点击了！！　" + (position), Toast.LENGTH_SHORT).show();
                     }
+                })
+                .setPullRefreshEnabled(true)
+                .setLoadingMoreEnabled(true)
+                .setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Context context, int position) {
+                        //需要减去你的header和刷新的view的数量
+                        Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show();
+                    }
+                }).setLoadingListener(new LoadingListener() {
+                    @Override
+                    public void onRefresh() {
+                        recycler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                refresh();
+                            }
+                        }, 1000);
+                    }
+
+                    @Override
+                    public void onLoadMore() {
+                        recycler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadMore();
+                            }
+                        }, 1000);
+                    }
                 });
+        ;
 
 
-        adapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, datas);
+        adapter = new NormalBindSuperAdapter(this, normalAdapterManager, datas);
 
         GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 2);
 
@@ -95,43 +119,7 @@ public class GridSystemRefreshActivity extends AppCompatActivity {
         recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.GRID));
         recycler.setAdapter(adapter);
 
-        recycler.addOnScrollListener(new LoadMoreScrollListener() {
-            @Override
-            public void onLoadMore() {
-                //注意加锁
-                if (!isfresh) {
-                    isfresh = true;
-                    recycler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadMore();
-                        }
 
-                    }, 2000);
-                }
-            }
-
-            @Override
-            public void onScrolled(int firstPosition) {
-            }
-        });
-
-        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-                if (!isfresh) {
-                    isfresh = true;
-                    recycler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            refresh();
-                        }
-
-                    }, 2000);
-                }
-            }
-        });
     }
 
     /**
@@ -149,8 +137,7 @@ public class GridSystemRefreshActivity extends AppCompatActivity {
         synchronized (lock) {
             datas = list;
             adapter.setListData(datas);
-            refresh.setRefreshing(false);
-            isfresh = false;
+            normalAdapterManager.refreshComplete();
         }
 
     }
@@ -162,7 +149,7 @@ public class GridSystemRefreshActivity extends AppCompatActivity {
         synchronized (lock) {
             //adapter.setLoadMoreState(BindLoadMoreHolder.NULL_DATA_STATE);
             adapter.addListData(list);
-            isfresh = false;
+            normalAdapterManager.refreshComplete();
         }
     }
 

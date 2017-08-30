@@ -148,11 +148,6 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
             return normalAdapterManager.getNoDataViewTypeHolder(context, parent);
         }
 
-        //如果有加载更多
-        if (normalAdapterManager.isSupportLoadMore() && viewType == normalAdapterManager.getLoadMoreId()) {
-            return normalAdapterManager.getLoadMoreViewTypeHolder(context, parent);
-        }
-
         final RecyclerView.ViewHolder holder = normalAdapterManager.getViewTypeHolder(context, parent, viewType);
 
         //itemView 的点击事件
@@ -195,9 +190,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
         }
 
         if (normalAdapterManager.isSupportLoadMore() && position + 1 == getItemCount()) {
-            model = normalAdapterManager.getLoadMoreObject();
-            NormalBindLoadMoreHolder normalLoadMoreHolder = (NormalBindLoadMoreHolder) holder;
-            normalLoadMoreHolder.switchLoadMore(model, normalAdapterManager.loadMoreState);
+            model = new Object();
         } else {
             model = dataList.get(position);
         }
@@ -249,11 +242,6 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
         //如果没有数据，就显示空页面
         if (normalAdapterManager.isShowNoData() && dataList.size() == 0) {
             return normalAdapterManager.getNoDataLayoutId();
-        }
-
-        //如果是最后，就加载更多
-        if (normalAdapterManager.isSupportLoadMore() && position + 1 == getItemCount()) {
-            return normalAdapterManager.getLoadMoreId();
         }
 
         //返回需要显示的ID

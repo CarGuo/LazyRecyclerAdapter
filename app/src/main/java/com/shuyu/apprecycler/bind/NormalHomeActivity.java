@@ -10,17 +10,11 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.bind.activity.CustomXRecyclerRefreshActivity;
-import com.shuyu.apprecycler.bind.activity.GridXRecyclerActivity;
 import com.shuyu.apprecycler.bind.activity.NormalActivity;
 import com.shuyu.apprecycler.bind.activity.NormalEmptyActivity;
 import com.shuyu.apprecycler.bind.activity.NormalSystemRefreshActivity;
-import com.shuyu.apprecycler.bind.activity.NormalXRecyclerActivity;
-import com.shuyu.apprecycler.bind.activity.RefreshXRecyclerActivity;
 import com.shuyu.apprecycler.bind.activity.StaggeredSystemRefreshActivity;
-import com.shuyu.apprecycler.bind.activity.StaggeredXRecyclerActivity;
-import com.shuyu.apprecycler.bind.activity.SystemRefreshActivity;
-import com.shuyu.apprecycler.bind.activity.XRecyclerEmptyActivity;
+import com.shuyu.apprecycler.bind.activity.GridSystemRefreshActivity;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
 
 /**
@@ -55,7 +49,7 @@ public class NormalHomeActivity extends AppCompatActivity implements ListView.On
                 break;
             }
             case 1: {
-                Intent intent = new Intent(NormalHomeActivity.this, SystemRefreshActivity.class);
+                Intent intent = new Intent(NormalHomeActivity.this, NormalSystemRefreshActivity.class);
                 startActivity(intent);
                 break;
             }
@@ -65,42 +59,12 @@ public class NormalHomeActivity extends AppCompatActivity implements ListView.On
                 break;
             }
             case 3: {
-                Intent intent = new Intent(NormalHomeActivity.this, NormalXRecyclerActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case 4: {
-                Intent intent = new Intent(NormalHomeActivity.this, RefreshXRecyclerActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case 5: {
-                Intent intent = new Intent(NormalHomeActivity.this, StaggeredXRecyclerActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case 6: {
-                Intent intent = new Intent(NormalHomeActivity.this, CustomXRecyclerRefreshActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case 7: {
                 Intent intent = new Intent(NormalHomeActivity.this, NormalEmptyActivity.class);
                 startActivity(intent);
                 break;
             }
-            case 8: {
-                Intent intent = new Intent(NormalHomeActivity.this, XRecyclerEmptyActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case 9: {
-                Intent intent = new Intent(NormalHomeActivity.this, GridXRecyclerActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case 10: {
-                Intent intent = new Intent(NormalHomeActivity.this, NormalSystemRefreshActivity.class);
+            case 4: {
+                Intent intent = new Intent(NormalHomeActivity.this, GridSystemRefreshActivity.class);
                 startActivity(intent);
                 break;
             }
