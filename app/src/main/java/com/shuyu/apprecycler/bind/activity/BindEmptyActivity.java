@@ -31,8 +31,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ * 空页面效果展示
  * Created by guoshuyu on 2017/1/8.
- * 利用 CommonRecyclerAdapter 实现空页面
  */
 
 public class BindEmptyActivity extends AppCompatActivity {

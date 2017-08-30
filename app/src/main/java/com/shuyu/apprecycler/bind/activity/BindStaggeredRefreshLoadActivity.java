@@ -36,12 +36,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ * 带上下拉的瀑布流
  * Created by guoshuyu on 2017/1/7.
- * <p>
- * 使用CommonRecyclerAdapter实现多样式的recycler
- * 系统的下拉刷新
- * CommonRecyclerAdapter的上拉加载更多
- * 瀑布流
  */
 public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
 
@@ -88,7 +84,7 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
                 })
                 .addHeaderView(header)
                 .setPullRefreshEnabled(true)
-                .setLoadingMoreEnabled(true)
+                .setLoadingMoreEnabled(false)
                 .setFootView(new BindCustomLoadMoreFooter(this))
                 .setRefreshHeader(new BindCustomRefreshHeader(this))
                 .setLoadingListener(new OnLoadingListener() {

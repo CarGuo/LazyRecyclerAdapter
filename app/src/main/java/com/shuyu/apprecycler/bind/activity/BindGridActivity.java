@@ -33,12 +33,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ * Grid效果展示
  * Created by guoshuyu on 2017/1/7.
- * <p>
- * 使用CommonRecyclerAdapter实现多样式的recycler
- * 系统的下拉刷新
- * CommonRecyclerAdapter的上拉加载更多
- * 瀑布流
  */
 public class BindGridActivity extends AppCompatActivity {
 
@@ -81,7 +77,7 @@ public class BindGridActivity extends AppCompatActivity {
                     }
                 })
                 .addHeaderView(header)
-                .setPullRefreshEnabled(true)
+                .setPullRefreshEnabled(false)
                 .setLoadingMoreEnabled(true)
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override

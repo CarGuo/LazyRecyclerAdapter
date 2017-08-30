@@ -30,8 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 使用CommonRecyclerAdapter实现多样式的recycler
- * 没有下拉刷新和上拉刷新
+ * 利用BindRecyclerAdapter实现，不带上下拉
  */
 public class BindNormalActivity extends AppCompatActivity {
 

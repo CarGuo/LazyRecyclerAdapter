@@ -30,11 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 带上下拉的线性布局
  * Created by guoshuyu on 2017/1/7.
- * <p>
- * 使用NormalCommonRecyclerAdapter实现多样式的recycler
- * 系统的下拉刷新
- * NormalCommonRecyclerAdapter的上拉加载更多
  */
 
 public class BindRefreshLoadActivity extends AppCompatActivity {

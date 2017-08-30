@@ -18,11 +18,11 @@ public class BindDataUtils {
     public static List<String> getHomeList() {
         List<String> list = new ArrayList<>();
 
-        list.add("普通列表 不刷新");
-        list.add("普通列表 + 系统下拉 + Adapter上拉");
-        list.add("瀑布流 + 系统下拉 + Adapter上拉");
-        list.add("adapter 实现空页面");
-        list.add("Grid + 普通上下拉");
+        list.add("列表 不上下拉");
+        list.add("列表带上下拉");
+        list.add("瀑布流 刷新无上拉");
+        list.add("空页面");
+        list.add("Grid上拉无刷新");
         return list;
     }
 

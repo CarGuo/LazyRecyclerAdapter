@@ -204,7 +204,11 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
                     lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
                 }
                 if (layoutManager.getChildCount() > 0
-                        && lastVisibleItemPosition >= layoutManager.getItemCount() - 1 && layoutManager.getItemCount() > layoutManager.getChildCount() && !normalAdapterManager.isNoMore && normalAdapterManager.mRefreshHeader.getState() < ArrowRefreshHeader.STATE_REFRESHING) {
+                        && lastVisibleItemPosition >= layoutManager.getItemCount() - 1
+                        && layoutManager.getItemCount() > layoutManager.getChildCount()
+                        && !normalAdapterManager.isNoMore
+                        && (normalAdapterManager.mRefreshHeader == null
+                        || normalAdapterManager.mRefreshHeader.getState() < ArrowRefreshHeader.STATE_REFRESHING)) {
                     if (emptyForLoadMore()) {
                         return;
                     }
