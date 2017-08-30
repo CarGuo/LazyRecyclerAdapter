@@ -1,6 +1,5 @@
 package com.shuyu.apprecycler.bind.holder;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,8 +17,8 @@ public class BindClickHolder extends NormalBindRecyclerBaseHolder {
 
     Button itemButton;
 
-    public BindClickHolder(Context context, View v) {
-        super(context, v);
+    public BindClickHolder(View v) {
+        super(v);
     }
 
     @Override

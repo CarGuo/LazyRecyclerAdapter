@@ -207,6 +207,9 @@ public class NormalBindAdapterManager {
                 e.printStackTrace();
             }
         }
+        if (object == null) {
+            throw new RuntimeException("Holder Constructor Error For : " + classType.getName());
+        }
         try {
             object.setAccessible(true);
             if (constructorFirst) {
