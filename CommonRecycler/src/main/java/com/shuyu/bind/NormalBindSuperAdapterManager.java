@@ -8,7 +8,7 @@ import com.jcodecraeer.xrecyclerview.LoadingMoreFooter;
 import com.jcodecraeer.xrecyclerview.base.BaseLoadMoreFooter;
 import com.jcodecraeer.xrecyclerview.base.BaseRefreshHeader;
 import com.jcodecraeer.xrecyclerview.other.ProgressStyle;
-import com.shuyu.bind.listener.LoadingListener;
+import com.shuyu.bind.listener.OnLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
     RecyclerView.OnScrollListener onScrollListener;
 
     //loading监听
-    LoadingListener mLoadingListener;
+    OnLoadingListener mLoadingListener;
 
     //headerView列表
     ArrayList<View> mHeaderViews = new ArrayList<>();
@@ -225,7 +225,7 @@ public class NormalBindSuperAdapterManager extends BindBaseAdapterManager<Normal
     /**
      * 刷新与加载更多的监听回调
      */
-    public NormalBindSuperAdapterManager setLoadingListener(LoadingListener listener) {
+    public NormalBindSuperAdapterManager setLoadingListener(OnLoadingListener listener) {
         mLoadingListener = listener;
         return this;
     }

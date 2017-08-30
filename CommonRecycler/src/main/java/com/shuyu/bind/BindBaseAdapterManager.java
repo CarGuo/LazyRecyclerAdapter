@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.shuyu.bind.listener.OnBindDataChooseListener;
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.listener.OnItemLongClickListener;
 
@@ -39,7 +40,7 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
     private Class<? extends NormalBindRecyclerBaseHolder> noDataHolder;
 
     //一个model对应多种Holder的数据的筛选，不设置默认使用最后一个
-    private NormalBindDataChooseListener normalBindDataChooseListener;
+    private OnBindDataChooseListener normalBindDataChooseListener;
 
     //单击
     OnItemClickListener itemClickListener;
@@ -96,7 +97,7 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
      * 一个model对应多种Holder的数据的筛选回调
      * 不设置默认使用最后一个
      */
-    public T bingChooseListener(NormalBindDataChooseListener listener) {
+    public T bingChooseListener(OnBindDataChooseListener listener) {
         normalBindDataChooseListener = listener;
         return (T)this;
     }
@@ -163,7 +164,7 @@ public abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
         return noDataLayoutId != -1 && noDataHolder != null && noDataObject != null;
     }
 
-    NormalBindDataChooseListener getNormalBindDataChooseListener() {
+    OnBindDataChooseListener getNormalBindDataChooseListener() {
         return normalBindDataChooseListener;
     }
 

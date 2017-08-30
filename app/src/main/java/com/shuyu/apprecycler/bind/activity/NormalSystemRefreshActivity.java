@@ -20,9 +20,9 @@ import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
 import com.shuyu.bind.NormalBindSuperAdapter;
 import com.shuyu.bind.NormalBindSuperAdapterManager;
-import com.shuyu.bind.listener.LoadingListener;
+import com.shuyu.bind.listener.OnLoadingListener;
 import com.shuyu.bind.listener.OnItemClickListener;
-import com.shuyu.bind.NormalBindDataChooseListener;
+import com.shuyu.bind.listener.OnBindDataChooseListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +69,7 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
                 .bind(BindMutliModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(BindMutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
                 .bind(BindClickModel.class, BindClickHolder.ID, BindClickHolder.class)
-                .bingChooseListener(new NormalBindDataChooseListener() {
+                .bingChooseListener(new OnBindDataChooseListener() {
                     //一种model类型对应多个Holder时，根据model实体判断选择holder
                     @Override
                     public int getCurrentDataLayoutId(Object object, Class classType, int position, List<Integer> ids) {
@@ -94,7 +94,7 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
                 })
                 .setPullRefreshEnabled(true)
                 .setLoadingMoreEnabled(true)
-                .setLoadingListener(new LoadingListener() {
+                .setLoadingListener(new OnLoadingListener() {
                     @Override
                     public void onRefresh() {
                         recycler.postDelayed(new Runnable() {

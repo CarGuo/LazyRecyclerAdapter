@@ -1,4 +1,4 @@
-package com.shuyu.bind;
+package com.shuyu.bind.listener;
 
 import java.util.List;
 
@@ -7,6 +7,6 @@ import java.util.List;
  * Created by guoshuyu on 2017/8/29.
  */
 
-public interface NormalBindDataChooseListener {
+public interface OnBindDataChooseListener {
     int getCurrentDataLayoutId(Object object, Class classType, int position, List<Integer> ids);
 }

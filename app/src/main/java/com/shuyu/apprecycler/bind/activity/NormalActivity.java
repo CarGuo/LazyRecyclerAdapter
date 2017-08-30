@@ -21,15 +21,12 @@ import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
-import com.shuyu.apprecycler.special.model.ImageModel;
 import com.shuyu.apprecycler.special.view.CustomLoadMoreFooter;
 import com.shuyu.apprecycler.special.view.CustomRefreshHeader;
-import com.shuyu.bind.NormalBindRecyclerAdapter;
 import com.shuyu.bind.NormalBindSuperAdapter;
 import com.shuyu.bind.NormalBindSuperAdapterManager;
-import com.shuyu.bind.listener.LoadingListener;
+import com.shuyu.bind.listener.OnLoadingListener;
 import com.shuyu.bind.listener.OnItemClickListener;
-import com.shuyu.bind.NormalBindAdapterManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +82,7 @@ public class NormalActivity extends AppCompatActivity {
                 .setFootView(new CustomLoadMoreFooter(this))
                 .setRefreshHeader(new CustomRefreshHeader(this))
                 .addHeaderView(header)
-                .setLoadingListener(new LoadingListener() {
+                .setLoadingListener(new OnLoadingListener() {
                     @Override
                     public void onRefresh() {
                         recycler.postDelayed(new Runnable() {

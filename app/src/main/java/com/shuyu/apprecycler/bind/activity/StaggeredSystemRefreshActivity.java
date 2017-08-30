@@ -22,7 +22,7 @@ import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
 import com.shuyu.bind.NormalBindSuperAdapter;
 import com.shuyu.bind.NormalBindSuperAdapterManager;
-import com.shuyu.bind.listener.LoadingListener;
+import com.shuyu.bind.listener.OnLoadingListener;
 import com.shuyu.bind.listener.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -82,7 +82,7 @@ public class StaggeredSystemRefreshActivity extends AppCompatActivity {
                     }
                 }).setPullRefreshEnabled(true)
                 .setLoadingMoreEnabled(true)
-                .setLoadingListener(new LoadingListener() {
+                .setLoadingListener(new OnLoadingListener() {
                     @Override
                     public void onRefresh() {
                         recycler.postDelayed(new Runnable() {

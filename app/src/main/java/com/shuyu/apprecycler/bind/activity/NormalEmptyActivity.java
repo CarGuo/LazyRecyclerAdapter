@@ -21,7 +21,7 @@ import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.bind.NormalBindSuperAdapter;
 import com.shuyu.bind.NormalBindSuperAdapterManager;
-import com.shuyu.bind.listener.LoadingListener;
+import com.shuyu.bind.listener.OnLoadingListener;
 import com.shuyu.bind.listener.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class NormalEmptyActivity extends AppCompatActivity {
                         Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setLoadingListener(new LoadingListener() {
+                .setLoadingListener(new OnLoadingListener() {
                     @Override
                     public void onRefresh() {
                         recycler.postDelayed(new Runnable() {
