@@ -62,7 +62,7 @@ public class NormalBindSuperAdapter extends NormalBindRecyclerAdapter implements
     }
 
     private void init() {
-        if (normalAdapterManager.pullRefreshEnabled &&  normalAdapterManager.mRefreshHeader == null) {
+        if (normalAdapterManager.pullRefreshEnabled && normalAdapterManager.mRefreshHeader == null) {
             normalAdapterManager.mRefreshHeader = new ArrowRefreshHeader(context);
             normalAdapterManager.mRefreshHeader.setProgressStyle(normalAdapterManager.mRefreshProgressStyle);
         }
@@ -111,7 +111,7 @@ public class NormalBindSuperAdapter extends NormalBindRecyclerAdapter implements
                 break;
             default:
                 mLastY = -1; // reset
-                if (normalAdapterManager.pullRefreshEnabled && isOnTop() &&  appbarState == AppBarStateChangeListener.State.EXPANDED) {
+                if (normalAdapterManager.pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     if (normalAdapterManager.mRefreshHeader.releaseAction()) {
                         if (normalAdapterManager.mLoadingListener != null) {
                             normalAdapterManager.mLoadingListener.onRefresh();
@@ -174,6 +174,13 @@ public class NormalBindSuperAdapter extends NormalBindRecyclerAdapter implements
         return ((refresh) ? 1 : 0);
     }
 
+    public boolean emptyForLoadMore() {
+        if ((getDataList() == null || getDataList().size() == 0) && !normalAdapterManager.loadingMoreEmptyEnabled) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * 滑动监听
      */
@@ -198,7 +205,7 @@ public class NormalBindSuperAdapter extends NormalBindRecyclerAdapter implements
                 }
                 if (layoutManager.getChildCount() > 0
                         && lastVisibleItemPosition >= layoutManager.getItemCount() - 1 && layoutManager.getItemCount() > layoutManager.getChildCount() && !normalAdapterManager.isNoMore && normalAdapterManager.mRefreshHeader.getState() < ArrowRefreshHeader.STATE_REFRESHING) {
-                    if ((getDataList() == null ||getDataList().size() == 0) && !normalAdapterManager.loadingMoreEmptyEnabled) {
+                    if (emptyForLoadMore()) {
                         return;
                     }
                     normalAdapterManager.isLoadingData = true;
