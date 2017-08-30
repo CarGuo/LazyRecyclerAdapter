@@ -88,19 +88,19 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
                         }
                         return ids.get(ids.size() - 1);
                     }
+                })
+                .setNeedAnimation(true)
+                .setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Context context, int position) {
+                        //需要减去你的header和刷新的view的数量
+                        Toast.makeText(context, "点击了！！　" + (position - 2), Toast.LENGTH_SHORT).show();
+                    }
                 });
 
 
+
         adapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, datas);
-
-        //设置动画支持打开
-        adapter.setNeedAnimation(true);
-
-        //配置你自定义的空页面效果，不配置显示默认
-        /*adapter.setNoDataLayoutId(EmptyHolder.ID);
-        RecyclerBaseModel recyclerBaseModel = new RecyclerBaseModel();
-        recyclerBaseModel.setResLayoutId(EmptyHolder.ID);
-        adapter.setNoDataModel(recyclerBaseModel);*/
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST));
@@ -140,14 +140,6 @@ public class NormalSystemRefreshActivity extends AppCompatActivity {
 
                     }, 2000);
                 }
-            }
-        });
-
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(Context context, int position) {
-                //需要减去你的header和刷新的view的数量
-                Toast.makeText(context, "点击了！！　" + (position - 2), Toast.LENGTH_SHORT).show();
             }
         });
     }

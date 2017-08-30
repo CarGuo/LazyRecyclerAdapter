@@ -80,7 +80,14 @@ public class StaggeredXRecyclerActivity extends AppCompatActivity {
                 .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
                 .bind(BindMutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
-                .bind(BindClickModel.class, BindClickHolder.ID, BindClickHolder.class);
+                .bind(BindClickModel.class, BindClickHolder.ID, BindClickHolder.class)
+                .setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Context context, int position) {
+                        //需要减去你的header和刷新的view的数量
+                        Toast.makeText(context, "点击了！！　" + (position - 2), Toast.LENGTH_SHORT).show();
+                    }
+                });
         //初始化通用管理器
         commonRecyclerAdapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, dataList);
         xRecycler.setAdapter(commonRecyclerAdapter);
@@ -112,14 +119,6 @@ public class StaggeredXRecyclerActivity extends AppCompatActivity {
                         loadMore();
                     }
                 }, 1000);
-            }
-        });
-
-        commonRecyclerAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(Context context, int position) {
-                //需要减去你的header和刷新的view的数量
-                Toast.makeText(context, "点击了！！　" + (position - 2), Toast.LENGTH_SHORT).show();
             }
         });
     }

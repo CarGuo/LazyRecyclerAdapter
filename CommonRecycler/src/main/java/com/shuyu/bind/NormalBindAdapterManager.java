@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.shuyu.bind.listener.OnItemClickListener;
+import com.shuyu.bind.listener.OnItemLongClickListener;
+
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +49,18 @@ public class NormalBindAdapterManager {
 
     //一个model对应多种Holder的数据的筛选，不设置默认使用最后一个
     private NormalBindDataChooseListener normalBindDataChooseListener;
+
+    //单击
+    OnItemClickListener itemClickListener;
+
+    //长按
+    OnItemLongClickListener itemLongClickListener;
+
+    //加载状态
+    NormalBindLoadMoreHolder.LoadMoreState loadMoreState = NormalBindLoadMoreHolder.LoadMoreState.LOAD_MORE_STATE;
+
+    //是否支持动画
+    boolean needAnimation = false;
 
     /**
      * 绑定加载更多模块显示
@@ -111,6 +126,54 @@ public class NormalBindAdapterManager {
         normalBindDataChooseListener = listener;
         return this;
     }
+
+    /**
+     * 设置加载更多的状态
+     */
+    public NormalBindAdapterManager setLoadMoreState(NormalBindLoadMoreHolder.LoadMoreState loadMoreState) {
+        this.loadMoreState = loadMoreState;
+        return this;
+    }
+
+    /**
+     * 获取加载更多的状态
+     */
+    public NormalBindLoadMoreHolder.LoadMoreState getLoadMoreState() {
+        return loadMoreState;
+    }
+
+    /**
+     * 设置点击
+     */
+    public NormalBindAdapterManager setOnItemClickListener(OnItemClickListener listener) {
+        this.itemClickListener = listener;
+        return this;
+    }
+
+    /**
+     * 设置长按
+     */
+    public NormalBindAdapterManager setOnItemLongClickListener(OnItemLongClickListener listener) {
+        this.itemLongClickListener = listener;
+        return this;
+    }
+
+    /**
+     * 是否支持动画
+     */
+    public boolean isNeedAnimation() {
+        return needAnimation;
+    }
+
+    /**
+     * 设置是否需要动画
+     */
+    public NormalBindAdapterManager setNeedAnimation(boolean needAnimation) {
+        this.needAnimation = needAnimation;
+        return this;
+    }
+
+
 
     HashMap<String, List<Integer>> getModelToId() {
         return modelToId;

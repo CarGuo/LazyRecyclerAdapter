@@ -63,24 +63,22 @@ public class NormalActivity extends AppCompatActivity {
                 .bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
                 .bind(BindMutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
                 .bind(BindClickModel.class, BindClickHolder.ID, BindClickHolder.class)
-                .bindEmpty(BindNoDataHolder.NoDataModel.class, BindNoDataHolder.ID, BindNoDataHolder.class);
+                .bindEmpty(BindNoDataHolder.NoDataModel.class, BindNoDataHolder.ID, BindNoDataHolder.class)
+                .setNeedAnimation(true)
+                .setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Context context, int position) {
+                        Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
         adapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, datas);
-
-        //设置动画支持打开
-        adapter.setNeedAnimation(true);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST));
         recycler.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(Context context, int position) {
-                Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     /**

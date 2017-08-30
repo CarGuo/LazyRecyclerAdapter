@@ -78,7 +78,14 @@ public class NormalXRecyclerActivity extends AppCompatActivity {
                 .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
                 .bind(BindMutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
-                .bind(BindClickModel.class, BindClickHolder.ID, BindClickHolder.class);
+                .bind(BindClickModel.class, BindClickHolder.ID, BindClickHolder.class)
+                .setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Context context, int position) {
+                        //需要减去你的header
+                        Toast.makeText(context, "点击了！！　" + (position - 1), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
         //初始化通用管理器
         commonRecyclerAdapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, dataList);
@@ -87,14 +94,6 @@ public class NormalXRecyclerActivity extends AppCompatActivity {
         View header = LayoutInflater.from(this).inflate(R.layout.layout_header, null);
         //添加头部
         xRecycler.addHeaderView(header);
-
-        commonRecyclerAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(Context context, int position) {
-                //需要减去你的header
-                Toast.makeText(context, "点击了！！　" + (position - 1), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     /**

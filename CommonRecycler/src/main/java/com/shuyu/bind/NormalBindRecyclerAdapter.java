@@ -30,18 +30,6 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     //管理器
     private NormalBindAdapterManager normalAdapterManager;
 
-    //单击
-    private OnItemClickListener itemClickListener;
-
-    //长按
-    private OnItemLongClickListener itemLongClickListener;
-
-    //加载状态
-    private NormalBindLoadMoreHolder.LoadMoreState loadMoreState = NormalBindLoadMoreHolder.LoadMoreState.LOAD_MORE_STATE;
-
-    //是否支持动画
-    private boolean needAnimation = false;
-
     //最后的位置
     private int lastPosition = -1;
 
@@ -101,34 +89,6 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     /**
-     * 设置加载更多的状态
-     */
-    public void setLoadMoreState(NormalBindLoadMoreHolder.LoadMoreState loadMoreState) {
-        this.loadMoreState = loadMoreState;
-    }
-
-    /**
-     * 获取加载更多的状态
-     */
-    public NormalBindLoadMoreHolder.LoadMoreState getLoadMoreState() {
-        return loadMoreState;
-    }
-
-    /**
-     * 设置点击
-     */
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.itemClickListener = listener;
-    }
-
-    /**
-     * 设置长按
-     */
-    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-        this.itemLongClickListener = listener;
-    }
-
-    /**
      * 获取最后一个位置
      */
     public int getLastPosition() {
@@ -140,20 +100,6 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
      */
     public void setLastPosition(int lastPosition) {
         this.lastPosition = lastPosition;
-    }
-
-    /**
-     * 是否支持动画
-     */
-    public boolean isNeedAnimation() {
-        return needAnimation;
-    }
-
-    /**
-     * 设置是否需要动画
-     */
-    public void setNeedAnimation(boolean needAnimation) {
-        this.needAnimation = needAnimation;
     }
 
     @Override
@@ -208,20 +154,20 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
         final RecyclerView.ViewHolder holder = normalAdapterManager.getViewTypeHolder(context, parent, viewType);
 
         //itemView 的点击事件
-        if (itemClickListener != null) {
+        if (normalAdapterManager.itemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemClickListener.onItemClick(holder.itemView.getContext(), holder.getPosition());
+                    normalAdapterManager.itemClickListener.onItemClick(holder.itemView.getContext(), holder.getPosition());
                 }
             });
         }
 
-        if (itemLongClickListener != null) {
+        if (normalAdapterManager.itemLongClickListener != null) {
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    return itemLongClickListener.onItemClick(holder.itemView.getContext(), holder.getPosition());
+                    return normalAdapterManager.itemLongClickListener.onItemClick(holder.itemView.getContext(), holder.getPosition());
                 }
             });
         }
@@ -249,7 +195,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
         if (normalAdapterManager.isSupportLoadMore() && position + 1 == getItemCount()) {
             model = normalAdapterManager.getLoadMoreObject();
             NormalBindLoadMoreHolder normalLoadMoreHolder = (NormalBindLoadMoreHolder) holder;
-            normalLoadMoreHolder.switchLoadMore(model, loadMoreState);
+            normalLoadMoreHolder.switchLoadMore(model, normalAdapterManager.loadMoreState);
         } else {
             model = dataList.get(position);
         }
@@ -267,7 +213,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
 
         recyclerHolder.onBind(model, position);
 
-        if (needAnimation && recyclerHolder.getAnimator(recyclerHolder.itemView) != null
+        if (normalAdapterManager.needAnimation && recyclerHolder.getAnimator(recyclerHolder.itemView) != null
                 && position > lastPosition) {
 
             recyclerHolder.getAnimator(recyclerHolder.itemView).start();

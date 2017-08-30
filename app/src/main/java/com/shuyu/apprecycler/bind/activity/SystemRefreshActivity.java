@@ -75,13 +75,18 @@ public class SystemRefreshActivity extends AppCompatActivity {
                 .bind(BindMutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
                 .bind(BindClickModel.class, BindClickHolder.ID, BindClickHolder.class)
                 .bindLoadMore(BindLoadMoreHolder.LoadMoreModel.class, BindLoadMoreHolder.ID, BindLoadMoreHolder.class)
-                .bindEmpty(BindNoDataHolder.NoDataModel.class, BindNoDataHolder.ID, BindNoDataHolder.class);
+                .bindEmpty(BindNoDataHolder.NoDataModel.class, BindNoDataHolder.ID, BindNoDataHolder.class)
+                .setNeedAnimation(true)
+                .setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Context context, int position) {
+                        //需要减去你的header和刷新的view的数量
+                        Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
         adapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, datas);
-
-        //设置动画支持打开
-        adapter.setNeedAnimation(true);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST));
@@ -121,14 +126,6 @@ public class SystemRefreshActivity extends AppCompatActivity {
 
                     }, 2000);
                 }
-            }
-        });
-
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(Context context, int position) {
-                //需要减去你的header和刷新的view的数量
-                Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show();
             }
         });
     }

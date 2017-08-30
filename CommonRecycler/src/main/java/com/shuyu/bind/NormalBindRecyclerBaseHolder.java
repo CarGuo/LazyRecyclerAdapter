@@ -15,22 +15,20 @@ public abstract class NormalBindRecyclerBaseHolder extends RecyclerView.ViewHold
 
     protected NormalBindRecyclerAdapter normalCommonRecyclerAdapter = null;
 
+    /**
+     * 必须继承其中之一
+     */
     public NormalBindRecyclerBaseHolder(View v) {
         this(v.getContext(), v);
     }
 
+    /**
+     * 必须继承其中之一
+     */
     public NormalBindRecyclerBaseHolder(Context context, View v) {
         super(v);
         createView(v);
         this.context = context;
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setAdapter(NormalBindRecyclerAdapter commonRecyclerAdapter) {
-        this.normalCommonRecyclerAdapter = commonRecyclerAdapter;
     }
 
     /**
@@ -44,10 +42,22 @@ public abstract class NormalBindRecyclerBaseHolder extends RecyclerView.ViewHold
     public abstract void onBind(Object model, final int position);
 
     /**
-     * 动画
+     * 动画，默认为返回null，继承后可返回动画
      */
     public AnimatorSet getAnimator(View view) {
         return null;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public NormalBindRecyclerAdapter getNormalCommonRecyclerAdapter() {
+        return normalCommonRecyclerAdapter;
+    }
+
+    void setAdapter(NormalBindRecyclerAdapter commonRecyclerAdapter) {
+        this.normalCommonRecyclerAdapter = commonRecyclerAdapter;
     }
 
 }
