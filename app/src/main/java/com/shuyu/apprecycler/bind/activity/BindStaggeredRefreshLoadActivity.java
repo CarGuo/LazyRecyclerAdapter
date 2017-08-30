@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
@@ -65,6 +67,7 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
 
 
     public void init() {
+        View header = LayoutInflater.from(this).inflate(R.layout.layout_header, null);
 
         normalAdapterManager = new BindSuperAdapterManager();
         normalAdapterManager
@@ -80,7 +83,9 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
                         //需要减去你的header和刷新的view的数量
                         Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show();
                     }
-                }).setPullRefreshEnabled(true)
+                })
+                .addHeaderView(header)
+                .setPullRefreshEnabled(true)
                 .setLoadingMoreEnabled(true)
                 .setLoadingListener(new OnLoadingListener() {
                     @Override
@@ -112,7 +117,7 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         recycler.setLayoutManager(staggeredGridLayoutManager);
-        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.GRID));
+        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.GRID, adapter));
         recycler.setAdapter(adapter);
 
 

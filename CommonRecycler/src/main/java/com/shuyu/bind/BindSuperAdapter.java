@@ -77,6 +77,7 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         mRecyclerView = recyclerView;
         if (adapter instanceof BindSuperAdapter) {
@@ -87,7 +88,6 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
             adapter.registerAdapterDataObserver(mDataObserver);
             mDataObserver.onChanged();
         }
-        super.onAttachedToRecyclerView(recyclerView);
     }
 
     @Override

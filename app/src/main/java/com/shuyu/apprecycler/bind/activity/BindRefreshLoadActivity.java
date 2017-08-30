@@ -18,6 +18,8 @@ import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
+import com.shuyu.apprecycler.special.view.CustomLoadMoreFooter;
+import com.shuyu.apprecycler.special.view.CustomRefreshHeader;
 import com.shuyu.bind.BindSuperAdapter;
 import com.shuyu.bind.BindSuperAdapterManager;
 import com.shuyu.bind.listener.OnLoadingListener;
@@ -84,6 +86,10 @@ public class BindRefreshLoadActivity extends AppCompatActivity {
                         return ids.get(ids.size() - 1);
                     }
                 })
+                .setPullRefreshEnabled(true)
+                .setLoadingMoreEnabled(true)
+                .setFootView(new CustomLoadMoreFooter(this))
+                .setRefreshHeader(new CustomRefreshHeader(this))
                 .setNeedAnimation(true)
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
@@ -92,8 +98,6 @@ public class BindRefreshLoadActivity extends AppCompatActivity {
                         Toast.makeText(context, "点击了！！　" + (position), Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setPullRefreshEnabled(true)
-                .setLoadingMoreEnabled(true)
                 .setLoadingListener(new OnLoadingListener() {
                     @Override
                     public void onRefresh() {
@@ -120,7 +124,7 @@ public class BindRefreshLoadActivity extends AppCompatActivity {
         adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST));
+        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST, adapter));
         recycler.setAdapter(adapter);
     }
 

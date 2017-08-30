@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
@@ -62,7 +64,7 @@ public class BindGridActivity extends AppCompatActivity {
 
 
     public void init() {
-
+        View header = LayoutInflater.from(this).inflate(R.layout.layout_header, null);
         normalAdapterManager = new BindSuperAdapterManager();
         normalAdapterManager
                 .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
@@ -78,6 +80,7 @@ public class BindGridActivity extends AppCompatActivity {
                         Toast.makeText(context, "点击了！！　" + (position), Toast.LENGTH_SHORT).show();
                     }
                 })
+                .addHeaderView(header)
                 .setPullRefreshEnabled(true)
                 .setLoadingMoreEnabled(true)
                 .setOnItemClickListener(new OnItemClickListener() {
@@ -107,7 +110,6 @@ public class BindGridActivity extends AppCompatActivity {
                         }, 1000);
                     }
                 });
-        ;
 
 
         adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
@@ -115,7 +117,7 @@ public class BindGridActivity extends AppCompatActivity {
         GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 2);
 
         recycler.setLayoutManager(staggeredGridLayoutManager);
-        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.GRID));
+        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.GRID, adapter));
         recycler.setAdapter(adapter);
 
 

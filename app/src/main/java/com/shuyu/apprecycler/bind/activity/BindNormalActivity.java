@@ -21,11 +21,8 @@ import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
-import com.shuyu.apprecycler.special.view.CustomLoadMoreFooter;
-import com.shuyu.apprecycler.special.view.CustomRefreshHeader;
-import com.shuyu.bind.BindSuperAdapter;
+import com.shuyu.bind.BindRecyclerAdapter;
 import com.shuyu.bind.BindSuperAdapterManager;
-import com.shuyu.bind.listener.OnLoadingListener;
 import com.shuyu.bind.listener.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -46,9 +43,7 @@ public class BindNormalActivity extends AppCompatActivity {
 
     private List datas = new ArrayList<>();
 
-    private BindSuperAdapter adapter;
-
-    private final Object lock = new Object();
+    private BindRecyclerAdapter adapter;
 
     private BindSuperAdapterManager normalAdapterManager;
 
@@ -62,7 +57,7 @@ public class BindNormalActivity extends AppCompatActivity {
     }
 
     public void init() {
-        View header = LayoutInflater.from(this).inflate(R.layout.layout_header, null);
+
         normalAdapterManager = new BindSuperAdapterManager();
         normalAdapterManager
                 .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
@@ -76,39 +71,13 @@ public class BindNormalActivity extends AppCompatActivity {
                     public void onItemClick(Context context, int position) {
                         Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show();
                     }
-                })
-                .setPullRefreshEnabled(true)
-                .setLoadingMoreEnabled(true)
-                .setFootView(new CustomLoadMoreFooter(this))
-                .setRefreshHeader(new CustomRefreshHeader(this))
-                .addHeaderView(header)
-                .setLoadingListener(new OnLoadingListener() {
-                    @Override
-                    public void onRefresh() {
-                        recycler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                refresh();
-                            }
-                        }, 1000);
-                    }
-
-                    @Override
-                    public void onLoadMore() {
-                        recycler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                loadMore();
-                            }
-                        }, 1000);
-                    }
                 });
 
 
-        adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
+        adapter = new BindRecyclerAdapter(this, normalAdapterManager, datas);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST, adapter));
+        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST));
         recycler.setAdapter(adapter);
 
     }
@@ -127,29 +96,6 @@ public class BindNormalActivity extends AppCompatActivity {
         this.datas = list;
         if (adapter != null) {
             adapter.setListData(datas);
-        }
-    }
-
-
-    private void refresh() {
-        List list = BindDataUtils.getRefreshData();
-        //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
-        //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
-        synchronized (lock) {
-            datas = list;
-            adapter.setListData(list);
-            normalAdapterManager.refreshComplete();
-        }
-
-    }
-
-    private void loadMore() {
-        List list = BindDataUtils.getLoadMoreData(datas);
-        //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
-        //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
-        synchronized (lock) {
-            adapter.addListData(list);
-            normalAdapterManager.loadMoreComplete();
         }
     }
 
