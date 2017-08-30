@@ -21,8 +21,6 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private int startPosition; //根据你想要的屏蔽不需要的边距的。
 
-    private NormalBindSuperAdapter normalBindSuperAdapter;
-
     public DividerItemDecoration(int space) {
         this.space = space;
     }
@@ -41,8 +39,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     public DividerItemDecoration(int space, int direct, NormalBindSuperAdapter normalBindSuperAdapter) {
         this.space = space;
         this.direct = direct;
-        this.normalBindSuperAdapter = normalBindSuperAdapter;
-        this.startPosition = normalBindSuperAdapter.absFirstPositionWhitoutHeader();
+        this.startPosition = normalBindSuperAdapter.absFirstPositionWithoutHeader();
     }
 
     @Override

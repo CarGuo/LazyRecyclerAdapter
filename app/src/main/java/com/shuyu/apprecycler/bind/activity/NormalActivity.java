@@ -22,6 +22,8 @@ import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
 import com.shuyu.apprecycler.special.model.ImageModel;
+import com.shuyu.apprecycler.special.view.CustomLoadMoreFooter;
+import com.shuyu.apprecycler.special.view.CustomRefreshHeader;
 import com.shuyu.bind.NormalBindRecyclerAdapter;
 import com.shuyu.bind.NormalBindSuperAdapter;
 import com.shuyu.bind.NormalBindSuperAdapterManager;
@@ -78,6 +80,8 @@ public class NormalActivity extends AppCompatActivity {
                 })
                 .setPullRefreshEnabled(true)
                 .setLoadingMoreEnabled(true)
+                .setFootView(new CustomLoadMoreFooter(this))
+                .setRefreshHeader(new CustomRefreshHeader(this))
                 .addHeaderView(header)
                 .setLoadingListener(new LoadingListener() {
                     @Override

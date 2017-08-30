@@ -14,7 +14,6 @@ import android.view.ViewParent;
 
 import com.jcodecraeer.xrecyclerview.ArrowRefreshHeader;
 import com.jcodecraeer.xrecyclerview.LoadingMoreFooter;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcodecraeer.xrecyclerview.other.AppBarStateChangeListener;
 ;
 import java.util.List;
@@ -63,13 +62,15 @@ public class NormalBindSuperAdapter extends NormalBindRecyclerAdapter implements
     }
 
     private void init() {
-        if (normalAdapterManager.pullRefreshEnabled) {
+        if (normalAdapterManager.pullRefreshEnabled &&  normalAdapterManager.mRefreshHeader == null) {
             normalAdapterManager.mRefreshHeader = new ArrowRefreshHeader(context);
             normalAdapterManager.mRefreshHeader.setProgressStyle(normalAdapterManager.mRefreshProgressStyle);
         }
-        LoadingMoreFooter footView = new LoadingMoreFooter(context);
-        footView.setProgressStyle(normalAdapterManager.mLoadingMoreProgressStyle);
-        normalAdapterManager.mFootView = footView;
+        if (normalAdapterManager.mFootView == null) {
+            LoadingMoreFooter footView = new LoadingMoreFooter(context);
+            footView.setProgressStyle(normalAdapterManager.mLoadingMoreProgressStyle);
+            normalAdapterManager.mFootView = footView;
+        }
         normalAdapterManager.mFootView.setVisibility(GONE);
     }
 
@@ -168,7 +169,7 @@ public class NormalBindSuperAdapter extends NormalBindRecyclerAdapter implements
         return count + ((refresh) ? 1 : 0);
     }
 
-    public int absFirstPositionWhitoutHeader() {
+    public int absFirstPositionWithoutHeader() {
         boolean refresh = normalAdapterManager.isPullRefreshEnabled();
         return ((refresh) ? 1 : 0);
     }
