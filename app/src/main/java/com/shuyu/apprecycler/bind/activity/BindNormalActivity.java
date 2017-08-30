@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
  * 使用CommonRecyclerAdapter实现多样式的recycler
  * 没有下拉刷新和上拉刷新
  */
-public class NormalActivity extends AppCompatActivity {
+public class BindNormalActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler)
     RecyclerView recycler;

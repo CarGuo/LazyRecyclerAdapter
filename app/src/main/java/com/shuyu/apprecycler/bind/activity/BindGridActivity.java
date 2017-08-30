@@ -3,13 +3,12 @@ package com.shuyu.apprecycler.bind.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
-
 import com.shuyu.apprecycler.bind.holder.BindClickHolder;
 import com.shuyu.apprecycler.bind.holder.BindImageHolder;
 import com.shuyu.apprecycler.bind.holder.BindMutliHolder;
@@ -39,7 +38,7 @@ import butterknife.ButterKnife;
  * CommonRecyclerAdapter的上拉加载更多
  * 瀑布流
  */
-public class StaggeredSystemRefreshActivity extends AppCompatActivity {
+public class BindGridActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
@@ -48,11 +47,9 @@ public class StaggeredSystemRefreshActivity extends AppCompatActivity {
 
     private BindSuperAdapter adapter;
 
-    private BindSuperAdapterManager normalAdapterManager;
-
     private final Object lock = new Object();
 
-    private int count = 0;
+    private BindSuperAdapterManager normalAdapterManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +75,18 @@ public class StaggeredSystemRefreshActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(Context context, int position) {
                         //需要减去你的header和刷新的view的数量
+                        Toast.makeText(context, "点击了！！　" + (position), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setPullRefreshEnabled(true)
+                .setLoadingMoreEnabled(true)
+                .setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Context context, int position) {
+                        //需要减去你的header和刷新的view的数量
                         Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show();
                     }
-                }).setPullRefreshEnabled(true)
-                .setLoadingMoreEnabled(true)
-                .setLoadingListener(new OnLoadingListener() {
+                }).setLoadingListener(new OnLoadingListener() {
                     @Override
                     public void onRefresh() {
                         recycler.postDelayed(new Runnable() {
@@ -105,11 +109,10 @@ public class StaggeredSystemRefreshActivity extends AppCompatActivity {
                 });
         ;
 
+
         adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
 
-
-        //瀑布流管理器
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 2);
 
         recycler.setLayoutManager(staggeredGridLayoutManager);
         recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.GRID));
@@ -143,13 +146,9 @@ public class StaggeredSystemRefreshActivity extends AppCompatActivity {
         //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized (lock) {
+            //adapter.setLoadMoreState(BindLoadMoreHolder.NULL_DATA_STATE);
             adapter.addListData(list);
-            if (count < 3) {
-                normalAdapterManager.loadMoreComplete();
-            } else {
-                normalAdapterManager.setNoMore(true);
-            }
-            count++;
+            normalAdapterManager.refreshComplete();
         }
     }
 

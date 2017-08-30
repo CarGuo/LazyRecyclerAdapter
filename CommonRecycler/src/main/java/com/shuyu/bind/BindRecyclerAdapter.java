@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.shuyu.bind.holder.NormalBindErrorHolder;
+import com.shuyu.bind.holder.BindErrorHolder;
 
 import java.util.List;
 
@@ -138,9 +138,9 @@ public class BindRecyclerAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         //错误数据
-        if (viewType == NormalBindErrorHolder.ID) {
-            View v = LayoutInflater.from(context).inflate(NormalBindErrorHolder.ID, parent, false);
-            return new NormalBindErrorHolder(context, v);
+        if (viewType == BindErrorHolder.ID) {
+            View v = LayoutInflater.from(context).inflate(BindErrorHolder.ID, parent, false);
+            return new BindErrorHolder(context, v);
         }
 
         //是否显示没有数据页面
@@ -196,8 +196,8 @@ public class BindRecyclerAdapter extends RecyclerView.Adapter {
         }
 
 
-        if (holder instanceof NormalBindErrorHolder) {
-            ((NormalBindErrorHolder) (holder)).onBind(model, position);
+        if (holder instanceof BindErrorHolder) {
+            ((BindErrorHolder) (holder)).onBind(model, position);
             return;
         }
 
@@ -250,7 +250,7 @@ public class BindRecyclerAdapter extends RecyclerView.Adapter {
 
 
         if (modelToId == null || modelToId.size() == 0) {
-            return NormalBindErrorHolder.ID;
+            return BindErrorHolder.ID;
         }
 
         int layoutId = modelToId.get(modelToId.size() - 1);
@@ -259,7 +259,7 @@ public class BindRecyclerAdapter extends RecyclerView.Adapter {
                     getCurrentDataLayoutId(object, object.getClass(), position, modelToId);
         }
         if (-1 == layoutId || layoutId == 0 || layoutId == Integer.MAX_VALUE) {
-            return NormalBindErrorHolder.ID;
+            return BindErrorHolder.ID;
         }
         return layoutId;
     }

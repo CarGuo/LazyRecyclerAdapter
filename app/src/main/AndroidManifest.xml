@@ -62,22 +62,22 @@
 
         <!--*****************************************************-->
         <activity
-            android:name=".bind.activity.NormalSystemRefreshActivity"
+            android:name=".bind.activity.BindRefreshLoadActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".bind.activity.NormalActivity"
+            android:name=".bind.activity.BindNormalActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".bind.activity.StaggeredSystemRefreshActivity"
+            android:name=".bind.activity.BindStaggeredRefreshLoadActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".bind.activity.NormalEmptyActivity"
+            android:name=".bind.activity.BindEmptyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".bind.activity.GridSystemRefreshActivity"
+            android:name=".bind.activity.BindGridActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".bind.NormalHomeActivity"
+            android:name=".bind.BindHomeActivity"
             android:screenOrientation="portrait" />
 
     </application>

@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.shuyu.apprecycler.bind.NormalHomeActivity;
+import com.shuyu.apprecycler.bind.BindHomeActivity;
 import com.shuyu.apprecycler.special.HomeActivity;
 
 /**
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.normal_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, NormalHomeActivity.class));
+                startActivity(new Intent(MainActivity.this, BindHomeActivity.class));
             }
         });
         findViewById(R.id.special_btn).setOnClickListener(new View.OnClickListener() {

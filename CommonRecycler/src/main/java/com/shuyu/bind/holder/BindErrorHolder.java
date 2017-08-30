@@ -13,17 +13,17 @@ import com.shuyu.common.R;
  * Created by guoshuyu on 2017/8/29.
  */
 
-public class NormalBindErrorHolder extends BindRecyclerBaseHolder {
+public class BindErrorHolder extends BindRecyclerBaseHolder {
 
     public final static int ID = R.layout.error_item;
 
     private TextView errorText;
 
-    public NormalBindErrorHolder(View v) {
+    public BindErrorHolder(View v) {
         super(v);
     }
 
-    public NormalBindErrorHolder(Context context, View v) {
+    public BindErrorHolder(Context context, View v) {
         super(context, v);
     }
 

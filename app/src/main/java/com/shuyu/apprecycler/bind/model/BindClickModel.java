@@ -1,6 +1,7 @@
 package com.shuyu.apprecycler.bind.model;
 
 /**
+ * 数据实体
  * Created by guoshuyu on 2017/8/29.
  */
 
