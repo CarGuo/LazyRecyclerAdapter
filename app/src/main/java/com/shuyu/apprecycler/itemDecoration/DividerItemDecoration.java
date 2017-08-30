@@ -5,6 +5,8 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.shuyu.bind.NormalBindSuperAdapter;
+
 /**
  * 实现分割线
  */
@@ -18,6 +20,8 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private int space;
 
     private int startPosition; //根据你想要的屏蔽不需要的边距的。
+
+    private NormalBindSuperAdapter normalBindSuperAdapter;
 
     public DividerItemDecoration(int space) {
         this.space = space;
@@ -34,6 +38,12 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         this.startPosition = startPosition;
     }
 
+    public DividerItemDecoration(int space, int direct, NormalBindSuperAdapter normalBindSuperAdapter) {
+        this.space = space;
+        this.direct = direct;
+        this.normalBindSuperAdapter = normalBindSuperAdapter;
+        this.startPosition = normalBindSuperAdapter.absFirstPositionWhitoutHeader();
+    }
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {

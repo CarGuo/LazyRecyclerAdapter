@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
@@ -23,6 +25,7 @@ import com.shuyu.apprecycler.special.model.ImageModel;
 import com.shuyu.bind.NormalBindRecyclerAdapter;
 import com.shuyu.bind.NormalBindSuperAdapter;
 import com.shuyu.bind.NormalBindSuperAdapterManager;
+import com.shuyu.bind.listener.LoadingListener;
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.NormalBindAdapterManager;
 
@@ -44,7 +47,7 @@ public class NormalActivity extends AppCompatActivity {
 
     private List datas = new ArrayList<>();
 
-    private NormalBindRecyclerAdapter adapter;
+    private NormalBindSuperAdapter adapter;
 
     private boolean isLoadMore;
 
@@ -58,8 +61,8 @@ public class NormalActivity extends AppCompatActivity {
     }
 
     public void init() {
-
-        NormalBindSuperAdapterManager normalAdapterManager = new NormalBindSuperAdapterManager();
+        View header = LayoutInflater.from(this).inflate(R.layout.layout_header, null);
+        final NormalBindSuperAdapterManager normalAdapterManager = new NormalBindSuperAdapterManager();
         normalAdapterManager
                 .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
@@ -73,14 +76,36 @@ public class NormalActivity extends AppCompatActivity {
                         Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setPullRefreshEnabled(false)
-                .setLoadingMoreEnabled(false);
+                .setPullRefreshEnabled(true)
+                .setLoadingMoreEnabled(true)
+                .addHeaderView(header)
+                .setLoadingListener(new LoadingListener() {
+                    @Override
+                    public void onRefresh() {
+                        recycler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                normalAdapterManager.refreshComplete();
+                            }
+                        }, 1000);
+                    }
+
+                    @Override
+                    public void onLoadMore() {
+                        recycler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                normalAdapterManager.loadMoreComplete();
+                            }
+                        }, 1000);
+                    }
+                });
 
 
         adapter = new NormalBindSuperAdapter(this, normalAdapterManager, datas);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST));
+        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST, adapter));
         recycler.setAdapter(adapter);
 
     }

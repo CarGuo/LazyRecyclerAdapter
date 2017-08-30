@@ -162,6 +162,17 @@ public class NormalBindSuperAdapter extends NormalBindRecyclerAdapter implements
         return position - count - ((refresh) ? 1 : 0);
     }
 
+    public int absFirstPosition() {
+        int count = normalAdapterManager.getHeadersCount();
+        boolean refresh = normalAdapterManager.isPullRefreshEnabled();
+        return count + ((refresh) ? 1 : 0);
+    }
+
+    public int absFirstPositionWhitoutHeader() {
+        boolean refresh = normalAdapterManager.isPullRefreshEnabled();
+        return ((refresh) ? 1 : 0);
+    }
+
     /**
      * 滑动监听
      */
@@ -356,7 +367,6 @@ public class NormalBindSuperAdapter extends NormalBindRecyclerAdapter implements
                 adapterCount = adapter.getItemCount();
                 if (adjPosition < adapterCount) {
                     adapter.onBindViewHolder(holder, adjPosition);
-                    return;
                 }
             }
         }
