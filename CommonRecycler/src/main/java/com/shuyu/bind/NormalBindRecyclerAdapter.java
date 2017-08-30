@@ -29,7 +29,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     private List dataList = null;
 
     //管理器
-    private NormalBindAdapterManager normalAdapterManager;
+    private BaseBindAdapterManager normalAdapterManager;
 
     //当前RecyclerView
     private RecyclerView curRecyclerView;
@@ -37,7 +37,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
     //最后的位置
     private int lastPosition = -1;
 
-    public NormalBindRecyclerAdapter(Context context, NormalBindAdapterManager normalAdapterManager, List dataList) {
+    public NormalBindRecyclerAdapter(Context context, BaseBindAdapterManager normalAdapterManager, List dataList) {
         this.normalAdapterManager = normalAdapterManager;
         this.dataList = dataList;
         this.context = context;
@@ -261,7 +261,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
 
         //返回需要显示的ID
         Object object = dataList.get(position);
-        List<Integer> modelToId = normalAdapterManager.getModelToId().get(object.getClass().getName());
+        List<Integer> modelToId = (List<Integer>) normalAdapterManager.getModelToId().get(object.getClass().getName());
 
 
         if (modelToId == null || modelToId.size() == 0) {
@@ -287,7 +287,7 @@ public class NormalBindRecyclerAdapter extends RecyclerView.Adapter {
         }
     }
 
-    private int curPosition(int position) {
+    int curPosition(int position) {
         if (curRecyclerView instanceof XRecyclerView) {
             XRecyclerView xRecyclerView = (XRecyclerView) curRecyclerView;
             int count = xRecyclerView.getHeadersCount();

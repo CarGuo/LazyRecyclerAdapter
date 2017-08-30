@@ -21,6 +21,8 @@ import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
 import com.shuyu.apprecycler.special.model.ImageModel;
 import com.shuyu.bind.NormalBindRecyclerAdapter;
+import com.shuyu.bind.NormalBindSuperAdapter;
+import com.shuyu.bind.NormalBindSuperAdapterManager;
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.NormalBindAdapterManager;
 
@@ -57,7 +59,7 @@ public class NormalActivity extends AppCompatActivity {
 
     public void init() {
 
-        NormalBindAdapterManager normalAdapterManager = new NormalBindAdapterManager();
+        NormalBindSuperAdapterManager normalAdapterManager = new NormalBindSuperAdapterManager();
         normalAdapterManager
                 .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
@@ -70,10 +72,12 @@ public class NormalActivity extends AppCompatActivity {
                     public void onItemClick(Context context, int position) {
                         Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show();
                     }
-                });
+                })
+                .setPullRefreshEnabled(false)
+                .setLoadingMoreEnabled(false);
 
 
-        adapter = new NormalBindRecyclerAdapter(this, normalAdapterManager, datas);
+        adapter = new NormalBindSuperAdapter(this, normalAdapterManager, datas);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST));
