@@ -64,11 +64,7 @@ public class BindItemDecoration extends RecyclerView.ItemDecoration {
             } else if (layoutManager instanceof LinearLayoutManager) {
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
                 orientation = linearLayoutManager.getOrientation();
-                if (linearLayoutManager.getOrientation() == LinearLayoutManager.HORIZONTAL) {
-                    outRect.right = space;
-                } else {
-                    outRect.bottom = space;
-                }
+                linearRect(layoutManager, parent, view, outRect);
             }
         }
     }
@@ -112,11 +108,33 @@ public class BindItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     /**
+     * 配置linear模式的item rect
+     */
+    void linearRect(RecyclerView.LayoutManager layoutManager, RecyclerView parent, View view, Rect outRect) {
+        int currentPosition = parent.getChildAdapterPosition(view);
+        //去掉header，上下拉item
+        if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
+            if (linearLayoutManager.getOrientation() == LinearLayoutManager.HORIZONTAL) {
+                outRect.right = space;
+            } else {
+                outRect.bottom = space;
+            }
+            if (linearLayoutManager.getOrientation() == LinearLayoutManager.HORIZONTAL) {
+                outRect.right = space;
+            } else {
+                outRect.bottom = space;
+            }
+        }
+    }
+
+    /**
      * 配置grid模式的item rect
      */
     void gridRect(RecyclerView parent, View view, Rect outRect) {
         int currentPosition = parent.getChildAdapterPosition(view);
         int spanIndex = getSpanIndex(parent, view, (RecyclerView.LayoutParams) view.getLayoutParams());
+        //去掉header，上下拉item
         if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
             if (spanIndex == (spanCount - 1)) {
                 outRect.bottom = space;
@@ -152,11 +170,14 @@ public class BindItemDecoration extends RecyclerView.ItemDecoration {
         final int childSize = parent.getChildCount();
         for (int i = 0; i < childSize; i++) {
             final View child = parent.getChildAt(i);
-            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
-            int top = child.getBottom() + layoutParams.bottomMargin;
-            int bottom = top + space;
-            if (paint != null) {
-                canvas.drawRect(left, top, right, bottom, paint);
+            int currentPosition = parent.getChildAdapterPosition(child);
+            if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
+                RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
+                int top = child.getBottom() + layoutParams.bottomMargin;
+                int bottom = top + space;
+                if (paint != null) {
+                    canvas.drawRect(left, top, right, bottom, paint);
+                }
             }
         }
     }
@@ -167,6 +188,7 @@ public class BindItemDecoration extends RecyclerView.ItemDecoration {
             final View child = parent.getChildAt(i);
             int currentPosition = parent.getChildAdapterPosition(child);
             int spanIndex = getSpanIndex(parent, child, (RecyclerView.LayoutParams) child.getLayoutParams());
+            //去掉header，上下拉item
             if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
                 if (spanIndex == (spanCount - 1)) {
                     int top = child.getTop();
