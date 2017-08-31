@@ -118,7 +118,6 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         recycler.setLayoutManager(staggeredGridLayoutManager);
-        //recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.GRID, adapter));
         recycler.addItemDecoration(new BindItemDecoration(adapter));
         recycler.setAdapter(adapter);
 

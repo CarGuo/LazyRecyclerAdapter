@@ -54,7 +54,9 @@ public class BindItemDecoration extends RecyclerView.ItemDecoration {
 
             //获取下拉刷新和头的偏移位置
             initOffsetPosition();
-
+            if (dataSize == 0) {
+                return;
+            }
             if (layoutManager instanceof GridLayoutManager || layoutManager instanceof StaggeredGridLayoutManager) {
                 orientation = getOrientation(layoutManager);
                 spanCount = getSpanCount(layoutManager);
@@ -74,6 +76,9 @@ public class BindItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(c, parent, state);
+        if (dataSize == 0) {
+            return;
+        }
         if (parent.getLayoutManager() != null) {
             RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
             //根据布局管理器绘制边框

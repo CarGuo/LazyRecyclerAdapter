@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.bind.itemDecoration.DividerItemDecoration;
 import com.shuyu.apprecycler.bind.holder.BindClickHolder;
 import com.shuyu.apprecycler.bind.holder.BindImageHolder;
 import com.shuyu.apprecycler.bind.holder.BindMutliHolder;
@@ -75,7 +74,6 @@ public class BindNormalActivity extends AppCompatActivity {
         adapter = new BindRecyclerAdapter(this, normalAdapterManager, datas);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        //recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST));
         recycler.addItemDecoration(new BindItemDecoration(adapter));
         recycler.setAdapter(adapter);
 

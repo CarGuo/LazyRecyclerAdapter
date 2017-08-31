@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
-import com.shuyu.apprecycler.bind.itemDecoration.DividerItemDecoration;
 import com.shuyu.apprecycler.bind.holder.BindClickHolder;
 import com.shuyu.apprecycler.bind.holder.BindImageHolder;
 import com.shuyu.apprecycler.bind.holder.BindMutliHolder;
@@ -19,6 +18,7 @@ import com.shuyu.apprecycler.bind.model.BindClickModel;
 import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
+import com.shuyu.bind.BindItemDecoration;
 import com.shuyu.bind.BindSuperAdapter;
 import com.shuyu.bind.BindSuperAdapterManager;
 import com.shuyu.bind.listener.OnLoadingListener;
@@ -102,7 +102,7 @@ public class BindEmptyActivity extends AppCompatActivity {
         adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.LIST, adapter));
+        recycler.addItemDecoration(new BindItemDecoration(adapter));
         recycler.setAdapter(adapter);
 
     }
