@@ -122,8 +122,14 @@ public class BindRefreshLoadActivity extends AppCompatActivity {
         adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
+
         //间隔线
-        recycler.addItemDecoration(new BindDecorationBuilder(adapter).setColor(getResources().getColor(R.color.material_deep_teal_500)).setSpace(dip2px(this, 2)).builder());
+        recycler.addItemDecoration(new BindDecorationBuilder(adapter)
+                .setColor(getResources()
+                .getColor(R.color.material_deep_teal_500))
+                .setSpace(dip2px(this, 2))
+                .builder());
+
         recycler.setAdapter(adapter);
     }
 

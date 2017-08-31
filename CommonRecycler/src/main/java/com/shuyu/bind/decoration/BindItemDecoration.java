@@ -35,7 +35,11 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
 
     private int endDataPosition;
 
+    //GRID左右是否需要边距
     private boolean needGridRightLeftEdge = true;
+
+    //第一行是否需要边距
+    private boolean needFirstTopEdge = false;
 
     private int color = Color.BLACK;
 
@@ -119,10 +123,13 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
             } else {
                 outRect.bottom = space;
             }
-            if (linearLayoutManager.getOrientation() == LinearLayoutManager.HORIZONTAL) {
-                outRect.right = space;
+        }
+        //第一行顶部间隔
+        if (needFirstTopEdge && currentPosition == offsetPosition && currentPosition != endDataPosition) {
+            if (orientation == LinearLayoutManager.HORIZONTAL) {
+                outRect.left = space;
             } else {
-                outRect.bottom = space;
+                outRect.top = space;
             }
         }
     }
@@ -148,6 +155,14 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                 }
             }
         }
+
+        //第一行顶部间隔
+        if (needFirstTopEdge && currentPosition >= offsetPosition
+                && currentPosition < (offsetPosition + spanCount)
+                && currentPosition != endDataPosition) {
+            outRect.top = space;
+        }
+
     }
 
     void drawLineVertical(Canvas canvas, RecyclerView parent) {
@@ -157,10 +172,19 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
         for (int i = 0; i < childSize; i++) {
             final View child = parent.getChildAt(i);
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
-            final int left = child.getRight() + layoutParams.rightMargin;
-            final int right = left + space;
-            if (paint != null) {
-                canvas.drawRect(left, top, right, bottom, paint);
+            int currentPosition = parent.getChildAdapterPosition(child);
+            if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
+                final int left = child.getRight() + layoutParams.rightMargin;
+                final int right = left + space;
+                if (paint != null) {
+                    canvas.drawRect(left, top, right, bottom, paint);
+                }
+                //第一行顶部间隔
+                if (needFirstTopEdge && currentPosition == offsetPosition && currentPosition != endDataPosition) {
+                    if (paint != null) {
+                        canvas.drawRect(child.getLeft() - space, top, child.getLeft(), bottom, paint);
+                    }
+                }
             }
         }
     }
@@ -178,6 +202,12 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                 int bottom = top + space;
                 if (paint != null) {
                     canvas.drawRect(left, top, right, bottom, paint);
+                }
+            }
+            //第一行顶部间隔
+            if (needFirstTopEdge && currentPosition == offsetPosition && currentPosition != endDataPosition) {
+                if (paint != null) {
+                    canvas.drawRect(left, child.getTop() - space, right, child.getTop(), paint);
                 }
             }
         }
@@ -230,6 +260,18 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                 }
             }
 
+            //第一行顶部间隔
+            if (needFirstTopEdge && currentPosition >= offsetPosition
+                    && currentPosition < (offsetPosition + spanCount)
+                    && currentPosition != endDataPosition) {
+                int top = child.getTop() - space;
+                int topBottom = child.getTop();
+                int left = child.getLeft() - space;
+                int right = child.getRight() + space;
+                if (paint != null) {
+                    canvas.drawRect(left, top, right, topBottom, paint);
+                }
+            }
         }
     }
 
@@ -279,5 +321,9 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
 
     public void setNeedGridRightLeftEdge(boolean needGridRightLeftEdge) {
         this.needGridRightLeftEdge = needGridRightLeftEdge;
+    }
+
+    public void setNeedFirstTopEdge(boolean needFirstTopEdge) {
+        this.needFirstTopEdge = needFirstTopEdge;
     }
 }

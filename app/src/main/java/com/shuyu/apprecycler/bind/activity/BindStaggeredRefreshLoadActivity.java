@@ -125,6 +125,7 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
                 .getColor(R.color.material_deep_teal_500))
                 .setSpace(dip2px(this, 5))
                 .setNeedGridRightLeftEdge(true)
+                .setNeedFirstTopEdge(true)
                 .builder());
 
         recycler.setAdapter(adapter);

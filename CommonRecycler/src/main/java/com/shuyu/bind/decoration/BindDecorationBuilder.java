@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import com.shuyu.bind.BindRecyclerAdapter;
 
 /**
+ * 构造分割线
  * Created by guoshuyu on 2017/8/31.
  */
 
@@ -18,6 +19,8 @@ public class BindDecorationBuilder {
     private int color = -1;
 
     private boolean needGridRightLeftEdge = true;
+
+    private boolean needFirstTopEdge = false;
 
     public BindDecorationBuilder(BindRecyclerAdapter bindRecyclerAdapter) {
         this.bindRecyclerAdapter = bindRecyclerAdapter;
@@ -43,6 +46,11 @@ public class BindDecorationBuilder {
         return this;
     }
 
+    public BindDecorationBuilder setNeedFirstTopEdge(boolean needFirstTopEdge) {
+        this.needFirstTopEdge = needFirstTopEdge;
+        return this;
+    }
+
     public BindItemDecoration builder() {
         BindItemDecoration bindItemDecoration = new BindItemDecoration(bindRecyclerAdapter);
         if (space != -1) {
@@ -55,6 +63,7 @@ public class BindDecorationBuilder {
             bindItemDecoration.setPaint(paint);
         }
         bindItemDecoration.setNeedGridRightLeftEdge(needGridRightLeftEdge);
+        bindItemDecoration.setNeedFirstTopEdge(needFirstTopEdge);
         return bindItemDecoration;
     }
 }
