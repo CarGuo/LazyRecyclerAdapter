@@ -26,26 +26,41 @@ public class BindDecorationBuilder {
         this.bindRecyclerAdapter = bindRecyclerAdapter;
     }
 
+    /**
+     * 画笔，设置画笔后颜色无效
+     */
     public BindDecorationBuilder setPaint(Paint paint) {
         this.paint = paint;
         return this;
     }
 
+    /**
+     * 间隔大小
+     */
     public BindDecorationBuilder setSpace(int space) {
         this.space = space;
         return this;
     }
 
+    /**
+     * 设置颜色
+     */
     public BindDecorationBuilder setColor(int color) {
         this.color = color;
         return this;
     }
 
+    /**
+     * 网格类型左右是否需要边距
+     */
     public BindDecorationBuilder setNeedGridRightLeftEdge(boolean needGridRightLeftEdge) {
         this.needGridRightLeftEdge = needGridRightLeftEdge;
         return this;
     }
 
+    /**
+     * 第一行是否需要边距
+     */
     public BindDecorationBuilder setNeedFirstTopEdge(boolean needFirstTopEdge) {
         this.needFirstTopEdge = needFirstTopEdge;
         return this;

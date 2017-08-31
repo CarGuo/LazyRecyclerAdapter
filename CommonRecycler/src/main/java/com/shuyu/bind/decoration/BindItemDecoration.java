@@ -153,6 +153,9 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                 if (needGridRightLeftEdge) {
                     outRect.left = space;
                 }
+            } else {
+                outRect.bottom = space;
+                outRect.right = space;
             }
         }
 
@@ -233,7 +236,7 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                         canvas.drawRect(left, bottomTop, right, bottom, paint);
                     }
 
-                    if (paint != null) {
+                    if (paint != null && needGridRightLeftEdge) {
                         canvas.drawRect(right, top, rightRight, bottom, paint);
                     }
 
@@ -254,8 +257,23 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                         canvas.drawRect(right, top, rightRight, bottom, paint);
                     }
 
-                    if (paint != null) {
+                    if (paint != null && needGridRightLeftEdge) {
                         canvas.drawRect(left - space, top, leftRight - space, bottom, paint);
+                    }
+                } else {
+                    int top = child.getTop();
+                    int bottomTop = child.getBottom();
+                    int bottom = bottomTop + space;
+                    int left = child.getLeft();
+                    int right = child.getRight();
+                    int rightRight = right + space;
+
+                    if (paint != null) {
+                        canvas.drawRect(left, bottomTop, right, bottom, paint);
+                    }
+
+                    if (paint != null) {
+                        canvas.drawRect(right, top, rightRight, bottom, paint);
                     }
                 }
             }

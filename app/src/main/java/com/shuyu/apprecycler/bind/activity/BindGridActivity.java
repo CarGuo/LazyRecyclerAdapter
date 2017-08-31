@@ -111,7 +111,7 @@ public class BindGridActivity extends AppCompatActivity {
 
         adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
 
-        GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 2);
+        GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 3);
 
         recycler.setLayoutManager(staggeredGridLayoutManager);
 
