@@ -1,6 +1,7 @@
 package com.shuyu.apprecycler.bind.activity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +19,7 @@ import com.shuyu.apprecycler.bind.model.BindClickModel;
 import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
-import com.shuyu.bind.BindItemDecoration;
+import com.shuyu.bind.decoration.BindDecorationBuilder;
 import com.shuyu.bind.BindSuperAdapter;
 import com.shuyu.bind.BindSuperAdapterManager;
 import com.shuyu.bind.listener.OnLoadingListener;
@@ -52,7 +53,7 @@ public class BindEmptyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_normal_empty);
+        setContentView(R.layout.activity_normal_recycler_layout);
         ButterKnife.bind(this);
         init();
     }
@@ -102,7 +103,7 @@ public class BindEmptyActivity extends AppCompatActivity {
         adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        recycler.addItemDecoration(new BindItemDecoration(adapter));
+        recycler.addItemDecoration(new BindDecorationBuilder(adapter).setColor(Color.WHITE).setSpace(dip2px(this, 3)).builder());
         recycler.setAdapter(adapter);
 
     }

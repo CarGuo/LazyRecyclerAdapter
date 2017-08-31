@@ -1,4 +1,4 @@
-package com.shuyu.bind;
+package com.shuyu.bind.decoration;
 
 
 import android.graphics.Canvas;
@@ -11,10 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
+import com.shuyu.bind.BindRecyclerAdapter;
+import com.shuyu.bind.BindSuperAdapter;
+
 /**
  * 实现分割线
  */
-public class BindItemDecoration extends RecyclerView.ItemDecoration {
+class BindItemDecoration extends RecyclerView.ItemDecoration {
 
     private BindRecyclerAdapter bindSuperAdapter;
 
@@ -32,19 +35,13 @@ public class BindItemDecoration extends RecyclerView.ItemDecoration {
 
     private int endDataPosition;
 
-    public BindItemDecoration(BindRecyclerAdapter bindRecyclerAdapter) {
-        this(bindRecyclerAdapter, Color.BLACK);
-    }
+    private int color = Color.BLACK;
 
-    public BindItemDecoration(BindRecyclerAdapter bindRecyclerAdapter, int color) {
-        this(bindRecyclerAdapter, new Paint(Paint.ANTI_ALIAS_FLAG));
+    BindItemDecoration(BindRecyclerAdapter bindRecyclerAdapter) {
+        this.bindSuperAdapter = bindRecyclerAdapter;
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(color);
         paint.setStyle(Paint.Style.FILL);
-    }
-
-    public BindItemDecoration(BindRecyclerAdapter bindRecyclerAdapter, Paint paint) {
-        this.bindSuperAdapter = bindRecyclerAdapter;
-        this.paint = paint;
     }
 
     @Override
@@ -233,7 +230,7 @@ public class BindItemDecoration extends RecyclerView.ItemDecoration {
     }
 
 
-    public int getSpanIndex(RecyclerView parent, View view, RecyclerView.LayoutParams layoutParams) {
+    protected  int getSpanIndex(RecyclerView parent, View view, RecyclerView.LayoutParams layoutParams) {
         if (layoutParams instanceof GridLayoutManager.LayoutParams) {
             int currentPosition = parent.getChildAdapterPosition(view);
             return ((currentPosition - offsetPosition) % spanCount);
@@ -243,7 +240,7 @@ public class BindItemDecoration extends RecyclerView.ItemDecoration {
         return 0;
     }
 
-    public int getOrientation(RecyclerView.LayoutManager layoutManager) {
+    protected int getOrientation(RecyclerView.LayoutManager layoutManager) {
         if (layoutManager instanceof GridLayoutManager) {
             return ((GridLayoutManager) layoutManager).getOrientation();
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
@@ -252,7 +249,7 @@ public class BindItemDecoration extends RecyclerView.ItemDecoration {
         return 0;
     }
 
-    public int getSpanCount(RecyclerView.LayoutManager layoutManager) {
+    protected int getSpanCount(RecyclerView.LayoutManager layoutManager) {
         if (layoutManager instanceof GridLayoutManager) {
             return ((GridLayoutManager) layoutManager).getSpanCount();
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
@@ -261,4 +258,18 @@ public class BindItemDecoration extends RecyclerView.ItemDecoration {
         return 0;
     }
 
+    public void setPaint(Paint paint) {
+        this.paint = paint;
+    }
+
+    public void setSpace(int space) {
+        this.space = space;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+        if (paint != null) {
+            paint.setColor(color);
+        }
+    }
 }

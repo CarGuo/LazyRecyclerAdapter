@@ -1,6 +1,10 @@
 package com.shuyu.apprecycler.bind.activity;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
+import android.graphics.PathEffect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +22,7 @@ import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
-import com.shuyu.bind.BindItemDecoration;
+import com.shuyu.bind.decoration.BindDecorationBuilder;
 import com.shuyu.bind.BindRecyclerAdapter;
 import com.shuyu.bind.BindSuperAdapterManager;
 import com.shuyu.bind.listener.OnItemClickListener;
@@ -74,7 +78,17 @@ public class BindNormalActivity extends AppCompatActivity {
         adapter = new BindRecyclerAdapter(this, normalAdapterManager, datas);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        recycler.addItemDecoration(new BindItemDecoration(adapter));
+
+
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(getResources().getColor(R.color.material_deep_teal_200));
+        PathEffect effects = new DashPathEffect(new float[]{5, 5, 5, 5}, 1);
+        paint.setPathEffect(effects);
+        paint.setStrokeWidth(dip2px(this, 5));
+        //paint.setStyle(Paint.Style.STROKE);
+        //paint.setAntiAlias(true);
+        recycler.addItemDecoration(new BindDecorationBuilder(adapter).setPaint(paint).setSpace(dip2px(this, 5)).builder());
         recycler.setAdapter(adapter);
 
     }

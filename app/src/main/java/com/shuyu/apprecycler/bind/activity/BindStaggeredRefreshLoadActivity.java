@@ -1,6 +1,7 @@
 package com.shuyu.apprecycler.bind.activity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +13,6 @@ import android.widget.Toast;
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.view.BindCustomLoadMoreFooter;
 import com.shuyu.apprecycler.bind.view.BindCustomRefreshHeader;
-import com.shuyu.apprecycler.bind.itemDecoration.DividerItemDecoration;
 
 import com.shuyu.apprecycler.bind.holder.BindClickHolder;
 import com.shuyu.apprecycler.bind.holder.BindImageHolder;
@@ -24,7 +24,7 @@ import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
-import com.shuyu.bind.BindItemDecoration;
+import com.shuyu.bind.decoration.BindDecorationBuilder;
 import com.shuyu.bind.BindSuperAdapter;
 import com.shuyu.bind.BindSuperAdapterManager;
 import com.shuyu.bind.listener.OnLoadingListener;
@@ -118,7 +118,7 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         recycler.setLayoutManager(staggeredGridLayoutManager);
-        recycler.addItemDecoration(new BindItemDecoration(adapter));
+        recycler.addItemDecoration(new BindDecorationBuilder(adapter).setColor(getResources().getColor(R.color.material_deep_teal_500)).setSpace(dip2px(this,5)).builder());
         recycler.setAdapter(adapter);
 
 
