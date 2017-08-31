@@ -329,7 +329,7 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
     /**
      * 内部adapter
      */
-    private class WrapAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public class WrapAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private RecyclerView.Adapter adapter;
 

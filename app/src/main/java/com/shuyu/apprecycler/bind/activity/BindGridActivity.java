@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.bind.itemDecoration.DividerItemDecoration;
 import com.shuyu.apprecycler.bind.holder.BindClickHolder;
 import com.shuyu.apprecycler.bind.holder.BindImageHolder;
 import com.shuyu.apprecycler.bind.holder.BindMutliHolder;
@@ -21,6 +20,7 @@ import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
+import com.shuyu.bind.BindItemDecoration;
 import com.shuyu.bind.BindSuperAdapter;
 import com.shuyu.bind.BindSuperAdapterManager;
 import com.shuyu.bind.listener.OnLoadingListener;
@@ -113,7 +113,7 @@ public class BindGridActivity extends AppCompatActivity {
         GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 2);
 
         recycler.setLayoutManager(staggeredGridLayoutManager);
-        recycler.addItemDecoration(new DividerItemDecoration(dip2px(this, 10), DividerItemDecoration.GRID, adapter));
+        recycler.addItemDecoration(new BindItemDecoration(adapter));
         recycler.setAdapter(adapter);
 
 
