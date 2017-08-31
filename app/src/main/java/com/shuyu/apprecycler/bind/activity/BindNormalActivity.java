@@ -80,15 +80,15 @@ public class BindNormalActivity extends AppCompatActivity {
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
 
+        //间隔线
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(getResources().getColor(R.color.material_deep_teal_200));
         PathEffect effects = new DashPathEffect(new float[]{5, 5, 5, 5}, 1);
         paint.setPathEffect(effects);
         paint.setStrokeWidth(dip2px(this, 5));
-        //paint.setStyle(Paint.Style.STROKE);
-        //paint.setAntiAlias(true);
         recycler.addItemDecoration(new BindDecorationBuilder(adapter).setPaint(paint).setSpace(dip2px(this, 5)).builder());
+
         recycler.setAdapter(adapter);
 
     }

@@ -118,7 +118,15 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         recycler.setLayoutManager(staggeredGridLayoutManager);
-        recycler.addItemDecoration(new BindDecorationBuilder(adapter).setColor(getResources().getColor(R.color.material_deep_teal_500)).setSpace(dip2px(this,5)).builder());
+
+        //间隔线
+        recycler.addItemDecoration(new BindDecorationBuilder(adapter)
+                .setColor(getResources()
+                .getColor(R.color.material_deep_teal_500))
+                .setSpace(dip2px(this, 5))
+                .setNeedGridRightLeftEdge(true)
+                .builder());
+
         recycler.setAdapter(adapter);
 
 

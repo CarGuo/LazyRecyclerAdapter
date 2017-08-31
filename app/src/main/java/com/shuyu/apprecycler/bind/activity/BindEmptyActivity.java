@@ -103,6 +103,7 @@ public class BindEmptyActivity extends AppCompatActivity {
         adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
+        //间隔线
         recycler.addItemDecoration(new BindDecorationBuilder(adapter).setColor(Color.WHITE).setSpace(dip2px(this, 3)).builder());
         recycler.setAdapter(adapter);
 

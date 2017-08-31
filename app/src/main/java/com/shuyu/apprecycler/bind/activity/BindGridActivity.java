@@ -114,7 +114,15 @@ public class BindGridActivity extends AppCompatActivity {
         GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 2);
 
         recycler.setLayoutManager(staggeredGridLayoutManager);
-        recycler.addItemDecoration(new BindDecorationBuilder(adapter).setColor(getResources().getColor(R.color.material_deep_teal_200)).setSpace(dip2px(this, 5)).builder());
+
+        //间隔线
+        recycler.addItemDecoration(new BindDecorationBuilder(adapter)
+                .setColor(getResources()
+                .getColor(R.color.material_deep_teal_200))
+                .setSpace(dip2px(this, 5))
+                .setNeedGridRightLeftEdge(false)
+                .builder());
+
         recycler.setAdapter(adapter);
 
 

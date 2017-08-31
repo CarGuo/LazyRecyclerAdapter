@@ -35,6 +35,8 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
 
     private int endDataPosition;
 
+    private boolean needGridRightLeftEdge = true;
+
     private int color = Color.BLACK;
 
     BindItemDecoration(BindRecyclerAdapter bindRecyclerAdapter) {
@@ -135,13 +137,15 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
         if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
             if (spanIndex == (spanCount - 1)) {
                 outRect.bottom = space;
-
-                outRect.right = space;
+                if (needGridRightLeftEdge) {
+                    outRect.right = space;
+                }
             } else if (spanIndex == 0) {
                 outRect.right = space;
                 outRect.bottom = space;
-
-                outRect.left = space;
+                if (needGridRightLeftEdge) {
+                    outRect.left = space;
+                }
             }
         }
     }
@@ -230,7 +234,7 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
     }
 
 
-    protected  int getSpanIndex(RecyclerView parent, View view, RecyclerView.LayoutParams layoutParams) {
+    protected int getSpanIndex(RecyclerView parent, View view, RecyclerView.LayoutParams layoutParams) {
         if (layoutParams instanceof GridLayoutManager.LayoutParams) {
             int currentPosition = parent.getChildAdapterPosition(view);
             return ((currentPosition - offsetPosition) % spanCount);
@@ -271,5 +275,9 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
         if (paint != null) {
             paint.setColor(color);
         }
+    }
+
+    public void setNeedGridRightLeftEdge(boolean needGridRightLeftEdge) {
+        this.needGridRightLeftEdge = needGridRightLeftEdge;
     }
 }

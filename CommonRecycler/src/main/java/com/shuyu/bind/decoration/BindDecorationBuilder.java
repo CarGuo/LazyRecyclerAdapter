@@ -17,6 +17,8 @@ public class BindDecorationBuilder {
 
     private int color = -1;
 
+    private boolean needGridRightLeftEdge = true;
+
     public BindDecorationBuilder(BindRecyclerAdapter bindRecyclerAdapter) {
         this.bindRecyclerAdapter = bindRecyclerAdapter;
     }
@@ -36,6 +38,11 @@ public class BindDecorationBuilder {
         return this;
     }
 
+    public BindDecorationBuilder setNeedGridRightLeftEdge(boolean needGridRightLeftEdge) {
+        this.needGridRightLeftEdge = needGridRightLeftEdge;
+        return this;
+    }
+
     public BindItemDecoration builder() {
         BindItemDecoration bindItemDecoration = new BindItemDecoration(bindRecyclerAdapter);
         if (space != -1) {
@@ -47,6 +54,7 @@ public class BindDecorationBuilder {
         if (paint != null) {
             bindItemDecoration.setPaint(paint);
         }
+        bindItemDecoration.setNeedGridRightLeftEdge(needGridRightLeftEdge);
         return bindItemDecoration;
     }
 }
