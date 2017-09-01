@@ -1,5 +1,5 @@
 
-![](https://github.com/CarGuo/LazyRecyclerAdapter/blob/master/11.png)
+![](https://github.com/CarGuo/LazyRecyclerAdapter/blob/master/22.png)
 
 ### 这个一个极简的通用RecyclerView的适配器，让你普通的RecyclerView变得灵活、解耦、通用、丰富起来吧。
 
@@ -46,10 +46,11 @@ dependencies {
 
 
 ### 效果
-<img src="https://github.com/CarGuo/CommonRecycler/blob/master/12.jpg" width="120px" height="218px"/>
-<img src="https://github.com/CarGuo/CommonRecycler/blob/master/13.jpg" width="120px" height="218px"/>
-<img src="https://github.com/CarGuo/CommonRecycler/blob/master/14.jpg" width="120px" height="218px"/>
-
+<div>
+<img src="https://github.com/CarGuo/CommonRecycler/blob/master/12.png" width="120px" height="218px"/>
+<img src="https://github.com/CarGuo/CommonRecycler/blob/master/13.png" width="120px" height="218px"/>
+<img src="https://github.com/CarGuo/CommonRecycler/blob/master/14.png" width="120px" height="218px"/>
+</div>
 
 ### 使用方法
 
