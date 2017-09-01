@@ -414,6 +414,7 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                         canvas.drawRect(right, top, rightRight, bottom, paint);
                     }
                 }
+                stagFixEnd(canvas, parent, child, i, currentPosition);
             }
 
             //第一行顶部间隔
@@ -517,6 +518,7 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                         }
                     }
                 }
+                stagFixEnd(canvas, parent, child, i, currentPosition);
             }
 
             //第一行顶部间隔
@@ -530,6 +532,81 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                 } else {
                     if (paint != null) {
                         canvas.drawRect(child.getLeft() - space, child.getTop() - space, child.getLeft(), child.getBottom() + space, paint);
+                    }
+                }
+            }
+
+        }
+    }
+
+    /**
+     * 针对瀑布流的优化处理
+     */
+    void stagFixEnd(Canvas canvas, RecyclerView parent, View child, int i, int currentPosition) {
+        if (!(parent.getLayoutManager() instanceof StaggeredGridLayoutManager)) {
+            return;
+        }
+        if (orientation == OrientationHelper.HORIZONTAL) {
+            if (i > 0) {
+                int row = (int) Math.ceil((float) (dataSize - 1) / spanCount);
+                int curRow = (int) Math.ceil((currentPosition - offsetPosition) / (float) spanCount);
+                if (row == curRow) {
+                    stagFixHorizontal(canvas, parent, child, i - 1);
+                }
+            }
+        } else {
+            if (i > 0) {
+                int row = (int) Math.ceil((float) (dataSize - 1) / spanCount);
+                int curRow = (int) Math.ceil((currentPosition - offsetPosition) / (float) spanCount);
+                if (row == curRow) {
+                    stagFixVertical(canvas, parent, child, i - 1);
+                }
+            }
+        }
+    }
+
+    /**
+     * 补齐那些缺少的
+     */
+    void stagFixVertical(Canvas canvas, RecyclerView parent, View view, int position) {
+        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+        if (layoutManager instanceof StaggeredGridLayoutManager) {
+            int spanIndex = getSpanIndex(parent, view, (RecyclerView.LayoutParams) view.getLayoutParams());
+            if (spanIndex != 0) {
+                View preView = parent.getChildAt(position);
+                if (getCurReverseLayout(layoutManager)) {
+                    if (preView.getTop() > view.getTop()) {
+                        canvas.drawRect(view.getLeft() - space, view.getTop() - space
+                                , view.getLeft(), preView.getTop(), paint);
+                    }
+                } else {
+                    if (preView.getBottom() < view.getBottom()) {
+                        canvas.drawRect(view.getLeft() - space, preView.getBottom()
+                                , view.getLeft(), view.getBottom() + space, paint);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 补齐那些缺少的
+     */
+    void stagFixHorizontal(Canvas canvas, RecyclerView parent, View view, int position) {
+        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+        if (layoutManager instanceof StaggeredGridLayoutManager) {
+            int spanIndex = getSpanIndex(parent, view, (RecyclerView.LayoutParams) view.getLayoutParams());
+            if (spanIndex != 0) {
+                View preView = parent.getChildAt(position);
+                if (getCurReverseLayout(layoutManager)) {
+                    if (preView.getLeft() > view.getLeft()) {
+                        canvas.drawRect(view.getLeft()
+                                , view.getTop() - space, preView.getLeft(), view.getTop(), paint);
+                    }
+                } else {
+                    if (preView.getRight() < view.getRight()) {
+                        canvas.drawRect(preView.getRight(), view.getTop() - space
+                                , view.getRight() + space, view.getTop(),  paint);
                     }
                 }
             }

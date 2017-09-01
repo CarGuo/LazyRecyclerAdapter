@@ -85,7 +85,7 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
                 })
                 .addHeaderView(header)
                 .setPullRefreshEnabled(true)
-                .setLoadingMoreEnabled(false)
+                .setLoadingMoreEnabled(true)
                 .setFootView(new BindCustomLoadMoreFooter(this))
                 .setRefreshHeader(new BindCustomRefreshHeader(this))
                 .setLoadingListener(new OnLoadingListener() {
