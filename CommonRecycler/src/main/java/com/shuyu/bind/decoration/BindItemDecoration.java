@@ -114,22 +114,38 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
      * 配置linear模式的item rect
      */
     void linearRect(RecyclerView.LayoutManager layoutManager, RecyclerView parent, View view, Rect outRect) {
+        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
         int currentPosition = parent.getChildAdapterPosition(view);
         //去掉header，上下拉item
         if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
-            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
             if (linearLayoutManager.getOrientation() == LinearLayoutManager.HORIZONTAL) {
-                outRect.right = space;
+                if (linearLayoutManager.getReverseLayout()) {
+                    outRect.left = space;
+                } else {
+                    outRect.right = space;
+                }
             } else {
-                outRect.bottom = space;
+                if (linearLayoutManager.getReverseLayout()) {
+                    outRect.top = space;
+                } else {
+                    outRect.bottom = space;
+                }
             }
         }
         //第一行顶部间隔
         if (needFirstTopEdge && currentPosition == offsetPosition && currentPosition != endDataPosition) {
             if (orientation == LinearLayoutManager.HORIZONTAL) {
-                outRect.left = space;
+                if (linearLayoutManager.getReverseLayout()) {
+                    outRect.right = space;
+                } else {
+                    outRect.left = space;
+                }
             } else {
-                outRect.top = space;
+                if (linearLayoutManager.getReverseLayout()) {
+                    outRect.bottom = space;
+                } else {
+                    outRect.top = space;
+                }
             }
         }
     }
@@ -172,20 +188,35 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
         final int top = parent.getPaddingTop();
         final int bottom = parent.getMeasuredHeight() - parent.getPaddingBottom();
         final int childSize = parent.getChildCount();
+        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) parent.getLayoutManager();
         for (int i = 0; i < childSize; i++) {
             final View child = parent.getChildAt(i);
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
             int currentPosition = parent.getChildAdapterPosition(child);
             if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
-                final int left = child.getRight() + layoutParams.rightMargin;
-                final int right = left + space;
-                if (paint != null) {
-                    canvas.drawRect(left, top, right, bottom, paint);
+                if (linearLayoutManager.getReverseLayout()) {
+                    if (paint != null) {
+                        final int left = child.getLeft() - space;
+                        final int right = child.getLeft();
+                        canvas.drawRect(left, top, right, bottom, paint);
+                    }
+                } else {
+                    if (paint != null) {
+                        final int left = child.getRight() + layoutParams.rightMargin;
+                        final int right = left + space;
+                        canvas.drawRect(left, top, right, bottom, paint);
+                    }
                 }
                 //第一行顶部间隔
                 if (needFirstTopEdge && currentPosition == offsetPosition && currentPosition != endDataPosition) {
-                    if (paint != null) {
-                        canvas.drawRect(child.getLeft() - space, top, child.getLeft(), bottom, paint);
+                    if (linearLayoutManager.getReverseLayout()) {
+                        if (paint != null) {
+                            canvas.drawRect(child.getRight(), top, child.getRight() + space, bottom, paint);
+                        }
+                    } else {
+                        if (paint != null) {
+                            canvas.drawRect(child.getLeft() - space, top, child.getLeft(), bottom, paint);
+                        }
                     }
                 }
             }
@@ -196,21 +227,36 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
         int left = parent.getPaddingLeft();
         int right = parent.getMeasuredWidth() - parent.getPaddingRight();
         final int childSize = parent.getChildCount();
+        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) parent.getLayoutManager();
         for (int i = 0; i < childSize; i++) {
             final View child = parent.getChildAt(i);
             int currentPosition = parent.getChildAdapterPosition(child);
             if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
-                RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
-                int top = child.getBottom() + layoutParams.bottomMargin;
-                int bottom = top + space;
-                if (paint != null) {
-                    canvas.drawRect(left, top, right, bottom, paint);
+                if (linearLayoutManager.getReverseLayout()) {
+                    int top = child.getTop() - space;
+                    int bottom = child.getTop();
+                    if (paint != null) {
+                        canvas.drawRect(left, top, right, bottom, paint);
+                    }
+                } else {
+                    RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
+                    int top = child.getBottom() + layoutParams.bottomMargin;
+                    int bottom = top + space;
+                    if (paint != null) {
+                        canvas.drawRect(left, top, right, bottom, paint);
+                    }
                 }
             }
             //第一行顶部间隔
             if (needFirstTopEdge && currentPosition == offsetPosition && currentPosition != endDataPosition) {
-                if (paint != null) {
-                    canvas.drawRect(left, child.getTop() - space, right, child.getTop(), paint);
+                if (linearLayoutManager.getReverseLayout()) {
+                    if (paint != null) {
+                        canvas.drawRect(left, child.getBottom(), right, child.getBottom() + space, paint);
+                    }
+                } else {
+                    if (paint != null) {
+                        canvas.drawRect(left, child.getTop() - space, right, child.getTop(), paint);
+                    }
                 }
             }
         }
