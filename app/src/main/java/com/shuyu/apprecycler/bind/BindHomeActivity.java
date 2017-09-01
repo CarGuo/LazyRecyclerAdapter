@@ -13,6 +13,7 @@ import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.activity.BindEmptyActivity;
 import com.shuyu.apprecycler.bind.activity.BindHorizontalGridActivity;
 import com.shuyu.apprecycler.bind.activity.BindHorizontalRefreshLoadActivity;
+import com.shuyu.apprecycler.bind.activity.BindHorizontalStaggeredRefreshLoadActivity;
 import com.shuyu.apprecycler.bind.activity.BindNormalActivity;
 import com.shuyu.apprecycler.bind.activity.BindRefreshLoadActivity;
 import com.shuyu.apprecycler.bind.activity.BindStaggeredRefreshLoadActivity;
@@ -81,6 +82,13 @@ public class BindHomeActivity extends AppCompatActivity implements ListView.OnIt
                 startActivity(intent);
                 break;
             }
+            case 7: {
+                Intent intent = new Intent(BindHomeActivity.this, BindHorizontalStaggeredRefreshLoadActivity.class);
+                startActivity(intent);
+                break;
+            }
+
+
         }
     }
 }
