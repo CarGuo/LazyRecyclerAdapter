@@ -68,6 +68,9 @@
             android:name=".bind.activity.BindHorizontalRefreshLoadActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".bind.activity.BindHorizontalGridActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".bind.activity.BindNormalActivity"
             android:screenOrientation="portrait" />
         <activity

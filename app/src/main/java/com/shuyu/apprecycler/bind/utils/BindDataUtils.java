@@ -24,6 +24,7 @@ public class BindDataUtils {
         list.add("空页面");
         list.add("Grid上拉无刷新");
         list.add("横向列表带左右拉");
+        list.add("横向Grid带左右拉");
         return list;
     }
 
@@ -86,6 +87,47 @@ public class BindDataUtils {
         clickModel = new BindClickModel();
         clickModel.setBtnText("我是老按键，按啊按啊按啊····4");
         list.add(clickModel);
+
+        return list;
+    }
+
+    public static List getRefreshImageData() {
+
+        List list = new ArrayList<>();
+
+        BindImageModel imageModel = new BindImageModel();
+        imageModel.setResId(R.drawable.a1);
+        list.add(imageModel);
+
+        imageModel = new BindImageModel();
+        imageModel.setResId(R.drawable.a2);
+        list.add(imageModel);
+
+
+        imageModel = new BindImageModel();
+        imageModel.setResId(R.drawable.a1);
+        list.add(imageModel);
+        imageModel = new BindImageModel();
+        imageModel.setResId(R.drawable.a2);
+        list.add(imageModel);
+
+        imageModel = new BindImageModel();
+        imageModel.setResId(R.drawable.a1);
+        list.add(imageModel);
+
+
+        imageModel = new BindImageModel();
+        imageModel.setResId(R.drawable.a1);
+        list.add(imageModel);
+
+
+        imageModel = new BindImageModel();
+        imageModel.setResId(R.drawable.a2);
+        list.add(imageModel);
+
+        imageModel = new BindImageModel();
+        imageModel.setResId(R.drawable.a1);
+        list.add(imageModel);
 
         return list;
     }

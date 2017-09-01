@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.activity.BindEmptyActivity;
+import com.shuyu.apprecycler.bind.activity.BindHorizontalGridActivity;
 import com.shuyu.apprecycler.bind.activity.BindHorizontalRefreshLoadActivity;
 import com.shuyu.apprecycler.bind.activity.BindNormalActivity;
 import com.shuyu.apprecycler.bind.activity.BindRefreshLoadActivity;
@@ -72,6 +73,11 @@ public class BindHomeActivity extends AppCompatActivity implements ListView.OnIt
             }
             case 5: {
                 Intent intent = new Intent(BindHomeActivity.this, BindHorizontalRefreshLoadActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case 6: {
+                Intent intent = new Intent(BindHomeActivity.this, BindHorizontalGridActivity.class);
                 startActivity(intent);
                 break;
             }

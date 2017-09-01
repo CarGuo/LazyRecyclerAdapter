@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
@@ -63,7 +64,11 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
             if (layoutManager instanceof GridLayoutManager || layoutManager instanceof StaggeredGridLayoutManager) {
                 orientation = getOrientation(layoutManager);
                 spanCount = getSpanCount(layoutManager);
-                gridRect(parent, view, outRect);
+                if (orientation == OrientationHelper.HORIZONTAL) {
+                    gridRectHorizontal(parent, view, outRect);
+                } else {
+                    gridRect(parent, view, outRect);
+                }
             } else if (layoutManager instanceof LinearLayoutManager) {
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
                 orientation = linearLayoutManager.getOrientation();
@@ -90,7 +95,11 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                     drawLineHorizontal(c, parent);
                 }
             } else {
-                drawGridVertical(c, parent);
+                if (getOrientation(layoutManager) == OrientationHelper.HORIZONTAL) {
+                    drawGridHorizontal(c, parent);
+                } else {
+                    drawGridVertical(c, parent);
+                }
             }
         }
     }
@@ -180,6 +189,40 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                 && currentPosition < (offsetPosition + spanCount)
                 && currentPosition != endDataPosition) {
             outRect.top = space;
+        }
+
+    }
+
+    /**
+     * 配置橫向grid模式的item rect
+     */
+    void gridRectHorizontal(RecyclerView parent, View view, Rect outRect) {
+        int currentPosition = parent.getChildAdapterPosition(view);
+        int spanIndex = getSpanIndex(parent, view, (RecyclerView.LayoutParams) view.getLayoutParams());
+        //去掉header，上下拉item
+        if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
+            if (spanIndex == (spanCount - 1)) {
+                outRect.right = space;
+                if (needGridRightLeftEdge) {
+                    outRect.bottom = space;
+                }
+            } else if (spanIndex == 0) {
+                outRect.bottom = space;
+                outRect.right = space;
+                if (needGridRightLeftEdge) {
+                    outRect.top = space;
+                }
+            } else {
+                outRect.right = space;
+                outRect.bottom = space;
+            }
+        }
+
+        //第一行顶部间隔
+        if (needFirstTopEdge && currentPosition >= offsetPosition
+                && currentPosition < (offsetPosition + spanCount)
+                && currentPosition != endDataPosition) {
+            outRect.left = space;
         }
 
     }
@@ -339,6 +382,80 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
+    void drawGridHorizontal(Canvas canvas, RecyclerView parent) {
+        final int childSize = parent.getChildCount();
+        for (int i = 0; i < childSize; i++) {
+            final View child = parent.getChildAt(i);
+            int currentPosition = parent.getChildAdapterPosition(child);
+            int spanIndex = getSpanIndex(parent, child, (RecyclerView.LayoutParams) child.getLayoutParams());
+            //去掉header，上下拉item
+            if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
+                if (spanIndex == 0) {
+                    int top = child.getTop();
+                    int bottomTop = child.getBottom();
+                    int bottom = bottomTop + space;
+                    int left = child.getLeft();
+                    int leftRight = left + space;
+                    int right = child.getRight();
+                    int rightRight = right + space;
+
+                    if (paint != null) {
+                        canvas.drawRect(left, bottomTop, right, bottom, paint);
+                    }
+
+                    if (paint != null) {
+                        canvas.drawRect(right, top, rightRight, bottom, paint);
+                    }
+
+                    if (paint != null && needGridRightLeftEdge) {
+                        canvas.drawRect(left, top - space, right + space, top, paint);
+                    }
+
+                } else if (spanIndex == (spanCount - 1)) {
+
+                    int top = child.getTop();
+                    int bottomTop = child.getBottom();
+                    int bottom = bottomTop + space;
+                    int left = child.getLeft();
+                    int right = child.getRight();
+                    int rightRight = right + space;
+
+                    if (paint != null) {
+                        canvas.drawRect(right, top, rightRight, bottom, paint);
+                    }
+
+                    if (paint != null && needGridRightLeftEdge) {
+                        canvas.drawRect(left, bottomTop, right, bottom, paint);
+                    }
+
+                } else {
+                    int top = child.getTop();
+                    int bottomTop = child.getBottom();
+                    int bottom = bottomTop + space;
+                    int left = child.getLeft();
+                    int right = child.getRight();
+                    int rightRight = right + space;
+
+                    if (paint != null) {
+                        canvas.drawRect(left, bottomTop, right, bottom, paint);
+                    }
+
+                    if (paint != null) {
+                        canvas.drawRect(right, top, rightRight, bottom, paint);
+                    }
+                }
+            }
+
+            //第一行顶部间隔
+            if (needFirstTopEdge && currentPosition >= offsetPosition
+                    && currentPosition < (offsetPosition + spanCount)
+                    && currentPosition != endDataPosition) {
+                if (paint != null) {
+                    canvas.drawRect(child.getLeft() - space, child.getTop() - space, child.getLeft(), child.getBottom() + space, paint);
+                }
+            }
+        }
+    }
 
     protected int getSpanIndex(RecyclerView parent, View view, RecyclerView.LayoutParams layoutParams) {
         if (layoutParams instanceof GridLayoutManager.LayoutParams) {
