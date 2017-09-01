@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
+import com.jcodecraeer.xrecyclerview.base.BaseLoadMoreFooter;
 import com.shuyu.bind.BindRecyclerAdapter;
 import com.shuyu.bind.BindSuperAdapter;
 
@@ -559,7 +560,7 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                 int row = (int) Math.ceil((float) (dataSize - 1) / spanCount);
                 int curRow = (int) Math.ceil((currentPosition - offsetPosition) / (float) spanCount);
                 if (row == curRow) {
-                    stagFixVertical(canvas, parent, child, i - 1);
+                    stagFixVertical(canvas, parent, child, i + 1);
                 }
             }
         }
