@@ -116,7 +116,7 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
 
         //瀑布流管理器
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-
+        //staggeredGridLayoutManager.setReverseLayout(true);
         recycler.setLayoutManager(staggeredGridLayoutManager);
 
         //间隔线
