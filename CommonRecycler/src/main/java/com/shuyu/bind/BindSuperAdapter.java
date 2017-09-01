@@ -171,7 +171,11 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
                 final float deltaX = ev.getRawX() - mLastX;
                 mLastX = ev.getRawX();
                 if (normalAdapterManager.pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
-                    normalAdapterManager.mRefreshHeader.onMove(deltaX / DRAG_RATE);
+                    float moveD = deltaX / DRAG_RATE;
+                    if (getCurReverseLayout(mRecyclerView.getLayoutManager())) {
+                        moveD = -moveD;
+                    }
+                    normalAdapterManager.mRefreshHeader.onMove(moveD);
                     if (normalAdapterManager.mRefreshHeader.getVisibleHeight() > 0 && normalAdapterManager.mRefreshHeader.getState() < ArrowRefreshHeader.STATE_REFRESHING) {
                         return false;
                     }
@@ -204,7 +208,11 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
                 final float deltaY = ev.getRawY() - mLastY;
                 mLastY = ev.getRawY();
                 if (normalAdapterManager.pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
-                    normalAdapterManager.mRefreshHeader.onMove(deltaY / DRAG_RATE);
+                    float moveD = deltaY / DRAG_RATE;
+                    if (getCurReverseLayout(mRecyclerView.getLayoutManager())) {
+                        moveD = -moveD;
+                    }
+                    normalAdapterManager.mRefreshHeader.onMove(moveD);
                     if (normalAdapterManager.mRefreshHeader.getVisibleHeight() > 0 && normalAdapterManager.mRefreshHeader.getState() < ArrowRefreshHeader.STATE_REFRESHING) {
                         return false;
                     }
@@ -569,5 +577,16 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
             return ((LinearLayoutManager) layoutManager).getOrientation();
         }
         return 0;
+    }
+
+    private boolean getCurReverseLayout(RecyclerView.LayoutManager layoutManager) {
+        if (layoutManager instanceof GridLayoutManager) {
+            return ((GridLayoutManager) layoutManager).getReverseLayout();
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+            return ((StaggeredGridLayoutManager) layoutManager).getReverseLayout();
+        } else if (layoutManager instanceof LinearLayoutManager) {
+            return ((LinearLayoutManager) layoutManager).getReverseLayout();
+        }
+        return false;
     }
 }

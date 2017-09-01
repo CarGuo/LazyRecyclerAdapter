@@ -122,6 +122,7 @@ public class BindHorizontalRefreshLoadActivity extends AppCompatActivity {
         adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
 
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        //recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
 
         //间隔线
         recycler.addItemDecoration(new BindDecorationBuilder(adapter)

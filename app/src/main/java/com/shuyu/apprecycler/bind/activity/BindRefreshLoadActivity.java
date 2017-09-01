@@ -121,6 +121,7 @@ public class BindRefreshLoadActivity extends AppCompatActivity {
 
         adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
 
+        //recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
         //间隔线
