@@ -1,7 +1,26 @@
-### 项目拥有一个通用的RecyclerAdapter，支持一个列表多种Item类型，让你无需维护和编写任何Adapter代码，参考项目配置逻辑，你可以快速集成拥有点击，动画，自定义刷新，自定义上拉，自定义空页面显示等多种配置模式的RecyclerView效果。高复用，你只需要编写维护Holder代码，通过Model来管理你的Holder显示，一个Holder可处理多种布局，存在多个RecyclerView逻辑里。
+
+![](https://github.com/CarGuo/LazyRecyclerAdapter/blob/master/11.png)
+
+### 这个一个极简的通用RecyclerView的适配器，让你普通的RecyclerView变得灵活、解耦、通用、丰富起来吧。
 
 [![](https://jitpack.io/v/CarGuo/LazyRecyclerAdapter.svg)](https://jitpack.io/#CarGuo/LazyRecyclerAdapter)
 [![Build Status](https://travis-ci.org/CarGuo/LazyRecyclerAdapter.svg?branch=master)](https://travis-ci.org/CarGuo/LazyRecyclerAdapter)
+
+
+状态 | 功能
+-------- | ---
+**支持**|**系统RecyclerView和任意数据实体**
+**支持**|**动态加载各种Item类型的列表、瀑布流、网格**
+**支持**|**列表、瀑布流、网格的刷新和加载更多效果，支持上下左右各个方向**
+**支持**|**自定义刷新和加载效果**
+**支持**|**内置支持各种列表和方向的万能分割线**
+**支持**|**点击和长按效果**
+**支持**|**空页面**
+**支持**|**Item的动画效果**
+**支持**|**Header头支持**
+**支持**|**一种数据实体对应多种Item**
+
+
 
 #### 在你的项目project下的build.gradle添加
 ```
@@ -15,7 +34,7 @@ allprojects {
 #### 在module下的build.gradle添加依赖
 ```
 dependencies {
-    compile 'com.github.CarGuo:LazyRecyclerAdapter:v2.0.0'
+    compile 'com.github.CarGuo:LazyRecyclerAdapter:v3.0.0'
 }
 
 ```
@@ -23,34 +42,50 @@ dependencies {
 
 ## [wiki 文档](https://github.com/CarGuo/LazyRecyclerAdapter/wiki)
 
-## [简书详解说明](http://www.jianshu.com/p/9c9aede9a19a)
-
-### 新版本 2.0.0 优化了代码，修复了bug，更新了多种demo。
-
-### QQ群，有兴趣的可以进来，无底线欢迎：174815284 。
-
 --------------------------------------------------------------------------------
 
 
 ### 效果
-<img src="https://github.com/CarGuo/CommonRecycler/blob/master/01.jpg" width="120px" height="218px"/>
-<img src="https://github.com/CarGuo/CommonRecycler/blob/master/02.jpg" width="120px" height="218px"/>
-<img src="https://github.com/CarGuo/CommonRecycler/blob/master/03.jpg" width="120px" height="218px"/>
+<img src="https://github.com/CarGuo/CommonRecycler/blob/master/12.jpg" width="120px" height="218px"/>
+<img src="https://github.com/CarGuo/CommonRecycler/blob/master/13.jpg" width="120px" height="218px"/>
+<img src="https://github.com/CarGuo/CommonRecycler/blob/master/14.jpg" width="120px" height="218px"/>
 
 
-### GIF效果
+### 使用方法
 
-![](https://github.com/CarGuo/CommonRecycler/blob/master/01.gif)
+1、创建管理器
 
-### Demo 多样式列表 类型
+管理器绑定数据、布局、Holder。其中XXXHolder需要继承BindRecyclerBaseHolder。
 
-* 普通列表 不刷新。
-* 普通列表 + 系统下拉 + Adapter上拉。
-* 瀑布流 + 系统下拉 + Adapter上拉。
-* 普通列表 xRecycler 不刷新。
-* 普通列表 + XRecycler + 上下拉。
-* 瀑布流 + XRecycler + 上下拉。
-* 瀑布流 + XRecycler + 自定义上下拉。
-* ViewPager下。
-* adapter 实现空页面。
-* XRecycler 实现空页面。
+BindRecyclerBaseHolder时继承了RecyclerView.ViewHolder的基类。
+
+```
+//创建管理器
+BindSuperAdapterManager normalAdapterManager = new BindSuperAdapterManager();
+//将数据Model类、布局layoutId、RecyclerView.ViewHolder绑定
+normalAdapterManager
+        .bind(BindImageModel.class, R.layout.horizontal_image_item, BindImageHolder.class)
+        .bind(BindTextModel.class, R.layout.horizontal_text_item, BindTextHolder.class)
+        .bind(BindClickModel.class, R.layout.horizontal_click_item, BindClickHolder.class)
+        .bindEmpty(BindNoDataHolder.NoDataModel.class, BindNoDataHolder.ID, BindNoDataHolder.class)
+```
+
+2、创建Adapter，设置RecyclerView
+```
+//通过管理器构建Adapter
+BindSuperAdapter adapter = new BindSuperAdapter(context, normalAdapterManager, datas);
+
+recycler.setLayoutManager(staggeredGridLayoutManager);
+recycler.setAdapter(adapter);
+
+```
+
+更多高级用法请看Demo与[wiki 文档](https://github.com/CarGuo/LazyRecyclerAdapter/wiki)。
+
+### License
+
+本项目把XRecyclerView的部分功能拆解到Adapter中
+```
+MIT
+
+```
