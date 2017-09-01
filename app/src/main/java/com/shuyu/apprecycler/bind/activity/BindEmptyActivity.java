@@ -105,7 +105,7 @@ public class BindEmptyActivity extends AppCompatActivity {
         recycler.setLayoutManager(new LinearLayoutManager(this));
         //间隔线
         recycler.addItemDecoration(new BindDecorationBuilder(adapter)
-                .setColor(Color.WHITE)
+                .setColor(Color.TRANSPARENT)
                 .setSpace(dip2px(this, 3))
                 .setNeedFirstTopEdge(true)
                 .builder());

@@ -20,7 +20,7 @@ public class BindDataUtils {
 
         list.add("列表 不上下拉");
         list.add("列表带上下拉");
-        list.add("瀑布流 刷新无上拉");
+        list.add("瀑布流 刷新上拉");
         list.add("空页面");
         list.add("Grid上拉无刷新");
         list.add("横向列表带左右拉");

@@ -84,7 +84,7 @@ public class BindHorizontalStaggeredRefreshLoadActivity extends AppCompatActivit
                 })
                 .addHeaderView(header)
                 .setPullRefreshEnabled(true)
-                .setLoadingMoreEnabled(false)
+                .setLoadingMoreEnabled(true)
                 .setFootView(new BindHorizontalCustomLoadMoreFooter(this))
                 .setRefreshHeader(new BindHorizontalCustomRefreshHeader(this))
                 .setLoadingListener(new OnLoadingListener() {
@@ -116,7 +116,6 @@ public class BindHorizontalStaggeredRefreshLoadActivity extends AppCompatActivit
         //瀑布流管理器
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
         //staggeredGridLayoutManager.setReverseLayout(true);
-        staggeredGridLayoutManager.setReverseLayout(false);
 
         recycler.setLayoutManager(staggeredGridLayoutManager);
 
