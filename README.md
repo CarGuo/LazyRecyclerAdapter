@@ -6,7 +6,7 @@
 [![](https://jitpack.io/v/CarGuo/LazyRecyclerAdapter.svg)](https://jitpack.io/#CarGuo/LazyRecyclerAdapter)
 [![Build Status](https://travis-ci.org/CarGuo/LazyRecyclerAdapter.svg?branch=master)](https://travis-ci.org/CarGuo/LazyRecyclerAdapter)
 
-## 功能
+## 一、功能
 
 状态 | 功能
 -------- | ---
@@ -21,6 +21,7 @@
 **支持**|**Header头支持**
 **支持**|**一种数据实体对应多种Item**
 
+## 二、依赖
 
 ### 在你的项目project下的build.gradle添加
 ```
@@ -40,20 +41,20 @@ dependencies {
 ```
 
 
-## 效果
+## 三、效果
 <div>
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/12.png" width="240px" height="436px"/>
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/13.png" width="240px" height="436px"/>
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/14.png" width="240px" height="436px"/>
 </div>
 
-## 使用方法
+## 四、使用方法
 
 #### 1、创建管理器
 
 管理器绑定数据、布局、Holder。其中XXXHolder需要继承BindRecyclerBaseHolder。
 
-BindRecyclerBaseHolder是一个继承了RecyclerView.ViewHolder的基类。
+（BindRecyclerBaseHolder是一个继承了RecyclerView.ViewHolder的基类。）
 
 ```
 //创建管理器
@@ -77,13 +78,15 @@ recycler.setAdapter(adapter);
 
 ```
 
-更多高级用法请看Demo与[wiki 文档](https://github.com/CarGuo/LazyRecyclerAdapter/wiki)。
+#### 更多高级用法请看Demo与[wiki 文档](https://github.com/CarGuo/LazyRecyclerAdapter/wiki)。
 
-### License
+## License
 
-本项目把XRecyclerView的部分功能拆解到Adapter中
+本项目把XRecyclerView的部分功能拆解到Adapter。
 
 ```
+
 MIT
+
 
 ```
