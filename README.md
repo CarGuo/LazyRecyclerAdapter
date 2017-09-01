@@ -49,11 +49,11 @@ dependencies {
 
 ## 使用方法
 
-1、创建管理器
+#### 1、创建管理器
 
 管理器绑定数据、布局、Holder。其中XXXHolder需要继承BindRecyclerBaseHolder。
 
-BindRecyclerBaseHolder时继承了RecyclerView.ViewHolder的基类。
+BindRecyclerBaseHolder是一个继承了RecyclerView.ViewHolder的基类。
 
 ```
 //创建管理器
@@ -66,7 +66,8 @@ normalAdapterManager
         .bindEmpty(BindNoDataHolder.NoDataModel.class, BindNoDataHolder.ID, BindNoDataHolder.class)
 ```
 
-2、创建Adapter，设置RecyclerView
+#### 2、创建Adapter，设置RecyclerView
+
 ```
 //通过管理器构建Adapter
 BindSuperAdapter adapter = new BindSuperAdapter(context, normalAdapterManager, datas);
@@ -81,6 +82,7 @@ recycler.setAdapter(adapter);
 ### License
 
 本项目把XRecyclerView的部分功能拆解到Adapter中
+
 ```
 MIT
 
