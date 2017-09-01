@@ -115,6 +115,7 @@ public class BindHorizontalGridActivity extends AppCompatActivity {
 
         adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
 
+        //GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 3, LinearLayoutManager.HORIZONTAL, true);
         GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 3, LinearLayoutManager.HORIZONTAL, false);
 
         recycler.setLayoutManager(staggeredGridLayoutManager);
@@ -124,7 +125,7 @@ public class BindHorizontalGridActivity extends AppCompatActivity {
                 .setColor(getResources()
                 .getColor(R.color.material_deep_teal_200))
                 .setSpace(dip2px(this, 5))
-                .setNeedGridRightLeftEdge(false)
+                .setNeedGridRightLeftEdge(true)
                 .setNeedFirstTopEdge(true)
                 .builder());
 

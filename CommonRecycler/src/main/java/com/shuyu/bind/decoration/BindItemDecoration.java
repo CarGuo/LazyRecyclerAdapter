@@ -202,18 +202,30 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
         //去掉header，上下拉item
         if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
             if (spanIndex == (spanCount - 1)) {
-                outRect.right = space;
+                if (getCurReverseLayout(parent.getLayoutManager())) {
+                    outRect.left = space;
+                } else {
+                    outRect.right = space;
+                }
                 if (needGridRightLeftEdge) {
                     outRect.bottom = space;
                 }
             } else if (spanIndex == 0) {
                 outRect.bottom = space;
-                outRect.right = space;
+                if (getCurReverseLayout(parent.getLayoutManager())) {
+                    outRect.left = space;
+                } else {
+                    outRect.right = space;
+                }
                 if (needGridRightLeftEdge) {
                     outRect.top = space;
                 }
             } else {
-                outRect.right = space;
+                if (getCurReverseLayout(parent.getLayoutManager())) {
+                    outRect.left = space;
+                } else {
+                    outRect.right = space;
+                }
                 outRect.bottom = space;
             }
         }
@@ -222,7 +234,11 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
         if (needFirstTopEdge && currentPosition >= offsetPosition
                 && currentPosition < (offsetPosition + spanCount)
                 && currentPosition != endDataPosition) {
-            outRect.left = space;
+            if (getCurReverseLayout(parent.getLayoutManager())) {
+                outRect.right = space;
+            } else {
+                outRect.left = space;
+            }
         }
 
     }
@@ -234,7 +250,6 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) parent.getLayoutManager();
         for (int i = 0; i < childSize; i++) {
             final View child = parent.getChildAt(i);
-            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
             int currentPosition = parent.getChildAdapterPosition(child);
             if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
                 if (linearLayoutManager.getReverseLayout()) {
@@ -245,7 +260,7 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                     }
                 } else {
                     if (paint != null) {
-                        final int left = child.getRight() + layoutParams.rightMargin;
+                        final int left = child.getRight();
                         final int right = left + space;
                         canvas.drawRect(left, top, right, bottom, paint);
                     }
@@ -282,8 +297,7 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                         canvas.drawRect(left, top, right, bottom, paint);
                     }
                 } else {
-                    RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
-                    int top = child.getBottom() + layoutParams.bottomMargin;
+                    int top = child.getBottom();
                     int bottom = top + space;
                     if (paint != null) {
                         canvas.drawRect(left, top, right, bottom, paint);
@@ -388,6 +402,7 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
             final View child = parent.getChildAt(i);
             int currentPosition = parent.getChildAdapterPosition(child);
             int spanIndex = getSpanIndex(parent, child, (RecyclerView.LayoutParams) child.getLayoutParams());
+
             //去掉header，上下拉item
             if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
                 if (spanIndex == 0) {
@@ -395,7 +410,6 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                     int bottomTop = child.getBottom();
                     int bottom = bottomTop + space;
                     int left = child.getLeft();
-                    int leftRight = left + space;
                     int right = child.getRight();
                     int rightRight = right + space;
 
@@ -403,8 +417,14 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                         canvas.drawRect(left, bottomTop, right, bottom, paint);
                     }
 
-                    if (paint != null) {
-                        canvas.drawRect(right, top, rightRight, bottom, paint);
+                    if (getCurReverseLayout(parent.getLayoutManager())) {
+                        if (paint != null) {
+                            canvas.drawRect(left - space, top - space, left, bottom, paint);
+                        }
+                    } else {
+                        if (paint != null) {
+                            canvas.drawRect(right, top, rightRight, bottom, paint);
+                        }
                     }
 
                     if (paint != null && needGridRightLeftEdge) {
@@ -420,8 +440,14 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                     int right = child.getRight();
                     int rightRight = right + space;
 
-                    if (paint != null) {
-                        canvas.drawRect(right, top, rightRight, bottom, paint);
+                    if (getCurReverseLayout(parent.getLayoutManager())) {
+                        if (paint != null) {
+                            canvas.drawRect(left - space, top - space, left, bottom, paint);
+                        }
+                    } else {
+                        if (paint != null) {
+                            canvas.drawRect(right, top, rightRight, bottom, paint);
+                        }
                     }
 
                     if (paint != null && needGridRightLeftEdge) {
@@ -440,8 +466,14 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                         canvas.drawRect(left, bottomTop, right, bottom, paint);
                     }
 
-                    if (paint != null) {
-                        canvas.drawRect(right, top, rightRight, bottom, paint);
+                    if (getCurReverseLayout(parent.getLayoutManager())) {
+                        if (paint != null) {
+                            canvas.drawRect(left - space, top - space, left, bottom, paint);
+                        }
+                    } else {
+                        if (paint != null) {
+                            canvas.drawRect(right, top, rightRight, bottom, paint);
+                        }
                     }
                 }
             }
@@ -450,8 +482,14 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
             if (needFirstTopEdge && currentPosition >= offsetPosition
                     && currentPosition < (offsetPosition + spanCount)
                     && currentPosition != endDataPosition) {
-                if (paint != null) {
-                    canvas.drawRect(child.getLeft() - space, child.getTop() - space, child.getLeft(), child.getBottom() + space, paint);
+                if (getCurReverseLayout(parent.getLayoutManager())) {
+                    if (paint != null) {
+                        canvas.drawRect(child.getRight(), child.getTop() - space, child.getRight() + space, child.getBottom() + space, paint);
+                    }
+                } else {
+                    if (paint != null) {
+                        canvas.drawRect(child.getLeft() - space, child.getTop() - space, child.getLeft(), child.getBottom() + space, paint);
+                    }
                 }
             }
         }
@@ -484,6 +522,18 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
         }
         return 0;
     }
+
+    private boolean getCurReverseLayout(RecyclerView.LayoutManager layoutManager) {
+        if (layoutManager instanceof GridLayoutManager) {
+            return ((GridLayoutManager) layoutManager).getReverseLayout();
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+            return ((StaggeredGridLayoutManager) layoutManager).getReverseLayout();
+        } else if (layoutManager instanceof LinearLayoutManager) {
+            return ((LinearLayoutManager) layoutManager).getReverseLayout();
+        }
+        return false;
+    }
+
 
     public void setPaint(Paint paint) {
         this.paint = paint;
