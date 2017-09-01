@@ -541,7 +541,7 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     /**
-     * 针对瀑布流的优化处理
+     * 针对瀑布流的优化处理，因为瀑布流有长短边
      */
     void stagFixEnd(Canvas canvas, RecyclerView parent, View child, int i, int currentPosition) {
         if (!(parent.getLayoutManager() instanceof StaggeredGridLayoutManager)) {
@@ -560,27 +560,29 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
                 int row = (int) Math.ceil((float) (dataSize - 1) / spanCount);
                 int curRow = (int) Math.ceil((currentPosition - offsetPosition) / (float) spanCount);
                 if (row == curRow) {
-                    stagFixVertical(canvas, parent, child, i + 1);
+                    stagFixVertical(canvas, parent, child, i);
                 }
             }
         }
     }
 
     /**
-     * 补齐那些缺少的
+     * 补齐那些缺少的瀑布流，存在缺角需要补齐
      */
     void stagFixVertical(Canvas canvas, RecyclerView parent, View view, int position) {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof StaggeredGridLayoutManager) {
             int spanIndex = getSpanIndex(parent, view, (RecyclerView.LayoutParams) view.getLayoutParams());
             if (spanIndex != 0) {
-                View preView = parent.getChildAt(position);
                 if (getCurReverseLayout(layoutManager)) {
+                    //倒过来的，最后的旁边那个，应该加1，因为减1就是loadmre的view了
+                    View preView = parent.getChildAt(position + 1);
                     if (preView.getTop() > view.getTop()) {
                         canvas.drawRect(view.getLeft() - space, view.getTop() - space
                                 , view.getLeft(), preView.getTop(), paint);
                     }
                 } else {
+                    View preView = parent.getChildAt(position - 1);
                     if (preView.getBottom() < view.getBottom()) {
                         canvas.drawRect(view.getLeft() - space, preView.getBottom()
                                 , view.getLeft(), view.getBottom() + space, paint);
@@ -591,7 +593,7 @@ class BindItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     /**
-     * 补齐那些缺少的
+     * 补齐那些缺少的瀑布流，存在缺角需要补齐
      */
     void stagFixHorizontal(Canvas canvas, RecyclerView parent, View view, int position) {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();

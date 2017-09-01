@@ -159,7 +159,7 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized (lock) {
             adapter.addListData(list);
-            if (count < 3) {
+            if (count < 1) {
                 normalAdapterManager.loadMoreComplete();
             } else {
                 normalAdapterManager.setNoMore(true);
