@@ -42,6 +42,7 @@ dependencies {
 
 
 ## 三、效果
+#### 更多效果请看DEMO
 <div>
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/12.png" width="240px" height="436px"/>
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/13.png" width="240px" height="436px"/>
