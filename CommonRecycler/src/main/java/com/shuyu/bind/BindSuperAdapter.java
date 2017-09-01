@@ -55,6 +55,8 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
     //触摸下拉移动的距离
     private float mLastY = -1;
 
+    private float mLastX = -1;
+
     public BindSuperAdapter(Context context, BindSuperAdapterManager normalAdapterManager, List dataList) {
         super(context, normalAdapterManager, dataList);
         this.normalAdapterManager = normalAdapterManager;
@@ -93,35 +95,10 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
 
     @Override
     public boolean onTouch(View v, MotionEvent ev) {
-        if (mLastY == -1) {
-            mLastY = ev.getRawY();
+        if (getOrientation(mRecyclerView.getLayoutManager()) == OrientationHelper.HORIZONTAL) {
+            return touchX(ev);
         }
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mLastY = ev.getRawY();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                final float deltaY = ev.getRawY() - mLastY;
-                mLastY = ev.getRawY();
-                if (normalAdapterManager.pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
-                    normalAdapterManager.mRefreshHeader.onMove(deltaY / DRAG_RATE);
-                    if (normalAdapterManager.mRefreshHeader.getVisibleHeight() > 0 && normalAdapterManager.mRefreshHeader.getState() < ArrowRefreshHeader.STATE_REFRESHING) {
-                        return false;
-                    }
-                }
-                break;
-            default:
-                mLastY = -1; // reset
-                if (normalAdapterManager.pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
-                    if (normalAdapterManager.mRefreshHeader.releaseAction()) {
-                        if (normalAdapterManager.mLoadingListener != null) {
-                            normalAdapterManager.mLoadingListener.onRefresh();
-                        }
-                    }
-                }
-                break;
-        }
-        return mRecyclerView.onTouchEvent(ev);
+        return touchY(ev);
     }
 
     @Override
@@ -180,6 +157,71 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
             return true;
         }
         return false;
+    }
+
+    private boolean touchX(MotionEvent ev) {
+        if (mLastX == -1) {
+            mLastX = ev.getRawX();
+        }
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mLastX = ev.getRawX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                final float deltaX = ev.getRawX() - mLastX;
+                mLastX = ev.getRawX();
+                if (normalAdapterManager.pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
+                    normalAdapterManager.mRefreshHeader.onMove(deltaX / DRAG_RATE);
+                    if (normalAdapterManager.mRefreshHeader.getVisibleHeight() > 0 && normalAdapterManager.mRefreshHeader.getState() < ArrowRefreshHeader.STATE_REFRESHING) {
+                        return false;
+                    }
+                }
+                break;
+            default:
+                mLastX = -1; // reset
+                if (normalAdapterManager.pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
+                    if (normalAdapterManager.mRefreshHeader.releaseAction()) {
+                        if (normalAdapterManager.mLoadingListener != null) {
+                            normalAdapterManager.mLoadingListener.onRefresh();
+                        }
+                    }
+                }
+                break;
+        }
+        return mRecyclerView.onTouchEvent(ev);
+    }
+
+
+    private boolean touchY(MotionEvent ev) {
+        if (mLastY == -1) {
+            mLastY = ev.getRawY();
+        }
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mLastY = ev.getRawY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                final float deltaY = ev.getRawY() - mLastY;
+                mLastY = ev.getRawY();
+                if (normalAdapterManager.pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
+                    normalAdapterManager.mRefreshHeader.onMove(deltaY / DRAG_RATE);
+                    if (normalAdapterManager.mRefreshHeader.getVisibleHeight() > 0 && normalAdapterManager.mRefreshHeader.getState() < ArrowRefreshHeader.STATE_REFRESHING) {
+                        return false;
+                    }
+                }
+                break;
+            default:
+                mLastY = -1; // reset
+                if (normalAdapterManager.pullRefreshEnabled && isOnTop() && appbarState == AppBarStateChangeListener.State.EXPANDED) {
+                    if (normalAdapterManager.mRefreshHeader.releaseAction()) {
+                        if (normalAdapterManager.mLoadingListener != null) {
+                            normalAdapterManager.mLoadingListener.onRefresh();
+                        }
+                    }
+                }
+                break;
+        }
+        return mRecyclerView.onTouchEvent(ev);
     }
 
     /**

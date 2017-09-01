@@ -23,6 +23,7 @@ public class BindDataUtils {
         list.add("瀑布流 刷新无上拉");
         list.add("空页面");
         list.add("Grid上拉无刷新");
+        list.add("横向列表带左右拉");
         return list;
     }
 

@@ -55,7 +55,7 @@ public class CustomRefreshHeader extends BaseRefreshHeader {
     private void initView() {
         // 初始情况，设置下拉刷新view高度为0
         mContainer = (RelativeLayout) LayoutInflater.from(getContext()).inflate(
-                R.layout.layout_custom_refresh_header, null);
+                R.layout.layout_horizontal_custom_refresh_header, null);
         LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         lp.setMargins(0, 0, 0, 0);
         this.setLayoutParams(lp);
