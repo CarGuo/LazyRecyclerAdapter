@@ -51,7 +51,7 @@ public class BindHorizontalRefreshLoadActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_normal_recycler_layout);
+        setContentView(R.layout.activity_horizontal_normal_recycler_layout);
         recycler = (RecyclerView) findViewById(R.id.recycler);
 
         init();
