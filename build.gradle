@@ -3,6 +3,7 @@ apply from: 'dependencies.gradle'
 
 buildscript {
     repositories {
+        maven { url 'https://jitpack.io' }
         jcenter()
     }
     dependencies {
@@ -16,6 +17,7 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url 'https://jitpack.io' }
         jcenter()
     }
 }

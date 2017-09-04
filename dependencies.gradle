@@ -8,11 +8,12 @@ allprojects {
 ext {
     //Android
     androidBuildToolsVersion = "23.0.1"
-    androidMinSdkVersion = 15
+    androidMinSdkVersion = 16
     androidTargetSdkVersion = 22
     androidCompileSdkVersion = 22
     supportLibraryVersion = '24.2.0'
     otherLibraryVersion = '22.2.1'
+    richVersion = 'v2.0.5'
 
     //ViewLibraries
     butterKnifeVersion = '8.2.1'
@@ -27,7 +28,8 @@ ext {
     ]
 
     viewDependencies = [
-            butterKnife     : "com.jakewharton:butterknife:${butterKnifeVersion}",
-            apt_butterKnife : "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
+            butterKnife    : "com.jakewharton:butterknife:${butterKnifeVersion}",
+            apt_butterKnife: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
+            rich           : "com.github.CarGuo:RickText:${richVersion}"
     ]
 }
