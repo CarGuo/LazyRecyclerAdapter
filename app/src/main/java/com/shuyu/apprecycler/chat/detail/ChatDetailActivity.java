@@ -107,4 +107,10 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
         mAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void sendSuccess() {
+        mChatDetailActivityEdit.setText("");
+        mAdapter.notifyDataSetChanged();
+    }
+
 }

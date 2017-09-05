@@ -25,7 +25,7 @@ public class ChatTextHolder extends BindRecyclerBaseHolder {
     @Override
     public void createView(View v) {
         mChatDetailHolderAvatar = (ImageView) v.findViewById(R.id.chat_detail_holder_avatar);
-        mChatDetailHolderText = (TextView) v.findViewById(R.id.chat_detail_holder_image);
+        mChatDetailHolderText = (TextView) v.findViewById(R.id.chat_detail_holder_text);
     }
 
     @Override

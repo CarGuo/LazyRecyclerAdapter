@@ -8,22 +8,24 @@ import java.io.Serializable;
  */
 
 public class UserModel implements Serializable {
-    private int userId;
-    private int userName;
 
-    public int getUserId() {
+    private String userId;
+
+    private String userName;
+
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public int getUserName() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(int userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 }

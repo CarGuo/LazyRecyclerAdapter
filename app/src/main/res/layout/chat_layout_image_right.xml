@@ -10,7 +10,8 @@
         android:layout_width="200dp"
         android:layout_height="100dp"
         android:layout_gravity="right"
-        android:layout_toLeftOf="@+id/chat_detail_holder_avatar" />
+        android:layout_toLeftOf="@+id/chat_detail_holder_avatar"
+        android:src="@drawable/a2" />
 
     <ImageView
         android:id="@+id/chat_detail_holder_avatar"

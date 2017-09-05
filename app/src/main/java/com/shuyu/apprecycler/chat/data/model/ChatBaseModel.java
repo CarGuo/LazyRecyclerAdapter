@@ -9,19 +9,19 @@ import java.io.Serializable;
 
 public abstract class ChatBaseModel implements Serializable {
 
-    private int chatId;
+    private String chatId;
 
     private int chatType;
 
-    private int id;
+    private String id;
 
     private boolean isMe;
 
-    public int getChatId() {
+    public String getChatId() {
         return chatId;
     }
 
-    public void setChatId(int chatId) {
+    public void setChatId(String chatId) {
         this.chatId = chatId;
     }
 
@@ -33,11 +33,11 @@ public abstract class ChatBaseModel implements Serializable {
         this.chatType = chatType;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

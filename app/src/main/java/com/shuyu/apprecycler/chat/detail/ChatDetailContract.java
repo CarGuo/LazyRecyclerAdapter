@@ -12,6 +12,9 @@ import java.util.List;
 public class ChatDetailContract {
     public interface IChatDetailView {
         void notifyView();
+
+        void sendSuccess();
+
         Context getContext();
     }
 

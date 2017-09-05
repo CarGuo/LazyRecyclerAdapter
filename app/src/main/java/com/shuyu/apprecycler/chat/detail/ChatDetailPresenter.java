@@ -1,11 +1,13 @@
 package com.shuyu.apprecycler.chat.detail;
 
+import com.shuyu.apprecycler.chat.data.ChatConst;
 import com.shuyu.apprecycler.chat.data.model.ChatBaseModel;
 import com.shuyu.apprecycler.chat.data.model.ChatTextModel;
 import com.shuyu.apprecycler.chat.detail.dagger.ChatDetailSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -40,12 +42,12 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
     public void sendMsg(String text) {
         ChatTextModel textModel = new ChatTextModel();
         textModel.setContent(text);
-        //textModel.setChatId();
-        //textModel.setChatType();
-        //textModel.setId();
+        textModel.setChatId("ALKSJDFLKSDJFLAKSDJFLKASDJF");
+        textModel.setChatType(ChatConst.TYPE_TEXT);
+        textModel.setId(UUID.randomUUID().toString());
         textModel.setMe(true);
         mDataList.add(0, textModel);
-        mView.notifyView();
+        mView.sendSuccess();
     }
 
 }
