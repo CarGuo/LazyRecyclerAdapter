@@ -33,6 +33,7 @@ dependencies {
     apt viewDependencies.apt_butterKnife
     compile viewDependencies.butterKnife
     compile viewDependencies.rich
+    compile viewDependencies.bubble
 
     compile other.dagger
     apt other.daggerCompiler

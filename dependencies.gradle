@@ -18,6 +18,7 @@ ext {
     //ViewLibraries
     butterKnifeVersion = '8.2.1'
     dagger = '2.7'
+    bubble = '1.1.1'
 
     androidDependencies = [
             recyclerView: "com.android.support:recyclerview-v7:${supportLibraryVersion}",
@@ -30,7 +31,8 @@ ext {
     viewDependencies = [
             butterKnife    : "com.jakewharton:butterknife:${butterKnifeVersion}",
             apt_butterKnife: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
-            rich           : "com.github.CarGuo:RickText:${richVersion}"
+            rich           : "com.github.CarGuo:RickText:${richVersion}",
+            bubble           : "com.daasuu:BubbleLayout:${bubble}",
     ]
 
     other = [

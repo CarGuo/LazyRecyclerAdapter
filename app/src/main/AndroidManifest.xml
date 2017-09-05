@@ -92,6 +92,7 @@
 
         <activity
             android:name=".chat.detail.ChatDetailActivity"
+            android:theme="@style/AppThemeTitle"
             android:screenOrientation="portrait" />
 
     </application>

@@ -1,6 +1,7 @@
 package com.shuyu.apprecycler.chat.detail;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -55,19 +56,24 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_detail);
         ButterKnife.bind(this);
-
+        initTitle();
         initActivity();
         initListener();
     }
 
 
     private void initActivity() {
-
         DaggerChatDetailComponent.builder()
                 .chatDetailPresenterModule(new ChatDetailPresenterModule(this))
                 .build()
                 .inject(this);
 
+    }
+
+    private void initTitle() {
+        mChatDetailActivityToolbar.setTitle("聊天详情");
+        mChatDetailActivityToolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(mChatDetailActivityToolbar);
     }
 
     private void initListener() {
