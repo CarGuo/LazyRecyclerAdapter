@@ -2,23 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="10dp">
+    android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/chat_detail_holder_avatar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/a2" />
+    <include layout="@layout/chat_detail_user_layout_left" />
 
     <TextView
         android:id="@+id/chat_detail_holder_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/chat_detail_holder_avatar"
+        android:layout_marginLeft="@dimen/chat_detail_margin_content"
+        android:layout_marginTop="@dimen/chat_detail_margin_top"
         android:minHeight="60dp"
         android:minWidth="20dp"
+        android:text=""
         android:textColor="#000000"
         android:textSize="13sp" />
 </RelativeLayout>

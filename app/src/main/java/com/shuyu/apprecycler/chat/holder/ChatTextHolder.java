@@ -13,9 +13,8 @@ import com.shuyu.bind.BindRecyclerBaseHolder;
  * Created by guoshuyu on 2017/9/4.
  */
 
-public class ChatTextHolder extends BindRecyclerBaseHolder {
+public class ChatTextHolder extends ChatBaseHolder {
 
-    private ImageView mChatDetailHolderAvatar;
     private TextView mChatDetailHolderText;
 
     public ChatTextHolder(View v) {
@@ -24,12 +23,13 @@ public class ChatTextHolder extends BindRecyclerBaseHolder {
 
     @Override
     public void createView(View v) {
-        mChatDetailHolderAvatar = (ImageView) v.findViewById(R.id.chat_detail_holder_avatar);
+        super.createView(v);
         mChatDetailHolderText = (TextView) v.findViewById(R.id.chat_detail_holder_text);
     }
 
     @Override
     public void onBind(Object model, int position) {
+        super.onBind(model, position);
         ChatTextModel chatTextModel = (ChatTextModel) model;
         mChatDetailHolderText.setText(chatTextModel.getContent());
     }

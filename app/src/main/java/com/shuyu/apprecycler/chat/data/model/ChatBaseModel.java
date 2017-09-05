@@ -17,6 +17,16 @@ public abstract class ChatBaseModel implements Serializable {
 
     private boolean isMe;
 
+    private UserModel userModel;
+
+    public UserModel getUserModel() {
+        return userModel;
+    }
+
+    public void setUserModel(UserModel userModel) {
+        this.userModel = userModel;
+    }
+
     public String getChatId() {
         return chatId;
     }

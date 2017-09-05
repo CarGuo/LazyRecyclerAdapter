@@ -13,6 +13,8 @@ public class UserModel implements Serializable {
 
     private String userName;
 
+    private String userPic;
+
     public String getUserId() {
         return userId;
     }
@@ -27,5 +29,13 @@ public class UserModel implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getUserPic() {
+        return userPic;
+    }
+
+    public void setUserPic(String userPic) {
+        this.userPic = userPic;
     }
 }

@@ -9,17 +9,7 @@ import java.io.Serializable;
 
 public class ChatTextModel extends ChatBaseModel implements Serializable {
 
-    private UserModel userModel;
-
     private String content;
-
-    public UserModel getUserModel() {
-        return userModel;
-    }
-
-    public void setUserModel(UserModel userModel) {
-        this.userModel = userModel;
-    }
 
     public String getContent() {
         return content;

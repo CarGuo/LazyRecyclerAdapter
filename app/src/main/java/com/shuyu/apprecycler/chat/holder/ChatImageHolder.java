@@ -11,10 +11,9 @@ import com.shuyu.bind.BindRecyclerBaseHolder;
  * Created by guoshuyu on 2017/9/4.
  */
 
-public class ChatImageHolder extends BindRecyclerBaseHolder {
+public class ChatImageHolder extends ChatBaseHolder {
 
     private ImageView mChatDetailHolderImage;
-    private ImageView mChatDetailHolderAvatar;
 
     public ChatImageHolder(View v) {
         super(v);
@@ -22,12 +21,13 @@ public class ChatImageHolder extends BindRecyclerBaseHolder {
 
     @Override
     public void createView(View v) {
+        super.createView(v);
         mChatDetailHolderImage = (ImageView) v.findViewById(R.id.chat_detail_holder_image);
-        mChatDetailHolderAvatar = (ImageView) v.findViewById(R.id.chat_detail_holder_avatar);
     }
 
     @Override
     public void onBind(Object model, int position) {
+        super.onBind(model, position);
         mChatDetailHolderImage.setImageResource(R.drawable.a1);
     }
 }
