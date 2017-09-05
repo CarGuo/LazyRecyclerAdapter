@@ -1,18 +1,20 @@
-package com.shuyu.apprecycler.chat.detail;
+package com.shuyu.apprecycler.chat.detail.dagger.module;
 
-import android.content.Context;
+
+import com.shuyu.apprecycler.chat.detail.ChatDetailContract;
 
 import dagger.Module;
 import dagger.Provides;
 
 /**
+ *
  * Created by guoshuyu on 2017/9/5.
  */
 @Module
-public class ChatDetailModule {
+public class ChatDetailPresenterModule {
     private final ChatDetailContract.IChatDetailView mView;
 
-    public ChatDetailModule(ChatDetailContract.IChatDetailView view) {
+    public ChatDetailPresenterModule(ChatDetailContract.IChatDetailView view) {
         this.mView = view;
     }
 

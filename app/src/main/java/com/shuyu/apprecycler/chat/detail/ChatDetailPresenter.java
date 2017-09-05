@@ -1,7 +1,5 @@
 package com.shuyu.apprecycler.chat.detail;
 
-import android.content.Context;
-
 import com.shuyu.apprecycler.chat.data.model.ChatBaseModel;
 import com.shuyu.apprecycler.chat.data.model.ChatTextModel;
 

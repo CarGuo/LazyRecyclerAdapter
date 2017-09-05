@@ -7,17 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.view.BindCustomLoadMoreFooter;
 import com.shuyu.apprecycler.chat.data.model.ChatImageModel;
 import com.shuyu.apprecycler.chat.data.model.ChatTextModel;
+import com.shuyu.apprecycler.chat.detail.dagger.ChatSuperAdapterManager;
+import com.shuyu.apprecycler.chat.detail.dagger.component.DaggerChatDetailComponent;
+import com.shuyu.apprecycler.chat.detail.dagger.module.ChatDetailPresenterModule;
 import com.shuyu.apprecycler.chat.holder.ChatImageHolder;
 import com.shuyu.apprecycler.chat.holder.ChatTextHolder;
 import com.shuyu.bind.BindSuperAdapter;
-import com.shuyu.bind.BindSuperAdapterManager;
 import com.shuyu.bind.listener.OnBindDataChooseListener;
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.listener.OnLoadingListener;
@@ -49,7 +50,8 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
 
     private BindSuperAdapter mAdapter;
 
-    private BindSuperAdapterManager mNormalAdapterManager;
+    @Inject
+    ChatSuperAdapterManager mNormalAdapterManager;
 
     @Inject
     ChatDetailPresenter mPresenter;
@@ -67,7 +69,7 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
     private void initView() {
 
         DaggerChatDetailComponent.builder()
-                .chatDetailModule(new ChatDetailModule(this))
+                .chatDetailPresenterModule(new ChatDetailPresenterModule(this))
                 .build()
                 .inject(this);
 
@@ -75,8 +77,6 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
     }
 
     private void initRecycler() {
-        mNormalAdapterManager = new BindSuperAdapterManager();
-
         //注意，一个manager中，一个id只能绑定一个holder
         //一个model class可以绑定多对id + Holder
         mNormalAdapterManager.bind(ChatImageModel.class, R.layout.chat_layout_image_left, ChatImageHolder.class)
@@ -114,7 +114,7 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
                     public void onLoadMore() {
                     }
                 });
-        //DaggerChatDetailComponent.b;
+
         mAdapter = new BindSuperAdapter(this, mNormalAdapterManager, mPresenter.getDataList());
         mChatDetailActivityRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         mChatDetailActivityRecycler.setAdapter(mAdapter);
