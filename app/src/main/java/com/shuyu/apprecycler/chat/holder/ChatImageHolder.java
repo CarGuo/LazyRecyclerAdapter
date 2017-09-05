@@ -28,6 +28,6 @@ public class ChatImageHolder extends BindRecyclerBaseHolder {
 
     @Override
     public void onBind(Object model, int position) {
-
+        mChatDetailHolderImage.setImageResource(R.drawable.a1);
     }
 }

@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shuyu.apprecycler.R;
+import com.shuyu.apprecycler.chat.data.model.ChatTextModel;
 import com.shuyu.bind.BindRecyclerBaseHolder;
 
 /**
@@ -15,7 +16,7 @@ import com.shuyu.bind.BindRecyclerBaseHolder;
 public class ChatTextHolder extends BindRecyclerBaseHolder {
 
     private ImageView mChatDetailHolderAvatar;
-    private TextView mChatDetailHolderImage;
+    private TextView mChatDetailHolderText;
 
     public ChatTextHolder(View v) {
         super(v);
@@ -24,11 +25,12 @@ public class ChatTextHolder extends BindRecyclerBaseHolder {
     @Override
     public void createView(View v) {
         mChatDetailHolderAvatar = (ImageView) v.findViewById(R.id.chat_detail_holder_avatar);
-        mChatDetailHolderImage = (TextView) v.findViewById(R.id.chat_detail_holder_image);
+        mChatDetailHolderText = (TextView) v.findViewById(R.id.chat_detail_holder_image);
     }
 
     @Override
     public void onBind(Object model, int position) {
-
+        ChatTextModel chatTextModel = (ChatTextModel) model;
+        mChatDetailHolderText.setText(chatTextModel.getContent());
     }
 }

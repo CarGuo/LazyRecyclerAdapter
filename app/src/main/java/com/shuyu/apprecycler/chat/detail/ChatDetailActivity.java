@@ -7,12 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.view.BindCustomLoadMoreFooter;
-import com.shuyu.apprecycler.bind.view.BindCustomRefreshHeader;
-import com.shuyu.apprecycler.chat.data.model.ChatBaseModel;
 import com.shuyu.apprecycler.chat.data.model.ChatImageModel;
 import com.shuyu.apprecycler.chat.data.model.ChatTextModel;
 import com.shuyu.apprecycler.chat.holder.ChatImageHolder;
@@ -24,40 +23,47 @@ import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.listener.OnLoadingListener;
 import com.shuyu.textutillib.RichEditText;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
+ * 聊天详情
  * Created by guoshuyu on 2017/9/4.
  */
 
-public class ChatDetailActivity extends AppCompatActivity {
+public class ChatDetailActivity extends AppCompatActivity implements ChatDetailContract.IChatDetailView {
 
-    private Toolbar mChatDetailActivityToolbar;
-    private RecyclerView mChatDetailActivityRecycler;
-    private RichEditText mChatDetailActivityEdit;
-    private TextView mChatDetailActivitySend;
+    @BindView(R.id.chat_detail_activity_toolbar)
+    Toolbar mChatDetailActivityToolbar;
+    @BindView(R.id.chat_detail_activity_recycler)
+    RecyclerView mChatDetailActivityRecycler;
+    @BindView(R.id.chat_detail_activity_edit)
+    RichEditText mChatDetailActivityEdit;
+    @BindView(R.id.chat_detail_activity_send)
+    TextView mChatDetailActivitySend;
 
-
-    private List<ChatBaseModel> mDataList = new ArrayList<>();
     private BindSuperAdapter mAdapter;
     private BindSuperAdapterManager mNormalAdapterManager;
+    private ChatDetailContract.IChatDetailPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_detail);
+        ButterKnife.bind(this);
+
+        mPresenter = new ChatDetailPresenter(this, this);
+
         initView();
     }
 
+
     private void initView() {
-        mChatDetailActivityToolbar = (Toolbar) findViewById(R.id.chat_detail_activity_toolbar);
-        mChatDetailActivityRecycler = (RecyclerView) findViewById(R.id.chat_detail_activity_recycler);
-        mChatDetailActivityEdit = (RichEditText) findViewById(R.id.chat_detail_activity_edit);
-        mChatDetailActivitySend = (TextView) findViewById(R.id.chat_detail_activity_send);
         initRecycler();
     }
-
 
     private void initRecycler() {
         mNormalAdapterManager = new BindSuperAdapterManager();
@@ -71,6 +77,13 @@ public class ChatDetailActivity extends AppCompatActivity {
                 .bingChooseListener(new OnBindDataChooseListener() {
                     @Override
                     public int getCurrentDataLayoutId(Object object, Class classType, int position, List<Integer> ids) {
+                        if (object instanceof ChatTextModel) {
+                            ChatTextModel chatTextModel = (ChatTextModel) object;
+                            return (chatTextModel.isMe()) ? R.layout.chat_layout_text_right : R.layout.chat_layout_text_left;
+                        } else if (object instanceof ChatImageModel) {
+                            ChatImageModel chatImageModel = (ChatImageModel) object;
+                            return (chatImageModel.isMe()) ? R.layout.chat_layout_image_right : R.layout.chat_layout_image_left;
+                        }
                         return ids.get(ids.size() - 1);
                     }
                 })
@@ -92,8 +105,19 @@ public class ChatDetailActivity extends AppCompatActivity {
                     public void onLoadMore() {
                     }
                 });
-        mAdapter = new BindSuperAdapter(this, mNormalAdapterManager, mDataList);
+        mAdapter = new BindSuperAdapter(this, mNormalAdapterManager, mPresenter.getDataList());
         mChatDetailActivityRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         mChatDetailActivityRecycler.setAdapter(mAdapter);
+    }
+
+    //TODO 用diff判断
+    @Override
+    public void notifyView() {
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @OnClick(R.id.chat_detail_activity_send)
+    public void onViewClicked() {
+        mPresenter.sendMsg(mChatDetailActivityEdit.getText().toString());
     }
 }

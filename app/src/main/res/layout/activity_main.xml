@@ -16,5 +16,12 @@
         android:layout_height="wrap_content"
         android:text="特殊模式（旧版）" />
 
+    <Button
+        android:id="@+id/chat_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="聊天" />
+
+
 
 </LinearLayout>

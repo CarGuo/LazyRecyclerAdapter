@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.shuyu.apprecycler.bind.BindHomeActivity;
+import com.shuyu.apprecycler.chat.detail.ChatDetailActivity;
 import com.shuyu.apprecycler.special.HomeActivity;
 
 /**
@@ -33,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, HomeActivity.class));
+            }
+        });
+        findViewById(R.id.chat_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ChatDetailActivity.class));
             }
         });
     }

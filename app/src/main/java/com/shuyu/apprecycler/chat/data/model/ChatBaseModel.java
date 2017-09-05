@@ -15,6 +15,8 @@ public abstract class ChatBaseModel implements Serializable {
 
     private int id;
 
+    private boolean isMe;
+
     public int getChatId() {
         return chatId;
     }
@@ -37,5 +39,13 @@ public abstract class ChatBaseModel implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isMe() {
+        return isMe;
+    }
+
+    public void setMe(boolean me) {
+        isMe = me;
     }
 }
