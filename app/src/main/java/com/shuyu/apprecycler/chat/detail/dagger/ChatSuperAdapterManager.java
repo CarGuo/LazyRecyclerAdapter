@@ -16,6 +16,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * 继承之后实现注入与初始化
  * Created by guoshuyu on 2017/9/5.
  */
 

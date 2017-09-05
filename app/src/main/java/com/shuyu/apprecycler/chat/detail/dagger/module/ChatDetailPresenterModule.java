@@ -9,6 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
+ * 提供注入Presenter的参数
  * Created by guoshuyu on 2017/9/5.
  */
 @Module

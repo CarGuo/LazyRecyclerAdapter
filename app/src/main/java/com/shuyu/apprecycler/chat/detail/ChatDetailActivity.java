@@ -56,21 +56,21 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
         setContentView(R.layout.activity_chat_detail);
         ButterKnife.bind(this);
 
-        initView();
+        initActivity();
+        initListener();
     }
 
 
-    private void initView() {
+    private void initActivity() {
 
         DaggerChatDetailComponent.builder()
                 .chatDetailPresenterModule(new ChatDetailPresenterModule(this))
                 .build()
                 .inject(this);
 
-        initRecycler();
     }
 
-    private void initRecycler() {
+    private void initListener() {
         mNormalAdapterManager
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override

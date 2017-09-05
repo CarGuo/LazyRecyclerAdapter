@@ -10,7 +10,7 @@ import com.shuyu.bind.BindSuperAdapter;
 import javax.inject.Inject;
 
 /**
- * 继承之后
+ * 继承之后实现注入
  * Created by guoshuyu on 2017/9/5.
  */
 
