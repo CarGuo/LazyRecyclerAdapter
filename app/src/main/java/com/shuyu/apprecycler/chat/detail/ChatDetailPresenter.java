@@ -1,6 +1,6 @@
 package com.shuyu.apprecycler.chat.detail;
 
-import com.shuyu.apprecycler.chat.data.ChatConst;
+import com.shuyu.apprecycler.chat.utils.ChatConst;
 import com.shuyu.apprecycler.chat.data.model.ChatBaseModel;
 import com.shuyu.apprecycler.chat.data.model.ChatTextModel;
 import com.shuyu.apprecycler.chat.detail.dagger.ChatDetailSingleton;

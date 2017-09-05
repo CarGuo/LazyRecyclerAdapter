@@ -5,6 +5,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.chat.data.model.ChatBaseModel;
 import com.shuyu.bind.BindRecyclerBaseHolder;
@@ -34,6 +36,16 @@ public abstract class ChatBaseHolder extends BindRecyclerBaseHolder {
     @Override
     public void onBind(Object model, int position) {
         ChatBaseModel chatBaseModel = (ChatBaseModel) model;
+
+        Glide.with(context.getApplicationContext())
+                .setDefaultRequestOptions(new RequestOptions()
+                        .centerCrop()
+                        .circleCrop()
+                        .placeholder(R.drawable.a2)
+                        .error(R.drawable.a1)
+                    )
+                .load("http://img1.imgtn.bdimg.com/it/u=2165802874,1472309307&fm=214&gp=0.jpg").into(mChatDetailHolderAvatar);
+
         //mChatDetailHolderName.setText(chatBaseModel.getUserModel().getUserName());
         //mChatDetailHolderAvatar.setImageResource(chatBaseModel.getUserModel().get());
     }

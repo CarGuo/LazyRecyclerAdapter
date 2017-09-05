@@ -1,4 +1,4 @@
-package com.shuyu.apprecycler.chat.data;
+package com.shuyu.apprecycler.chat.utils;
 
 /**
  * Created by guoshuyu on 2017/9/5.

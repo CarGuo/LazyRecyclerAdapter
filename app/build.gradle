@@ -34,6 +34,8 @@ dependencies {
     compile viewDependencies.butterKnife
     compile viewDependencies.rich
     compile viewDependencies.bubble
+    compile viewDependencies.glide
+    compile viewDependencies.glideProcessor
 
     compile other.dagger
     apt other.daggerCompiler
