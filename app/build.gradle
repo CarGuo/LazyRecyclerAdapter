@@ -29,7 +29,12 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':CommonRecycler')
     def viewDependencies = rootProject.ext.viewDependencies
+    def other = rootProject.ext.other
     apt viewDependencies.apt_butterKnife
     compile viewDependencies.butterKnife
     compile viewDependencies.rich
+
+    compile other.dagger
+    apt other.daggerCompiler
+    provided 'org.glassfish:javax.annotation:10.0-b28'
 }

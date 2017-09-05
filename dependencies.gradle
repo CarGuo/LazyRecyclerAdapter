@@ -17,7 +17,7 @@ ext {
 
     //ViewLibraries
     butterKnifeVersion = '8.2.1'
-
+    dagger = '2.7'
 
     androidDependencies = [
             recyclerView: "com.android.support:recyclerview-v7:${supportLibraryVersion}",
@@ -31,5 +31,10 @@ ext {
             butterKnife    : "com.jakewharton:butterknife:${butterKnifeVersion}",
             apt_butterKnife: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
             rich           : "com.github.CarGuo:RickText:${richVersion}"
+    ]
+
+    other = [
+            dagger        : "com.google.dagger:dagger:${dagger}",
+            daggerCompiler: "com.google.dagger:dagger-compiler:${dagger}",
     ]
 }

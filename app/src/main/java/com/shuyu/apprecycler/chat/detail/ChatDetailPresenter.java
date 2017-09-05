@@ -8,6 +8,8 @@ import com.shuyu.apprecycler.chat.data.model.ChatTextModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by guoshuyu on 2017/9/4.
  */
@@ -16,12 +18,11 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
 
     private List<ChatBaseModel> mDataList = new ArrayList<>();
 
-    private Context mContext;
-
     private ChatDetailContract.IChatDetailView mView;
 
-    public ChatDetailPresenter(Context context, ChatDetailContract.IChatDetailView view) {
-        this.mContext = context;
+
+    @Inject
+    public ChatDetailPresenter(ChatDetailContract.IChatDetailView view) {
         this.mView = view;
     }
 
@@ -46,4 +47,5 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         mDataList.add(0, textModel);
         mView.notifyView();
     }
+
 }

@@ -25,6 +25,8 @@ import com.shuyu.textutillib.RichEditText;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,8 +48,11 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
     TextView mChatDetailActivitySend;
 
     private BindSuperAdapter mAdapter;
+
     private BindSuperAdapterManager mNormalAdapterManager;
-    private ChatDetailContract.IChatDetailPresenter mPresenter;
+
+    @Inject
+    ChatDetailPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,13 +60,17 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
         setContentView(R.layout.activity_chat_detail);
         ButterKnife.bind(this);
 
-        mPresenter = new ChatDetailPresenter(this, this);
-
         initView();
     }
 
 
     private void initView() {
+
+        DaggerChatDetailComponent.builder()
+                .chatDetailModule(new ChatDetailModule(this))
+                .build()
+                .inject(this);
+
         initRecycler();
     }
 
@@ -105,9 +114,21 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
                     public void onLoadMore() {
                     }
                 });
+        //DaggerChatDetailComponent.b;
         mAdapter = new BindSuperAdapter(this, mNormalAdapterManager, mPresenter.getDataList());
         mChatDetailActivityRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         mChatDetailActivityRecycler.setAdapter(mAdapter);
+    }
+
+    @OnClick(R.id.chat_detail_activity_send)
+    public void onViewClicked() {
+        mPresenter.sendMsg(mChatDetailActivityEdit.getText().toString());
+    }
+
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 
     //TODO 用diff判断
@@ -116,8 +137,4 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
         mAdapter.notifyDataSetChanged();
     }
 
-    @OnClick(R.id.chat_detail_activity_send)
-    public void onViewClicked() {
-        mPresenter.sendMsg(mChatDetailActivityEdit.getText().toString());
-    }
 }

@@ -1,5 +1,7 @@
 package com.shuyu.apprecycler.chat.detail;
 
+import android.content.Context;
+
 import java.util.List;
 
 /**
@@ -10,6 +12,7 @@ import java.util.List;
 public class ChatDetailContract {
     public interface IChatDetailView {
         void notifyView();
+        Context getContext();
     }
 
     public interface IChatDetailPresenter<T> {
