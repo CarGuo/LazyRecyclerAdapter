@@ -2,6 +2,7 @@ package com.shuyu.apprecycler.chat.detail;
 
 import com.shuyu.apprecycler.chat.data.model.ChatBaseModel;
 import com.shuyu.apprecycler.chat.data.model.ChatTextModel;
+import com.shuyu.apprecycler.chat.detail.dagger.ChatDetailSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.inject.Inject;
  * Created by guoshuyu on 2017/9/4.
  */
 
+@ChatDetailSingleton
 public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresenter<ChatBaseModel> {
 
     private List<ChatBaseModel> mDataList = new ArrayList<>();

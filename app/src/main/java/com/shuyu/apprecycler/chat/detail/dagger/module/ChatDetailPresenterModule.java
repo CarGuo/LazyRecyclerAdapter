@@ -1,13 +1,14 @@
 package com.shuyu.apprecycler.chat.detail.dagger.module;
 
 
+import android.content.Context;
+
 import com.shuyu.apprecycler.chat.detail.ChatDetailContract;
 
 import dagger.Module;
 import dagger.Provides;
 
 /**
- *
  * Created by guoshuyu on 2017/9/5.
  */
 @Module
@@ -22,6 +23,11 @@ public class ChatDetailPresenterModule {
     @Provides
     ChatDetailContract.IChatDetailView provideChatDetailView() {
         return mView;
+    }
+
+    @Provides
+    Context provideContext() {
+        return mView.getContext();
     }
 
 }
