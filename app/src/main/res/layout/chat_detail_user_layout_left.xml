@@ -24,12 +24,4 @@
         android:textColor="@android:color/darker_gray"
         android:textSize="12sp" />
 
-    <RelativeLayout
-        android:id="@+id/chat_detail_holder_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/chat_detail_holder_name"
-        android:layout_toRightOf="@+id/chat_detail_holder_avatar">
-
-    </RelativeLayout>
 </RelativeLayout>

@@ -13,7 +13,7 @@ ext {
     androidCompileSdkVersion = 22
     supportLibraryVersion = '24.2.0'
     otherLibraryVersion = '22.2.1'
-    richVersion = 'v2.0.5'
+    richVersion = 'v2.0.6'
 
     //ViewLibraries
     butterKnifeVersion = '8.2.1'

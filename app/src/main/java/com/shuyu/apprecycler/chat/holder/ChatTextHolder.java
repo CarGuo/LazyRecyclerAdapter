@@ -1,12 +1,11 @@
 package com.shuyu.apprecycler.chat.holder;
 
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.chat.data.model.ChatTextModel;
-import com.shuyu.bind.BindRecyclerBaseHolder;
+import com.shuyu.textutillib.RichTextBuilder;
 
 /**
  * 聊天文本
@@ -31,6 +30,11 @@ public class ChatTextHolder extends ChatBaseHolder {
     public void onBind(Object model, int position) {
         super.onBind(model, position);
         ChatTextModel chatTextModel = (ChatTextModel) model;
-        mChatDetailHolderText.setText(chatTextModel.getContent());
+        RichTextBuilder richTextBuilder = new RichTextBuilder(context);
+        richTextBuilder.setContent(chatTextModel.getContent())
+                .setNeedUrl(false)
+                .setNeedNum(false)
+                .setTextView(mChatDetailHolderText)
+                .build();
     }
 }

@@ -20,7 +20,6 @@ public abstract class ChatBaseHolder extends BindRecyclerBaseHolder {
 
     private ImageView mChatDetailHolderAvatar;
     private TextView mChatDetailHolderName;
-    private ViewGroup mChatDetailContentLayout;
 
     public ChatBaseHolder(View v) {
         super(v);
@@ -30,24 +29,20 @@ public abstract class ChatBaseHolder extends BindRecyclerBaseHolder {
     public void createView(View v) {
         mChatDetailHolderName = (TextView) v.findViewById(R.id.chat_detail_holder_name);
         mChatDetailHolderAvatar = (ImageView) v.findViewById(R.id.chat_detail_holder_avatar);
-        mChatDetailContentLayout = (ViewGroup) v.findViewById(R.id.chat_detail_holder_layout);
     }
 
     @Override
     public void onBind(Object model, int position) {
         ChatBaseModel chatBaseModel = (ChatBaseModel) model;
-
+        mChatDetailHolderName.setText(chatBaseModel.getUserModel().getUserName());
         Glide.with(context.getApplicationContext())
                 .setDefaultRequestOptions(new RequestOptions()
                         .centerCrop()
                         .circleCrop()
                         .placeholder(R.drawable.a2)
                         .error(R.drawable.a1)
-                    )
-                .load("http://img1.imgtn.bdimg.com/it/u=2165802874,1472309307&fm=214&gp=0.jpg").into(mChatDetailHolderAvatar);
-
-        //mChatDetailHolderName.setText(chatBaseModel.getUserModel().getUserName());
-        //mChatDetailHolderAvatar.setImageResource(chatBaseModel.getUserModel().get());
+                )
+                .load(chatBaseModel.getUserModel().getUserPic()).into(mChatDetailHolderAvatar);
     }
 
 }

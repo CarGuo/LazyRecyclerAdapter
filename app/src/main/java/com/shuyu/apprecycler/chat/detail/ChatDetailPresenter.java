@@ -1,5 +1,7 @@
 package com.shuyu.apprecycler.chat.detail;
 
+import android.os.Handler;
+
 import com.shuyu.apprecycler.chat.utils.ChatConst;
 import com.shuyu.apprecycler.chat.data.model.ChatBaseModel;
 import com.shuyu.apprecycler.chat.data.model.ChatTextModel;
@@ -22,6 +24,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
 
     private ChatDetailContract.IChatDetailView mView;
 
+    private Handler mHandler = new Handler();
 
     @Inject
     public ChatDetailPresenter(ChatDetailContract.IChatDetailView view) {
@@ -46,8 +49,28 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         textModel.setChatType(ChatConst.TYPE_TEXT);
         textModel.setId(UUID.randomUUID().toString());
         textModel.setMe(true);
+        textModel.setUserModel(ChatConst.getDefaultUser());
         mDataList.add(0, textModel);
         mView.sendSuccess();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                replyTextMsg();
+            }
+        }, 500);
+    }
+
+
+    private void replyTextMsg() {
+        ChatTextModel textModel = new ChatTextModel();
+        textModel.setContent("我回复你啦，萌萌哒");
+        textModel.setChatId("BBBBBBBBBBBBBBBBBBBBBB");
+        textModel.setChatType(ChatConst.TYPE_TEXT);
+        textModel.setId(UUID.randomUUID().toString());
+        textModel.setMe(false);
+        textModel.setUserModel(ChatConst.getReplayUser());
+        mDataList.add(0, textModel);
+        mView.notifyView();
     }
 
 }
