@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/chat_item_click_shape"
     android:orientation="horizontal">
 
     <include layout="@layout/chat_detail_user_layout_right" />
