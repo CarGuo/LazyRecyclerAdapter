@@ -16,11 +16,9 @@ import dagger.Provides;
 @Module
 public class ChatDetailPresenterModule {
     private final ChatDetailContract.IChatDetailView mView;
-    private final RecyclerView mRecycler;
 
-    public ChatDetailPresenterModule(ChatDetailContract.IChatDetailView view, RecyclerView recyclerView) {
+    public ChatDetailPresenterModule(ChatDetailContract.IChatDetailView view) {
         this.mView = view;
-        this.mRecycler = recyclerView;
     }
 
     @Provides
@@ -33,8 +31,4 @@ public class ChatDetailPresenterModule {
         return mView.getContext();
     }
 
-    @Provides
-    RecyclerView provideRecyclerView() {
-        return mRecycler;
-    }
 }

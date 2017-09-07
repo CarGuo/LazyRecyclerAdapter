@@ -9,6 +9,8 @@ import com.shuyu.apprecycler.chat.holder.ChatImageHolder;
 import com.shuyu.apprecycler.chat.holder.ChatTextHolder;
 import com.shuyu.bind.BindSuperAdapterManager;
 import com.shuyu.bind.listener.OnBindDataChooseListener;
+import com.shuyu.bind.listener.OnItemClickListener;
+import com.shuyu.bind.listener.OnLoadingListener;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class ChatSuperAdapterManager extends BindSuperAdapterManager {
     }
 
     @Inject
-    public void initManager(Context context) {
+    public void initManager(Context context, OnItemClickListener onItemClickListener, OnLoadingListener loadingListener) {
         bind(ChatImageModel.class, R.layout.chat_layout_image_left, ChatImageHolder.class)
                 .bind(ChatImageModel.class, R.layout.chat_layout_image_right, ChatImageHolder.class)
                 .bind(ChatTextModel.class, R.layout.chat_layout_text_left, ChatTextHolder.class)
@@ -49,7 +51,9 @@ public class ChatSuperAdapterManager extends BindSuperAdapterManager {
                 .setPullRefreshEnabled(false)
                 .setLoadingMoreEnabled(false)
                 .setFootView(new BindCustomLoadMoreFooter(context))
-                .setNeedAnimation(true);
+                .setNeedAnimation(true)
+                .setOnItemClickListener(onItemClickListener)
+                .setLoadingListener(loadingListener);
     }
 
 }

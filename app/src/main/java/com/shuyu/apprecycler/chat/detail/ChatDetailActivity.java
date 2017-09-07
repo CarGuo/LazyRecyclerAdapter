@@ -15,7 +15,9 @@ import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.chat.detail.dagger.ChatDetailAdapter;
 import com.shuyu.apprecycler.chat.detail.dagger.ChatSuperAdapterManager;
 import com.shuyu.apprecycler.chat.detail.dagger.component.DaggerChatDetailComponent;
+import com.shuyu.apprecycler.chat.detail.dagger.module.ChatDetailManagerModule;
 import com.shuyu.apprecycler.chat.detail.dagger.module.ChatDetailPresenterModule;
+import com.shuyu.apprecycler.chat.detail.dagger.module.ChatDetailViewModule;
 import com.shuyu.apprecycler.chat.detail.view.ChatDetailBottomView;
 import com.shuyu.apprecycler.chat.detail.view.ChatDetailEmojiLayout;
 import com.shuyu.bind.listener.OnItemClickListener;
@@ -37,7 +39,7 @@ import butterknife.OnTouch;
  * Created by guoshuyu on 2017/9/4.
  */
 
-public class ChatDetailActivity extends AppCompatActivity implements ChatDetailContract.IChatDetailView {
+public class ChatDetailActivity extends AppCompatActivity implements ChatDetailContract.IChatDetailView, OnItemClickListener, OnLoadingListener {
 
     @BindView(R.id.chat_detail_activity_toolbar)
     Toolbar mChatDetailActivityToolbar;
@@ -82,7 +84,9 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
     @SuppressWarnings("unchecked")
     private void initActivity() {
         DaggerChatDetailComponent.builder()
-                .chatDetailPresenterModule(new ChatDetailPresenterModule(this, mChatDetailActivityRecycler))
+                .chatDetailPresenterModule(new ChatDetailPresenterModule(this))
+                .chatDetailManagerModule(new ChatDetailManagerModule(this, this))
+                .chatDetailViewModule(new ChatDetailViewModule(mChatDetailActivityRecycler))
                 .build()
                 .inject(this);
 
@@ -93,21 +97,6 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
     }
 
     private void initListener() {
-        mNormalAdapterManager
-                .setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(Context context, int position) {
-                    }
-                })
-                .setLoadingListener(new OnLoadingListener() {
-                    @Override
-                    public void onRefresh() {
-                    }
-
-                    @Override
-                    public void onLoadMore() {
-                    }
-                });
 
         mChatDetailActivityKeyboardLayout.setKeyBoardStateListener(new KeyBoardLockLayout.KeyBoardStateListener() {
             @Override
@@ -196,6 +185,21 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
     public void sendSuccess() {
         mChatDetailActivityEdit.setText("");
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onItemClick(Context context, int position) {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+
     }
 
     @Override
