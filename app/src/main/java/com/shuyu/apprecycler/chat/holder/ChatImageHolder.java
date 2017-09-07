@@ -3,7 +3,10 @@ package com.shuyu.apprecycler.chat.holder;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.shuyu.apprecycler.R;
+import com.shuyu.apprecycler.chat.data.model.ChatImageModel;
 import com.shuyu.bind.BindRecyclerBaseHolder;
 
 /**
@@ -28,6 +31,12 @@ public class ChatImageHolder extends ChatBaseHolder {
     @Override
     public void onBind(Object model, int position) {
         super.onBind(model, position);
-        mChatDetailHolderImage.setImageResource(R.drawable.a1);
+        ChatImageModel chatImageModel = (ChatImageModel) model;
+        Glide.with(context.getApplicationContext())
+                .setDefaultRequestOptions(new RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.a2)
+                        .error(R.drawable.a1)
+                ).load(chatImageModel.getImgUrl()).into(mChatDetailHolderImage);
     }
 }

@@ -3,6 +3,7 @@ package com.shuyu.apprecycler.chat.detail;
 import android.os.Handler;
 
 import com.shuyu.apprecycler.R;
+import com.shuyu.apprecycler.chat.data.model.ChatImageModel;
 import com.shuyu.apprecycler.chat.detail.view.ChatDetailBottomView;
 import com.shuyu.apprecycler.chat.utils.ChatConst;
 import com.shuyu.apprecycler.chat.data.model.ChatBaseModel;
@@ -73,8 +74,24 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
     @Override
     public void sendMenuItem(int position) {
         switch (position) {
-            case 0:
+            case 0: {
+                ChatImageModel chatImageModel = new ChatImageModel();
+                chatImageModel.setImgUrl("http://osvlwlt4g.bkt.clouddn.com/17-9-6/50017724.jpg");
+                chatImageModel.setChatId(ChatConst.CHAT_ID);
+                chatImageModel.setChatType(ChatConst.TYPE_IMAGE);
+                chatImageModel.setId(UUID.randomUUID().toString());
+                chatImageModel.setMe(true);
+                chatImageModel.setUserModel(ChatConst.getDefaultUser());
+                mDataList.add(0, chatImageModel);
+                mView.notifyView();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        replyImgMsg();
+                    }
+                }, 500);
                 break;
+            }
         }
 
     }
@@ -83,6 +100,17 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         mMenuList.add(new ChatDetailBottomView.ChatDetailBottomMenuModel("图片", R.mipmap.ic_launcher));
     }
 
+    private void replyImgMsg() {
+        ChatImageModel chatImageModel = new ChatImageModel();
+        chatImageModel.setImgUrl("http://osvlwlt4g.bkt.clouddn.com/17-9-6/50017724.jpg");
+        chatImageModel.setChatId(ChatConst.CHAT_ID);
+        chatImageModel.setChatType(ChatConst.TYPE_IMAGE);
+        chatImageModel.setId(UUID.randomUUID().toString());
+        chatImageModel.setMe(false);
+        chatImageModel.setUserModel(ChatConst.getReplayUser());
+        mDataList.add(0, chatImageModel);
+        mView.notifyView();
+    }
 
     private void replyTextMsg() {
         ChatTextModel textModel = new ChatTextModel();
