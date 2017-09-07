@@ -13,6 +13,8 @@ import android.view.View;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.chat.detail.dagger.ChatDetailAdapter;
+import com.shuyu.apprecycler.chat.detail.dagger.ChatDetailViewControl;
+import com.shuyu.apprecycler.chat.detail.dagger.ChatDetailViewOption;
 import com.shuyu.apprecycler.chat.detail.dagger.ChatSuperAdapterManager;
 import com.shuyu.apprecycler.chat.detail.dagger.component.DaggerChatDetailComponent;
 import com.shuyu.apprecycler.chat.detail.dagger.module.ChatDetailManagerModule;
@@ -63,6 +65,9 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
     @Inject
     ChatDetailAdapter mAdapter;
 
+    @Inject
+    ChatDetailViewControl mChatDetailViewControl;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +77,6 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
         ButterKnife.bind(this);
         initTitle();
         initActivity();
-        initListener();
     }
 
     private void initTitle() {
@@ -83,46 +87,20 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
 
     @SuppressWarnings("unchecked")
     private void initActivity() {
+
+        ChatDetailViewOption option = new ChatDetailViewOption();
+        option.setChatDetailActivityBottomMenu(mChatDetailActivityBottomMenu)
+                .setChatDetailActivityKeyboardLayout(mChatDetailActivityKeyboardLayout)
+                .setChatDetailActivitySendEmojiLayout(mChatDetailActivitySendEmojiLayout)
+                .setChatDetailActivityEdit(mChatDetailActivityEdit)
+                .setRecyclerView(mChatDetailActivityRecycler);
+
         DaggerChatDetailComponent.builder()
                 .chatDetailPresenterModule(new ChatDetailPresenterModule(this))
                 .chatDetailManagerModule(new ChatDetailManagerModule(this, this))
-                .chatDetailViewModule(new ChatDetailViewModule(mChatDetailActivityRecycler))
+                .chatDetailViewModule(new ChatDetailViewModule(option))
                 .build()
                 .inject(this);
-
-        mChatDetailActivitySendEmojiLayout.setEditTextSmile(mChatDetailActivityEdit);
-        mChatDetailActivityKeyboardLayout.setBottomView(mChatDetailActivitySendEmojiLayout);
-
-        mChatDetailActivityBottomMenu.setDataList(mPresenter.getMenuList());
-    }
-
-    private void initListener() {
-
-        mChatDetailActivityKeyboardLayout.setKeyBoardStateListener(new KeyBoardLockLayout.KeyBoardStateListener() {
-            @Override
-            public void onState(boolean show) {
-                if (show) {
-                    mChatDetailActivitySendEmojiLayout.showKeyboard();
-                } else {
-                    mChatDetailActivitySendEmojiLayout.hideKeyboard();
-                }
-            }
-        });
-
-        mChatDetailActivityBottomMenu.setClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(Context context, int position) {
-                mPresenter.sendMenuItem(position);
-            }
-        });
-    }
-
-    private boolean interceptBack() {
-        if (mChatDetailActivitySendEmojiLayout.getVisibility() == View.VISIBLE) {
-            mChatDetailActivitySendEmojiLayout.setVisibility(View.GONE);
-            return true;
-        }
-        return false;
     }
 
     @OnClick(R.id.chat_detail_activity_send)
@@ -132,41 +110,29 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
 
     @OnClick(R.id.chat_detail_activity_edit)
     public void onEditClicked() {
-        mChatDetailActivityKeyboardLayout.hideBottomViewLockHeight();
+        mChatDetailViewControl.showKeyBoradOnly();
     }
 
     @OnClick(R.id.chat_detail_activity_emoji_btn)
     public void onEmojiBtnClicked() {
-        mChatDetailActivityKeyboardLayout.setBottomView(mChatDetailActivitySendEmojiLayout);
-        mChatDetailActivityBottomMenu.setVisibility(View.GONE);
-        if (mChatDetailActivitySendEmojiLayout.getVisibility() == View.VISIBLE) {
-            mChatDetailActivityKeyboardLayout.hideBottomViewLockHeight();
-        } else {
-            mChatDetailActivityKeyboardLayout.showBottomViewLockHeight();
-        }
+        mChatDetailViewControl.showEmojiOnly();
     }
 
     @OnClick(R.id.chat_detail_activity_bottom_btn)
     public void onBottomViewBtnClicked() {
-        mChatDetailActivityKeyboardLayout.setBottomView(mChatDetailActivityBottomMenu);
-        mChatDetailActivitySendEmojiLayout.setVisibility(View.GONE);
-        if (mChatDetailActivityBottomMenu.getVisibility() == View.VISIBLE) {
-            mChatDetailActivityKeyboardLayout.hideBottomViewLockHeight();
-        } else {
-            mChatDetailActivityKeyboardLayout.showBottomViewLockHeight();
-        }
+        mChatDetailViewControl.showBottomMenuOnly();
     }
 
-    @OnTouch(R.id.chat_detail_activity_recycler)
+    @OnTouch(R.id.chat_detail_activity_keyboard_layout)
     public boolean onRecyclerTouch(MotionEvent event) {
-        mChatDetailActivitySendEmojiLayout.hideKeyboard();
+        mChatDetailViewControl.hideAllMenuAndKebBoard();
         return false;
     }
 
     @OnFocusChange(R.id.chat_detail_activity_edit)
     public void onEditFocusChanged(boolean hasFocus) {
         if (hasFocus) {
-            mChatDetailActivityKeyboardLayout.hideBottomViewLockHeight();
+            mChatDetailViewControl.showKeyBoradOnly();
         }
     }
 
@@ -204,7 +170,7 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
 
     @Override
     public void onBackPressed() {
-        if (interceptBack()) {
+        if (mChatDetailViewControl.interceptBack()) {
             return;
         }
         super.onBackPressed();

@@ -1,7 +1,6 @@
 package com.shuyu.apprecycler.chat.detail.dagger;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.shuyu.apprecycler.chat.detail.view.ChatDetailBottomView;
 import com.shuyu.textutillib.EmojiLayout;
@@ -20,7 +19,6 @@ public class ChatDetailViewOption {
     EmojiLayout mChatDetailActivitySendEmojiLayout;
     ChatDetailBottomView mChatDetailActivityBottomMenu;
     RecyclerView mRecyclerView;
-    View mSendButton;
 
 
     public RichEditText getChatDetailActivityEdit() {
@@ -57,5 +55,13 @@ public class ChatDetailViewOption {
     public ChatDetailViewOption setChatDetailActivityBottomMenu(ChatDetailBottomView chatDetailActivityBottomMenu) {
         this.mChatDetailActivityBottomMenu = chatDetailActivityBottomMenu;
         return this;
+    }
+
+    public RecyclerView getRecyclerView() {
+        return mRecyclerView;
+    }
+
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.mRecyclerView = recyclerView;
     }
 }
