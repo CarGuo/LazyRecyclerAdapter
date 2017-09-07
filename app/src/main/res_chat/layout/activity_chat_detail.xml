@@ -23,9 +23,9 @@
             android:id="@+id/chat_detail_activity_recycler"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingBottom="20dp"
+            android:layout_weight="1"
             android:clipToPadding="false"
-            android:layout_weight="1" />
+            android:paddingBottom="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,6 +47,14 @@
                 app:richMaxLength="2000" />
 
             <ImageView
+                android:id="@+id/chat_detail_activity_bottom_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:src="@drawable/chat_detail_menu_icon" />
+
+            <ImageView
                 android:id="@+id/chat_detail_activity_emoji_btn"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -66,10 +74,17 @@
         </LinearLayout>
     </com.shuyu.textutillib.KeyBoardLockLayout>
 
-    <com.shuyu.textutillib.EmojiLayout
+    <com.shuyu.apprecycler.chat.detail.view.ChatDetailEmojiLayout
         android:id="@+id/chat_detail_activity_send_emojiLayout"
         android:layout_width="match_parent"
         android:layout_height="220dp"
+        android:visibility="gone" />
+
+    <com.shuyu.apprecycler.chat.detail.view.ChatDetailBottomView
+        android:id="@+id/chat_detail_activity_bottom_menu"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:padding="10dp"
         android:visibility="gone" />
 
 </LinearLayout>

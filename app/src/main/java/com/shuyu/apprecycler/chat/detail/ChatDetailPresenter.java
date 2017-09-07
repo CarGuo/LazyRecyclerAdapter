@@ -2,6 +2,8 @@ package com.shuyu.apprecycler.chat.detail;
 
 import android.os.Handler;
 
+import com.shuyu.apprecycler.R;
+import com.shuyu.apprecycler.chat.detail.view.ChatDetailBottomView;
 import com.shuyu.apprecycler.chat.utils.ChatConst;
 import com.shuyu.apprecycler.chat.data.model.ChatBaseModel;
 import com.shuyu.apprecycler.chat.data.model.ChatTextModel;
@@ -22,6 +24,8 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
 
     private List<ChatBaseModel> mDataList = new ArrayList<>();
 
+    private List<ChatDetailBottomView.ChatDetailBottomMenuModel> mMenuList = new ArrayList<>();
+
     private ChatDetailContract.IChatDetailView mView;
 
     private Handler mHandler = new Handler();
@@ -29,6 +33,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
     @Inject
     public ChatDetailPresenter(ChatDetailContract.IChatDetailView view) {
         this.mView = view;
+        init();
     }
 
     @Override
@@ -39,6 +44,11 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
     @Override
     public List<ChatBaseModel> getDataList() {
         return mDataList;
+    }
+
+    @Override
+    public List getMenuList() {
+        return mMenuList;
     }
 
     @Override
@@ -58,6 +68,19 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
                 replyTextMsg();
             }
         }, 500);
+    }
+
+    @Override
+    public void sendMenuItem(int position) {
+        switch (position) {
+            case 0:
+                break;
+        }
+
+    }
+
+    private void init() {
+        mMenuList.add(new ChatDetailBottomView.ChatDetailBottomMenuModel("图片", R.mipmap.ic_launcher));
     }
 
 

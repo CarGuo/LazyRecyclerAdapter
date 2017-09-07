@@ -24,7 +24,11 @@ public class ChatDetailContract {
 
         List<T> getDataList();
 
+        List getMenuList();
+
         void sendMsg(String text);
+
+        void sendMenuItem(int position);
 
     }
 }
