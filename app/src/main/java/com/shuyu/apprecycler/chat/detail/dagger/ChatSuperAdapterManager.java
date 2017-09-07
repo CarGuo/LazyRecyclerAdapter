@@ -1,7 +1,6 @@
 package com.shuyu.apprecycler.chat.detail.dagger;
 
 import android.content.Context;
-
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.view.BindCustomLoadMoreFooter;
 import com.shuyu.apprecycler.chat.data.model.ChatImageModel;

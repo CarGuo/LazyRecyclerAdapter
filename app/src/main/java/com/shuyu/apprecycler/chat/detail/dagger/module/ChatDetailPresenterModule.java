@@ -2,6 +2,7 @@ package com.shuyu.apprecycler.chat.detail.dagger.module;
 
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 
 import com.shuyu.apprecycler.chat.detail.ChatDetailContract;
 
@@ -15,11 +16,12 @@ import dagger.Provides;
 @Module
 public class ChatDetailPresenterModule {
     private final ChatDetailContract.IChatDetailView mView;
+    private final RecyclerView mRecycler;
 
-    public ChatDetailPresenterModule(ChatDetailContract.IChatDetailView view) {
+    public ChatDetailPresenterModule(ChatDetailContract.IChatDetailView view, RecyclerView recyclerView) {
         this.mView = view;
+        this.mRecycler = recyclerView;
     }
-
 
     @Provides
     ChatDetailContract.IChatDetailView provideChatDetailView() {
@@ -31,4 +33,8 @@ public class ChatDetailPresenterModule {
         return mView.getContext();
     }
 
+    @Provides
+    RecyclerView provideRecyclerView() {
+        return mRecycler;
+    }
 }

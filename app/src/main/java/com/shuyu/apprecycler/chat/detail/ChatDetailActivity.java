@@ -8,9 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.chat.detail.dagger.ChatDetailAdapter;
@@ -31,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
+import butterknife.OnTouch;
 
 /**
  * 聊天详情
@@ -79,13 +79,15 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
         setSupportActionBar(mChatDetailActivityToolbar);
     }
 
+    @SuppressWarnings("unchecked")
     private void initActivity() {
         DaggerChatDetailComponent.builder()
-                .chatDetailPresenterModule(new ChatDetailPresenterModule(this))
+                .chatDetailPresenterModule(new ChatDetailPresenterModule(this, mChatDetailActivityRecycler))
                 .build()
                 .inject(this);
 
         mChatDetailActivitySendEmojiLayout.setEditTextSmile(mChatDetailActivityEdit);
+        mChatDetailActivityKeyboardLayout.setBottomView(mChatDetailActivitySendEmojiLayout);
 
         mChatDetailActivityBottomMenu.setDataList(mPresenter.getMenuList());
     }
@@ -106,8 +108,6 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
                     public void onLoadMore() {
                     }
                 });
-        mChatDetailActivityRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
-        mChatDetailActivityRecycler.setAdapter(mAdapter);
 
         mChatDetailActivityKeyboardLayout.setKeyBoardStateListener(new KeyBoardLockLayout.KeyBoardStateListener() {
             @Override
@@ -157,7 +157,6 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
         }
     }
 
-
     @OnClick(R.id.chat_detail_activity_bottom_btn)
     public void onBottomViewBtnClicked() {
         mChatDetailActivityKeyboardLayout.setBottomView(mChatDetailActivityBottomMenu);
@@ -169,6 +168,11 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
         }
     }
 
+    @OnTouch(R.id.chat_detail_activity_recycler)
+    public boolean onRecyclerTouch(MotionEvent event) {
+        mChatDetailActivitySendEmojiLayout.hideKeyboard();
+        return false;
+    }
 
     @OnFocusChange(R.id.chat_detail_activity_edit)
     public void onEditFocusChanged(boolean hasFocus) {
