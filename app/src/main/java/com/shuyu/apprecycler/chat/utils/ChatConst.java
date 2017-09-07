@@ -10,6 +10,7 @@ public class ChatConst {
     public final static int TYPE_TEXT = 1;
     public final static int TYPE_IMAGE = 2;
 
+    public final static String CHAT_ID = "2017-0101010aabbccjjekdj";
 
     private static UserModel sDefaultUser = null;
     private static UserModel sReplayUser = null;

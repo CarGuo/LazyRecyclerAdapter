@@ -45,7 +45,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
     public void sendMsg(String text) {
         ChatTextModel textModel = new ChatTextModel();
         textModel.setContent(text);
-        textModel.setChatId("ALKSJDFLKSDJFLAKSDJFLKASDJF");
+        textModel.setChatId(ChatConst.CHAT_ID);
         textModel.setChatType(ChatConst.TYPE_TEXT);
         textModel.setId(UUID.randomUUID().toString());
         textModel.setMe(true);
@@ -64,7 +64,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
     private void replyTextMsg() {
         ChatTextModel textModel = new ChatTextModel();
         textModel.setContent("我回复你啦，萌萌哒");
-        textModel.setChatId("BBBBBBBBBBBBBBBBBBBBBB");
+        textModel.setChatId(ChatConst.CHAT_ID);
         textModel.setChatType(ChatConst.TYPE_TEXT);
         textModel.setId(UUID.randomUUID().toString());
         textModel.setMe(false);
