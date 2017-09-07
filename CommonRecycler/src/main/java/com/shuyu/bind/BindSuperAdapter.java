@@ -95,6 +95,9 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
 
     @Override
     public boolean onTouch(View v, MotionEvent ev) {
+        if (normalAdapterManager.mTouchListener != null) {
+            return normalAdapterManager.mTouchListener.onTouch(v, ev);
+        }
         if (getOrientation(mRecyclerView.getLayoutManager()) == OrientationHelper.HORIZONTAL) {
             return touchX(ev);
         }
@@ -333,23 +336,6 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
     private class DataObserver extends RecyclerView.AdapterDataObserver {
         @Override
         public void onChanged() {
-            RecyclerView.Adapter<?> adapter = mRecyclerView.getAdapter();
-            if (adapter != null && normalAdapterManager.mEmptyView != null) {
-                int emptyCount = 0;
-                if (normalAdapterManager.pullRefreshEnabled) {
-                    emptyCount++;
-                }
-                if (normalAdapterManager.loadingMoreEnabled) {
-                    emptyCount++;
-                }
-                if (adapter.getItemCount() == emptyCount) {
-                    normalAdapterManager.mEmptyView.setVisibility(View.VISIBLE);
-                    mRecyclerView.setVisibility(GONE);
-                } else {
-                    normalAdapterManager.mEmptyView.setVisibility(GONE);
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                }
-            }
             if (mWrapAdapter != null) {
                 mWrapAdapter.notifyDataSetChanged();
             }

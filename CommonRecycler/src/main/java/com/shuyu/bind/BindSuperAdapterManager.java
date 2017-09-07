@@ -45,9 +45,6 @@ public class BindSuperAdapterManager extends BindBaseAdapterManager<BindSuperAda
     //每个header必须有不同的type,不然滚动的时候顺序会变化
     static List<Integer> sHeaderTypes = new ArrayList<>();
 
-    //adapter没有数据的时候显示,类似于listView的emptyView
-    View mEmptyView;
-
     //滚动监听
     RecyclerView.OnScrollListener onScrollListener;
 
@@ -62,6 +59,8 @@ public class BindSuperAdapterManager extends BindBaseAdapterManager<BindSuperAda
 
     //头部刷新类型
     BaseRefreshHeader mRefreshHeader;
+
+    View.OnTouchListener mTouchListener;
 
     public int getHeadersCount() {
         return mHeaderViews.size();
@@ -128,13 +127,6 @@ public class BindSuperAdapterManager extends BindBaseAdapterManager<BindSuperAda
             mRefreshHeader.refreshComplete();
         }
         setNoMore(false);
-    }
-
-    /**
-     * 没有数据的时候空view
-     */
-    public void setEmptyView(View emptyView) {
-        this.mEmptyView = emptyView;
     }
 
     /**
@@ -218,10 +210,6 @@ public class BindSuperAdapterManager extends BindBaseAdapterManager<BindSuperAda
         return this;
     }
 
-    public View getEmptyView() {
-        return mEmptyView;
-    }
-
     /**
      * 刷新与加载更多的监听回调
      */
@@ -239,5 +227,9 @@ public class BindSuperAdapterManager extends BindBaseAdapterManager<BindSuperAda
     }
 
 
+    public BindSuperAdapterManager setTouchListener(View.OnTouchListener touchListener) {
+        this.mTouchListener = touchListener;
+        return this;
+    }
 
 }

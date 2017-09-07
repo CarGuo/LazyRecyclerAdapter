@@ -1,10 +1,13 @@
 package com.shuyu.apprecycler.chat.detail.dagger;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.shuyu.apprecycler.chat.detail.ChatDetailPresenter;
 import com.shuyu.apprecycler.chat.detail.view.ChatDetailBottomView;
+import com.shuyu.bind.BindSuperAdapter;
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.textutillib.EmojiLayout;
 import com.shuyu.textutillib.KeyBoardLockLayout;

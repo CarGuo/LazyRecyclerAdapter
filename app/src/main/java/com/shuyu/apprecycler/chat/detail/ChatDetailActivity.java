@@ -34,14 +34,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
-import butterknife.OnTouch;
 
 /**
  * 聊天详情
  * Created by guoshuyu on 2017/9/4.
  */
 
-public class ChatDetailActivity extends AppCompatActivity implements ChatDetailContract.IChatDetailView, OnItemClickListener, OnLoadingListener {
+public class ChatDetailActivity extends AppCompatActivity implements ChatDetailContract.IChatDetailView, OnItemClickListener, OnLoadingListener, View.OnTouchListener {
 
     @BindView(R.id.chat_detail_activity_toolbar)
     Toolbar mChatDetailActivityToolbar;
@@ -58,16 +57,12 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
 
     @Inject
     ChatDetailPresenter mPresenter;
-
     @Inject
     ChatSuperAdapterManager mNormalAdapterManager;
-
     @Inject
     ChatDetailAdapter mAdapter;
-
     @Inject
     ChatDetailViewControl mChatDetailViewControl;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,7 +92,7 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
 
         DaggerChatDetailComponent.builder()
                 .chatDetailPresenterModule(new ChatDetailPresenterModule(this))
-                .chatDetailManagerModule(new ChatDetailManagerModule(this, this))
+                .chatDetailManagerModule(new ChatDetailManagerModule(this, this, this))
                 .chatDetailViewModule(new ChatDetailViewModule(option))
                 .build()
                 .inject(this);
@@ -121,12 +116,6 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
     @OnClick(R.id.chat_detail_activity_bottom_btn)
     public void onBottomViewBtnClicked() {
         mChatDetailViewControl.showBottomMenuOnly();
-    }
-
-    @OnTouch(R.id.chat_detail_activity_keyboard_layout)
-    public boolean onRecyclerTouch(MotionEvent event) {
-        mChatDetailViewControl.hideAllMenuAndKebBoard();
-        return false;
     }
 
     @OnFocusChange(R.id.chat_detail_activity_edit)
@@ -159,13 +148,21 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
     }
 
     @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
     public void onItemClick(Context context, int position) {
 
     }
 
     @Override
-    public void onLoadMore() {
-
+    public boolean onTouch(View v, MotionEvent event) {
+        if (v instanceof RecyclerView) {
+            mChatDetailViewControl.hideAllMenuAndKebBoard();
+        }
+        return false;
     }
 
     @Override

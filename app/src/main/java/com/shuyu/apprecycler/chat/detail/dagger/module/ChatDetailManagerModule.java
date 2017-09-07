@@ -1,5 +1,7 @@
 package com.shuyu.apprecycler.chat.detail.dagger.module;
 
+import android.view.View;
+
 import com.shuyu.bind.listener.OnItemClickListener;
 import com.shuyu.bind.listener.OnLoadingListener;
 
@@ -13,10 +15,12 @@ import dagger.Provides;
 public class ChatDetailManagerModule {
     private final OnItemClickListener mOnItemClickListener;
     private final OnLoadingListener mLoadingListener;
+    private final View.OnTouchListener mOnTouchListener;
 
-    public ChatDetailManagerModule(OnItemClickListener onItemClickListener, OnLoadingListener loadingListener) {
+    public ChatDetailManagerModule(OnItemClickListener onItemClickListener, OnLoadingListener loadingListener, View.OnTouchListener touchListener) {
         mOnItemClickListener = onItemClickListener;
         mLoadingListener = loadingListener;
+        mOnTouchListener = touchListener;
     }
 
     @Provides
@@ -25,7 +29,12 @@ public class ChatDetailManagerModule {
     }
 
     @Provides
-    OnLoadingListener provideOnOnLoadingListener() {
+    OnLoadingListener provideOnLoadingListener() {
         return mLoadingListener;
+    }
+
+    @Provides
+    View.OnTouchListener provideOnTouchListener() {
+        return mOnTouchListener;
     }
 }

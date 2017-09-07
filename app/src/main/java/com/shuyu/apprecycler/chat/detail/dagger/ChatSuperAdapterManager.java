@@ -1,6 +1,8 @@
 package com.shuyu.apprecycler.chat.detail.dagger;
 
 import android.content.Context;
+import android.view.View;
+
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.view.BindCustomLoadMoreFooter;
 import com.shuyu.apprecycler.chat.data.model.ChatImageModel;
@@ -30,7 +32,7 @@ public class ChatSuperAdapterManager extends BindSuperAdapterManager {
     }
 
     @Inject
-    public void initManager(Context context, OnItemClickListener onItemClickListener, OnLoadingListener loadingListener) {
+    public void initManager(Context context, OnItemClickListener onItemClickListener, OnLoadingListener loadingListener, View.OnTouchListener onTouchListener) {
         bind(ChatImageModel.class, R.layout.chat_layout_image_left, ChatImageHolder.class)
                 .bind(ChatImageModel.class, R.layout.chat_layout_image_right, ChatImageHolder.class)
                 .bind(ChatTextModel.class, R.layout.chat_layout_text_left, ChatTextHolder.class)
@@ -52,6 +54,7 @@ public class ChatSuperAdapterManager extends BindSuperAdapterManager {
                 .setLoadingMoreEnabled(false)
                 .setFootView(new BindCustomLoadMoreFooter(context))
                 .setNeedAnimation(true)
+                .setTouchListener(onTouchListener)
                 .setOnItemClickListener(onItemClickListener)
                 .setLoadingListener(loadingListener);
     }

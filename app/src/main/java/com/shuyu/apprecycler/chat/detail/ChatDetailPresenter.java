@@ -1,6 +1,7 @@
 package com.shuyu.apprecycler.chat.detail;
 
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.chat.data.model.ChatImageModel;
@@ -54,6 +55,9 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
 
     @Override
     public void sendMsg(String text) {
+        if (TextUtils.isEmpty(text)) {
+            return;
+        }
         ChatTextModel textModel = new ChatTextModel();
         textModel.setContent(text);
         textModel.setChatId(ChatConst.CHAT_ID);
