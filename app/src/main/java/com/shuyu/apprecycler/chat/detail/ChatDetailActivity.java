@@ -171,4 +171,10 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
         }
         super.onBackPressed();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.release();
+    }
 }

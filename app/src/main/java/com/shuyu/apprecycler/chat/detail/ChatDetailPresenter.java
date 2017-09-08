@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.shuyu.apprecycler.R;
+import com.shuyu.apprecycler.chat.data.factory.LocalChatDetailLogic;
 import com.shuyu.apprecycler.chat.data.model.ChatImageModel;
 import com.shuyu.apprecycler.chat.detail.view.ChatDetailBottomView;
 import com.shuyu.apprecycler.chat.utils.ChatConst;
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
+
+import io.realm.Realm;
 
 /**
  * Created by guoshuyu on 2017/9/4.
@@ -31,6 +34,8 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
     private ChatDetailContract.IChatDetailView mView;
 
     private Handler mHandler = new Handler();
+
+    private Realm mRealm;
 
     @Inject
     public ChatDetailPresenter(ChatDetailContract.IChatDetailView view) {
@@ -66,6 +71,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         textModel.setMe(true);
         textModel.setUserModel(ChatConst.getDefaultUser());
         mDataList.add(0, textModel);
+        LocalChatDetailLogic.saveChatMessage(mRealm, textModel);
         mView.sendSuccess();
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -87,6 +93,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
                 chatImageModel.setMe(true);
                 chatImageModel.setUserModel(ChatConst.getDefaultUser());
                 mDataList.add(0, chatImageModel);
+                LocalChatDetailLogic.saveChatMessage(mRealm, chatImageModel);
                 mView.notifyView();
                 mHandler.postDelayed(new Runnable() {
                     @Override
@@ -100,8 +107,14 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
 
     }
 
+    @Override
+    public void release() {
+        mRealm.close();
+    }
+
     private void init() {
         mMenuList.add(new ChatDetailBottomView.ChatDetailBottomMenuModel("图片", R.mipmap.ic_launcher));
+        mRealm = Realm.getDefaultInstance();
     }
 
     private void replyImgMsg() {
@@ -113,6 +126,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         chatImageModel.setMe(false);
         chatImageModel.setUserModel(ChatConst.getReplayUser());
         mDataList.add(0, chatImageModel);
+        LocalChatDetailLogic.saveChatMessage(mRealm, chatImageModel);
         mView.notifyView();
     }
 
@@ -125,6 +139,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         textModel.setMe(false);
         textModel.setUserModel(ChatConst.getReplayUser());
         mDataList.add(0, textModel);
+        LocalChatDetailLogic.saveChatMessage(mRealm, textModel);
         mView.notifyView();
     }
 

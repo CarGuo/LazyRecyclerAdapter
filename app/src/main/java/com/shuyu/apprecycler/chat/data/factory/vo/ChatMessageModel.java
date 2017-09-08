@@ -2,6 +2,7 @@ package com.shuyu.apprecycler.chat.data.factory.vo;
 
 
 import io.realm.RealmObject;
+import io.realm.annotations.LinkingObjects;
 
 /**
  * Created by guoshuyu on 2017/9/8.

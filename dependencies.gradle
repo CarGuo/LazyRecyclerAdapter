@@ -20,7 +20,7 @@ ext {
     dagger = '2.7'
     bubble = '1.1.1'
     imageLoader = '4.0.0'
-    realmVersion = '3.7.1'
+    realmVersion = '4.0.0'
 
     rxandroid = '2.0.1'
     rxjava = '2.1.3'

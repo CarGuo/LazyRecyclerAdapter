@@ -30,5 +30,7 @@ public class ChatDetailContract {
 
         void sendMenuItem(int position);
 
+        void release();
+
     }
 }
