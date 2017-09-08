@@ -20,6 +20,7 @@ ext {
     dagger = '2.7'
     bubble = '1.1.1'
     imageLoader = '4.0.0'
+    realmVersion = '3.7.1'
 
     androidDependencies = [
             recyclerView: "com.android.support:recyclerview-v7:${supportLibraryVersion}",

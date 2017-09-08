@@ -67,7 +67,6 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ChatDetailEmojiLayout.initEmoji(getContext());
         setContentView(R.layout.activity_chat_detail);
         ButterKnife.bind(this);
         initTitle();

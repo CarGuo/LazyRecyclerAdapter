@@ -1,6 +1,12 @@
 package com.shuyu.apprecycler.chat.utils;
 
+import android.content.Context;
+
 import com.shuyu.apprecycler.chat.data.model.UserModel;
+import com.shuyu.apprecycler.chat.detail.view.ChatDetailEmojiLayout;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * Created by guoshuyu on 2017/9/5.
@@ -14,6 +20,14 @@ public class ChatConst {
 
     private static UserModel sDefaultUser = null;
     private static UserModel sReplayUser = null;
+
+    public static void ChatInit(Context context) {
+        ChatDetailEmojiLayout.initEmoji(context);
+        Realm.init(context);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .schemaVersion(1).build();
+        Realm.setDefaultConfiguration(config);
+    }
 
     public static UserModel getDefaultUser() {
         if (sDefaultUser == null) {
