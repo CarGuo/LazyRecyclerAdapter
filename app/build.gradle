@@ -45,5 +45,8 @@ dependencies {
 
     compile other.dagger
     apt other.daggerCompiler
-    provided 'org.glassfish:javax.annotation:10.0-b28'
+    provided other.glassfishAnnotation
+
+    compile other.rxjava
+    compile other.rxandroid
 }
