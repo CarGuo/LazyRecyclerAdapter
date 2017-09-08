@@ -62,7 +62,6 @@ public class LocalChatDetailLogic {
     public static void getChatDetail(Realm realm, final String chatId, final int page) {
 
         getRealm(realm)
-                .subscribeOn(Schedulers.io())
                 .map(new Function<Realm, RealmResults<ChatMessageModel>>() {
                     @Override
                     public RealmResults<ChatMessageModel> apply(@NonNull Realm realm) throws Exception {
@@ -80,6 +79,7 @@ public class LocalChatDetailLogic {
                         return resolveMessageList(chatMessageModels);
                     }
                 })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<ChatBaseModel>>() {
                     @Override
@@ -147,13 +147,13 @@ public class LocalChatDetailLogic {
                 emitter.setDisposable(Disposables.fromRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        observableRealm.removeChangeListener(listener);
+                        observableRealm.removeAllChangeListeners();
                         observableRealm.close();
                     }
                 }));
                 observableRealm.addChangeListener(listener);
                 emitter.onNext(observableRealm);
             }
-        });
+        }).subscribeOn(AndroidSchedulers.mainThread());
     }
 }

@@ -115,6 +115,8 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
     private void init() {
         mMenuList.add(new ChatDetailBottomView.ChatDetailBottomMenuModel("图片", R.mipmap.ic_launcher));
         mRealm = Realm.getDefaultInstance();
+
+        LocalChatDetailLogic.getChatDetail(mRealm, ChatConst.CHAT_ID, 0);
     }
 
     private void replyImgMsg() {
