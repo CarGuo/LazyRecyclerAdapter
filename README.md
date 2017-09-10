@@ -1,7 +1,7 @@
 
 ![](https://github.com/CarGuo/LazyRecyclerAdapter/blob/master/33.png)
 
-### 这个一个极简的通用RecyclerView的Adapter，一个Adapter解决日常开发中常用的各种功能，你无需再写任何Adapter代码，让你普通的RecyclerView变得灵活、解耦、通用、丰富起来吧。
+### 这个一个极简的通用RecyclerView的Adapter，入侵性低，一个Adapter解决日常开发中常用的各种功能，你无需再写任何Adapter代码，让你普通的RecyclerView变得灵活、解耦、通用、丰富起来吧。
 
 [![](https://jitpack.io/v/CarGuo/LazyRecyclerAdapter.svg)](https://jitpack.io/#CarGuo/LazyRecyclerAdapter)
 [![Build Status](https://travis-ci.org/CarGuo/LazyRecyclerAdapter.svg?branch=master)](https://travis-ci.org/CarGuo/LazyRecyclerAdapter)
@@ -20,6 +20,7 @@
 **支持**|**Item的动画效果**
 **支持**|**Header头支持**
 **支持**|**一种数据实体对应多种Item**
+**dev分支支持中**|**快速实现聊天模式**
 
 ## 二、依赖
 
