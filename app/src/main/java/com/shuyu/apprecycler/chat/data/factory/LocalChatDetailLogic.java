@@ -1,6 +1,5 @@
 package com.shuyu.apprecycler.chat.data.factory;
 
-import android.util.Log;
 
 import com.shuyu.apprecycler.chat.data.factory.vo.ChatMessageModel;
 import com.shuyu.apprecycler.chat.data.factory.vo.ChatUserModel;
@@ -19,14 +18,12 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposables;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import io.realm.Sort;
+
 
 /**
  * Created by guoshuyu on 2017/9/8.
@@ -59,15 +56,16 @@ public class LocalChatDetailLogic {
         });
     }
 
-    public static void getChatDetail(Realm realm, final String chatId, final int page) {
-
-        getRealm(realm)
+    public static Observable<List<ChatBaseModel>> getChatDetail(final String chatId, final int page) {
+        return getRealm()
                 .map(new Function<Realm, RealmResults<ChatMessageModel>>() {
                     @Override
                     public RealmResults<ChatMessageModel> apply(@NonNull Realm realm) throws Exception {
-                        return realm.where(ChatMessageModel.class)
+                        RealmResults<ChatMessageModel> realmResults = realm.where(ChatMessageModel.class)
                                 .equalTo("chatId", chatId)
-                                .findAll();
+                                .findAll().sort("createTime", Sort.DESCENDING);
+                        realm.close();
+                        return realmResults;
                     }
                 })
                 .map(new Function<RealmResults<ChatMessageModel>, List<ChatBaseModel>>() {
@@ -78,15 +76,7 @@ public class LocalChatDetailLogic {
                         }
                         return resolveMessageList(chatMessageModels);
                     }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<ChatBaseModel>>() {
-                    @Override
-                    public void accept(List<ChatBaseModel> chatBaseModels) throws Exception {
-                        Log.e("ffffff", "adsfasdfasdf " + chatBaseModels.size());
-                    }
-                });
+                }).subscribeOn(Schedulers.io());
     }
 
     private static List<ChatBaseModel> resolveMessageList(RealmResults<ChatMessageModel> chatMessageModels) {
@@ -97,12 +87,14 @@ public class LocalChatDetailLogic {
                     ChatTextModel chatText = new ChatTextModel();
                     chatText.setContent(chatMessage.getContent());
                     cloneChatBaseModel(chatText, chatMessage);
+                    list.add(chatText);
                     break;
                 }
                 case ChatConst.TYPE_IMAGE: {
                     ChatImageModel chatImg = new ChatImageModel();
                     chatImg.setImgUrl(chatMessage.getContent());
                     cloneChatBaseModel(chatImg, chatMessage);
+                    list.add(chatImg);
                     break;
                 }
             }
@@ -115,6 +107,7 @@ public class LocalChatDetailLogic {
         chatBase.setMe(ChatConst.getDefaultUser().getUserId().equals(chatMessage.getUserModel().getUserId()));
         chatBase.setId(chatMessage.getId());
         chatBase.setChatType(chatMessage.getType());
+        chatBase.setCreateTime(chatMessage.getCreateTime());
         UserModel user = new UserModel();
         user.setUserId(chatMessage.getUserModel().getUserId());
         user.setUserPic(chatMessage.getUserModel().getUserPic());
@@ -126,32 +119,18 @@ public class LocalChatDetailLogic {
         message.setId(chatBase.getId());
         message.setChatId(chatBase.getChatId());
         message.setType(chatBase.getChatType());
+        message.setCreateTime(chatBase.getCreateTime());
         chatUser.setUserName(chatBase.getUserModel().getUserName());
         chatUser.setUserPic(chatBase.getUserModel().getUserPic());
         message.setUserModel(chatUser);
     }
 
-    private static Observable<Realm> getRealm(final Realm realm) {
+    private static Observable<Realm> getRealm() {
         return Observable.create(new ObservableOnSubscribe<Realm>() {
             @Override
             public void subscribe(final ObservableEmitter<Realm> emitter)
                     throws Exception {
-                RealmConfiguration realmConfiguration = realm.getConfiguration();
-                final Realm observableRealm = Realm.getInstance(realmConfiguration);
-                final RealmChangeListener<Realm> listener = new RealmChangeListener<Realm>() {
-                    @Override
-                    public void onChange(Realm realm) {
-                        emitter.onNext(realm);
-                    }
-                };
-                emitter.setDisposable(Disposables.fromRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        observableRealm.removeAllChangeListeners();
-                        observableRealm.close();
-                    }
-                }));
-                observableRealm.addChangeListener(listener);
+                final Realm observableRealm = Realm.getDefaultInstance();
                 emitter.onNext(observableRealm);
             }
         }).subscribeOn(AndroidSchedulers.mainThread());

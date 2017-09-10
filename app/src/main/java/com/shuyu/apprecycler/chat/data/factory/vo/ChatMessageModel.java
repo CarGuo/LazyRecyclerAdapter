@@ -1,6 +1,8 @@
 package com.shuyu.apprecycler.chat.data.factory.vo;
 
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 import io.realm.annotations.LinkingObjects;
 
@@ -17,6 +19,8 @@ public class ChatMessageModel extends RealmObject {
     private String content;
 
     private ChatUserModel userModel;
+
+    private long createTime;
 
     private int type;
 
@@ -58,5 +62,13 @@ public class ChatMessageModel extends RealmObject {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 }

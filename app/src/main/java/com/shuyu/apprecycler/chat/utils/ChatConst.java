@@ -1,6 +1,7 @@
 package com.shuyu.apprecycler.chat.utils;
 
 import android.content.Context;
+import android.os.Environment;
 
 import com.shuyu.apprecycler.chat.data.model.UserModel;
 import com.shuyu.apprecycler.chat.detail.view.ChatDetailEmojiLayout;
@@ -25,7 +26,6 @@ public class ChatConst {
         ChatDetailEmojiLayout.initEmoji(context);
         Realm.init(context);
         RealmConfiguration config = new RealmConfiguration.Builder().build();
-        Realm.deleteRealm(config);
         Realm.setDefaultConfiguration(config);
     }
 

@@ -9,15 +9,18 @@ import java.io.Serializable;
 
 public abstract class ChatBaseModel implements Serializable {
 
-    private String chatId;
-
-    private int chatType;
 
     private String id;
 
-    private boolean isMe;
+    private String chatId;
 
     private UserModel userModel;
+
+    private int chatType;
+
+    private long createTime;
+
+    private boolean isMe;
 
     public UserModel getUserModel() {
         return userModel;
@@ -57,5 +60,13 @@ public abstract class ChatBaseModel implements Serializable {
 
     public void setMe(boolean me) {
         isMe = me;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 }

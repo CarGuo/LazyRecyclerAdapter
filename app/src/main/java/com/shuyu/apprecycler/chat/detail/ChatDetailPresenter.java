@@ -2,6 +2,7 @@ package com.shuyu.apprecycler.chat.detail;
 
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.chat.data.factory.LocalChatDetailLogic;
@@ -13,11 +14,15 @@ import com.shuyu.apprecycler.chat.data.model.ChatTextModel;
 import com.shuyu.apprecycler.chat.detail.dagger.ChatDetailSingleton;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.realm.Realm;
 
 /**
@@ -70,6 +75,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         textModel.setId(UUID.randomUUID().toString());
         textModel.setMe(true);
         textModel.setUserModel(ChatConst.getDefaultUser());
+        textModel.setCreateTime(new Date().getTime());
         mDataList.add(0, textModel);
         LocalChatDetailLogic.saveChatMessage(mRealm, textModel);
         mView.sendSuccess();
@@ -92,6 +98,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
                 chatImageModel.setId(UUID.randomUUID().toString());
                 chatImageModel.setMe(true);
                 chatImageModel.setUserModel(ChatConst.getDefaultUser());
+                chatImageModel.setCreateTime(new Date().getTime());
                 mDataList.add(0, chatImageModel);
                 LocalChatDetailLogic.saveChatMessage(mRealm, chatImageModel);
                 mView.notifyView();
@@ -116,7 +123,20 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         mMenuList.add(new ChatDetailBottomView.ChatDetailBottomMenuModel("图片", R.mipmap.ic_launcher));
         mRealm = Realm.getDefaultInstance();
 
-        LocalChatDetailLogic.getChatDetail(mRealm, ChatConst.CHAT_ID, 0);
+        final Observable<List<ChatBaseModel>> observable = LocalChatDetailLogic.getChatDetail(ChatConst.CHAT_ID, 0);
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<ChatBaseModel>>() {
+                    @Override
+                    public void accept(List<ChatBaseModel> chatBaseModels) throws Exception {
+                        if (chatBaseModels != null && chatBaseModels.size() > 0) {
+                            mDataList.addAll(chatBaseModels);
+                            mView.notifyView();
+                        }
+                    }
+                });
+
+
+
     }
 
     private void replyImgMsg() {
@@ -127,6 +147,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         chatImageModel.setId(UUID.randomUUID().toString());
         chatImageModel.setMe(false);
         chatImageModel.setUserModel(ChatConst.getReplayUser());
+        chatImageModel.setCreateTime(new Date().getTime());
         mDataList.add(0, chatImageModel);
         LocalChatDetailLogic.saveChatMessage(mRealm, chatImageModel);
         mView.notifyView();
@@ -140,6 +161,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         textModel.setId(UUID.randomUUID().toString());
         textModel.setMe(false);
         textModel.setUserModel(ChatConst.getReplayUser());
+        textModel.setCreateTime(new Date().getTime());
         mDataList.add(0, textModel);
         LocalChatDetailLogic.saveChatMessage(mRealm, textModel);
         mView.notifyView();
