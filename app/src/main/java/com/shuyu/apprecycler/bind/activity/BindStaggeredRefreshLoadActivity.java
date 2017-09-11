@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
+import com.shuyu.bind.BindDragCallBack;
 import com.shuyu.bind.decoration.BindDecorationBuilder;
 import com.shuyu.bind.BindSuperAdapter;
 import com.shuyu.bind.BindSuperAdapterManager;
@@ -118,6 +120,12 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         //staggeredGridLayoutManager.setReverseLayout(true);
         recycler.setLayoutManager(staggeredGridLayoutManager);
+
+        //使能拖拽
+        BindDragCallBack bindDragCallBack = new BindDragCallBack(adapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(bindDragCallBack);
+        itemTouchHelper.attachToRecyclerView(recycler);
+
 
         //间隔线
         recycler.addItemDecoration(new BindDecorationBuilder(adapter)

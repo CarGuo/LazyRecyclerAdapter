@@ -21,6 +21,10 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
     //是否可以拖动
     private boolean mDragEnabled = true;
 
+
+    //是否可以swipe
+    private boolean mSwipEnabled = false;
+
     //限制首位不能拖动
     private boolean mLimitStartPosition = false;
 
@@ -132,7 +136,7 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
         if (mMoveListener != null) {
             mMoveListener.onMoveEnd();
         }
-        recyclerView.getAdapter().notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -149,7 +153,7 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
 
     @Override
     public boolean isItemViewSwipeEnabled() {
-        return false;
+        return mSwipEnabled;
     }
 
     /**
@@ -167,11 +171,15 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
             return dY < 0 ? 0 : dY;
         }
 
+        if (position > (mAdapter.getDataList().size() - 1)) {
+            return dY < 0 ? 0 : dY;
+        }
+
         if (mLimitStartPosition && position == 0) {
             return dY < 0 ? 0 : dY;
         }
 
-        if (mLimitEndPosition && position == recyclerView.getAdapter().getItemCount() - 1) {
+        if (mLimitEndPosition && position == mAdapter.getDataList().size() - 1) {
             return dY > 0 ? 0 : dY;
         }
 
