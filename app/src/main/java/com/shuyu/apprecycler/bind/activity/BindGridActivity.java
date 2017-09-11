@@ -80,6 +80,7 @@ public class BindGridActivity extends AppCompatActivity {
                 .addHeaderView(header)
                 .setPullRefreshEnabled(false)
                 .setLoadingMoreEnabled(true)
+                .setNeedDragMove(true)
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(Context context, int position) {

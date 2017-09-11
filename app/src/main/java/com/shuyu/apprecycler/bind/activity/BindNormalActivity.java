@@ -67,6 +67,7 @@ public class BindNormalActivity extends AppCompatActivity {
                 .bind(BindClickModel.class, BindClickHolder.ID, BindClickHolder.class)
                 .bindEmpty(BindNoDataHolder.NoDataModel.class, BindNoDataHolder.ID, BindNoDataHolder.class)
                 .setNeedAnimation(true)
+                .setNeedDragMove(true)
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(Context context, int position) {

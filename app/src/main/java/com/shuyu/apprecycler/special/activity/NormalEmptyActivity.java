@@ -13,7 +13,7 @@ import com.shuyu.apprecycler.special.holder.ImageHolder;
 import com.shuyu.apprecycler.special.holder.MutilHolder;
 import com.shuyu.apprecycler.special.holder.TextHolder;
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
+import com.shuyu.apprecycler.common.itemDecoration.DividerItemDecoration;
 import com.shuyu.common.CommonRecyclerAdapter;
 import com.shuyu.common.CommonRecyclerManager;
 import com.shuyu.common.listener.OnItemClickListener;

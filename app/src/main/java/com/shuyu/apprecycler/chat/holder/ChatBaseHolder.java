@@ -10,6 +10,7 @@ import com.shuyu.apprecycler.chat.utils.img.LoadOption;
 import com.shuyu.bind.BindRecyclerBaseHolder;
 
 /**
+ * holder基类，处理头像加载和姓名显示
  * Created by guoshuyu on 2017/9/5.
  */
 
