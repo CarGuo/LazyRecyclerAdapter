@@ -2,10 +2,10 @@ package com.shuyu.apprecycler.chat.detail;
 
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.chat.data.factory.LocalChatDetailLogic;
+import com.shuyu.apprecycler.chat.data.factory.ILocalChatDetailGetListener;
+import com.shuyu.apprecycler.chat.data.factory.LocalChatDBFactory;
 import com.shuyu.apprecycler.chat.data.model.ChatImageModel;
 import com.shuyu.apprecycler.chat.detail.view.ChatDetailBottomView;
 import com.shuyu.apprecycler.chat.utils.ChatConst;
@@ -22,9 +22,9 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
-import io.realm.Realm;
 
 /**
+ * 聊天想起处理逻辑
  * Created by guoshuyu on 2017/9/4.
  */
 
@@ -38,8 +38,6 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
     private ChatDetailContract.IChatDetailView mView;
 
     private Handler mHandler = new Handler();
-
-    private Realm mRealm;
 
     @Inject
     public ChatDetailPresenter(ChatDetailContract.IChatDetailView view) {
@@ -76,7 +74,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         textModel.setCreateTime(new Date().getTime());
         textModel.setUserModel(ChatConst.getDefaultUser());
         mDataList.add(0, textModel);
-        LocalChatDetailLogic.saveChatMessage(mRealm, textModel);
+        LocalChatDBFactory.getChatDBManager().saveChatMessage(textModel);
         mView.sendSuccess();
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -99,7 +97,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
                 chatImageModel.setCreateTime(new Date().getTime());
                 chatImageModel.setUserModel(ChatConst.getDefaultUser());
                 mDataList.add(0, chatImageModel);
-                LocalChatDetailLogic.saveChatMessage(mRealm, chatImageModel);
+                LocalChatDBFactory.getChatDBManager().saveChatMessage(chatImageModel);
                 mView.notifyView();
                 mHandler.postDelayed(new Runnable() {
                     @Override
@@ -115,24 +113,20 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
 
     @Override
     public void release() {
-        mRealm.close();
+        LocalChatDBFactory.getChatDBManager().closeDB();
     }
 
     private void init() {
         mMenuList.add(new ChatDetailBottomView.ChatDetailBottomMenuModel("图片", R.mipmap.ic_launcher));
-        mRealm = Realm.getDefaultInstance();
-
-        LocalChatDetailLogic.getChatDetail(ChatConst.CHAT_ID, 0)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<ChatBaseModel>>() {
-                    @Override
-                    public void accept(List<ChatBaseModel> chatBaseModels) throws Exception {
-                        if (chatBaseModels != null && chatBaseModels.size() > 0) {
-                            mDataList.addAll(chatBaseModels);
-                            mView.notifyView();
-                        }
-                    }
-                });;
+        LocalChatDBFactory.getChatDBManager().getChatMessage(ChatConst.CHAT_ID, 0, new ILocalChatDetailGetListener() {
+            @Override
+            public void getData(List<ChatBaseModel> datList) {
+                if (datList != null && datList.size() > 0) {
+                    mDataList.addAll(datList);
+                    mView.notifyView();
+                }
+            }
+        });
     }
 
     private void replyImgMsg() {
@@ -145,7 +139,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         chatImageModel.setCreateTime(new Date().getTime());
         chatImageModel.setUserModel(ChatConst.getReplayUser());
         mDataList.add(0, chatImageModel);
-        LocalChatDetailLogic.saveChatMessage(mRealm, chatImageModel);
+        LocalChatDBFactory.getChatDBManager().saveChatMessage(chatImageModel);
         mView.notifyView();
     }
 
@@ -159,7 +153,7 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         textModel.setCreateTime(new Date().getTime());
         textModel.setUserModel(ChatConst.getReplayUser());
         mDataList.add(0, textModel);
-        LocalChatDetailLogic.saveChatMessage(mRealm, textModel);
+        LocalChatDBFactory.getChatDBManager().saveChatMessage(textModel);
         mView.notifyView();
     }
 
