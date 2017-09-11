@@ -72,7 +72,7 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
         if ((viewHolder instanceof BindSuperAdapter.WrapAdapter.SimpleViewHolder)) {
             return false;
         }
-        return viewHolder.getItemViewType() == target.getItemViewType();
+        return true;
     }
 
     @Override
@@ -161,7 +161,11 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
      */
     private float limitedDrag(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dY) {
 
-        int position = viewHolder.getLayoutPosition();
+        int position =  viewHolder.getAdapterPosition() - mAdapter.absFirstPosition();
+
+        if (position < 0) {
+            return dY < 0 ? 0 : dY;
+        }
 
         if (mLimitStartPosition && position == 0) {
             return dY < 0 ? 0 : dY;
