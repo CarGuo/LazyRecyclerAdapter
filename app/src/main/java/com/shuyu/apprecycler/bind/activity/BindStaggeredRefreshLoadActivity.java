@@ -122,9 +122,9 @@ public class BindStaggeredRefreshLoadActivity extends AppCompatActivity {
         recycler.setLayoutManager(staggeredGridLayoutManager);
 
         //使能拖拽
-        BindDragCallBack bindDragCallBack = new BindDragCallBack(adapter);
+        /*BindDragCallBack bindDragCallBack = new BindDragCallBack(adapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(bindDragCallBack);
-        itemTouchHelper.attachToRecyclerView(recycler);
+        itemTouchHelper.attachToRecyclerView(recycler);*/
 
 
         //间隔线
