@@ -25,7 +25,6 @@ public class ChatConst {
         ChatDetailEmojiLayout.initEmoji(context);
         Realm.init(context);
         RealmConfiguration config = new RealmConfiguration.Builder().build();
-        Realm.deleteRealm(config);
         Realm.setDefaultConfiguration(config);
     }
 

@@ -17,6 +17,16 @@ public abstract class ChatBaseModel implements Serializable {
 
     private boolean isMe;
 
+    private long createTime;
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
     private UserModel userModel;
 
     public UserModel getUserModel() {
