@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
+import com.shuyu.bind.BindDragCallBack;
 import com.shuyu.bind.decoration.BindDecorationBuilder;
 import com.shuyu.bind.BindSuperAdapter;
 import com.shuyu.bind.BindSuperAdapterManager;
@@ -80,7 +82,6 @@ public class BindGridActivity extends AppCompatActivity {
                 .addHeaderView(header)
                 .setPullRefreshEnabled(false)
                 .setLoadingMoreEnabled(true)
-                .setNeedDragMove(true)
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(Context context, int position) {
@@ -115,6 +116,11 @@ public class BindGridActivity extends AppCompatActivity {
         GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 3);
 
         recycler.setLayoutManager(staggeredGridLayoutManager);
+
+        //使能拖拽
+        BindDragCallBack bindDragCallBack = new BindDragCallBack(adapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(bindDragCallBack);
+        itemTouchHelper.attachToRecyclerView(recycler);
 
         //间隔线
         recycler.addItemDecoration(new BindDecorationBuilder(adapter)

@@ -84,7 +84,7 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         mRecyclerView = recyclerView;
         if (adapter instanceof BindSuperAdapter) {
-            mWrapAdapter = new WrapAdapter(adapter);
+            mWrapAdapter = new WrapAdapter((BindSuperAdapter)adapter);
             recyclerView.setAdapter(mWrapAdapter);
             recyclerView.setOnTouchListener(this);
             recyclerView.addOnScrollListener(mScrollListener);
@@ -368,9 +368,9 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
      */
     public class WrapAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        private RecyclerView.Adapter adapter;
+        private BindRecyclerAdapter adapter;
 
-        WrapAdapter(RecyclerView.Adapter adapter) {
+        WrapAdapter(BindRecyclerAdapter adapter) {
             this.adapter = adapter;
         }
 
@@ -547,10 +547,14 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
             adapter.registerAdapterDataObserver(observer);
         }
 
-        private class SimpleViewHolder extends RecyclerView.ViewHolder {
+        public class SimpleViewHolder extends RecyclerView.ViewHolder {
             public SimpleViewHolder(View itemView) {
                 super(itemView);
             }
+        }
+
+        public BindRecyclerAdapter getBindRecyclerAdapter() {
+            return adapter;
         }
     }
 

@@ -29,6 +29,50 @@ public class BindDataUtils {
         return list;
     }
 
+    public static List getNormalData() {
+
+        List list = new ArrayList<>();
+
+
+        BindTextModel textModel = new BindTextModel();
+        textModel.setText("你这个老司机，说好的文本呢1");
+        list.add(textModel);
+
+
+        textModel = new BindTextModel();
+        textModel.setText("你这个老司机，说好的文本呢2");
+        list.add(textModel);
+
+        textModel = new BindTextModel();
+        textModel.setText("你这个老司机，说好的文本呢3");
+        list.add(textModel);
+
+
+        textModel = new BindTextModel();
+        textModel.setText("你这个老司机，说好的文本呢4");
+        list.add(textModel);
+
+
+        textModel = new BindTextModel();
+        textModel.setText("你这个老司机，说好的文本呢5");
+        list.add(textModel);
+
+        textModel = new BindTextModel();
+        textModel.setText("你这个老司机，说好的文本呢6");
+        list.add(textModel);
+
+        textModel = new BindTextModel();
+        textModel.setText("你这个老司机，说好的文本呢7");
+        list.add(textModel);
+
+        textModel = new BindTextModel();
+        textModel.setText("你这个老司机，说好的文本呢8");
+        list.add(textModel);
+
+
+        return list;
+    }
+
 
     public static List getRefreshData() {
 
