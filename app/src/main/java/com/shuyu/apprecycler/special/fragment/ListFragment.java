@@ -21,7 +21,7 @@ import com.shuyu.common.model.RecyclerBaseModel;
 import com.shuyu.apprecycler.special.holder.ClickHolder;
 import com.shuyu.apprecycler.special.holder.ImageHolder;
 import com.shuyu.apprecycler.special.holder.TextHolder;
-import com.shuyu.apprecycler.itemDecoration.DividerItemDecoration;
+import com.shuyu.apprecycler.common.itemDecoration.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;

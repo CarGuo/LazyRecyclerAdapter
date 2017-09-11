@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
@@ -20,6 +21,7 @@ import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
 import com.shuyu.apprecycler.bind.view.BindCustomRefreshHeader;
 import com.shuyu.apprecycler.bind.view.BindCustomLoadMoreFooter;
+import com.shuyu.bind.BindDragCallBack;
 import com.shuyu.bind.decoration.BindDecorationBuilder;
 import com.shuyu.bind.BindSuperAdapter;
 import com.shuyu.bind.BindSuperAdapterManager;
@@ -123,6 +125,12 @@ public class BindRefreshLoadActivity extends AppCompatActivity {
 
         //recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         recycler.setLayoutManager(new LinearLayoutManager(this));
+
+        BindDragCallBack bindDragCallBack = new BindDragCallBack(adapter);
+        bindDragCallBack.setSwipeEnabled(true);
+        bindDragCallBack.setSwipeFlags(ItemTouchHelper.END);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(bindDragCallBack);
+        itemTouchHelper.attachToRecyclerView(recycler);
 
         //间隔线
         recycler.addItemDecoration(new BindDecorationBuilder(adapter)

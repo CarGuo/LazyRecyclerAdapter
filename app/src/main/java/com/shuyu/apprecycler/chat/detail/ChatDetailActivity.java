@@ -125,33 +125,6 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
     }
 
     @Override
-    public Context getContext() {
-        return this;
-    }
-
-    //TODO 用diff判断
-    @Override
-    public void notifyView() {
-        mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void sendSuccess() {
-        mChatDetailActivityEdit.setText("");
-        mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onRefresh() {
-
-    }
-
-    @Override
-    public void onLoadMore() {
-
-    }
-
-    @Override
     public void onItemClick(Context context, int position) {
 
     }
@@ -177,4 +150,31 @@ public class ChatDetailActivity extends AppCompatActivity implements ChatDetailC
         super.onDestroy();
         mPresenter.release();
     }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void notifyView() {
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void sendSuccess() {
+        mChatDetailActivityEdit.setText("");
+        mAdapter.notifyDataSetChanged();
+    }
+
 }

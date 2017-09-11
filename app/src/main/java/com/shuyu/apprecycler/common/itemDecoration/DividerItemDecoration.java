@@ -1,4 +1,4 @@
-package com.shuyu.apprecycler.itemDecoration;
+package com.shuyu.apprecycler.common.itemDecoration;
 
 
 import android.graphics.Rect;

@@ -2,11 +2,13 @@ package com.shuyu.apprecycler.chat.detail;
 
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.shuyu.apprecycler.R;
-import com.shuyu.apprecycler.chat.data.factory.LocalChatDetailLogic;
+import com.shuyu.apprecycler.chat.data.factory.ILocalChatDetailGetListener;
+import com.shuyu.apprecycler.chat.data.factory.LocalChatDBFactory;
+import com.shuyu.apprecycler.chat.data.factory.vo.ChatUserModel;
 import com.shuyu.apprecycler.chat.data.model.ChatImageModel;
+import com.shuyu.apprecycler.chat.data.model.UserModel;
 import com.shuyu.apprecycler.chat.detail.view.ChatDetailBottomView;
 import com.shuyu.apprecycler.chat.utils.ChatConst;
 import com.shuyu.apprecycler.chat.data.model.ChatBaseModel;
@@ -20,12 +22,8 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.realm.Realm;
-
 /**
+ * 聊天想起处理逻辑
  * Created by guoshuyu on 2017/9/4.
  */
 
@@ -39,8 +37,6 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
     private ChatDetailContract.IChatDetailView mView;
 
     private Handler mHandler = new Handler();
-
-    private Realm mRealm;
 
     @Inject
     public ChatDetailPresenter(ChatDetailContract.IChatDetailView view) {
@@ -68,46 +64,22 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
         if (TextUtils.isEmpty(text)) {
             return;
         }
+        //发送文本
         ChatTextModel textModel = new ChatTextModel();
         textModel.setContent(text);
-        textModel.setChatId(ChatConst.CHAT_ID);
-        textModel.setChatType(ChatConst.TYPE_TEXT);
-        textModel.setId(UUID.randomUUID().toString());
-        textModel.setMe(true);
-        textModel.setUserModel(ChatConst.getDefaultUser());
-        textModel.setCreateTime(new Date().getTime());
-        mDataList.add(0, textModel);
-        LocalChatDetailLogic.saveChatMessage(mRealm, textModel);
-        mView.sendSuccess();
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                replyTextMsg();
-            }
-        }, 500);
+        resolveBaseData(textModel, ChatConst.getDefaultUser(), ChatConst.TYPE_TEXT, true);
+        resolveAutoReply(ChatConst.TYPE_TEXT);
     }
 
     @Override
     public void sendMenuItem(int position) {
         switch (position) {
             case 0: {
+                //发送图片
                 ChatImageModel chatImageModel = new ChatImageModel();
                 chatImageModel.setImgUrl("http://osvlwlt4g.bkt.clouddn.com/17-9-6/50017724.jpg");
-                chatImageModel.setChatId(ChatConst.CHAT_ID);
-                chatImageModel.setChatType(ChatConst.TYPE_IMAGE);
-                chatImageModel.setId(UUID.randomUUID().toString());
-                chatImageModel.setMe(true);
-                chatImageModel.setUserModel(ChatConst.getDefaultUser());
-                chatImageModel.setCreateTime(new Date().getTime());
-                mDataList.add(0, chatImageModel);
-                LocalChatDetailLogic.saveChatMessage(mRealm, chatImageModel);
-                mView.notifyView();
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        replyImgMsg();
-                    }
-                }, 500);
+                resolveBaseData(chatImageModel, ChatConst.getDefaultUser(), ChatConst.TYPE_IMAGE, true);
+                resolveAutoReply(ChatConst.TYPE_IMAGE);
                 break;
             }
         }
@@ -116,55 +88,74 @@ public class ChatDetailPresenter implements ChatDetailContract.IChatDetailPresen
 
     @Override
     public void release() {
-        mRealm.close();
+        LocalChatDBFactory.getChatDBManager().closeDB();
     }
 
     private void init() {
+        //初始化底部menu
         mMenuList.add(new ChatDetailBottomView.ChatDetailBottomMenuModel("图片", R.mipmap.ic_launcher));
-        mRealm = Realm.getDefaultInstance();
-
-        final Observable<List<ChatBaseModel>> observable = LocalChatDetailLogic.getChatDetail(ChatConst.CHAT_ID, 0);
-        observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<ChatBaseModel>>() {
-                    @Override
-                    public void accept(List<ChatBaseModel> chatBaseModels) throws Exception {
-                        if (chatBaseModels != null && chatBaseModels.size() > 0) {
-                            mDataList.addAll(chatBaseModels);
-                            mView.notifyView();
-                        }
-                    }
-                });
-
-
-
+        //初始化读取本地数据库
+        LocalChatDBFactory.getChatDBManager().getChatMessage(ChatConst.CHAT_ID, 0, new ILocalChatDetailGetListener() {
+            @Override
+            public void getData(List<ChatBaseModel> datList) {
+                if (datList != null && datList.size() > 0) {
+                    mDataList.addAll(datList);
+                    mView.notifyView();
+                }
+            }
+        });
     }
 
+    /**
+     * 获取图片
+     */
     private void replyImgMsg() {
         ChatImageModel chatImageModel = new ChatImageModel();
         chatImageModel.setImgUrl("http://osvlwlt4g.bkt.clouddn.com/17-9-6/50017724.jpg");
-        chatImageModel.setChatId(ChatConst.CHAT_ID);
-        chatImageModel.setChatType(ChatConst.TYPE_IMAGE);
-        chatImageModel.setId(UUID.randomUUID().toString());
-        chatImageModel.setMe(false);
-        chatImageModel.setUserModel(ChatConst.getReplayUser());
-        chatImageModel.setCreateTime(new Date().getTime());
-        mDataList.add(0, chatImageModel);
-        LocalChatDetailLogic.saveChatMessage(mRealm, chatImageModel);
-        mView.notifyView();
+        resolveBaseData(chatImageModel, ChatConst.getReplayUser(), ChatConst.TYPE_IMAGE, false);
     }
 
+    /**
+     * 回复文本
+     */
     private void replyTextMsg() {
         ChatTextModel textModel = new ChatTextModel();
         textModel.setContent("我回复你啦，萌萌哒");
-        textModel.setChatId(ChatConst.CHAT_ID);
-        textModel.setChatType(ChatConst.TYPE_TEXT);
-        textModel.setId(UUID.randomUUID().toString());
-        textModel.setMe(false);
-        textModel.setUserModel(ChatConst.getReplayUser());
-        textModel.setCreateTime(new Date().getTime());
-        mDataList.add(0, textModel);
-        LocalChatDetailLogic.saveChatMessage(mRealm, textModel);
-        mView.notifyView();
+        resolveBaseData(textModel, ChatConst.getReplayUser(), ChatConst.TYPE_TEXT, false);
+    }
+
+    /**
+     * 聊天基础数据同意处理
+     */
+    private void resolveBaseData(ChatBaseModel chatBaseModel, UserModel chatUserModel, int type, boolean isMe) {
+        chatBaseModel.setChatId(ChatConst.CHAT_ID);
+        chatBaseModel.setChatType(type);
+        chatBaseModel.setId(UUID.randomUUID().toString());
+        chatBaseModel.setMe(isMe);
+        chatBaseModel.setCreateTime(new Date().getTime());
+        chatBaseModel.setUserModel(chatUserModel);
+        mDataList.add(0, chatBaseModel);
+        mView.sendSuccess();
+        LocalChatDBFactory.getChatDBManager().saveChatMessage(chatBaseModel);
+    }
+
+    /**
+     * 自动回复
+     */
+    private void resolveAutoReply(final int type) {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                switch (type) {
+                    case ChatConst.TYPE_TEXT:
+                        replyTextMsg();
+                        break;
+                    case ChatConst.TYPE_IMAGE:
+                        replyImgMsg();
+                        break;
+                }
+            }
+        }, 500);
     }
 
 }
