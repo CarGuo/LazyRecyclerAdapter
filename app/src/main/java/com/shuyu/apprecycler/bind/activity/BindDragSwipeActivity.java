@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 带上下拉的线性布局
+ * 滑动和拖拽
  * Created by guoshuyu on 2017/1/7.
  */
 

@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 拖动回调
+ * 拖动回调，适配BindSuperAdapter
  * Created by guoshuyu on 2017/9/11.
  */
 
@@ -37,11 +37,16 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
     //是否滑动
     private boolean isSwiped = true;
 
+    //是否拖拽
+    private boolean isDraged = true;
 
+    //swipe滑动是否出发删除
     private boolean isSwipedDelete = true;
 
+    //drag门槛
     private float mMoveThreshold = 0.5f;
 
+    //swipe门槛
     private float mSwipeThreshold = 0.5f;
 
     //滑动方向
@@ -127,6 +132,7 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
             if (mMoveListener != null) {
                 mMoveListener.onMoved(fromPosition, toPosition);
             }
+            isDraged = true;
         }
         isSwiped = false;
     }
@@ -138,19 +144,20 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
             return;
         }
 
-        if (isSwipedDelete) {
-            int pos = viewHolder.getAdapterPosition() - mAdapter.absFirstPosition();
-            if (pos >= 0 && pos <= (mAdapter.getDataList().size() - 1)) {
-                isSwiped = true;
-                int position = viewHolder.getAdapterPosition();
+        int pos = viewHolder.getAdapterPosition() - mAdapter.absFirstPosition();
+        if (pos >= 0 && pos <= (mAdapter.getDataList().size() - 1)) {
+            int position = viewHolder.getAdapterPosition();
+            if (isSwipedDelete) {
                 mAdapter.getDataList().remove(pos);
                 mAdapter.notifyItemRemoved(position);
                 mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount() - position);
-                if (mSwipeListener != null && mSwipeEnabled) {
-                    mSwipeListener.onSwiped(pos);
-                }
             }
+            if (mSwipeListener != null && mSwipeEnabled) {
+                mSwipeListener.onSwiped(pos);
+            }
+            isSwiped = true;
         }
+        isDraged = false;
     }
 
     /**
@@ -181,14 +188,15 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
             return;
         }
 
-        if (mMoveListener != null) {
-            mMoveListener.onMoveEnd();
-        }
-
-        try {
-            mAdapter.notifyDataSetChanged();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (isDraged) {
+            if (mMoveListener != null) {
+                mMoveListener.onMoveEnd();
+            }
+            try {
+                mAdapter.notifyDataSetChanged();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
