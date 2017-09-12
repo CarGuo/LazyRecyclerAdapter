@@ -20,19 +20,9 @@ public class ChatMessageModel extends RealmObject {
 
     private ChatUserModel userModel;
 
-    private long createTime;
-
     private int type;
 
     private long createTime;
-
-    public long getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(long createTime) {
-        this.createTime = createTime;
-    }
 
     public String getId() {
         return id;
