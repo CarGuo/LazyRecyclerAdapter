@@ -22,7 +22,6 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
     //是否可以拖动
     private boolean mDragEnabled = true;
 
-
     //是否可以swipe
     private boolean mSwipeEnabled = false;
 
@@ -37,6 +36,8 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
     private DragMoveListener mMoveListener;
 
     private SwipeListener mSwipeListener;
+
+    private boolean isSwiped = false;
 
     public BindDragCallBack(BindSuperAdapter adapter, boolean limitStartPosition, boolean limitEndPosition) {
         super();
@@ -113,7 +114,7 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
                 mMoveListener.onMoved(fromPosition, toPosition);
             }
         }
-
+        isSwiped = false;
     }
 
 
@@ -126,9 +127,14 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
         int pos = viewHolder.getAdapterPosition() - mAdapter.absFirstPosition();
 
 
-        if (pos >= 0 && pos < (mAdapter.getDataList().size() - 1)) {
+        if (pos >= 0 && pos <= (mAdapter.getDataList().size() - 1)) {
+            isSwiped = true;
+            int position = viewHolder.getAdapterPosition();
             mAdapter.getDataList().remove(pos);
-            mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+            mAdapter.notifyItemRemoved(position);
+            if (position != mAdapter.getDataList().size()) {
+                mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount() - position);
+            }
             if (mSwipeListener != null && mSwipeEnabled) {
                 mSwipeListener.onSwiped(pos);
             }
@@ -157,6 +163,11 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
             return;
         }
 
+        if (isSwiped) {
+            isSwiped = false;
+            return;
+        }
+
         if (mMoveListener != null) {
             mMoveListener.onMoveEnd();
         }
@@ -170,25 +181,14 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
         int position = viewHolder.getAdapterPosition() - mAdapter.absFirstPosition();
-
-        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE
-                && position >= 0 && position < (mAdapter.getDataList().size() - 1) && !(viewHolder instanceof BindSuperAdapter.WrapAdapter.SimpleViewHolder)) {
-            View itemView = viewHolder.itemView;
-            c.save();
-            if (dX > 0) {
-                c.clipRect(itemView.getLeft(), itemView.getTop(),
-                        itemView.getLeft() + dX, itemView.getBottom());
-                c.translate(itemView.getLeft(), itemView.getTop());
-            } else {
-                c.clipRect(itemView.getRight() + dX, itemView.getTop(),
-                        itemView.getRight(), itemView.getBottom());
-                c.translate(itemView.getRight() + dX, itemView.getTop());
+        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+            if (position >= 0 && position <= (mAdapter.getDataList().size() - 1) && !(viewHolder instanceof BindSuperAdapter.WrapAdapter.SimpleViewHolder)) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
-            c.restore();
         } else {
-            dY = limitedDrag(viewHolder, dY);
+            dY = DragLimited(viewHolder, dY);
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
-        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }
 
     @Override
@@ -202,13 +202,8 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
         return mSwipeEnabled;
     }
 
-    /**
-     * 根据方向和条件获取限制在RecyclerView内部的DY值
-     *
-     * @param viewHolder drag的ViewHolder
-     * @param dY         限制前的DY值
-     */
-    private float limitedDrag(RecyclerView.ViewHolder viewHolder, float dY) {
+
+    private float DragLimited(RecyclerView.ViewHolder viewHolder, float dY) {
 
         int position = viewHolder.getAdapterPosition() - mAdapter.absFirstPosition();
 
