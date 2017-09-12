@@ -127,8 +127,6 @@ public class BindDragSwipeActivity extends AppCompatActivity {
 
         BindDragCallBack bindDragCallBack = new BindDragCallBack(adapter);
         bindDragCallBack.setSwipeEnabled(true);
-        bindDragCallBack.setSwipedDelete(false);
-        bindDragCallBack.setSwipeLength(200);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(bindDragCallBack);
         itemTouchHelper.attachToRecyclerView(recycler);
 
