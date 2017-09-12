@@ -197,13 +197,13 @@ abstract class BindBaseAdapterManager<T extends BindBaseAdapterManager> {
             object = classType.getDeclaredConstructor(new Class[]{Context.class, View.class});
         } catch (NoSuchMethodException e) {
             constructorFirst = false;
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         if (!constructorFirst) {
             try {
                 object = classType.getDeclaredConstructor(new Class[]{View.class});
             } catch (NoSuchMethodException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
         if (object == null) {

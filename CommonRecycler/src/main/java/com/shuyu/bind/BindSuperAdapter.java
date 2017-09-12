@@ -363,7 +363,7 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
 
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-            super.onItemRangeChanged(positionStart, itemCount, payload);
+            mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount, payload);
         }
     }
 
