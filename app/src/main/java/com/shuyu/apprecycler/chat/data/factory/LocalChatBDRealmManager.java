@@ -69,6 +69,11 @@ public class LocalChatBDRealmManager implements ILocalChatDBManager {
         });
     }
 
+    /**
+     * TODO
+     * 因为懒加载，所以realm没有分页改变
+     * 所以需要对realmResults进行分页读取，读取完毕才可以close当前线程的realm
+     */
     @Override
     public void getChatMessage(final String chatId, final int page, final ILocalChatDetailGetListener listener) {
 
