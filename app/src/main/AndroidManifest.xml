@@ -93,6 +93,9 @@
             android:name=".bind.activity.BindGridActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".bind.activity.BindDragSwipeActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".bind.BindHomeActivity"
             android:screenOrientation="portrait" />
 

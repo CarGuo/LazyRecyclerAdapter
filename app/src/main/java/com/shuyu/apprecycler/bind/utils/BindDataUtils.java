@@ -26,6 +26,7 @@ public class BindDataUtils {
         list.add("横向列表带左右拉");
         list.add("横向Grid带左右拉");
         list.add("横向瀑布流带左右拉");
+        list.add("拖拽");
         return list;
     }
 

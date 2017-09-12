@@ -1,7 +1,6 @@
 package com.shuyu.apprecycler.bind.activity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,15 +18,15 @@ import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
-import com.shuyu.apprecycler.bind.view.BindCustomRefreshHeader;
 import com.shuyu.apprecycler.bind.view.BindCustomLoadMoreFooter;
+import com.shuyu.apprecycler.bind.view.BindCustomRefreshHeader;
 import com.shuyu.bind.BindDragCallBack;
-import com.shuyu.bind.decoration.BindDecorationBuilder;
 import com.shuyu.bind.BindSuperAdapter;
 import com.shuyu.bind.BindSuperAdapterManager;
-import com.shuyu.bind.listener.OnLoadingListener;
-import com.shuyu.bind.listener.OnItemClickListener;
+import com.shuyu.bind.decoration.BindDecorationBuilder;
 import com.shuyu.bind.listener.OnBindDataChooseListener;
+import com.shuyu.bind.listener.OnItemClickListener;
+import com.shuyu.bind.listener.OnLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +36,7 @@ import java.util.List;
  * Created by guoshuyu on 2017/1/7.
  */
 
-public class BindRefreshLoadActivity extends AppCompatActivity {
+public class BindDragSwipeActivity extends AppCompatActivity {
 
 
     private RecyclerView recycler;
@@ -125,6 +124,13 @@ public class BindRefreshLoadActivity extends AppCompatActivity {
 
         //recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         recycler.setLayoutManager(new LinearLayoutManager(this));
+
+        BindDragCallBack bindDragCallBack = new BindDragCallBack(adapter);
+        bindDragCallBack.setSwipeEnabled(true);
+        bindDragCallBack.setSwipedDelete(false);
+        bindDragCallBack.setSwipeLength(200);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(bindDragCallBack);
+        itemTouchHelper.attachToRecyclerView(recycler);
 
         //间隔线
         recycler.addItemDecoration(new BindDecorationBuilder(adapter)
