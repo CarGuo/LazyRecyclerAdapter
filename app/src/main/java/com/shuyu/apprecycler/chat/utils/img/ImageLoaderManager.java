@@ -7,6 +7,7 @@ package com.shuyu.apprecycler.chat.utils.img;
 
 public class ImageLoaderManager {
     public static IImageLoader getImageLoaderManager() {
+        //需要替换图片加载框架，只需要替换这个实例化即可
         return ImageLoaderGlide.newInstance();
     }
 }
