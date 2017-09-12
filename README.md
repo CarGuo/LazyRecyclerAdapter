@@ -20,7 +20,9 @@
 **支持**|**Item的动画效果**
 **支持**|**Header头支持**
 **支持**|**一种数据实体对应多种Item**
-**dev分支支持中**|**快速实现聊天模式**
+**支持**|**侧滑、拖拽**
+**支持**|**快速实现聊天模式(DEMO包含Dagger2、MVP、RxJava2、Realm、键盘弹出优化处理)**
+待支持|内置更多自定义Manager
 
 ## 二、依赖
 
@@ -36,7 +38,7 @@ allprojects {
 ### 在module下的build.gradle添加依赖
 ```
 dependencies {
-    compile 'com.github.CarGuo:LazyRecyclerAdapter:v3.0.0'
+    compile 'com.github.CarGuo:LazyRecyclerAdapter:v3.0.1'
 }
 
 ```
@@ -44,10 +46,12 @@ dependencies {
 
 ## 三、效果
 #### 更多效果请看DEMO
+#### 聊天DEMO中包含Dagger2、MVP、RxJava2、Realm、Factory模式、键盘弹出优化处理。
 <div>
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/12.png" width="240px" height="436px"/>
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/13.png" width="240px" height="436px"/>
 <img src="https://github.com/CarGuo/CommonRecycler/blob/master/14.png" width="240px" height="436px"/>
+<img src="https://github.com/CarGuo/CommonRecycler/blob/master/15.png" width="240px" height="436px"/>
 </div>
 
 ## 四、使用方法

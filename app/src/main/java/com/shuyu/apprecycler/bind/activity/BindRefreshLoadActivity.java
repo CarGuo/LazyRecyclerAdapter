@@ -126,12 +126,6 @@ public class BindRefreshLoadActivity extends AppCompatActivity {
         //recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
-        BindDragCallBack bindDragCallBack = new BindDragCallBack(adapter);
-        bindDragCallBack.setSwipeEnabled(true);
-        bindDragCallBack.setSwipeFlags(ItemTouchHelper.END);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(bindDragCallBack);
-        itemTouchHelper.attachToRecyclerView(recycler);
-
         //间隔线
         recycler.addItemDecoration(new BindDecorationBuilder(adapter)
                 .setColor(getResources()

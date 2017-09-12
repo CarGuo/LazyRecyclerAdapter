@@ -5,13 +5,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
- * 拖动回调
+ * 拖动回调，适配BindSuperAdapter
  * Created by guoshuyu on 2017/9/11.
  */
 
@@ -19,9 +20,10 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
 
     private BindSuperAdapter mAdapter;
 
+    private int mSwipeLength = -1;
+
     //是否可以拖动
     private boolean mDragEnabled = true;
-
 
     //是否可以swipe
     private boolean mSwipeEnabled = false;
@@ -32,10 +34,28 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
     //限制结束不能拖动
     private boolean mLimitEndPosition = false;
 
+    //是否滑动
+    private boolean isSwiped = true;
+
+    //是否拖拽
+    private boolean isDraged = true;
+
+    //swipe滑动是否出发删除
+    private boolean isSwipedDelete = true;
+
+    //drag门槛
+    private float mMoveThreshold = 0.5f;
+
+    //swipe门槛
+    private float mSwipeThreshold = 0.5f;
+
+    //滑动方向
     private int mSwipeFlags = ItemTouchHelper.START;
 
+    //拖动回调
     private DragMoveListener mMoveListener;
 
+    //滑动回调
     private SwipeListener mSwipeListener;
 
     public BindDragCallBack(BindSuperAdapter adapter, boolean limitStartPosition, boolean limitEndPosition) {
@@ -112,8 +132,9 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
             if (mMoveListener != null) {
                 mMoveListener.onMoved(fromPosition, toPosition);
             }
+            isDraged = true;
         }
-
+        isSwiped = false;
     }
 
 
@@ -124,15 +145,19 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
         }
 
         int pos = viewHolder.getAdapterPosition() - mAdapter.absFirstPosition();
-
-
-        if (pos >= 0 && pos < (mAdapter.getDataList().size() - 1)) {
-            mAdapter.getDataList().remove(pos);
-            mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+        if (pos >= 0 && pos <= (mAdapter.getDataList().size() - 1)) {
+            int position = viewHolder.getAdapterPosition();
+            if (isSwipedDelete) {
+                mAdapter.getDataList().remove(pos);
+                mAdapter.notifyItemRemoved(position);
+                mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount() - position);
+            }
             if (mSwipeListener != null && mSwipeEnabled) {
                 mSwipeListener.onSwiped(pos);
             }
+            isSwiped = true;
         }
+        isDraged = false;
     }
 
     /**
@@ -153,42 +178,42 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
      */
     @Override
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+        super.clearView(recyclerView, viewHolder);
         if ((viewHolder instanceof BindSuperAdapter.WrapAdapter.SimpleViewHolder)) {
             return;
         }
 
-        if (mMoveListener != null) {
-            mMoveListener.onMoveEnd();
+        if (isSwiped) {
+            isSwiped = false;
+            return;
         }
-        try {
-            mAdapter.notifyDataSetChanged();
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        if (isDraged) {
+            if (mMoveListener != null) {
+                mMoveListener.onMoveEnd();
+            }
+            try {
+                mAdapter.notifyDataSetChanged();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
         int position = viewHolder.getAdapterPosition() - mAdapter.absFirstPosition();
-
-        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE
-                && position >= 0 && position < (mAdapter.getDataList().size() - 1) && !(viewHolder instanceof BindSuperAdapter.WrapAdapter.SimpleViewHolder)) {
-            View itemView = viewHolder.itemView;
-            c.save();
-            if (dX > 0) {
-                c.clipRect(itemView.getLeft(), itemView.getTop(),
-                        itemView.getLeft() + dX, itemView.getBottom());
-                c.translate(itemView.getLeft(), itemView.getTop());
-            } else {
-                c.clipRect(itemView.getRight() + dX, itemView.getTop(),
-                        itemView.getRight(), itemView.getBottom());
-                c.translate(itemView.getRight() + dX, itemView.getTop());
+        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+            if (position >= 0 && position <= (mAdapter.getDataList().size() - 1) && !(viewHolder instanceof BindSuperAdapter.WrapAdapter.SimpleViewHolder)) {
+                if (mSwipeLength != -1) {
+                    dX = SwipeLimited(dX);
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
-            c.restore();
         } else {
-            dY = limitedDrag(viewHolder, dY);
+            dY = DragLimited(viewHolder, dY);
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
-        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }
 
     @Override
@@ -202,32 +227,41 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
         return mSwipeEnabled;
     }
 
-    /**
-     * 根据方向和条件获取限制在RecyclerView内部的DY值
-     *
-     * @param viewHolder drag的ViewHolder
-     * @param dY         限制前的DY值
-     */
-    private float limitedDrag(RecyclerView.ViewHolder viewHolder, float dY) {
+    @Override
+    public float getMoveThreshold(RecyclerView.ViewHolder viewHolder) {
+        return mMoveThreshold;
+    }
 
+    @Override
+    public float getSwipeThreshold(RecyclerView.ViewHolder viewHolder) {
+        return mSwipeThreshold;
+    }
+
+    private float SwipeLimited(float dX) {
+        if (Math.abs(dX) > Math.abs(mSwipeLength)) {
+            if (dX < 0) {
+                dX = -Math.abs(mSwipeLength);
+            } else {
+                dX = Math.abs(mSwipeLength);
+            }
+        }
+        return dX;
+    }
+
+    private float DragLimited(RecyclerView.ViewHolder viewHolder, float dY) {
         int position = viewHolder.getAdapterPosition() - mAdapter.absFirstPosition();
-
         if (position < 0) {
             return dY < 0 ? 0 : dY;
         }
-
         if (position > (mAdapter.getDataList().size() - 1)) {
             return dY < 0 ? 0 : dY;
         }
-
         if (mLimitStartPosition && position == 0) {
             return dY < 0 ? 0 : dY;
         }
-
         if (mLimitEndPosition && position == mAdapter.getDataList().size() - 1) {
             return dY > 0 ? 0 : dY;
         }
-
         return dY;
     }
 
@@ -260,10 +294,40 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
     }
 
     /**
+     * Swipe移动门槛
+     */
+    public void setSwipeThreshold(float swipeThreshold) {
+        mSwipeThreshold = swipeThreshold;
+    }
+
+
+    /**
+     * Drag移动门槛
+     */
+    public void setMoveThreshold(float moveThreshold) {
+        mMoveThreshold = moveThreshold;
+    }
+
+
+    /**
+     * 滑动是否删除
+     */
+    public void setSwipedDelete(boolean swipedDelete) {
+        isSwipedDelete = swipedDelete;
+    }
+
+    /**
      * 使能滑动
      */
     public void setSwipeEnabled(boolean swipeEnabled) {
         this.mSwipeEnabled = swipeEnabled;
+    }
+
+    /**
+     * 滑动最大距离，默认-1
+     */
+    public void setSwipeLength(int swipeLength) {
+        this.mSwipeLength = swipeLength;
     }
 
     public interface DragMoveListener {

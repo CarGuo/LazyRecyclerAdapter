@@ -1,5 +1,7 @@
 package com.shuyu.apprecycler.chat.data.factory;
 
+import android.util.Log;
+
 import com.shuyu.apprecycler.chat.data.factory.vo.ChatMessageModel;
 import com.shuyu.apprecycler.chat.data.factory.vo.ChatUserModel;
 import com.shuyu.apprecycler.chat.data.model.ChatBaseModel;
@@ -67,27 +69,32 @@ public class LocalChatBDRealmManager implements ILocalChatDBManager {
         });
     }
 
+    /**
+     * TODO
+     * 因为懒加载，所以realm没有分页改变
+     * 所以需要对realmResults进行分页读取，读取完毕才可以close当前线程的realm
+     */
     @Override
     public void getChatMessage(final String chatId, final int page, final ILocalChatDetailGetListener listener) {
 
-        getRealm()
-                .map(new Function<Realm, RealmResults<ChatMessageModel>>() {
+        getRealm().subscribeOn(Schedulers.io())
+                .map(new Function<Realm, List<ChatBaseModel>>() {
                     @Override
-                    public RealmResults<ChatMessageModel> apply(@NonNull Realm realm) throws Exception {
-                        return realm.where(ChatMessageModel.class)
+                    public List<ChatBaseModel> apply(@NonNull Realm realm) throws Exception {
+                        RealmResults<ChatMessageModel> realmResults = realm.where(ChatMessageModel.class)
                                 .equalTo("chatId", chatId)
                                 .findAll().sort("createTime", Sort.DESCENDING);
+                        List<ChatBaseModel> list;
+                        if (realmResults == null) {
+                            list = new ArrayList<>();
+                        } else {
+                            list = resolveMessageList(realmResults);
+                        }
+                        realm.close();
+                        return list;
+
                     }
                 })
-                .map(new Function<RealmResults<ChatMessageModel>, List<ChatBaseModel>>() {
-                    @Override
-                    public List<ChatBaseModel> apply(@NonNull RealmResults<ChatMessageModel> chatMessageModels) throws Exception {
-                        if (chatMessageModels == null) {
-                            return new ArrayList<>();
-                        }
-                        return resolveMessageList(chatMessageModels);
-                    }
-                }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<ChatBaseModel>>() {
                     @Override
@@ -171,8 +178,7 @@ public class LocalChatBDRealmManager implements ILocalChatDBManager {
                 final Realm observableRealm = Realm.getDefaultInstance();
                 emitter.onNext(observableRealm);
                 emitter.onComplete();
-                observableRealm.close();
             }
-        }).subscribeOn(AndroidSchedulers.mainThread());
+        });
     }
 }

@@ -1,76 +1,94 @@
 package com.shuyu.apprecycler.bind.activity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Toast;
 
 import com.shuyu.apprecycler.R;
 import com.shuyu.apprecycler.bind.holder.BindClickHolder;
 import com.shuyu.apprecycler.bind.holder.BindImageHolder;
 import com.shuyu.apprecycler.bind.holder.BindMutliHolder;
-import com.shuyu.apprecycler.bind.holder.BindNoDataHolder;
 import com.shuyu.apprecycler.bind.holder.BindTextHolder;
 import com.shuyu.apprecycler.bind.model.BindClickModel;
 import com.shuyu.apprecycler.bind.model.BindImageModel;
 import com.shuyu.apprecycler.bind.model.BindMutliModel;
 import com.shuyu.apprecycler.bind.model.BindTextModel;
 import com.shuyu.apprecycler.bind.utils.BindDataUtils;
+import com.shuyu.apprecycler.bind.view.BindCustomLoadMoreFooter;
+import com.shuyu.apprecycler.bind.view.BindCustomRefreshHeader;
 import com.shuyu.bind.BindDragCallBack;
-import com.shuyu.bind.decoration.BindDecorationBuilder;
 import com.shuyu.bind.BindSuperAdapter;
 import com.shuyu.bind.BindSuperAdapterManager;
-import com.shuyu.bind.listener.OnLoadingListener;
+import com.shuyu.bind.decoration.BindDecorationBuilder;
+import com.shuyu.bind.listener.OnBindDataChooseListener;
 import com.shuyu.bind.listener.OnItemClickListener;
+import com.shuyu.bind.listener.OnLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
- * Grid效果展示
+ * 滑动和拖拽
  * Created by guoshuyu on 2017/1/7.
  */
-public class BindGridActivity extends AppCompatActivity {
 
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
+public class BindDragSwipeActivity extends AppCompatActivity {
+
+
+    private RecyclerView recycler;
 
     private List datas = new ArrayList<>();
 
     private BindSuperAdapter adapter;
 
-    private final Object lock = new Object();
-
     private BindSuperAdapterManager normalAdapterManager;
+
+    private final Object lock = new Object();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_normal_recycler_layout);
-        ButterKnife.bind(this);
+        recycler = (RecyclerView) findViewById(R.id.recycler);
+
         init();
         refresh();
     }
 
-
     public void init() {
-        View header = LayoutInflater.from(this).inflate(R.layout.layout_header, null);
+
         normalAdapterManager = new BindSuperAdapterManager();
-        normalAdapterManager
+
+        //注意，一个manager中，一个id只能绑定一个holder
+        //一个model class可以绑定多对id + Holder
+        normalAdapterManager.bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
                 .bind(BindImageModel.class, BindImageHolder.ID, BindImageHolder.class)
-                .bind(BindTextModel.class, BindTextHolder.ID, BindTextHolder.class)
+                .bind(BindMutliModel.class, BindImageHolder.ID, BindImageHolder.class)
                 .bind(BindMutliModel.class, BindMutliHolder.ID, BindMutliHolder.class)
                 .bind(BindClickModel.class, BindClickHolder.ID, BindClickHolder.class)
-                .bindEmpty(BindNoDataHolder.NoDataModel.class, BindNoDataHolder.ID, BindNoDataHolder.class)
+                .bingChooseListener(new OnBindDataChooseListener() {
+                    //一种model类型对应多个Holder时，根据model实体判断选择holder
+                    @Override
+                    public int getCurrentDataLayoutId(Object object, Class classType, int position, List<Integer> ids) {
+                        if (object instanceof BindMutliModel && ids.size() > 1) {
+                            BindMutliModel mutliModel = (BindMutliModel) object;
+                            if (mutliModel.getType() > 1) {
+                                return BindMutliHolder.ID;
+                            } else {
+                                return BindImageHolder.ID;
+                            }
+                        }
+                        return ids.get(ids.size() - 1);
+                    }
+                })
+                .setPullRefreshEnabled(true)
+                .setLoadingMoreEnabled(true)
+                .setFootView(new BindCustomLoadMoreFooter(this))
+                .setRefreshHeader(new BindCustomRefreshHeader(this))
                 .setNeedAnimation(true)
                 .setOnItemClickListener(new OnItemClickListener() {
                     @Override
@@ -79,16 +97,7 @@ public class BindGridActivity extends AppCompatActivity {
                         Toast.makeText(context, "点击了！！　" + (position), Toast.LENGTH_SHORT).show();
                     }
                 })
-                .addHeaderView(header)
-                .setPullRefreshEnabled(false)
-                .setLoadingMoreEnabled(true)
-                .setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(Context context, int position) {
-                        //需要减去你的header和刷新的view的数量
-                        Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show();
-                    }
-                }).setLoadingListener(new OnLoadingListener() {
+                .setLoadingListener(new OnLoadingListener() {
                     @Override
                     public void onRefresh() {
                         recycler.postDelayed(new Runnable() {
@@ -113,26 +122,22 @@ public class BindGridActivity extends AppCompatActivity {
 
         adapter = new BindSuperAdapter(this, normalAdapterManager, datas);
 
-        GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 3);
+        //recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        recycler.setLayoutManager(new LinearLayoutManager(this));
 
-        recycler.setLayoutManager(staggeredGridLayoutManager);
-
-        //使能拖拽
-        /*BindDragCallBack bindDragCallBack = new BindDragCallBack(adapter);
+        BindDragCallBack bindDragCallBack = new BindDragCallBack(adapter);
+        bindDragCallBack.setSwipeEnabled(true);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(bindDragCallBack);
-        itemTouchHelper.attachToRecyclerView(recycler);*/
+        itemTouchHelper.attachToRecyclerView(recycler);
 
         //间隔线
         recycler.addItemDecoration(new BindDecorationBuilder(adapter)
                 .setColor(getResources()
-                .getColor(R.color.material_deep_teal_200))
-                .setSpace(dip2px(this, 5))
-                .setNeedGridRightLeftEdge(false)
+                .getColor(R.color.material_deep_teal_500))
+                .setSpace(dip2px(this, 2))
                 .builder());
 
         recycler.setAdapter(adapter);
-
-
     }
 
     /**
@@ -143,8 +148,38 @@ public class BindGridActivity extends AppCompatActivity {
         return (int) (dipValue * fontScale + 0.5f);
     }
 
+    @SuppressWarnings("unchecked")
     private void refresh() {
         List list = BindDataUtils.getRefreshData();
+
+        BindMutliModel mutliModel = new BindMutliModel();
+
+        mutliModel.setResId(R.drawable.a1);
+        mutliModel.setRes2(R.drawable.a2);
+        mutliModel.setType(1);
+        list.add(0, mutliModel);
+
+        mutliModel = new BindMutliModel();
+
+        mutliModel.setResId(R.drawable.a1);
+        mutliModel.setRes2(R.drawable.a2);
+        mutliModel.setType(2);
+        list.add(1, mutliModel);
+
+        mutliModel = new BindMutliModel();
+
+        mutliModel.setResId(R.drawable.a1);
+        mutliModel.setRes2(R.drawable.a2);
+        mutliModel.setType(1);
+        list.add(4, mutliModel);
+
+
+        mutliModel = new BindMutliModel();
+        mutliModel.setResId(R.drawable.a1);
+        mutliModel.setRes2(R.drawable.a2);
+        mutliModel.setType(2);
+        list.add(7, mutliModel);
+
         //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized (lock) {
@@ -162,9 +197,7 @@ public class BindGridActivity extends AppCompatActivity {
         synchronized (lock) {
             //adapter.setLoadMoreState(BindLoadMoreHolder.NULL_DATA_STATE);
             adapter.addListData(list);
-            normalAdapterManager.refreshComplete();
+            normalAdapterManager.loadMoreComplete();
         }
     }
-
-
 }

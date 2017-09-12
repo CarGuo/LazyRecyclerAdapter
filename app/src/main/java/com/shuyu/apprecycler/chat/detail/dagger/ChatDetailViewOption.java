@@ -9,6 +9,7 @@ import com.shuyu.textutillib.RichEditText;
 
 
 /**
+ * view option
  * Created by guoshuyu on 2017/9/7.
  */
 
