@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 
 import java.util.Collections;
@@ -125,16 +126,12 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
         }
 
         int pos = viewHolder.getAdapterPosition() - mAdapter.absFirstPosition();
-
-
         if (pos >= 0 && pos <= (mAdapter.getDataList().size() - 1)) {
             isSwiped = true;
             int position = viewHolder.getAdapterPosition();
             mAdapter.getDataList().remove(pos);
             mAdapter.notifyItemRemoved(position);
-            if (position != mAdapter.getDataList().size()) {
-                mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount() - position);
-            }
+            mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount() - position);
             if (mSwipeListener != null && mSwipeEnabled) {
                 mSwipeListener.onSwiped(pos);
             }
@@ -159,6 +156,7 @@ public class BindDragCallBack extends ItemTouchHelper.Callback {
      */
     @Override
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+        super.clearView(recyclerView, viewHolder);
         if ((viewHolder instanceof BindSuperAdapter.WrapAdapter.SimpleViewHolder)) {
             return;
         }

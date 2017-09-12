@@ -128,7 +128,7 @@ public class BindRefreshLoadActivity extends AppCompatActivity {
 
         BindDragCallBack bindDragCallBack = new BindDragCallBack(adapter);
         bindDragCallBack.setSwipeEnabled(true);
-        bindDragCallBack.setSwipeFlags(ItemTouchHelper.END);
+        //bindDragCallBack.setSwipeFlags(ItemTouchHelper.END);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(bindDragCallBack);
         itemTouchHelper.attachToRecyclerView(recycler);
 
