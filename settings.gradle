@@ -1,1 +1,1 @@
-include ':app', ':CommonRecycler', ':Commonrecycler-kotlin'
+include ':app', ':CommonRecycler', ':CommonRecycler-Kotlin'
