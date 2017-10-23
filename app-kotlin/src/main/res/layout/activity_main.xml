@@ -5,19 +5,13 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/normal_btn"
+        android:id="@+id/normalBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="普通模式（新版）" />
 
     <Button
-        android:id="@+id/special_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="特殊模式（旧版）" />
-
-    <Button
-        android:id="@+id/chat_btn"
+        android:id="@+id/chatBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="聊天" />

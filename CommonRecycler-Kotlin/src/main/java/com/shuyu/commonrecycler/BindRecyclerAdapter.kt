@@ -132,11 +132,11 @@ open class BindRecyclerAdapter(context: Context, //管理器
 
         //itemView 的点击事件
         if (normalAdapterManager.itemClickListener != null) {
-            holder!!.itemView.setOnClickListener { normalAdapterManager.itemClickListener.onItemClick(holder.itemView.context, curPosition(holder.position)) }
+            holder!!.itemView.setOnClickListener { normalAdapterManager.itemClickListener?.onItemClick(holder.itemView.context, curPosition(holder.position)) }
         }
 
         if (normalAdapterManager.itemLongClickListener != null) {
-            holder!!.itemView.setOnLongClickListener { normalAdapterManager.itemLongClickListener.onItemClick(holder.itemView.context, curPosition(holder.position)) }
+            holder!!.itemView.setOnLongClickListener { normalAdapterManager.itemLongClickListener?.onItemClick(holder.itemView.context, curPosition(holder.position))!! }
         }
 
 

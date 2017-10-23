@@ -47,10 +47,10 @@ open abstract class BindBaseAdapterManager<T : BindBaseAdapterManager<T>> {
         private set
 
     //单击
-    lateinit var itemClickListener: OnItemClickListener
+    var itemClickListener: OnItemClickListener? =null
 
     //长按
-    lateinit var itemLongClickListener: OnItemLongClickListener
+    var itemLongClickListener: OnItemLongClickListener? =null
 
     //是否支持动画
     var needAnimation = false

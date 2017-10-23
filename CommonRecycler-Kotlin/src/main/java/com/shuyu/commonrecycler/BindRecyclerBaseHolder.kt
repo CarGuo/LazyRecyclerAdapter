@@ -44,7 +44,7 @@ open abstract class BindRecyclerBaseHolder
     /**
      * 动画，默认为返回null，继承后可返回动画
      */
-    fun getAnimator(view: View): AnimatorSet? {
+    open fun getAnimator(view: View): AnimatorSet? {
         return null
     }
 

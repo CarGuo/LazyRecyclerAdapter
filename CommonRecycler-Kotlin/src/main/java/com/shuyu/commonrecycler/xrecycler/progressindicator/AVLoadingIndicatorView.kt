@@ -82,9 +82,9 @@ open class AVLoadingIndicatorView : View {
     internal var mIndicatorId: Int = 0
     internal var mIndicatorColor: Int = 0
 
-    lateinit var mPaint: Paint
+    var mPaint: Paint? = null
 
-    lateinit var mIndicatorController: BaseIndicatorController
+    var mIndicatorController: BaseIndicatorController ?= null
 
     private var mHasAnimation: Boolean = false
 
@@ -116,9 +116,9 @@ open class AVLoadingIndicatorView : View {
         mIndicatorColor = a.getColor(R.styleable.AVLoadingIndicatorView_indicator_color, Color.WHITE)
         a.recycle()
         mPaint = Paint()
-        mPaint.color = mIndicatorColor
-        mPaint.style = Paint.Style.FILL
-        mPaint.isAntiAlias = true
+        mPaint?.color = mIndicatorColor
+        mPaint?.style = Paint.Style.FILL
+        mPaint?.isAntiAlias = true
         applyIndicator()
     }
 
@@ -129,7 +129,7 @@ open class AVLoadingIndicatorView : View {
 
     fun setIndicatorColor(color: Int) {
         mIndicatorColor = color
-        mPaint.color = mIndicatorColor
+        mPaint?.color = mIndicatorColor
         this.invalidate()
     }
 
@@ -164,7 +164,7 @@ open class AVLoadingIndicatorView : View {
             BallGridBeat -> mIndicatorController = BallGridBeatIndicator()
             SemiCircleSpin -> mIndicatorController = SemiCircleSpinIndicator()
         }
-        mIndicatorController.target = this
+        mIndicatorController?.target = this
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -204,29 +204,29 @@ open class AVLoadingIndicatorView : View {
         if (visibility != v) {
             super.setVisibility(v)
             if (v == View.GONE || v == View.INVISIBLE) {
-                mIndicatorController.setAnimationStatus(BaseIndicatorController.AnimStatus.END)
+                mIndicatorController?.setAnimationStatus(BaseIndicatorController.AnimStatus.END)
             } else {
-                mIndicatorController.setAnimationStatus(BaseIndicatorController.AnimStatus.START)
+                mIndicatorController?.setAnimationStatus(BaseIndicatorController.AnimStatus.START)
             }
         }
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        mIndicatorController.setAnimationStatus(BaseIndicatorController.AnimStatus.CANCEL)
+        mIndicatorController?.setAnimationStatus(BaseIndicatorController.AnimStatus.CANCEL)
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        mIndicatorController.setAnimationStatus(BaseIndicatorController.AnimStatus.START)
+        mIndicatorController?.setAnimationStatus(BaseIndicatorController.AnimStatus.START)
     }
 
     internal fun drawIndicator(canvas: Canvas) {
-        mIndicatorController.draw(canvas, mPaint)
+        mIndicatorController?.draw(canvas, mPaint!!)
     }
 
     internal fun applyAnimation() {
-        mIndicatorController.initAnimation()
+        mIndicatorController?.initAnimation()
     }
 
     private fun dp2px(dpValue: Int): Int {

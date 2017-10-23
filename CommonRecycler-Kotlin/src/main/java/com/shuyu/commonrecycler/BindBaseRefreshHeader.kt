@@ -31,7 +31,7 @@ open abstract class BindBaseRefreshHeader : BaseRefreshHeader {
      */
     override var state = BaseRefreshHeader.STATE_NORMAL
 
-    lateinit var mContainer: ViewGroup
+    var mContainer: ViewGroup ?= null
 
     /**
      * 返回布局id
@@ -53,15 +53,15 @@ open abstract class BindBaseRefreshHeader : BaseRefreshHeader {
      */
     override var visibleHeight: Int
         get() {
-            val lp = mContainer.layoutParams as LinearLayout.LayoutParams
+            val lp = mContainer?.layoutParams as LinearLayout.LayoutParams
             return lp.height
         }
         set(height) {
             var height = height
             if (height < 0) height = 0
-            val lp = mContainer.layoutParams as LinearLayout.LayoutParams
+            val lp = mContainer?.layoutParams as LinearLayout.LayoutParams
             lp.height = height
-            mContainer.layoutParams = lp
+            mContainer?.layoutParams = lp
         }
 
 
@@ -81,7 +81,7 @@ open abstract class BindBaseRefreshHeader : BaseRefreshHeader {
         // 初始情况，设置下拉刷新view高度为0
         mContainer = LayoutInflater.from(context)
                 .inflate(layoutId, null) as ViewGroup
-        addView(mContainer)
+        addView(mContainer!!)
     }
 
     /**

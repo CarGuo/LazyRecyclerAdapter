@@ -52,7 +52,7 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
         override fun onScrollStateChanged(recyclerView: RecyclerView?, state: Int) {
             super.onScrollStateChanged(recyclerView, state)
             if (normalAdapterManager.onScrollListener != null) {
-                normalAdapterManager.onScrollListener.onScrollStateChanged(recyclerView, state)
+                normalAdapterManager.onScrollListener?.onScrollStateChanged(recyclerView, state)
             }
             if (state == RecyclerView.SCROLL_STATE_IDLE && normalAdapterManager.mLoadingListener != null && !normalAdapterManager.isLoadingData && normalAdapterManager.loadingMoreEnabled) {
                 val layoutManager = recyclerView!!.layoutManager
@@ -131,7 +131,7 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
 
     override fun onTouch(v: View, ev: MotionEvent): Boolean {
         if (normalAdapterManager.mTouchListener != null) {
-            return normalAdapterManager.mTouchListener.onTouch(v, ev)
+            return normalAdapterManager.mTouchListener?.onTouch(v, ev)!!
         }
         return if (getOrientation(mRecyclerView!!.layoutManager) == OrientationHelper.HORIZONTAL) {
             touchX(ev)

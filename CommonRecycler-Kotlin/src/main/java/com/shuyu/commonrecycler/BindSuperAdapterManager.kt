@@ -52,7 +52,7 @@ open class BindSuperAdapterManager : BindBaseAdapterManager<BindSuperAdapterMana
     internal var isNoMore = false
 
     //滚动监听
-    internal lateinit var onScrollListener: RecyclerView.OnScrollListener
+    internal var onScrollListener: RecyclerView.OnScrollListener ?= null
 
     //loading监听
     internal var mLoadingListener: OnLoadingListener? = null
@@ -66,7 +66,7 @@ open class BindSuperAdapterManager : BindBaseAdapterManager<BindSuperAdapterMana
     //头部刷新类型
     internal var mRefreshHeader: BaseRefreshHeader? = null
 
-    internal lateinit var mTouchListener: View.OnTouchListener
+    internal var mTouchListener: View.OnTouchListener? =null
 
     val headersCount: Int
         get() = mHeaderViews.size
