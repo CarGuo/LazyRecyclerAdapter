@@ -1,4 +1,4 @@
-package com.shuyu.bind.listener;
+package com.shuyu.commonrecycler.listener;
 
 import android.content.Context;
 

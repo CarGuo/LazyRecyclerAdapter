@@ -1,4 +1,4 @@
-package com.jcodecraeer.xrecyclerview.base;
+package com.shuyu.commonrecycler.xrecycler.base;
 
 import android.content.Context;
 import android.util.AttributeSet;

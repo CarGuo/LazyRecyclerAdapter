@@ -1,4 +1,4 @@
-package com.jcodecraeer.xrecyclerview.progressindicator.indicator;
+package com.shuyu.commonrecycler.xrecycler.progressindicator.indicator;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;

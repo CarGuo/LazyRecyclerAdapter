@@ -1,14 +1,15 @@
-package com.shuyu.bind;
+package com.shuyu.commonrecycler;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.jcodecraeer.xrecyclerview.ArrowRefreshHeader;
-import com.jcodecraeer.xrecyclerview.LoadingMoreFooter;
-import com.jcodecraeer.xrecyclerview.base.BaseLoadMoreFooter;
-import com.jcodecraeer.xrecyclerview.base.BaseRefreshHeader;
-import com.jcodecraeer.xrecyclerview.other.ProgressStyle;
-import com.shuyu.bind.listener.OnLoadingListener;
+
+import com.shuyu.commonrecycler.listener.OnLoadingListener;
+import com.shuyu.commonrecycler.xrecycler.ArrowRefreshHeader;
+import com.shuyu.commonrecycler.xrecycler.LoadingMoreFooter;
+import com.shuyu.commonrecycler.xrecycler.base.BaseLoadMoreFooter;
+import com.shuyu.commonrecycler.xrecycler.base.BaseRefreshHeader;
+import com.shuyu.commonrecycler.xrecycler.other.ProgressStyle;
 
 import java.util.ArrayList;
 import java.util.List;

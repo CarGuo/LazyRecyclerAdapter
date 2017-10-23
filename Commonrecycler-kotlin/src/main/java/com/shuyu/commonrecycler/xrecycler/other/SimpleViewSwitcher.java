@@ -1,4 +1,4 @@
-package com.jcodecraeer.xrecyclerview.other;
+package com.shuyu.commonrecycler.xrecycler.other;
 
 import android.content.Context;
 import android.util.AttributeSet;

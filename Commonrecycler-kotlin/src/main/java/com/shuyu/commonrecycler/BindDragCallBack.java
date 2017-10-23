@@ -1,12 +1,10 @@
-package com.shuyu.bind;
+package com.shuyu.commonrecycler;
 
 import android.graphics.Canvas;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
-import android.view.View;
 
 import java.util.Collections;
 import java.util.List;
