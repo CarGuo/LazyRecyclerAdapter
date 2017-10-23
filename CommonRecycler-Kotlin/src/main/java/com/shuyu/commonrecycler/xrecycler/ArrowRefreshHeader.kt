@@ -45,35 +45,39 @@ open class ArrowRefreshHeader : BaseRefreshHeader {
         set(state) {
             if (state == this.state) return
 
-            if (state == BaseRefreshHeader.STATE_REFRESHING) {
-                mArrowImageView!!.clearAnimation()
-                mArrowImageView!!.visibility = View.INVISIBLE
-                mProgressBar!!.visibility = View.VISIBLE
-            } else if (state == BaseRefreshHeader.STATE_DONE) {
-                mArrowImageView!!.visibility = View.INVISIBLE
-                mProgressBar!!.visibility = View.INVISIBLE
-            } else {
-                mArrowImageView!!.visibility = View.VISIBLE
-                mProgressBar!!.visibility = View.INVISIBLE
+            when (state) {
+                BaseRefreshHeader.STATE_REFRESHING -> {
+                    mArrowImageView?.clearAnimation()
+                    mArrowImageView?.visibility = View.INVISIBLE
+                    mProgressBar?.visibility = View.VISIBLE
+                }
+                BaseRefreshHeader.STATE_DONE -> {
+                    mArrowImageView?.visibility = View.INVISIBLE
+                    mProgressBar?.visibility = View.INVISIBLE
+                }
+                else -> {
+                    mArrowImageView?.visibility = View.VISIBLE
+                    mProgressBar?.visibility = View.INVISIBLE
+                }
             }
 
             when (state) {
                 BaseRefreshHeader.STATE_NORMAL -> {
                     if (this.state == BaseRefreshHeader.STATE_RELEASE_TO_REFRESH) {
-                        mArrowImageView!!.startAnimation(mRotateDownAnim)
+                        mArrowImageView?.startAnimation(mRotateDownAnim)
                     }
                     if (this.state == BaseRefreshHeader.STATE_REFRESHING) {
-                        mArrowImageView!!.clearAnimation()
+                        mArrowImageView?.clearAnimation()
                     }
-                    mStatusTextView!!.setText(R.string.listview_header_hint_normal)
+                    mStatusTextView?.setText(R.string.listview_header_hint_normal)
                 }
                 BaseRefreshHeader.STATE_RELEASE_TO_REFRESH -> if (this.state != BaseRefreshHeader.STATE_RELEASE_TO_REFRESH) {
-                    mArrowImageView!!.clearAnimation()
-                    mArrowImageView!!.startAnimation(mRotateUpAnim)
-                    mStatusTextView!!.setText(R.string.listview_header_hint_release)
+                    mArrowImageView?.clearAnimation()
+                    mArrowImageView?.startAnimation(mRotateUpAnim)
+                    mStatusTextView?.setText(R.string.listview_header_hint_release)
                 }
-                BaseRefreshHeader.STATE_REFRESHING -> mStatusTextView!!.setText(R.string.refreshing)
-                BaseRefreshHeader.STATE_DONE -> mStatusTextView!!.setText(R.string.refresh_done)
+                BaseRefreshHeader.STATE_REFRESHING -> mStatusTextView?.setText(R.string.refreshing)
+                BaseRefreshHeader.STATE_DONE -> mStatusTextView?.setText(R.string.refresh_done)
             }
 
             field = state
@@ -83,15 +87,15 @@ open class ArrowRefreshHeader : BaseRefreshHeader {
 
     override var visibleHeight: Int
         get() {
-            val lp = mContainer!!.layoutParams as LinearLayout.LayoutParams
+            val lp = mContainer?.layoutParams as LinearLayout.LayoutParams
             return lp.height
         }
-        set(height) {
-            var height = height
+        set(heightT) {
+            var height = heightT
             if (height < 0) height = 0
-            val lp = mContainer!!.layoutParams as LinearLayout.LayoutParams
+            val lp = mContainer?.layoutParams as LinearLayout.LayoutParams
             lp.height = height
-            mContainer!!.layoutParams = lp
+            mContainer?.layoutParams = lp
         }
 
     constructor(context: Context) : super(context) {
@@ -126,17 +130,17 @@ open class ArrowRefreshHeader : BaseRefreshHeader {
         val progressView = AVLoadingIndicatorView(context)
         progressView.setIndicatorColor(-0x4a4a4b)
         progressView.setIndicatorId(ProgressStyle.BallSpinFadeLoader)
-        mProgressBar!!.setView(progressView)
+        mProgressBar?.setView(progressView)
 
 
         mRotateUpAnim = RotateAnimation(0.0f, -180.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-        mRotateUpAnim!!.duration = ROTATE_ANIM_DURATION.toLong()
-        mRotateUpAnim!!.fillAfter = true
+        mRotateUpAnim?.duration = ROTATE_ANIM_DURATION.toLong()
+        mRotateUpAnim?.fillAfter = true
         mRotateDownAnim = RotateAnimation(-180.0f, 0.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-        mRotateDownAnim!!.duration = ROTATE_ANIM_DURATION.toLong()
-        mRotateDownAnim!!.fillAfter = true
+        mRotateDownAnim?.duration = ROTATE_ANIM_DURATION.toLong()
+        mRotateDownAnim?.fillAfter = true
 
         mHeaderTimeView = findViewById(R.id.last_refresh_time) as TextView
         measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -145,33 +149,33 @@ open class ArrowRefreshHeader : BaseRefreshHeader {
 
     override fun setProgressStyle(style: Int) {
         if (style == ProgressStyle.SysProgress) {
-            mProgressBar!!.setView(ProgressBar(context, null, android.R.attr.progressBarStyle))
+            mProgressBar?.setView(ProgressBar(context, null, android.R.attr.progressBarStyle))
         } else {
             val progressView = AVLoadingIndicatorView(this.context)
             progressView.setIndicatorColor(-0x4a4a4b)
             progressView.setIndicatorId(style)
-            mProgressBar!!.setView(progressView)
+            mProgressBar?.setView(progressView)
         }
     }
 
     override fun setArrowImageView(resid: Int) {
-        mArrowImageView!!.setImageResource(resid)
+        mArrowImageView?.setImageResource(resid)
     }
 
     override fun refreshComplete() {
-        mHeaderTimeView!!.text = friendlyTime(Date())
+        mHeaderTimeView?.text = friendlyTime(Date())
         state = BaseRefreshHeader.STATE_DONE
         Handler().postDelayed({ reset() }, 200)
     }
 
     override fun onMove(delta: Float) {
         if (visibleHeight > 0 || delta > 0) {
-            visibleHeight = delta.toInt() + visibleHeight
+            visibleHeight += delta.toInt()
             if (state <= BaseRefreshHeader.STATE_RELEASE_TO_REFRESH) { // 未处于刷新状态，更新箭头
-                if (visibleHeight > mMeasuredHeight) {
-                    state = BaseRefreshHeader.STATE_RELEASE_TO_REFRESH
+                state = if (visibleHeight > mMeasuredHeight) {
+                    BaseRefreshHeader.STATE_RELEASE_TO_REFRESH
                 } else {
-                    state = BaseRefreshHeader.STATE_NORMAL
+                    BaseRefreshHeader.STATE_NORMAL
                 }
             }
         }
@@ -226,20 +230,20 @@ open class ArrowRefreshHeader : BaseRefreshHeader {
                 return "刚刚"
             }
 
-            if (ct > 0 && ct < 60) {
+            if (ct in 1..59) {
                 return ct.toString() + "秒前"
             }
 
-            if (ct >= 60 && ct < 3600) {
+            if (ct in 60..3599) {
                 return Math.max(ct / 60, 1).toString() + "分钟前"
             }
-            if (ct >= 3600 && ct < 86400)
+            if (ct in 3600..86399)
                 return (ct / 3600).toString() + "小时前"
-            if (ct >= 86400 && ct < 2592000) { //86400 * 30
+            if (ct in 86400..2591999) { //86400 * 30
                 val day = ct / 86400
                 return day.toString() + "天前"
             }
-            return if (ct >= 2592000 && ct < 31104000) { //86400 * 30
+            return if (ct in 2592000..31103999) { //86400 * 30
                 (ct / 2592000).toString() + "月前"
             } else (ct / 31104000).toString() + "年前"
         }

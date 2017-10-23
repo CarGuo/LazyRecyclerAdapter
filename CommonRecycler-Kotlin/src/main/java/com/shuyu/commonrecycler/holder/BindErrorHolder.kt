@@ -17,8 +17,6 @@ open class BindErrorHolder : BindRecyclerBaseHolder {
 
     private var errorText: TextView? = null
 
-    constructor(v: View) : super(v) {}
-
     constructor(context: Context, v: View) : super(context, v) {}
 
     override fun createView(v: View) {
@@ -26,7 +24,7 @@ open class BindErrorHolder : BindRecyclerBaseHolder {
     }
 
     override fun onBind(model: Any, position: Int) {
-        val text = "model：<font color=\"#000000\"><big>" + model.javaClass.name + "</big></font>    never bind"
+        val text = "model：<font color=\"#000000\"><big>{$model.javaClass.name}</big></font>    never bind"
         errorText!!.text = Html.fromHtml(text)
     }
 

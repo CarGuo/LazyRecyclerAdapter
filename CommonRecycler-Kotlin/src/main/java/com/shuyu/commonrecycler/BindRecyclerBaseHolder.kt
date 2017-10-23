@@ -9,11 +9,7 @@ import android.view.View
  * 必须继承的BaseHolder
  * Created by Guo on 2015/11/23.
  */
-open abstract class BindRecyclerBaseHolder
-/**
- * 必须继承其中之一
- */
-(context: Context, v: View) : RecyclerView.ViewHolder(v) {
+open abstract class BindRecyclerBaseHolder (context: Context, v: View) : RecyclerView.ViewHolder(v) {
 
     var context: Context? = null
         protected set
@@ -44,9 +40,7 @@ open abstract class BindRecyclerBaseHolder
     /**
      * 动画，默认为返回null，继承后可返回动画
      */
-    open fun getAnimator(view: View): AnimatorSet? {
-        return null
-    }
+    open fun getAnimator(view: View): AnimatorSet? = null
 
     internal fun setAdapter(commonRecyclerAdapter: BindRecyclerAdapter) {
         this.normalCommonRecyclerAdapter = commonRecyclerAdapter

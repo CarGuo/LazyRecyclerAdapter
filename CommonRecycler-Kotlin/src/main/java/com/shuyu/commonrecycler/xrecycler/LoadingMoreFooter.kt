@@ -42,50 +42,50 @@ open class LoadingMoreFooter : BaseLoadMoreFooter {
         setPadding(0, resources.getDimension(R.dimen.textandiconmargin).toInt(), 0,
                 resources.getDimension(R.dimen.textandiconmargin).toInt())
         progressCon = SimpleViewSwitcher(context)
-        progressCon!!.layoutParams = ViewGroup.LayoutParams(
+        progressCon?.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         val progressView = AVLoadingIndicatorView(this.context)
         progressView.setIndicatorColor(-0x4a4a4b)
         progressView.setIndicatorId(ProgressStyle.BallSpinFadeLoader)
-        progressCon!!.setView(progressView)
+        progressCon?.setView(progressView)
 
         addView(progressCon)
         mText = TextView(context)
-        mText!!.text = "正在加载..."
+        mText?.text = "正在加载..."
 
         val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         layoutParams.setMargins(resources.getDimension(R.dimen.textandiconmargin).toInt(), 0, 0, 0)
 
-        mText!!.layoutParams = layoutParams
+        mText?.layoutParams = layoutParams
         addView(mText)
     }
 
     override fun setProgressStyle(style: Int) {
         if (style == ProgressStyle.SysProgress) {
-            progressCon!!.setView(ProgressBar(context, null, android.R.attr.progressBarStyleSmall))
+            progressCon?.setView(ProgressBar(context, null, android.R.attr.progressBarStyleSmall))
         } else {
             val progressView = AVLoadingIndicatorView(this.context)
             progressView.setIndicatorColor(-0x4a4a4b)
             progressView.setIndicatorId(style)
-            progressCon!!.setView(progressView)
+            progressCon?.setView(progressView)
         }
     }
 
     override fun setState(state: Int) {
         when (state) {
             BaseLoadMoreFooter.STATE_LOADING -> {
-                progressCon!!.visibility = View.VISIBLE
-                mText!!.text = context.getText(R.string.listview_loading)
+                progressCon?.visibility = View.VISIBLE
+                mText?.text = context.getText(R.string.listview_loading)
                 this.visibility = View.VISIBLE
             }
             BaseLoadMoreFooter.STATE_COMPLETE -> {
-                mText!!.text = context.getText(R.string.listview_loading)
+                mText?.text = context.getText(R.string.listview_loading)
                 this.visibility = View.GONE
             }
             BaseLoadMoreFooter.STATE_NOMORE -> {
-                mText!!.text = context.getText(R.string.nomore_loading)
-                progressCon!!.visibility = View.GONE
+                mText?.text = context.getText(R.string.nomore_loading)
+                progressCon?.visibility = View.GONE
                 this.visibility = View.VISIBLE
             }
         }

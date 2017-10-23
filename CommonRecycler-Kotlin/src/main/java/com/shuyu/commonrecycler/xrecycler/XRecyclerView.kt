@@ -32,24 +32,6 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
     //触摸下拉移动的距离
     private var mLastY = -1f
 
-    //是否使能下拉刷新
-    /**
-     * 是否使能下拉刷新
-     */
-    var isPullRefreshEnabled = true
-
-    //是否使能加载更多
-    /**
-     * 是否使能上拉加载更多
-     */
-    var isLoadingMoreEnabled = true
-        set(enabled) {
-            field = enabled
-            if (!enabled) {
-                mFootView!!.setState(BaseLoadMoreFooter.STATE_COMPLETE)
-            }
-        }
-
     //是否正在加载数据
     private var isLoadingData = false
 
@@ -58,16 +40,6 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
 
     //用在内外数据变化更新的同步更新
     private val mDataObserver = DataObserver()
-
-    //adapter没有数据的时候显示,类似于listView的emptyView
-    /**
-     * 没有数据的时候空view
-     */
-    var emptyView: View? = null
-        set(emptyView) {
-            field = emptyView
-            mDataObserver.onChanged()
-        }
 
     //底部footer
     private var mFootView: BaseLoadMoreFooter? = null
@@ -91,14 +63,34 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
     private var mWrapAdapter: WrapAdapter? = null
 
     /**
+     * 是否使能下拉刷新
+     */
+    var isPullRefreshEnabled = true
+
+    /**
+     * 是否使能上拉加载更多
+     */
+    var isLoadingMoreEnabled = true
+        set(enabled) {
+            field = enabled
+            if (!enabled) {
+                mFootView?.setState(BaseLoadMoreFooter.STATE_COMPLETE)
+            }
+        }
+
+    /**
+     * 没有数据的时候空view
+     */
+    var emptyView: View? = null
+        set(emptyView) {
+            field = emptyView
+            mDataObserver.onChanged()
+        }
+    /**
      * 是否顶部
      */
     private val isOnTop: Boolean
-        get() = if (mRefreshHeader!!.parent != null) {
-            true
-        } else {
-            false
-        }
+        get() = mRefreshHeader?.parent != null
 
 
     val headersCount: Int
@@ -118,12 +110,12 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
     private fun init() {
         if (isPullRefreshEnabled) {
             mRefreshHeader = ArrowRefreshHeader(context)
-            mRefreshHeader!!.setProgressStyle(mRefreshProgressStyle)
+            mRefreshHeader?.setProgressStyle(mRefreshProgressStyle)
         }
         val footView = LoadingMoreFooter(context)
         footView.setProgressStyle(mLoadingMoreProgressStyle)
         mFootView = footView
-        mFootView!!.visibility = View.GONE
+        mFootView?.visibility = View.GONE
     }
 
     override fun setAdapter(adapter: RecyclerView.Adapter<ViewHolder>) {
@@ -136,25 +128,25 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
     override fun onScrollStateChanged(state: Int) {
         super.onScrollStateChanged(state)
         if (onScrollListenerT != null) {
-            onScrollListenerT!!.onScrollStateChanged(this, state)
+            onScrollListenerT?.onScrollStateChanged(this, state)
         }
         if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadingListener != null && !isLoadingData && isLoadingMoreEnabled) {
             val layoutManager = layoutManager
-            val lastVisibleItemPosition: Int
-            if (layoutManager is GridLayoutManager) {
-                lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-            } else if (layoutManager is StaggeredGridLayoutManager) {
-                val into = IntArray(layoutManager.spanCount)
-                layoutManager.findLastVisibleItemPositions(into)
-                lastVisibleItemPosition = findMax(into)
-            } else {
-                lastVisibleItemPosition = (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+            val lastVisibleItemPosition = when (layoutManager) {
+                is GridLayoutManager -> layoutManager.findLastVisibleItemPosition()
+                is StaggeredGridLayoutManager -> {
+                    val into = IntArray(layoutManager.spanCount)
+                    layoutManager.findLastVisibleItemPositions(into)
+                    findMax(into)
+                }
+                else -> (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
             }
             if (layoutManager.childCount > 0
-                    && lastVisibleItemPosition >= layoutManager.itemCount - 1 && layoutManager.itemCount > layoutManager.childCount && !isNoMore && mRefreshHeader!!.state < BaseRefreshHeader.STATE_REFRESHING) {
+                    && lastVisibleItemPosition >= layoutManager.itemCount - 1 && layoutManager.itemCount > layoutManager.childCount && !isNoMore
+                    && mRefreshHeader != null  && mRefreshHeader!!.state < BaseRefreshHeader.STATE_REFRESHING) {
                 isLoadingData = true
-                mFootView!!.setState(BaseLoadMoreFooter.STATE_LOADING)
-                mLoadingListener!!.onLoadMore()
+                mFootView?.setState(BaseLoadMoreFooter.STATE_LOADING)
+                mLoadingListener?.onLoadMore()
             }
         }
     }
@@ -169,7 +161,7 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
                 val deltaY = ev.rawY - mLastY
                 mLastY = ev.rawY
                 if (isOnTop && isPullRefreshEnabled && appbarState == AppBarStateChangeListener.State.EXPANDED) {
-                    mRefreshHeader!!.onMove(deltaY / DRAG_RATE)
+                    mRefreshHeader?.onMove(deltaY / DRAG_RATE)
                     if (mRefreshHeader!!.visibleHeight > 0 && mRefreshHeader!!.state < BaseRefreshHeader.STATE_REFRESHING) {
                         return false
                     }
@@ -180,7 +172,7 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
                 if (isOnTop && isPullRefreshEnabled && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     if (mRefreshHeader!!.releaseAction()) {
                         if (mLoadingListener != null) {
-                            mLoadingListener!!.onRefresh()
+                            mLoadingListener?.onRefresh()
                         }
                     }
                 }
@@ -233,32 +225,21 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
     /**
      * 判断一个type是否为HeaderType
      */
-    private fun isHeaderType(itemViewType: Int): Boolean {
-        return mHeaderViews.size > 0 && sHeaderTypes.contains(itemViewType)
-    }
+    private fun isHeaderType(itemViewType: Int): Boolean =
+            mHeaderViews.size > 0 && sHeaderTypes.contains(itemViewType)
 
     /**
      * 判断是否是XRecyclerView保留的itemViewType
      */
-    private fun isReservedItemViewType(itemViewType: Int): Boolean {
-        return if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_FOOTER || sHeaderTypes.contains(itemViewType)) {
-            true
-        } else {
-            false
-        }
-    }
+    private fun isReservedItemViewType(itemViewType: Int): Boolean =
+            itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_FOOTER || sHeaderTypes.contains(itemViewType)
 
     /**
      * 瀑布流里最后的一个item的位置
      */
     private fun findMax(lastPositions: IntArray): Int {
-        var max = lastPositions[0]
-        for (value in lastPositions) {
-            if (value > max) {
-                max = value
-            }
-        }
-        return max
+        return lastPositions.max()
+                ?: lastPositions[0]
     }
 
     /**
@@ -276,32 +257,30 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
                     emptyCount++
                 }
                 if (adapter.itemCount == emptyCount) {
-                    emptyView!!.visibility = View.VISIBLE
+                    emptyView?.visibility = View.VISIBLE
                     this@XRecyclerView.visibility = View.GONE
                 } else {
-                    emptyView!!.visibility = View.GONE
+                    emptyView?.visibility = View.GONE
                     this@XRecyclerView.visibility = View.VISIBLE
                 }
             }
-            if (mWrapAdapter != null) {
-                mWrapAdapter!!.notifyDataSetChanged()
-            }
+            mWrapAdapter?.notifyDataSetChanged()
         }
 
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-            mWrapAdapter!!.notifyItemRangeInserted(positionStart, itemCount)
+            mWrapAdapter?.notifyItemRangeInserted(positionStart, itemCount)
         }
 
         override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-            mWrapAdapter!!.notifyItemRangeChanged(positionStart, itemCount)
+            mWrapAdapter?.notifyItemRangeChanged(positionStart, itemCount)
         }
 
         override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-            mWrapAdapter!!.notifyItemRangeRemoved(positionStart, itemCount)
+            mWrapAdapter?.notifyItemRangeRemoved(positionStart, itemCount)
         }
 
         override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
-            mWrapAdapter!!.notifyItemMoved(fromPosition, toPosition)
+            mWrapAdapter?.notifyItemMoved(fromPosition, toPosition)
         }
     }
 
@@ -317,7 +296,7 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
         fun isHeader(position: Int): Boolean {
             val startHeader = if (isPullRefreshEnabled) 1 else 0
             val endHeader = if (isPullRefreshEnabled) mHeaderViews.size + 1 else mHeaderViews.size
-            return position >= startHeader && position < endHeader
+            return position in startHeader..(endHeader - 1)
         }
 
         fun isFooter(position: Int): Boolean {
@@ -328,34 +307,27 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
             }
         }
 
-        fun isRefreshHeader(position: Int): Boolean {
-            return position == 0 && isPullRefreshEnabled
-        }
+        fun isRefreshHeader(position: Int): Boolean = position == 0 && isPullRefreshEnabled
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            if (viewType == TYPE_REFRESH_HEADER) {
-                return SimpleViewHolder(mRefreshHeader!!)
-            } else if (isHeaderType(viewType)) {
-                return SimpleViewHolder(getHeaderViewByType(viewType)!!)
-            } else if (viewType == TYPE_FOOTER) {
-                return SimpleViewHolder(mFootView!!)
-            }
-            return adapter!!.onCreateViewHolder(parent, viewType)
-        }
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+                when {
+                    viewType == TYPE_REFRESH_HEADER -> SimpleViewHolder(mRefreshHeader!!)
+                    isHeaderType(viewType) -> SimpleViewHolder(getHeaderViewByType(viewType)!!)
+                    viewType == TYPE_FOOTER -> SimpleViewHolder(mFootView!!)
+                    else -> adapter.onCreateViewHolder(parent, viewType)
+                }
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             if (isHeader(position) || isRefreshHeader(position)) {
                 return
             }
             val adjPosition = position - if (isPullRefreshEnabled) headersCount + 1 else headersCount
-            val adapterCount: Int
-            if (adapter != null) {
-                adapterCount = adapter.itemCount
-                if (adjPosition < adapterCount) {
-                    adapter.onBindViewHolder(holder, adjPosition)
-                    return
-                }
+            val adapterCount = adapter.itemCount
+            if (adjPosition < adapterCount) {
+                adapter.onBindViewHolder(holder, adjPosition)
+                return
             }
+            
         }
 
         override fun getItemCount(): Int {
@@ -381,8 +353,8 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
             }
         }
 
-        override fun getItemViewType(position: Int): Int {
-            var position = position
+        override fun getItemViewType(positionT: Int): Int {
+            var position = positionT
             val adjPosition = position - if (isPullRefreshEnabled) headersCount + 1 else headersCount
             if (isReservedItemViewType(adapter.getItemViewType(adjPosition))) {
                 throw IllegalStateException("XRecyclerView require itemViewType in adapter should be less than 10000 ")
@@ -392,7 +364,7 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
             }
             if (isHeader(position)) {
                 if (isPullRefreshEnabled) {
-                    position = position - 1
+                    position -= 1
                 }
                 return sHeaderTypes[position]
             }
@@ -423,7 +395,7 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
         override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
             super.onAttachedToRecyclerView(recyclerView)
             adapter.onAttachedToRecyclerView(recyclerView)
-            val manager = recyclerView!!.layoutManager
+            val manager = recyclerView?.layoutManager
             if (manager is GridLayoutManager) {
                 manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
@@ -459,9 +431,8 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
             adapter.onViewRecycled(holder)
         }
 
-        override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder?): Boolean {
-            return adapter.onFailedToRecycleView(holder)
-        }
+        override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder?): Boolean =
+                adapter.onFailedToRecycleView(holder)
 
         override fun unregisterAdapterDataObserver(observer: RecyclerView.AdapterDataObserver) {
             adapter.unregisterAdapterDataObserver(observer)
@@ -487,7 +458,7 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
      */
     fun loadMoreComplete() {
         isLoadingData = false
-        mFootView!!.setState(BaseLoadMoreFooter.STATE_COMPLETE)
+        mFootView?.setState(BaseLoadMoreFooter.STATE_COMPLETE)
     }
 
     /**
@@ -498,7 +469,7 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
     fun setNoMore(noMore: Boolean) {
         isLoadingData = false
         isNoMore = noMore
-        mFootView!!.setState(if (isNoMore) BaseLoadMoreFooter.STATE_NOMORE else BaseLoadMoreFooter.STATE_COMPLETE)
+        mFootView?.setState(if (isNoMore) BaseLoadMoreFooter.STATE_NOMORE else BaseLoadMoreFooter.STATE_COMPLETE)
     }
 
     /**
@@ -515,9 +486,9 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
      */
     fun setRefreshing(refreshing: Boolean) {
         if (refreshing && isPullRefreshEnabled && mLoadingListener != null) {
-            mRefreshHeader!!.state = BaseRefreshHeader.STATE_REFRESHING
-            mRefreshHeader!!.onMove(mRefreshHeader!!.measuredHeight.toFloat())
-            mLoadingListener!!.onRefresh()
+            mRefreshHeader?.state = BaseRefreshHeader.STATE_REFRESHING
+            mRefreshHeader?.onMove(mRefreshHeader?.measuredHeight!!.toFloat())
+            mLoadingListener?.onRefresh()
         }
     }
 
@@ -525,7 +496,7 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
      * 刷新结束
      */
     fun refreshComplete() {
-        mRefreshHeader!!.refreshComplete()
+        mRefreshHeader?.refreshComplete()
         setNoMore(false)
     }
 
@@ -549,7 +520,7 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
     fun setRefreshProgressStyle(style: Int) {
         mRefreshProgressStyle = style
         if (mRefreshHeader != null) {
-            mRefreshHeader!!.setProgressStyle(style)
+            mRefreshHeader?.setProgressStyle(style)
         }
     }
 
@@ -558,7 +529,7 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
      */
     fun setLoadingMoreProgressStyle(style: Int) {
         mLoadingMoreProgressStyle = style
-        mFootView!!.setProgressStyle(style)
+        mFootView?.setProgressStyle(style)
 
     }
 
@@ -567,7 +538,7 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
      */
     fun setArrowImageView(resId: Int) {
         if (mRefreshHeader != null) {
-            mRefreshHeader!!.setArrowImageView(resId)
+            mRefreshHeader?.setArrowImageView(resId)
         }
     }
 
