@@ -70,7 +70,7 @@ open class BindDecorationBuilder(private val bindRecyclerAdapter: BindRecyclerAd
             bindItemDecoration.setColor(color)
         }
         if (paint != null) {
-            bindItemDecoration.setPaint(paint!!)
+            bindItemDecoration.setPaint(paint)
         }
         bindItemDecoration.setNeedGridRightLeftEdge(needGridRightLeftEdge)
         bindItemDecoration.setNeedFirstTopEdge(needFirstTopEdge)

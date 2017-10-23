@@ -44,8 +44,8 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
 
     init {
         paint = Paint(Paint.ANTI_ALIAS_FLAG)
-        paint!!.color = color
-        paint!!.style = Paint.Style.FILL
+        paint?.color = color
+        paint?.style = Paint.Style.FILL
     }
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
@@ -100,7 +100,7 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
     /**
      * 初始化偏移位置，不包含刷新、头部、上拉等item
      */
-    fun initOffsetPosition() {
+    private fun initOffsetPosition() {
         //获取下拉刷新和头的偏移位置
         if (bindSuperAdapter is BindSuperAdapter) {
             offsetPosition = bindSuperAdapter.absFirstPosition()
@@ -115,11 +115,11 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
     /**
      * 配置linear模式的item rect
      */
-    fun linearRect(layoutManager: RecyclerView.LayoutManager, parent: RecyclerView, view: View, outRect: Rect) {
+    private fun linearRect(layoutManager: RecyclerView.LayoutManager, parent: RecyclerView, view: View, outRect: Rect) {
         val linearLayoutManager = layoutManager as LinearLayoutManager
         val currentPosition = parent.getChildAdapterPosition(view)
         //去掉header，上下拉item
-        if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
+        if (currentPosition in offsetPosition..(endDataPosition - 1)) {
             if (linearLayoutManager.orientation == LinearLayoutManager.HORIZONTAL) {
                 if (linearLayoutManager.reverseLayout) {
                     outRect.left = space
@@ -155,11 +155,11 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
     /**
      * 配置grid模式的item rect
      */
-    fun gridRect(parent: RecyclerView, view: View, outRect: Rect) {
+    private fun gridRect(parent: RecyclerView, view: View, outRect: Rect) {
         val currentPosition = parent.getChildAdapterPosition(view)
         val spanIndex = getSpanIndex(parent, view, view.layoutParams as RecyclerView.LayoutParams)
         //去掉header，上下拉item
-        if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
+        if (currentPosition in offsetPosition..(endDataPosition - 1)) {
             if (spanIndex == spanCount - 1) {
                 if (getCurReverseLayout(parent.layoutManager)) {
                     outRect.top = space
@@ -205,11 +205,11 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
     /**
      * 配置橫向grid模式的item rect
      */
-    fun gridRectHorizontal(parent: RecyclerView, view: View, outRect: Rect) {
+    private fun gridRectHorizontal(parent: RecyclerView, view: View, outRect: Rect) {
         val currentPosition = parent.getChildAdapterPosition(view)
         val spanIndex = getSpanIndex(parent, view, view.layoutParams as RecyclerView.LayoutParams)
         //去掉header，上下拉item
-        if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
+        if (currentPosition in offsetPosition..(endDataPosition - 1)) {
             if (spanIndex == spanCount - 1) {
                 if (getCurReverseLayout(parent.layoutManager)) {
                     outRect.left = space
@@ -252,7 +252,7 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
 
     }
 
-    fun drawLineVertical(canvas: Canvas, parent: RecyclerView) {
+    private fun drawLineVertical(canvas: Canvas, parent: RecyclerView) {
         val top = parent.paddingTop
         val bottom = parent.measuredHeight - parent.paddingBottom
         val childSize = parent.childCount
@@ -260,29 +260,29 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
         for (i in 0 until childSize) {
             val child = parent.getChildAt(i)
             val currentPosition = parent.getChildAdapterPosition(child)
-            if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
+            if (currentPosition in offsetPosition..(endDataPosition - 1)) {
                 if (linearLayoutManager.reverseLayout) {
                     if (paint != null) {
                         val left = child.left - space
                         val right = child.left
-                        canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint!!)
+                        canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint)
                     }
                 } else {
                     if (paint != null) {
                         val left = child.right
                         val right = left + space
-                        canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint!!)
+                        canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint)
                     }
                 }
                 //第一行顶部间隔
                 if (needFirstTopEdge && currentPosition == offsetPosition && currentPosition != endDataPosition) {
                     if (linearLayoutManager.reverseLayout) {
                         if (paint != null) {
-                            canvas.drawRect(child.right.toFloat(), top.toFloat(), (child.right + space).toFloat(), bottom.toFloat(), paint!!)
+                            canvas.drawRect(child.right.toFloat(), top.toFloat(), (child.right + space).toFloat(), bottom.toFloat(), paint)
                         }
                     } else {
                         if (paint != null) {
-                            canvas.drawRect((child.left - space).toFloat(), top.toFloat(), child.left.toFloat(), bottom.toFloat(), paint!!)
+                            canvas.drawRect((child.left - space).toFloat(), top.toFloat(), child.left.toFloat(), bottom.toFloat(), paint)
                         }
                     }
                 }
@@ -290,7 +290,7 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
         }
     }
 
-    fun drawLineHorizontal(canvas: Canvas, parent: RecyclerView) {
+    private fun drawLineHorizontal(canvas: Canvas, parent: RecyclerView) {
         val left = parent.paddingLeft
         val right = parent.measuredWidth - parent.paddingRight
         val childSize = parent.childCount
@@ -298,18 +298,18 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
         for (i in 0 until childSize) {
             val child = parent.getChildAt(i)
             val currentPosition = parent.getChildAdapterPosition(child)
-            if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
+            if (currentPosition in offsetPosition..(endDataPosition - 1)) {
                 if (linearLayoutManager.reverseLayout) {
                     val top = child.top - space
                     val bottom = child.top
                     if (paint != null) {
-                        canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint!!)
+                        canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint)
                     }
                 } else {
                     val top = child.bottom
                     val bottom = top + space
                     if (paint != null) {
-                        canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint!!)
+                        canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint)
                     }
                 }
             }
@@ -317,25 +317,25 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
             if (needFirstTopEdge && currentPosition == offsetPosition && currentPosition != endDataPosition) {
                 if (linearLayoutManager.reverseLayout) {
                     if (paint != null) {
-                        canvas.drawRect(left.toFloat(), child.bottom.toFloat(), right.toFloat(), (child.bottom + space).toFloat(), paint!!)
+                        canvas.drawRect(left.toFloat(), child.bottom.toFloat(), right.toFloat(), (child.bottom + space).toFloat(), paint)
                     }
                 } else {
                     if (paint != null) {
-                        canvas.drawRect(left.toFloat(), (child.top - space).toFloat(), right.toFloat(), child.top.toFloat(), paint!!)
+                        canvas.drawRect(left.toFloat(), (child.top - space).toFloat(), right.toFloat(), child.top.toFloat(), paint)
                     }
                 }
             }
         }
     }
 
-    fun drawGridVertical(canvas: Canvas, parent: RecyclerView) {
+    private fun drawGridVertical(canvas: Canvas, parent: RecyclerView) {
         val childSize = parent.childCount
         for (i in 0 until childSize) {
             val child = parent.getChildAt(i)
             val currentPosition = parent.getChildAdapterPosition(child)
             val spanIndex = getSpanIndex(parent, child, child.layoutParams as RecyclerView.LayoutParams)
             //去掉header，上下拉item
-            if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
+            if (currentPosition in offsetPosition..(endDataPosition - 1)) {
                 if (spanIndex == spanCount - 1) {
                     val top = child.top
                     val bottomTop = child.bottom
@@ -346,16 +346,16 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
 
                     if (getCurReverseLayout(parent.layoutManager)) {
                         if (paint != null) {
-                            canvas.drawRect((left - space).toFloat(), (top - space).toFloat(), (right + space).toFloat(), top.toFloat(), paint!!)
+                            canvas.drawRect((left - space).toFloat(), (top - space).toFloat(), (right + space).toFloat(), top.toFloat(), paint)
                         }
                     } else {
                         if (paint != null) {
-                            canvas.drawRect(left.toFloat(), bottomTop.toFloat(), right.toFloat(), bottom.toFloat(), paint!!)
+                            canvas.drawRect(left.toFloat(), bottomTop.toFloat(), right.toFloat(), bottom.toFloat(), paint)
                         }
                     }
 
                     if (paint != null && needGridRightLeftEdge) {
-                        canvas.drawRect(right.toFloat(), top.toFloat(), rightRight.toFloat(), bottom.toFloat(), paint!!)
+                        canvas.drawRect(right.toFloat(), top.toFloat(), rightRight.toFloat(), bottom.toFloat(), paint)
                     }
 
                 } else if (spanIndex == 0) {
@@ -369,20 +369,20 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
 
                     if (getCurReverseLayout(parent.layoutManager)) {
                         if (paint != null) {
-                            canvas.drawRect((left - space).toFloat(), (top - space).toFloat(), (right + space).toFloat(), top.toFloat(), paint!!)
+                            canvas.drawRect((left - space).toFloat(), (top - space).toFloat(), (right + space).toFloat(), top.toFloat(), paint)
                         }
                     } else {
                         if (paint != null) {
-                            canvas.drawRect(left.toFloat(), bottomTop.toFloat(), right.toFloat(), bottom.toFloat(), paint!!)
+                            canvas.drawRect(left.toFloat(), bottomTop.toFloat(), right.toFloat(), bottom.toFloat(), paint)
                         }
                     }
 
                     if (paint != null) {
-                        canvas.drawRect(right.toFloat(), top.toFloat(), rightRight.toFloat(), bottom.toFloat(), paint!!)
+                        canvas.drawRect(right.toFloat(), top.toFloat(), rightRight.toFloat(), bottom.toFloat(), paint)
                     }
 
                     if (paint != null && needGridRightLeftEdge) {
-                        canvas.drawRect((left - space).toFloat(), top.toFloat(), (leftRight - space).toFloat(), bottom.toFloat(), paint!!)
+                        canvas.drawRect((left - space).toFloat(), top.toFloat(), (leftRight - space).toFloat(), bottom.toFloat(), paint)
                     }
                 } else {
                     val top = child.top
@@ -394,17 +394,17 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
 
                     if (getCurReverseLayout(parent.layoutManager)) {
                         if (paint != null) {
-                            canvas.drawRect((left - space).toFloat(), (top - space).toFloat(), (right + space).toFloat(), top.toFloat(), paint!!)
+                            canvas.drawRect((left - space).toFloat(), (top - space).toFloat(), (right + space).toFloat(), top.toFloat(), paint)
                         }
                     } else {
 
                         if (paint != null) {
-                            canvas.drawRect(left.toFloat(), bottomTop.toFloat(), right.toFloat(), bottom.toFloat(), paint!!)
+                            canvas.drawRect(left.toFloat(), bottomTop.toFloat(), right.toFloat(), bottom.toFloat(), paint)
                         }
                     }
 
                     if (paint != null) {
-                        canvas.drawRect(right.toFloat(), top.toFloat(), rightRight.toFloat(), bottom.toFloat(), paint!!)
+                        canvas.drawRect(right.toFloat(), top.toFloat(), rightRight.toFloat(), bottom.toFloat(), paint)
                     }
                 }
                 stagFixEnd(canvas, parent, child, i, currentPosition)
@@ -420,18 +420,18 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
                 val right = child.right + space
                 if (getCurReverseLayout(parent.layoutManager)) {
                     if (paint != null) {
-                        canvas.drawRect(left.toFloat(), child.bottom.toFloat(), right.toFloat(), (child.bottom + space).toFloat(), paint!!)
+                        canvas.drawRect(left.toFloat(), child.bottom.toFloat(), right.toFloat(), (child.bottom + space).toFloat(), paint)
                     }
                 } else {
                     if (paint != null) {
-                        canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), topBottom.toFloat(), paint!!)
+                        canvas.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), topBottom.toFloat(), paint)
                     }
                 }
             }
         }
     }
 
-    fun drawGridHorizontal(canvas: Canvas, parent: RecyclerView) {
+    private fun drawGridHorizontal(canvas: Canvas, parent: RecyclerView) {
         val childSize = parent.childCount
         for (i in 0 until childSize) {
             val child = parent.getChildAt(i)
@@ -439,7 +439,7 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
             val spanIndex = getSpanIndex(parent, child, child.layoutParams as RecyclerView.LayoutParams)
 
             //去掉header，上下拉item
-            if (currentPosition >= offsetPosition && currentPosition < endDataPosition) {
+            if (currentPosition in offsetPosition..(endDataPosition - 1)) {
                 if (spanIndex == 0) {
                     val top = child.top
                     val bottomTop = child.bottom
@@ -449,21 +449,21 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
                     val rightRight = right + space
 
                     if (paint != null) {
-                        canvas.drawRect(left.toFloat(), bottomTop.toFloat(), right.toFloat(), bottom.toFloat(), paint!!)
+                        canvas.drawRect(left.toFloat(), bottomTop.toFloat(), right.toFloat(), bottom.toFloat(), paint)
                     }
 
                     if (getCurReverseLayout(parent.layoutManager)) {
                         if (paint != null) {
-                            canvas.drawRect((left - space).toFloat(), (top - space).toFloat(), left.toFloat(), bottom.toFloat(), paint!!)
+                            canvas.drawRect((left - space).toFloat(), (top - space).toFloat(), left.toFloat(), bottom.toFloat(), paint)
                         }
                     } else {
                         if (paint != null) {
-                            canvas.drawRect(right.toFloat(), top.toFloat(), rightRight.toFloat(), bottom.toFloat(), paint!!)
+                            canvas.drawRect(right.toFloat(), top.toFloat(), rightRight.toFloat(), bottom.toFloat(), paint)
                         }
                     }
 
                     if (paint != null && needGridRightLeftEdge) {
-                        canvas.drawRect(left.toFloat(), (top - space).toFloat(), (right + space).toFloat(), top.toFloat(), paint!!)
+                        canvas.drawRect(left.toFloat(), (top - space).toFloat(), (right + space).toFloat(), top.toFloat(), paint)
                     }
 
                 } else if (spanIndex == spanCount - 1) {
@@ -477,16 +477,16 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
 
                     if (getCurReverseLayout(parent.layoutManager)) {
                         if (paint != null) {
-                            canvas.drawRect((left - space).toFloat(), (top - space).toFloat(), left.toFloat(), bottom.toFloat(), paint!!)
+                            canvas.drawRect((left - space).toFloat(), (top - space).toFloat(), left.toFloat(), bottom.toFloat(), paint)
                         }
                     } else {
                         if (paint != null) {
-                            canvas.drawRect(right.toFloat(), top.toFloat(), rightRight.toFloat(), bottom.toFloat(), paint!!)
+                            canvas.drawRect(right.toFloat(), top.toFloat(), rightRight.toFloat(), bottom.toFloat(), paint)
                         }
                     }
 
                     if (paint != null && needGridRightLeftEdge) {
-                        canvas.drawRect(left.toFloat(), bottomTop.toFloat(), right.toFloat(), bottom.toFloat(), paint!!)
+                        canvas.drawRect(left.toFloat(), bottomTop.toFloat(), right.toFloat(), bottom.toFloat(), paint)
                     }
 
                 } else {
@@ -498,16 +498,16 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
                     val rightRight = right + space
 
                     if (paint != null) {
-                        canvas.drawRect(left.toFloat(), bottomTop.toFloat(), right.toFloat(), bottom.toFloat(), paint!!)
+                        canvas.drawRect(left.toFloat(), bottomTop.toFloat(), right.toFloat(), bottom.toFloat(), paint)
                     }
 
                     if (getCurReverseLayout(parent.layoutManager)) {
                         if (paint != null) {
-                            canvas.drawRect((left - space).toFloat(), (top - space).toFloat(), left.toFloat(), bottom.toFloat(), paint!!)
+                            canvas.drawRect((left - space).toFloat(), (top - space).toFloat(), left.toFloat(), bottom.toFloat(), paint)
                         }
                     } else {
                         if (paint != null) {
-                            canvas.drawRect(right.toFloat(), top.toFloat(), rightRight.toFloat(), bottom.toFloat(), paint!!)
+                            canvas.drawRect(right.toFloat(), top.toFloat(), rightRight.toFloat(), bottom.toFloat(), paint)
                         }
                     }
                 }
@@ -520,11 +520,11 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
                     && currentPosition != endDataPosition) {
                 if (getCurReverseLayout(parent.layoutManager)) {
                     if (paint != null) {
-                        canvas.drawRect(child.right.toFloat(), (child.top - space).toFloat(), (child.right + space).toFloat(), (child.bottom + space).toFloat(), paint!!)
+                        canvas.drawRect(child.right.toFloat(), (child.top - space).toFloat(), (child.right + space).toFloat(), (child.bottom + space).toFloat(), paint)
                     }
                 } else {
                     if (paint != null) {
-                        canvas.drawRect((child.left - space).toFloat(), (child.top - space).toFloat(), child.left.toFloat(), (child.bottom + space).toFloat(), paint!!)
+                        canvas.drawRect((child.left - space).toFloat(), (child.top - space).toFloat(), child.left.toFloat(), (child.bottom + space).toFloat(), paint)
                     }
                 }
             }
@@ -535,7 +535,7 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
     /**
      * 针对瀑布流的优化处理，因为瀑布流有长短边
      */
-    fun stagFixEnd(canvas: Canvas, parent: RecyclerView, child: View, i: Int, currentPosition: Int) {
+    private fun stagFixEnd(canvas: Canvas, parent: RecyclerView, child: View, i: Int, currentPosition: Int) {
         if (parent.layoutManager !is StaggeredGridLayoutManager) {
             return
         }
@@ -561,7 +561,7 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
     /**
      * 补齐那些缺少的瀑布流，存在缺角需要补齐
      */
-    fun stagFixVertical(canvas: Canvas, parent: RecyclerView, view: View, position: Int) {
+    private fun stagFixVertical(canvas: Canvas, parent: RecyclerView, view: View, position: Int) {
         val layoutManager = parent.layoutManager
         if (layoutManager is StaggeredGridLayoutManager) {
             val spanIndex = getSpanIndex(parent, view, view.layoutParams as RecyclerView.LayoutParams)
@@ -570,12 +570,12 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
                     //倒过来的，最后的旁边那个，应该加1，因为减1就是loadmre的view了
                     val preView = parent.getChildAt(position + 1)
                     if (preView.top > view.top) {
-                        canvas.drawRect((view.left - space).toFloat(), (view.top - space).toFloat(), view.left.toFloat(), preView.top.toFloat(), paint!!)
+                        canvas.drawRect((view.left - space).toFloat(), (view.top - space).toFloat(), view.left.toFloat(), preView.top.toFloat(), paint)
                     }
                 } else {
                     val preView = parent.getChildAt(position - 1)
                     if (preView.bottom < view.bottom) {
-                        canvas.drawRect((view.left - space).toFloat(), preView.bottom.toFloat(), view.left.toFloat(), (view.bottom + space).toFloat(), paint!!)
+                        canvas.drawRect((view.left - space).toFloat(), preView.bottom.toFloat(), view.left.toFloat(), (view.bottom + space).toFloat(), paint)
                     }
                 }
             }
@@ -585,7 +585,7 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
     /**
      * 补齐那些缺少的瀑布流，存在缺角需要补齐
      */
-    fun stagFixHorizontal(canvas: Canvas, parent: RecyclerView, view: View, position: Int) {
+    private fun stagFixHorizontal(canvas: Canvas, parent: RecyclerView, view: View, position: Int) {
         val layoutManager = parent.layoutManager
         if (layoutManager is StaggeredGridLayoutManager) {
             val spanIndex = getSpanIndex(parent, view, view.layoutParams as RecyclerView.LayoutParams)
@@ -593,18 +593,18 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
                 val preView = parent.getChildAt(position)
                 if (getCurReverseLayout(layoutManager)) {
                     if (preView.left > view.left) {
-                        canvas.drawRect(view.left.toFloat(), (view.top - space).toFloat(), preView.left.toFloat(), view.top.toFloat(), paint!!)
+                        canvas.drawRect(view.left.toFloat(), (view.top - space).toFloat(), preView.left.toFloat(), view.top.toFloat(), paint)
                     }
                 } else {
                     if (preView.right < view.right) {
-                        canvas.drawRect(preView.right.toFloat(), (view.top - space).toFloat(), (view.right + space).toFloat(), view.top.toFloat(), paint!!)
+                        canvas.drawRect(preView.right.toFloat(), (view.top - space).toFloat(), (view.right + space).toFloat(), view.top.toFloat(), paint)
                     }
                 }
             }
         }
     }
 
-    protected fun getSpanIndex(parent: RecyclerView, view: View, layoutParams: RecyclerView.LayoutParams): Int {
+    fun getSpanIndex(parent: RecyclerView, view: View, layoutParams: RecyclerView.LayoutParams): Int {
         if (layoutParams is GridLayoutManager.LayoutParams) {
             val currentPosition = parent.getChildAdapterPosition(view)
             return (currentPosition - offsetPosition) % spanCount
@@ -614,7 +614,7 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
         return 0
     }
 
-    protected fun getOrientation(layoutManager: RecyclerView.LayoutManager): Int {
+    fun getOrientation(layoutManager: RecyclerView.LayoutManager): Int {
         if (layoutManager is GridLayoutManager) {
             return layoutManager.orientation
         } else if (layoutManager is StaggeredGridLayoutManager) {
@@ -623,7 +623,7 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
         return 0
     }
 
-    protected fun getSpanCount(layoutManager: RecyclerView.LayoutManager): Int {
+    fun getSpanCount(layoutManager: RecyclerView.LayoutManager): Int {
         if (layoutManager is GridLayoutManager) {
             return layoutManager.spanCount
         } else if (layoutManager is StaggeredGridLayoutManager) {
@@ -633,18 +633,16 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
     }
 
     private fun getCurReverseLayout(layoutManager: RecyclerView.LayoutManager): Boolean {
-        if (layoutManager is GridLayoutManager) {
-            return layoutManager.reverseLayout
-        } else if (layoutManager is StaggeredGridLayoutManager) {
-            return layoutManager.reverseLayout
-        } else if (layoutManager is LinearLayoutManager) {
-            return layoutManager.reverseLayout
+        return when (layoutManager) {
+            is GridLayoutManager -> layoutManager.reverseLayout
+            is StaggeredGridLayoutManager -> layoutManager.reverseLayout
+            is LinearLayoutManager -> layoutManager.reverseLayout
+            else -> false
         }
-        return false
     }
 
 
-    fun setPaint(paint: Paint) {
+    fun setPaint(paint: Paint?) {
         this.paint = paint
     }
 
@@ -654,9 +652,7 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
 
     fun setColor(color: Int) {
         this.color = color
-        if (paint != null) {
-            paint!!.color = color
-        }
+        paint?.color = color
     }
 
     fun setNeedGridRightLeftEdge(needGridRightLeftEdge: Boolean) {
