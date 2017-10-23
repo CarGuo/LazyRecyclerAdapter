@@ -1,0 +1,20 @@
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/colorChatPressed"
+    >
+    <item>
+        <selector>
+            <item android:state_pressed="true">
+                <shape>
+                    <corners android:radius="2dp"></corners>
+                    <solid android:color="@color/ripple_material_dark"></solid>
+                </shape>
+            </item>
+            <item android:state_pressed="false">
+                <shape>
+                    <corners android:radius="2dp"></corners>
+                    <solid android:color="@android:color/transparent"></solid>
+                </shape>
+            </item>
+        </selector>
+    </item>
+</ripple>

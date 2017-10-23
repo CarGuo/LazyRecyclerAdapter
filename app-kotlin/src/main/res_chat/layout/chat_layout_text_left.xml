@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/chat_item_click_shape"
+    android:orientation="horizontal">
+
+    <include layout="@layout/chat_detail_user_layout_left" />
+
+    <com.daasuu.bl.BubbleLayout
+        style="@style/BubbleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/chat_detail_margin_content"
+        android:padding="5dp"
+        app:bl_arrowDirection="left">
+
+        <TextView
+            android:id="@+id/chat_detail_holder_text"
+            style="@style/BubbleTextStyle" />
+
+    </com.daasuu.bl.BubbleLayout>
+</RelativeLayout>

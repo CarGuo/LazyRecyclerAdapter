@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@drawable/chat_item_click_shape"
+    android:orientation="horizontal">
+
+    <include layout="@layout/chat_detail_user_layout_right" />
+
+    <com.shuyu.apprecycler.chat.detail.view.ImageBubbleLayout
+        style="@style/BubbleStyle"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/chat_detail_margin_content"
+        app:bl_arrowDirection="right">
+
+        <ImageView
+            android:id="@+id/chat_detail_holder_image"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/a1" />
+
+    </com.shuyu.apprecycler.chat.detail.view.ImageBubbleLayout>
+</RelativeLayout>

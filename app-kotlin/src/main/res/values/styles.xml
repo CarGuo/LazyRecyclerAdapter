@@ -1,0 +1,40 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- App全局主题 -->
+    <style name="AppThemeTitle" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item> <!-- 设置弹窗颜色和样式-->
+    </style>
+
+
+
+    <style name="BubbleStyle">
+        <item name="android:layout_marginTop">@dimen/chat_detail_margin_top</item>
+        <item name="bl_arrowHeight">8dp</item>
+        <item name="bl_arrowPosition">6dp</item>
+        <item name="bl_arrowWidth">4dp</item>
+        <item name="bl_cornersRadius">4dp</item>
+        <item name="bl_strokeWidth">1dp</item>
+        <item name="bl_bubbleColor">@color/colorPrimary</item>
+        <item name="bl_strokeColor">@android:color/white</item>
+    </style>
+
+    <style name="BubbleTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+</resources>

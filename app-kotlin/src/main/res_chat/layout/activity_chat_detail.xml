@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/chat_detail_activity_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
+        android:background="@color/colorPrimaryDark" />
+
+    <!--优雅的切换键盘和底部view-->
+    <com.shuyu.textutillib.KeyBoardLockLayout
+        android:id="@+id/chat_detail_activity_keyboard_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/chat_detail_activity_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#AAAAAA"
+            android:orientation="horizontal">
+
+            <com.shuyu.textutillib.RichEditText
+                android:id="@+id/chat_detail_activity_edit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="left"
+                android:hint="请输入贴子内容"
+                android:textColor="#333333"
+                android:textColorHint="#A7A7A7"
+                app:richMaxLength="2000" />
+
+            <ImageView
+                android:id="@+id/chat_detail_activity_bottom_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:src="@drawable/chat_detail_menu_icon" />
+
+            <ImageView
+                android:id="@+id/chat_detail_activity_emoji_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:src="@drawable/chat_face_icon" />
+
+            <TextView
+                android:id="@+id/chat_detail_activity_send"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@color/ripple_material_light"
+                android:gravity="center"
+                android:text="发送" />
+
+        </LinearLayout>
+    </com.shuyu.textutillib.KeyBoardLockLayout>
+
+    <com.shuyu.apprecycler.chat.detail.view.ChatDetailEmojiLayout
+        android:id="@+id/chat_detail_activity_send_emojiLayout"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:visibility="gone" />
+
+    <com.shuyu.apprecycler.chat.detail.view.ChatDetailBottomView
+        android:id="@+id/chat_detail_activity_bottom_menu"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:padding="10dp"
+        android:visibility="gone" />
+
+</LinearLayout>

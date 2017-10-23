@@ -1,0 +1,52 @@
+apply plugin: 'com.android.library'
+apply plugin: 'realm-android'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+    compileSdkVersion globalConfiguration.androidCompileSdkVersion
+    buildToolsVersion globalConfiguration.androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion globalConfiguration.androidMinSdkVersion
+        targetSdkVersion globalConfiguration.androidTargetSdkVersion
+
+        versionCode 1
+        versionName "1.0"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs = ['src/main/res', 'src/main/res_chat']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':CommonRecycler-Kotlin')
+    def viewDependencies = rootProject.ext.viewDependencies
+    def other = rootProject.ext.other
+    compile androidDependencies.kotlin
+    compile viewDependencies.rich
+    compile viewDependencies.bubble
+    compile viewDependencies.glide
+    compile viewDependencies.glideProcessor
+
+    compile other.dagger
+    apt other.daggerCompiler
+    provided other.glassfishAnnotation
+
+    compile other.rxjava
+    compile other.rxandroid
+}
