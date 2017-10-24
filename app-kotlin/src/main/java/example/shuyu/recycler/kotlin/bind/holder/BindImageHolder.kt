@@ -51,16 +51,16 @@ open class BindImageHolder (context: Context, v: View) : BindRecyclerBaseHolder(
     override fun getAnimator(view: View): AnimatorSet? {
         val animatorSet = AnimatorSet()
         val animator = ObjectAnimator.ofFloat(view, "translationY", dip2px(context, 80f).toFloat(), 0f)
-        animator.setDuration(500)
-        animator.setInterpolator(OvershootInterpolator(.5f))
+        animator.duration = 500
+        animator.interpolator = OvershootInterpolator(.5f)
 
         val animatorSx = ObjectAnimator.ofFloat(view, "scaleX", 0.5f, 1f)
-        animator.setDuration(500)
-        animator.setInterpolator(OvershootInterpolator(.5f))
+        animator.duration = 500
+        animator.interpolator = OvershootInterpolator(.5f)
 
         val animatorSy = ObjectAnimator.ofFloat(view, "scaleY", 0.5f, 1f)
-        animator.setDuration(500)
-        animator.setInterpolator(OvershootInterpolator(.5f))
+        animator.duration = 500
+        animator.interpolator = OvershootInterpolator(.5f)
 
         animatorSet.playTogether(animator, animatorSx, animatorSy)
         return animatorSet

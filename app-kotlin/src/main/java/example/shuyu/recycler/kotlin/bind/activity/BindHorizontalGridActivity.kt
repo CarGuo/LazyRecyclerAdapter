@@ -57,36 +57,36 @@ class BindHorizontalGridActivity : AppCompatActivity() {
     fun init() {
         val header = LayoutInflater.from(this).inflate(R.layout.layout_horitonal_header, null)
         normalAdapterManager = BindSuperAdapterManager()
-        normalAdapterManager!!
-                .bind(BindImageModel::class.java, BindImageHolder.ID, BindImageHolder::class.java)
-                .bind(BindTextModel::class.java, BindTextHolder.ID, BindTextHolder::class.java)
-                .bind(BindMutliModel::class.java, BindMutliHolder.ID, BindMutliHolder::class.java)
-                .bind(BindClickModel::class.java, BindClickHolder.ID, BindClickHolder::class.java)
-                .bindEmpty(BindNoDataHolder.NoDataModel::class.java, BindNoDataHolder.ID, BindNoDataHolder::class.java)
-                .setNeedAnimation(true)
-                .setOnItemClickListener(object : OnItemClickListener {
+        normalAdapterManager
+                ?.bind(BindImageModel::class.java, BindImageHolder.ID, BindImageHolder::class.java)
+                ?.bind(BindTextModel::class.java, BindTextHolder.ID, BindTextHolder::class.java)
+                ?.bind(BindMutliModel::class.java, BindMutliHolder.ID, BindMutliHolder::class.java)
+                ?.bind(BindClickModel::class.java, BindClickHolder.ID, BindClickHolder::class.java)
+                ?.bindEmpty(BindNoDataHolder.NoDataModel::class.java, BindNoDataHolder.ID, BindNoDataHolder::class.java)
+                ?.setNeedAnimation(true)
+                ?.setOnItemClickListener(object : OnItemClickListener {
                     override fun onItemClick(context: Context, position: Int) {
                         //需要减去你的header和刷新的view的数量
                         Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show()
                     }
                 })
-                .addHeaderView(header)
-                .setPullRefreshEnabled(true)
-                .setLoadingMoreEnabled(true)
-                .setFootView(BindHorizontalCustomLoadMoreFooter(this))
-                .setRefreshHeader(BindHorizontalCustomRefreshHeader(this))
-                .setOnItemClickListener(object : OnItemClickListener {
+                ?.addHeaderView(header)
+                ?.setPullRefreshEnabled(true)
+                ?.setLoadingMoreEnabled(true)
+                ?.setFootView(BindHorizontalCustomLoadMoreFooter(this))
+                ?.setRefreshHeader(BindHorizontalCustomRefreshHeader(this))
+                ?.setOnItemClickListener(object : OnItemClickListener {
                     override fun onItemClick(context: Context, position: Int) {
                         //需要减去你的header和刷新的view的数量
                         Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show()
                     }
-                }).setLoadingListener(object : OnLoadingListener {
+                })?.setLoadingListener(object : OnLoadingListener {
             override fun onRefresh() {
-                recycler!!.postDelayed({ refresh() }, 1000)
+                recycler?.postDelayed({ refresh() }, 1000)
             }
 
             override fun onLoadMore() {
-                recycler!!.postDelayed({ loadMore() }, 1000)
+                recycler?.postDelayed({ loadMore() }, 1000)
             }
         })
 
@@ -96,10 +96,10 @@ class BindHorizontalGridActivity : AppCompatActivity() {
         //GridLayoutManager staggeredGridLayoutManager = new GridLayoutManager(this, 3, LinearLayoutManager.HORIZONTAL, true);
         val staggeredGridLayoutManager = GridLayoutManager(this, 3, LinearLayoutManager.HORIZONTAL, false)
 
-        recycler!!.layoutManager = staggeredGridLayoutManager
+        recycler?.layoutManager = staggeredGridLayoutManager
 
         //间隔线
-        recycler!!.addItemDecoration(BindDecorationBuilder(adapter!!)
+        recycler?.addItemDecoration(BindDecorationBuilder(adapter)
                 .setColor(resources
                         .getColor(R.color.material_deep_teal_200))
                 .setSpace(dip2px(this, 5f))
@@ -107,7 +107,7 @@ class BindHorizontalGridActivity : AppCompatActivity() {
                 .setNeedFirstTopEdge(true)
                 .builder())
 
-        recycler!!.adapter = adapter
+        recycler?.adapter = adapter
 
 
     }
@@ -118,8 +118,8 @@ class BindHorizontalGridActivity : AppCompatActivity() {
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized(lock) {
             datas = list
-            adapter!!.setListData(datas)
-            normalAdapterManager!!.refreshComplete()
+            adapter?.setListData(datas)
+            normalAdapterManager?.refreshComplete()
         }
 
     }
@@ -130,8 +130,8 @@ class BindHorizontalGridActivity : AppCompatActivity() {
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized(lock) {
             //adapter.setLoadMoreState(BindLoadMoreHolder.NULL_DATA_STATE);
-            adapter!!.addListData(list)
-            normalAdapterManager!!.refreshComplete()
+            adapter?.addListData(list)
+            normalAdapterManager?.refreshComplete()
         }
     }
 

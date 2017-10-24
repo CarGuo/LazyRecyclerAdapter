@@ -9,7 +9,7 @@ import com.shuyu.commonrecycler.BindRecyclerAdapter
  * Created by guoshuyu on 2017/8/31.
  */
 
-open class BindDecorationBuilder(private val bindRecyclerAdapter: BindRecyclerAdapter) {
+open class BindDecorationBuilder(private val bindRecyclerAdapter: BindRecyclerAdapter?) {
 
     private var paint: Paint? = null
 

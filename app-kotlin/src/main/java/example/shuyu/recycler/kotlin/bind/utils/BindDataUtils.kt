@@ -185,18 +185,22 @@ object BindDataUtils {
         for (i in datas.indices) {
             val `object` = datas[i]
             val newModel: Any
-            if (`object` is BindClickModel) {
-                newModel = BindClickModel()
-                newModel.btnText = "Load More 我就老按键哈哈哈哈！！！！！ " + (datas.indexOf(`object`) + 1)
-                list.add(newModel)
-            } else if (`object` is BindTextModel) {
-                newModel = BindTextModel()
-                newModel.text = "Load More 我就老文本哈哈哈哈！！！！！ " + (datas.indexOf(`object`) + 1)
-                list.add(newModel)
-            } else if (`object` is BindImageModel) {
-                newModel = BindImageModel()
-                newModel.resId = `object`.resId
-                list.add(newModel)
+            when (`object`) {
+                is BindClickModel -> {
+                    newModel = BindClickModel()
+                    newModel.btnText = "Load More 我就老按键哈哈哈哈！！！！！ " + (datas.indexOf(`object`) + 1)
+                    list.add(newModel)
+                }
+                is BindTextModel -> {
+                    newModel = BindTextModel()
+                    newModel.text = "Load More 我就老文本哈哈哈哈！！！！！ " + (datas.indexOf(`object`) + 1)
+                    list.add(newModel)
+                }
+                is BindImageModel -> {
+                    newModel = BindImageModel()
+                    newModel.resId = `object`.resId
+                    list.add(newModel)
+                }
             }
         }
         return list

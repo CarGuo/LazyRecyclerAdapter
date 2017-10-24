@@ -6,6 +6,4 @@ package example.shuyu.recycler.kotlin.bind.model
  * Created by shuyu on 2016/11/23.
  */
 
-open class BindTextModel {
-    var text = ""
-}
+data class BindTextModel(var text: String = "")

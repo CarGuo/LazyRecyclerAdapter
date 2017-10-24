@@ -53,42 +53,42 @@ class BindEmptyActivity : AppCompatActivity() {
     fun init() {
 
         normalAdapterManager = BindSuperAdapterManager()
-        normalAdapterManager!!
-                .bind(BindImageModel::class.java, BindImageHolder.ID, BindImageHolder::class.java)
-                .bind(BindTextModel::class.java, BindTextHolder.ID, BindTextHolder::class.java)
-                .bind(BindMutliModel::class.java, BindMutliHolder.ID, BindMutliHolder::class.java)
-                .bind(BindClickModel::class.java, BindClickHolder.ID, BindClickHolder::class.java)
-                .bindEmpty(BindNoDataHolder.NoDataModel::class.java, BindNoDataHolder.ID, BindNoDataHolder::class.java)
-                .setNeedAnimation(true)
-                .setPullRefreshEnabled(true)
-                .setLoadingMoreEnabled(true)
-                .setOnItemClickListener(object : OnItemClickListener {
+        normalAdapterManager
+                ?.bind(BindImageModel::class.java, BindImageHolder.ID, BindImageHolder::class.java)
+                ?.bind(BindTextModel::class.java, BindTextHolder.ID, BindTextHolder::class.java)
+                ?.bind(BindMutliModel::class.java, BindMutliHolder.ID, BindMutliHolder::class.java)
+                ?.bind(BindClickModel::class.java, BindClickHolder.ID, BindClickHolder::class.java)
+                ?.bindEmpty(BindNoDataHolder.NoDataModel::class.java, BindNoDataHolder.ID, BindNoDataHolder::class.java)
+                ?.setNeedAnimation(true)
+                ?.setPullRefreshEnabled(true)
+                ?.setLoadingMoreEnabled(true)
+                ?.setOnItemClickListener(object : OnItemClickListener {
                     override fun onItemClick(context: Context, position: Int) {
                         //需要减去你的header和刷新的view的数量
                         Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show()
                     }
                 })
-                .setLoadingListener(object : OnLoadingListener {
+                ?.setLoadingListener(object : OnLoadingListener {
                     override fun onRefresh() {
-                        recycler!!.postDelayed({ refresh() }, 1000)
+                        recycler?.postDelayed({ refresh() }, 1000)
                     }
 
                     override fun onLoadMore() {
-                        recycler!!.postDelayed({ loadMore() }, 1000)
+                        recycler?.postDelayed({ loadMore() }, 1000)
                     }
                 })
 
 
         adapter = BindSuperAdapter(this, normalAdapterManager!!, datas)
 
-        recycler!!.layoutManager = LinearLayoutManager(this)
+        recycler?.layoutManager = LinearLayoutManager(this)
         //间隔线
-        recycler!!.addItemDecoration(BindDecorationBuilder(adapter!!)
+        recycler?.addItemDecoration(BindDecorationBuilder(adapter)
                 .setColor(Color.TRANSPARENT)
                 .setSpace(dip2px(this, 3f))
                 .setNeedFirstTopEdge(true)
                 .builder())
-        recycler!!.adapter = adapter
+        recycler?.adapter = adapter
 
     }
 
@@ -99,8 +99,8 @@ class BindEmptyActivity : AppCompatActivity() {
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized(lock) {
             datas = list
-            adapter!!.setListData(list)
-            normalAdapterManager!!.refreshComplete()
+            adapter?.setListData(list)
+            normalAdapterManager?.refreshComplete()
         }
 
     }
@@ -110,8 +110,8 @@ class BindEmptyActivity : AppCompatActivity() {
         //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized(lock) {
-            adapter!!.addListData(list)
-            normalAdapterManager!!.loadMoreComplete()
+            adapter?.addListData(list)
+            normalAdapterManager?.loadMoreComplete()
         }
     }
 

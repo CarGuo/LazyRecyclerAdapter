@@ -58,31 +58,31 @@ class BindStaggeredRefreshLoadActivity : AppCompatActivity() {
         val header = LayoutInflater.from(this).inflate(R.layout.layout_header, null)
 
         normalAdapterManager = BindSuperAdapterManager()
-        normalAdapterManager!!
-                .bind(BindImageModel::class.java, BindImageHolder.ID, BindImageHolder::class.java)
-                .bind(BindTextModel::class.java, BindTextHolder.ID, BindTextHolder::class.java)
-                .bind(BindMutliModel::class.java, BindMutliHolder.ID, BindMutliHolder::class.java)
-                .bind(BindClickModel::class.java, BindClickHolder.ID, BindClickHolder::class.java)
-                .bindEmpty(BindNoDataHolder.NoDataModel::class.java, BindNoDataHolder.ID, BindNoDataHolder::class.java)
-                .setNeedAnimation(true)
-                .setOnItemClickListener(object : OnItemClickListener {
+        normalAdapterManager
+                ?.bind(BindImageModel::class.java, BindImageHolder.ID, BindImageHolder::class.java)
+                ?.bind(BindTextModel::class.java, BindTextHolder.ID, BindTextHolder::class.java)
+                ?.bind(BindMutliModel::class.java, BindMutliHolder.ID, BindMutliHolder::class.java)
+                ?.bind(BindClickModel::class.java, BindClickHolder.ID, BindClickHolder::class.java)
+                ?.bindEmpty(BindNoDataHolder.NoDataModel::class.java, BindNoDataHolder.ID, BindNoDataHolder::class.java)
+                ?.setNeedAnimation(true)
+                ?.setOnItemClickListener(object : OnItemClickListener {
                     override fun onItemClick(context: Context, position: Int) {
                         //需要减去你的header和刷新的view的数量
                         Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show()
                     }
                 })
-                .addHeaderView(header)
-                .setPullRefreshEnabled(true)
-                .setLoadingMoreEnabled(true)
-                .setFootView(BindCustomLoadMoreFooter(this))
-                .setRefreshHeader(BindCustomRefreshHeader(this))
-                .setLoadingListener(object : OnLoadingListener {
+                ?.addHeaderView(header)
+                ?.setPullRefreshEnabled(true)
+                ?.setLoadingMoreEnabled(true)
+                ?.setFootView(BindCustomLoadMoreFooter(this))
+                ?.setRefreshHeader(BindCustomRefreshHeader(this))
+                ?.setLoadingListener(object : OnLoadingListener {
                     override fun onRefresh() {
-                        recycler!!.postDelayed({ refresh() }, 3000)
+                        recycler?.postDelayed({ refresh() }, 3000)
                     }
 
                     override fun onLoadMore() {
-                        recycler!!.postDelayed({ loadMore() }, 2000)
+                        recycler?.postDelayed({ loadMore() }, 2000)
                     }
                 })
 
@@ -92,7 +92,7 @@ class BindStaggeredRefreshLoadActivity : AppCompatActivity() {
         //瀑布流管理器
         val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         //staggeredGridLayoutManager.setReverseLayout(true);
-        recycler!!.layoutManager = staggeredGridLayoutManager
+        recycler?.layoutManager = staggeredGridLayoutManager
 
         //使能拖拽
         /*BindDragCallBack bindDragCallBack = new BindDragCallBack(adapter);
@@ -101,7 +101,7 @@ class BindStaggeredRefreshLoadActivity : AppCompatActivity() {
 
 
         //间隔线
-        recycler!!.addItemDecoration(BindDecorationBuilder(adapter!!)
+        recycler?.addItemDecoration(BindDecorationBuilder(adapter)
                 .setColor(resources
                         .getColor(R.color.material_deep_teal_500))
                 .setSpace(dip2px(this, 5f))
@@ -109,7 +109,7 @@ class BindStaggeredRefreshLoadActivity : AppCompatActivity() {
                 .setNeedFirstTopEdge(true)
                 .builder())
 
-        recycler!!.adapter = adapter
+        recycler?.adapter = adapter
 
 
     }
@@ -120,8 +120,8 @@ class BindStaggeredRefreshLoadActivity : AppCompatActivity() {
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized(lock) {
             datas = list
-            adapter!!.setListData(datas)
-            normalAdapterManager!!.refreshComplete()
+            adapter?.setListData(datas)
+            normalAdapterManager?.refreshComplete()
         }
 
     }
@@ -131,11 +131,11 @@ class BindStaggeredRefreshLoadActivity : AppCompatActivity() {
         //组装好数据之后，再一次性给list，在加多个锁，这样能够避免和上拉数据更新冲突
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized(lock) {
-            adapter!!.addListData(list)
+            adapter?.addListData(list)
             if (count < 1) {
-                normalAdapterManager!!.loadMoreComplete()
+                normalAdapterManager?.loadMoreComplete()
             } else {
-                normalAdapterManager!!.setNoMore(true)
+                normalAdapterManager?.setNoMore(true)
             }
             count++
         }

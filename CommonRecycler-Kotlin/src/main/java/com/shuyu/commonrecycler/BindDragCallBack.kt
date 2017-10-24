@@ -55,15 +55,15 @@ open class BindDragCallBack : ItemTouchHelper.Callback {
     //滑动回调
     private var mSwipeListener: SwipeListener? = null
 
-    constructor(adapter: BindSuperAdapter, limitStartPosition: Boolean, limitEndPosition: Boolean) : super() {
+    constructor(adapter: BindSuperAdapter?, limitStartPosition: Boolean, limitEndPosition: Boolean) : super() {
         init(adapter, limitStartPosition, limitEndPosition)
     }
 
-    constructor(adapter: BindSuperAdapter) : super() {
+    constructor(adapter: BindSuperAdapter?) : super() {
         init(adapter, false, false)
     }
 
-    private fun init(adapter: BindSuperAdapter, limitStartPosition: Boolean, limitEndPosition: Boolean) {
+    private fun init(adapter: BindSuperAdapter?, limitStartPosition: Boolean, limitEndPosition: Boolean) {
         mLimitEndPosition = limitEndPosition
         mLimitStartPosition = limitStartPosition
         mAdapter = adapter

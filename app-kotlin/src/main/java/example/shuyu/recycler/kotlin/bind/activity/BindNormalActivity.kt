@@ -51,14 +51,14 @@ class BindNormalActivity : AppCompatActivity() {
     fun init() {
 
         normalAdapterManager = BindSuperAdapterManager()
-        normalAdapterManager!!
-                .bind(BindImageModel::class.java, BindImageHolder.ID, BindImageHolder::class.java)
-                .bind(BindTextModel::class.java, BindTextHolder.ID, BindTextHolder::class.java)
-                .bind(BindMutliModel::class.java, BindMutliHolder.ID, BindMutliHolder::class.java)
-                .bind(BindClickModel::class.java, BindClickHolder.ID, BindClickHolder::class.java)
-                .bindEmpty(BindNoDataHolder.NoDataModel::class.java, BindNoDataHolder.ID, BindNoDataHolder::class.java)
-                .setNeedAnimation(true)
-                .setOnItemClickListener(object : OnItemClickListener {
+        normalAdapterManager
+                ?.bind(BindImageModel::class.java, BindImageHolder.ID, BindImageHolder::class.java)
+                ?.bind(BindTextModel::class.java, BindTextHolder.ID, BindTextHolder::class.java)
+                ?.bind(BindMutliModel::class.java, BindMutliHolder.ID, BindMutliHolder::class.java)
+                ?.bind(BindClickModel::class.java, BindClickHolder.ID, BindClickHolder::class.java)
+                ?.bindEmpty(BindNoDataHolder.NoDataModel::class.java, BindNoDataHolder.ID, BindNoDataHolder::class.java)
+                ?.setNeedAnimation(true)
+                ?.setOnItemClickListener(object : OnItemClickListener {
                     override fun onItemClick(context: Context, position: Int) {
                         Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show()
                     }
@@ -67,7 +67,7 @@ class BindNormalActivity : AppCompatActivity() {
 
         adapter = BindRecyclerAdapter(this, normalAdapterManager!!, datas)
 
-        recycler!!.layoutManager = LinearLayoutManager(this)
+        recycler?.layoutManager = LinearLayoutManager(this)
 
 
         //间隔线
@@ -77,9 +77,9 @@ class BindNormalActivity : AppCompatActivity() {
         val effects = DashPathEffect(floatArrayOf(5f, 5f, 5f, 5f), 1f)
         paint.pathEffect = effects
         paint.strokeWidth = dip2px(this, 5f).toFloat()
-        recycler!!.addItemDecoration(BindDecorationBuilder(adapter!!).setPaint(paint).setSpace(dip2px(this, 5f)).builder())
+        recycler?.addItemDecoration(BindDecorationBuilder(adapter).setPaint(paint).setSpace(dip2px(this, 5f)).builder())
 
-        recycler!!.adapter = adapter
+        recycler?.adapter = adapter
 
     }
 
@@ -88,7 +88,7 @@ class BindNormalActivity : AppCompatActivity() {
         val list = BindDataUtils.refreshData
         this.datas = list
         if (adapter != null) {
-            adapter!!.setListData(datas)
+            adapter?.setListData(datas)
         }
     }
 

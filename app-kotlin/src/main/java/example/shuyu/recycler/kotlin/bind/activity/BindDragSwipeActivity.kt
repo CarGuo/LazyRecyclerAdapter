@@ -65,12 +65,12 @@ class BindDragSwipeActivity : AppCompatActivity() {
 
         //注意，一个manager中，一个id只能绑定一个holder
         //一个model class可以绑定多对id + Holder
-        normalAdapterManager!!.bind(BindTextModel::class.java, BindTextHolder.ID, BindTextHolder::class.java)
-                .bind(BindImageModel::class.java, BindImageHolder.ID, BindImageHolder::class.java)
-                .bind(BindMutliModel::class.java, BindImageHolder.ID, BindImageHolder::class.java)
-                .bind(BindMutliModel::class.java, BindMutliHolder.ID, BindMutliHolder::class.java)
-                .bind(BindClickModel::class.java, BindClickHolder.ID, BindClickHolder::class.java)
-                .bingChooseListener(object : OnBindDataChooseListener {
+        normalAdapterManager?.bind(BindTextModel::class.java, BindTextHolder.ID, BindTextHolder::class.java)
+                ?.bind(BindImageModel::class.java, BindImageHolder.ID, BindImageHolder::class.java)
+                ?.bind(BindMutliModel::class.java, BindImageHolder.ID, BindImageHolder::class.java)
+                ?.bind(BindMutliModel::class.java, BindMutliHolder.ID, BindMutliHolder::class.java)
+                ?.bind(BindClickModel::class.java, BindClickHolder.ID, BindClickHolder::class.java)
+                ?.bingChooseListener(object : OnBindDataChooseListener {
                     //一种model类型对应多个Holder时，根据model实体判断选择holder
                    override fun getCurrentDataLayoutId(`object`: Any, classType: Class<*>, position: Int, ids: List<Int>): Int {
                         return if (`object` is BindMutliModel && ids.size > 1) {
@@ -82,24 +82,24 @@ class BindDragSwipeActivity : AppCompatActivity() {
                         } else ids[ids.size - 1]
                     }
                 })
-                .setPullRefreshEnabled(true)
-                .setLoadingMoreEnabled(true)
-                .setFootView(BindCustomLoadMoreFooter(this))
-                .setRefreshHeader(BindCustomRefreshHeader(this))
-                .setNeedAnimation(true)
-                .setOnItemClickListener(object : OnItemClickListener {
+                ?.setPullRefreshEnabled(true)
+                ?.setLoadingMoreEnabled(true)
+                ?.setFootView(BindCustomLoadMoreFooter(this))
+                ?.setRefreshHeader(BindCustomRefreshHeader(this))
+                ?.setNeedAnimation(true)
+                ?.setOnItemClickListener(object : OnItemClickListener {
                     override fun onItemClick(context: Context, position: Int) {
                         //需要减去你的header和刷新的view的数量
                         Toast.makeText(context, "点击了！！　" + position, Toast.LENGTH_SHORT).show()
                     }
                 })
-                .setLoadingListener(object : OnLoadingListener {
+                ?.setLoadingListener(object : OnLoadingListener {
                     override fun onRefresh() {
-                        recycler!!.postDelayed({ refresh() }, 1000)
+                        recycler?.postDelayed({ refresh() }, 1000)
                     }
 
                     override fun onLoadMore() {
-                        recycler!!.postDelayed({ loadMore() }, 1000)
+                        recycler?.postDelayed({ loadMore() }, 1000)
                     }
                 })
 
@@ -107,21 +107,21 @@ class BindDragSwipeActivity : AppCompatActivity() {
         adapter = BindSuperAdapter(this, normalAdapterManager!!, datas)
 
         //recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
-        recycler!!.layoutManager = LinearLayoutManager(this)
+        recycler?.layoutManager = LinearLayoutManager(this)
 
-        val bindDragCallBack = BindDragCallBack(adapter!!)
+        val bindDragCallBack = BindDragCallBack(adapter)
         bindDragCallBack.setSwipeEnabled(true)
         val itemTouchHelper = ItemTouchHelper(bindDragCallBack)
         itemTouchHelper.attachToRecyclerView(recycler)
 
         //间隔线
-        recycler!!.addItemDecoration(BindDecorationBuilder(adapter!!)
+        recycler?.addItemDecoration(BindDecorationBuilder(adapter)
                 .setColor(resources
                         .getColor(R.color.material_deep_teal_500))
                 .setSpace(dip2px(this, 2f))
                 .builder())
 
-        recycler!!.adapter = adapter
+        recycler?.adapter = adapter
     }
 
     private fun refresh() {
@@ -159,8 +159,8 @@ class BindDragSwipeActivity : AppCompatActivity() {
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized(lock) {
             datas = list
-            adapter!!.setListData(datas)
-            normalAdapterManager!!.refreshComplete()
+            adapter?.setListData(datas)
+            normalAdapterManager?.refreshComplete()
         }
 
     }
@@ -171,8 +171,8 @@ class BindDragSwipeActivity : AppCompatActivity() {
         //数据要尽量组装好，避免多个异步操作同个内存，因为多个异步更新一个数据源会有问题。
         synchronized(lock) {
             //adapter.setLoadMoreState(BindLoadMoreHolder.NULL_DATA_STATE);
-            adapter!!.addListData(list)
-            normalAdapterManager!!.loadMoreComplete()
+            adapter?.addListData(list)
+            normalAdapterManager?.loadMoreComplete()
         }
     }
 

@@ -18,7 +18,7 @@ import com.shuyu.commonrecycler.BindSuperAdapter
 /**
  * 实现分割线
  */
-open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter) : RecyclerView.ItemDecoration() {
+open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter?) : RecyclerView.ItemDecoration() {
 
     private var paint: Paint? = Paint(Paint.ANTI_ALIAS_FLAG)
 
@@ -105,7 +105,7 @@ open class BindItemDecoration(private val bindSuperAdapter: BindRecyclerAdapter)
         if (bindSuperAdapter is BindSuperAdapter) {
             offsetPosition = bindSuperAdapter.absFirstPosition()
         }
-        dataSize = if (bindSuperAdapter.dataList != null) bindSuperAdapter.dataList!!.size else 0
+        dataSize = if (bindSuperAdapter?.dataList != null) bindSuperAdapter.dataList!!.size else 0
         endDataPosition = offsetPosition + dataSize
         if (endDataPosition < 0) {
             endDataPosition = 0
