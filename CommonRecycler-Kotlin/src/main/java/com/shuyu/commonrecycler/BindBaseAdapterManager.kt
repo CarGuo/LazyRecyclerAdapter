@@ -79,9 +79,11 @@ open abstract class BindBaseAdapterManager<T : BindBaseAdapterManager<T>> {
             modelToId.put(modelClass.name, list)
         } else {
             val list = modelToId[modelClass.name]
-            if (!queryIdIn(list!!, layoutId)) {
-                list.add(layoutId)
-                modelToId.put(modelClass.name, list)
+            if (list != null) {
+                if (!queryIdIn(list, layoutId)) {
+                    list.add(layoutId)
+                    modelToId.put(modelClass.name, list)
+                }
             }
         }
         if (!idToHolder.containsKey(layoutId)) {
@@ -134,9 +136,7 @@ open abstract class BindBaseAdapterManager<T : BindBaseAdapterManager<T>> {
     /**
      * 是否支持动画
      */
-    fun isNeedAnimation(): Boolean {
-        return needAnimation
-    }
+    fun isNeedAnimation(): Boolean = needAnimation
 
     /**
      * 设置是否需要动画
@@ -157,9 +157,8 @@ open abstract class BindBaseAdapterManager<T : BindBaseAdapterManager<T>> {
     /**
      * 创建空数据的holder
      */
-    fun getNoDataViewTypeHolder(context: Context, parent: ViewGroup): BindRecyclerBaseHolder? {
-        return contructorHolder<BindRecyclerBaseHolder>(context, parent, noDataHolder, noDataLayoutId)
-    }
+    fun getNoDataViewTypeHolder(context: Context, parent: ViewGroup): BindRecyclerBaseHolder? =
+            contructorHolder<BindRecyclerBaseHolder>(context, parent, noDataHolder, noDataLayoutId)
 
     /**
      * 根据参数构造
@@ -171,7 +170,7 @@ open abstract class BindBaseAdapterManager<T : BindBaseAdapterManager<T>> {
         val v = LayoutInflater.from(context).inflate(layoutId, parent, false)
 
         try {
-            `object` = classType!!.getDeclaredConstructor(*arrayOf(Context::class.java, View::class.java))
+            `object` = classType?.getDeclaredConstructor(Context::class.java, View::class.java)
         } catch (e: NoSuchMethodException) {
             constructorFirst = false
             //e.printStackTrace();
@@ -179,14 +178,14 @@ open abstract class BindBaseAdapterManager<T : BindBaseAdapterManager<T>> {
 
         if (!constructorFirst) {
             try {
-                `object` = classType!!.getDeclaredConstructor(*arrayOf<Class<*>>(View::class.java))
+                `object` = classType?.getDeclaredConstructor(View::class.java)
             } catch (e: NoSuchMethodException) {
                 //e.printStackTrace();
             }
 
         }
         if (`object` == null) {
-            throw RuntimeException("Holder Constructor Error For : " + classType!!.name)
+            throw RuntimeException("Holder Constructor Error For : " + classType?.name)
         }
         try {
             `object`.isAccessible = true
@@ -203,13 +202,6 @@ open abstract class BindBaseAdapterManager<T : BindBaseAdapterManager<T>> {
     }
 
 
-    private fun queryIdIn(list: List<Int>, id: Int): Boolean {
-        for (i in list) {
-            if (i == id) {
-                return true
-            }
-        }
-        return false
-    }
+    private fun queryIdIn(list: List<Int>, id: Int): Boolean = list.contains(id)
 
 }

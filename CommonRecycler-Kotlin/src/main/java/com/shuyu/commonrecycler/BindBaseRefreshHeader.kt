@@ -46,18 +46,13 @@ open abstract class BindBaseRefreshHeader : BaseRefreshHeader {
     /**
      * 继承，view的可视高度
      */
-    /**
-     * 继承，view的可视高度
-     *
-     * @param height
-     */
     override var visibleHeight: Int
         get() {
             val lp = mContainer?.layoutParams as LinearLayout.LayoutParams
             return lp.height
         }
-        set(height) {
-            var height = height
+        set(heightT) {
+            var height = heightT
             if (height < 0) height = 0
             val lp = mContainer?.layoutParams as LinearLayout.LayoutParams
             lp.height = height
@@ -81,13 +76,14 @@ open abstract class BindBaseRefreshHeader : BaseRefreshHeader {
         // 初始情况，设置下拉刷新view高度为0
         mContainer = LayoutInflater.from(context)
                 .inflate(layoutId, null) as ViewGroup
-        addView(mContainer!!)
+        addView(mContainer)
+
     }
 
     /**
      * 添加view
      */
-    protected abstract fun addView(container: ViewGroup)
+    protected abstract fun addView(container: ViewGroup?)
 
     /**
      * 继承，必须要时需要实现样式
@@ -116,12 +112,12 @@ open abstract class BindBaseRefreshHeader : BaseRefreshHeader {
      */
     override fun onMove(delta: Float) {
         if (visibleHeight > 0 || delta > 0) {
-            visibleHeight = delta.toInt() + visibleHeight
+            visibleHeight += delta.toInt()
             if (state <= BaseRefreshHeader.STATE_RELEASE_TO_REFRESH) { // 未处于刷新状态，更新箭头
-                if (visibleHeight > currentMeasuredHeight) {
-                    state = BaseRefreshHeader.STATE_RELEASE_TO_REFRESH
+                state = if (visibleHeight > currentMeasuredHeight) {
+                    BaseRefreshHeader.STATE_RELEASE_TO_REFRESH
                 } else {
-                    state = BaseRefreshHeader.STATE_NORMAL
+                    BaseRefreshHeader.STATE_NORMAL
                 }
             }
         }
@@ -163,7 +159,7 @@ open abstract class BindBaseRefreshHeader : BaseRefreshHeader {
         Handler().postDelayed({ state = BaseRefreshHeader.STATE_NORMAL }, mResetTime.toLong())
     }
 
-    protected fun smoothScrollTo(destHeight: Int) {
+    fun smoothScrollTo(destHeight: Int) {
         val animator = ValueAnimator.ofInt(visibleHeight, destHeight)
         animator.setDuration(mScrollTime.toLong()).start()
         animator.addUpdateListener { animation -> visibleHeight = animation.animatedValue as Int }

@@ -113,7 +113,7 @@ open class BindHorizontalCustomRefreshHeader : BindBaseRefreshHeader {
      *
      * @param container
      */
-    override fun addView(container: ViewGroup) {
+    override fun addView(container: ViewGroup?) {
         val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT)
         lp.setMargins(0, 0, 0, 0)
         this.layoutParams = lp
@@ -122,7 +122,7 @@ open class BindHorizontalCustomRefreshHeader : BindBaseRefreshHeader {
         addView(container, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT))
         setGravity(Gravity.LEFT)
 
-        mCustomRefreshImg = container.findViewById(R.id.custom_refresh_img) as ImageView
+        mCustomRefreshImg = container?.findViewById(R.id.custom_refresh_img) as ImageView
         mCustomRefreshTxt = container.findViewById(R.id.custom_refresh_txt) as TextView
 
 

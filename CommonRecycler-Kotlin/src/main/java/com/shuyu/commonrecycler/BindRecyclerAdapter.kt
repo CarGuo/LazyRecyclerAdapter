@@ -27,12 +27,6 @@ open class BindRecyclerAdapter(context: Context, //管理器
     private var curRecyclerView: RecyclerView? = null
 
     //最后的位置
-    /**
-     * 获取最后一个位置
-     */
-    /**
-     * 最后一个的位置
-     */
     var lastPosition = -1
 
     init {
@@ -51,7 +45,7 @@ open class BindRecyclerAdapter(context: Context, //管理器
      * 删除
      */
     fun remove(position: Int) {
-        dataList!!.removeAt(position)
+        dataList?.removeAt(position)
         notifyItemRemoved(position)
     }
 
@@ -59,7 +53,7 @@ open class BindRecyclerAdapter(context: Context, //管理器
      * 增加
      */
     fun add(`object`: Any, position: Int) {
-        dataList!!.add(position, `object`)
+        dataList?.add(position, `object`)
         notifyItemInserted(position)
     }
 
@@ -68,7 +62,7 @@ open class BindRecyclerAdapter(context: Context, //管理器
      */
     @Synchronized
     fun addListData(data: List<Any>) {
-        dataList!!.addAll(data)
+        dataList?.addAll(data)
         notifyDataSetChanged()
     }
 
@@ -84,14 +78,12 @@ open class BindRecyclerAdapter(context: Context, //管理器
     /**
      * 获取列表数据
      */
-    fun getDataList(): List<*>? {
-        return dataList
-    }
+    fun getDataList(): List<Any>? = dataList
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
         super.onAttachedToRecyclerView(recyclerView)
         curRecyclerView = recyclerView
-        val manager = recyclerView!!.layoutManager
+        val manager = recyclerView?.layoutManager
         if (manager is GridLayoutManager) {
             manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
@@ -106,7 +98,7 @@ open class BindRecyclerAdapter(context: Context, //管理器
 
     override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder?) {
         super.onViewAttachedToWindow(holder)
-        val lp = holder!!.itemView.layoutParams
+        val lp = holder?.itemView?.layoutParams
         if (lp != null
                 && lp is StaggeredGridLayoutManager.LayoutParams
                 && isFooter(holder.layoutPosition)) {
@@ -132,11 +124,11 @@ open class BindRecyclerAdapter(context: Context, //管理器
 
         //itemView 的点击事件
         if (normalAdapterManager.itemClickListener != null) {
-            holder!!.itemView.setOnClickListener { normalAdapterManager.itemClickListener?.onItemClick(holder.itemView.context, curPosition(holder.position)) }
+            holder?.itemView?.setOnClickListener { normalAdapterManager.itemClickListener?.onItemClick(holder.itemView.context, curPosition(holder.position)) }
         }
 
         if (normalAdapterManager.itemLongClickListener != null) {
-            holder!!.itemView.setOnLongClickListener { normalAdapterManager.itemLongClickListener?.onItemClick(holder.itemView.context, curPosition(holder.position))!! }
+            holder?.itemView?.setOnLongClickListener { normalAdapterManager.itemLongClickListener?.onItemClick(holder.itemView.context, curPosition(holder.position))!! }
         }
 
 
@@ -149,8 +141,6 @@ open class BindRecyclerAdapter(context: Context, //管理器
         if (position < 0)
             return
 
-        val model: Any
-
         if (normalAdapterManager.isShowNoData && dataList != null && dataList!!.size == 0) {
             val recyclerHolder = holder as BindRecyclerBaseHolder
             recyclerHolder.setAdapter(this)
@@ -158,10 +148,10 @@ open class BindRecyclerAdapter(context: Context, //管理器
             return
         }
 
-        if (normalAdapterManager.isSupportLoadMore && position + 1 == itemCount) {
-            model = Any()
+        val model = if (normalAdapterManager.isSupportLoadMore && position + 1 == itemCount) {
+            Any()
         } else {
-            model = dataList!![position]
+            dataList!![position]
         }
 
 
@@ -212,10 +202,10 @@ open class BindRecyclerAdapter(context: Context, //管理器
 
         //返回需要显示的ID
         val `object` = dataList!![position]
-        val modelToId = normalAdapterManager.modelToId[`object`.javaClass.getName()] as List<Int>
+        val modelToId = normalAdapterManager.modelToId[`object`.javaClass.name] as List<Int>
 
 
-        if (modelToId == null || modelToId.size == 0) {
+        if (modelToId.isEmpty()) {
             return BindErrorHolder.ID
         }
 
@@ -237,13 +227,13 @@ open class BindRecyclerAdapter(context: Context, //管理器
     }
 
     internal open fun curPosition(position: Int): Int {
-        if (curRecyclerView is XRecyclerView) {
+        return if (curRecyclerView is XRecyclerView) {
             val xRecyclerView = curRecyclerView as XRecyclerView?
             val count = xRecyclerView!!.headersCount
             val refresh = xRecyclerView.isPullRefreshEnabled
-            return position - count - if (refresh) 1 else 0
+            position - count - if (refresh) 1 else 0
         } else {
-            return position
+            position
         }
     }
 

@@ -89,16 +89,14 @@ open class BindDragCallBack : ItemTouchHelper.Callback {
         if (mLimitStartPosition && (fromPosition == 0 || toPosition == 0)) {
             return false
         }
-        return if (viewHolder is BindSuperAdapter.WrapAdapter.SimpleViewHolder) {
-            false
-        } else true
+        return viewHolder !is BindSuperAdapter.WrapAdapter.SimpleViewHolder
     }
 
     override fun onMoved(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, fromPos: Int, target: RecyclerView.ViewHolder, toPos: Int, x: Int, y: Int) {
         super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y)
         val fromPosition = viewHolder.adapterPosition - mAdapter!!.absFirstPosition()
         val toPosition = target.adapterPosition - mAdapter!!.absFirstPosition()
-        val dataList = mAdapter!!.dataList
+        val dataList = mAdapter?.dataList
         if (fromPosition >= 0 && toPosition >= 0 && dataList != null
                 && toPosition < dataList.size && fromPosition < dataList.size) {
             if (fromPosition < toPosition) {
@@ -115,13 +113,8 @@ open class BindDragCallBack : ItemTouchHelper.Callback {
                 }
             }
             //数据和item的位置不是一致的
-            if (mAdapter != null) {
-                mAdapter!!.notifyItemMoved(fromPos, toPos)
-            }
-
-            if (mMoveListener != null) {
-                mMoveListener!!.onMoved(fromPosition, toPosition)
-            }
+            mAdapter?.notifyItemMoved(fromPos, toPos)
+            mMoveListener?.onMoved(fromPosition, toPosition)
             isDraged = true
         }
         isSwiped = false
@@ -137,12 +130,12 @@ open class BindDragCallBack : ItemTouchHelper.Callback {
         if (pos >= 0 && pos <= mAdapter!!.dataList!!.size - 1) {
             val position = viewHolder.adapterPosition
             if (isSwipedDelete) {
-                mAdapter!!.dataList!!.removeAt(pos)
-                mAdapter!!.notifyItemRemoved(position)
-                mAdapter!!.notifyItemRangeChanged(position, mAdapter!!.itemCount - position)
+                mAdapter?.dataList?.removeAt(pos)
+                mAdapter?.notifyItemRemoved(position)
+                mAdapter?.notifyItemRangeChanged(position, mAdapter!!.itemCount - position)
             }
             if (mSwipeListener != null && mSwipeEnabled) {
-                mSwipeListener!!.onSwiped(pos)
+                mSwipeListener?.onSwiped(pos)
             }
             isSwiped = true
         }
@@ -156,9 +149,7 @@ open class BindDragCallBack : ItemTouchHelper.Callback {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             return
         }
-        if (mMoveListener != null) {
-            mMoveListener!!.onMoveStart()
-        }
+        mMoveListener?.onMoveStart()
     }
 
     /**
@@ -176,11 +167,9 @@ open class BindDragCallBack : ItemTouchHelper.Callback {
         }
 
         if (isDraged) {
-            if (mMoveListener != null) {
-                mMoveListener!!.onMoveEnd()
-            }
+            mMoveListener?.onMoveEnd()
             try {
-                mAdapter!!.notifyDataSetChanged()
+                mAdapter?.notifyDataSetChanged()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -188,9 +177,9 @@ open class BindDragCallBack : ItemTouchHelper.Callback {
         }
     }
 
-    override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
-        var dX = dX
-        var dY = dY
+    override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dXT: Float, dYT: Float, actionState: Int, isCurrentlyActive: Boolean) {
+        var dX = dXT
+        var dY = dYT
         val position = viewHolder.adapterPosition - mAdapter!!.absFirstPosition()
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             if (position >= 0 && position <= mAdapter!!.dataList!!.size - 1 && viewHolder !is BindSuperAdapter.WrapAdapter.SimpleViewHolder) {
@@ -205,30 +194,22 @@ open class BindDragCallBack : ItemTouchHelper.Callback {
         }
     }
 
-    override fun isLongPressDragEnabled(): Boolean {
-        return mDragEnabled
-    }
+    override fun isLongPressDragEnabled(): Boolean = mDragEnabled
 
 
-    override fun isItemViewSwipeEnabled(): Boolean {
-        return mSwipeEnabled
-    }
+    override fun isItemViewSwipeEnabled(): Boolean = mSwipeEnabled
 
-    override fun getMoveThreshold(viewHolder: RecyclerView.ViewHolder?): Float {
-        return mMoveThreshold
-    }
+    override fun getMoveThreshold(viewHolder: RecyclerView.ViewHolder?): Float = mMoveThreshold
 
-    override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder?): Float {
-        return mSwipeThreshold
-    }
+    override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder?): Float = mSwipeThreshold
 
-    private fun SwipeLimited(dX: Float): Float {
-        var dX = dX
+    private fun SwipeLimited(dXT: Float): Float {
+        var dX = dXT
         if (Math.abs(dX) > Math.abs(mSwipeLength)) {
-            if (dX < 0) {
-                dX = (-Math.abs(mSwipeLength)).toFloat()
+            dX = if (dX < 0) {
+                (-Math.abs(mSwipeLength)).toFloat()
             } else {
-                dX = Math.abs(mSwipeLength).toFloat()
+                Math.abs(mSwipeLength).toFloat()
             }
         }
         return dX

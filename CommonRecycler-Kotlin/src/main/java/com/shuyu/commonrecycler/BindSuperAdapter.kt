@@ -55,16 +55,15 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
                 normalAdapterManager.onScrollListener?.onScrollStateChanged(recyclerView, state)
             }
             if (state == RecyclerView.SCROLL_STATE_IDLE && normalAdapterManager.mLoadingListener != null && !normalAdapterManager.isLoadingData && normalAdapterManager.loadingMoreEnabled) {
-                val layoutManager = recyclerView!!.layoutManager
-                val lastVisibleItemPosition: Int
-                if (layoutManager is GridLayoutManager) {
-                    lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-                } else if (layoutManager is StaggeredGridLayoutManager) {
-                    val into = IntArray(layoutManager.spanCount)
-                    layoutManager.findLastVisibleItemPositions(into)
-                    lastVisibleItemPosition = findMax(into)
-                } else {
-                    lastVisibleItemPosition = (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                val layoutManager = recyclerView?.layoutManager
+                val lastVisibleItemPosition = when (layoutManager) {
+                    is GridLayoutManager -> layoutManager.findLastVisibleItemPosition()
+                    is StaggeredGridLayoutManager -> {
+                        val into = IntArray(layoutManager.spanCount)
+                        layoutManager.findLastVisibleItemPositions(into)
+                        findMax(into)
+                    }
+                    else -> (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
                 }
                 if (layoutManager.childCount > 0
                         && lastVisibleItemPosition >= layoutManager.itemCount - 1
@@ -75,8 +74,8 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
                         return
                     }
                     normalAdapterManager.isLoadingData = true
-                    normalAdapterManager.mFootView!!.setState(BaseLoadMoreFooter.STATE_LOADING)
-                    normalAdapterManager.mLoadingListener!!.onLoadMore()
+                    normalAdapterManager.mFootView?.setState(BaseLoadMoreFooter.STATE_LOADING)
+                    normalAdapterManager.mLoadingListener?.onLoadMore()
                 }
             }
         }
@@ -87,13 +86,10 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
      */
     private val isOnTop: Boolean
         get() {
-            if (normalAdapterManager.mRefreshHeader == null) {
-                return true
-            }
-            return if (normalAdapterManager.mRefreshHeader!!.parent != null) {
+            return if (normalAdapterManager.mRefreshHeader == null) {
                 true
             } else {
-                false
+                normalAdapterManager.mRefreshHeader?.parent != null
             }
         }
 
@@ -104,20 +100,20 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
     private fun init() {
         if (normalAdapterManager.pullRefreshEnabled && normalAdapterManager.mRefreshHeader == null) {
             normalAdapterManager.mRefreshHeader = ArrowRefreshHeader(context)
-            normalAdapterManager.mRefreshHeader!!.setProgressStyle(normalAdapterManager.mRefreshProgressStyle)
+            normalAdapterManager.mRefreshHeader?.setProgressStyle(normalAdapterManager.mRefreshProgressStyle)
         }
         if (normalAdapterManager.mFootView == null) {
             val footView = LoadingMoreFooter(context)
             footView.setProgressStyle(normalAdapterManager.mLoadingMoreProgressStyle)
             normalAdapterManager.mFootView = footView
         }
-        normalAdapterManager.mFootView!!.visibility = GONE
+        normalAdapterManager.mFootView?.visibility = GONE
     }
 
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
         super.onAttachedToRecyclerView(recyclerView)
-        val adapter = recyclerView!!.adapter
+        val adapter = recyclerView?.adapter
         mRecyclerView = recyclerView
         if (adapter is BindSuperAdapter) {
             mWrapAdapter = WrapAdapter(adapter)
@@ -133,7 +129,7 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
         if (normalAdapterManager.mTouchListener != null) {
             return normalAdapterManager.mTouchListener?.onTouch(v, ev)!!
         }
-        return if (getOrientation(mRecyclerView!!.layoutManager) == OrientationHelper.HORIZONTAL) {
+        return if (getOrientation(mRecyclerView?.layoutManager) == OrientationHelper.HORIZONTAL) {
             touchX(ev)
         } else touchY(ev)
     }
@@ -141,7 +137,7 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
     override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder?) {
         super.onViewAttachedToWindow(holder) //解决和CollapsingToolbarLayout冲突的问题
         var appBarLayout: AppBarLayout? = null
-        var p: ViewParent? = mRecyclerView!!.parent
+        var p: ViewParent? = mRecyclerView?.parent
         while (p != null) {
             if (p is CoordinatorLayout) {
                 break
@@ -150,12 +146,14 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
         }
         if (p is CoordinatorLayout) {
             val coordinatorLayout = p as CoordinatorLayout?
-            val childCount = coordinatorLayout!!.childCount
-            for (i in childCount - 1 downTo 0) {
-                val child = coordinatorLayout.getChildAt(i)
-                if (child is AppBarLayout) {
-                    appBarLayout = child
-                    break
+            val childCount = coordinatorLayout?.childCount
+            if (childCount != null) {
+                for (i in childCount - 1 downTo 0) {
+                    val child = coordinatorLayout.getChildAt(i)
+                    if (child is AppBarLayout) {
+                        appBarLayout = child
+                        break
+                    }
                 }
             }
             if (appBarLayout != null) {
@@ -169,7 +167,7 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
     }
 
 
-    internal override fun curPosition(position: Int): Int {
+    override fun curPosition(position: Int): Int {
         val count = normalAdapterManager.headersCount
         val refresh = normalAdapterManager.isPullRefreshEnabled()
         return position - count - if (refresh) 1 else 0
@@ -186,11 +184,8 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
         return if (refresh) 1 else 0
     }
 
-    fun emptyForLoadMore(): Boolean {
-        return if ((dataList == null || dataList!!.size == 0) && !normalAdapterManager.loadingMoreEmptyEnabled) {
-            true
-        } else false
-    }
+    fun emptyForLoadMore(): Boolean =
+            (dataList == null || dataList?.size == 0) && !normalAdapterManager.loadingMoreEmptyEnabled
 
     private fun touchX(ev: MotionEvent): Boolean {
         if (mLastX == -1f) {
@@ -203,10 +198,10 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
                 mLastX = ev.rawX
                 if (normalAdapterManager.pullRefreshEnabled && isOnTop && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     var moveD = deltaX / DRAG_RATE
-                    if (getCurReverseLayout(mRecyclerView!!.layoutManager)) {
+                    if (getCurReverseLayout(mRecyclerView?.layoutManager)) {
                         moveD = -moveD
                     }
-                    normalAdapterManager.mRefreshHeader!!.onMove(moveD)
+                    normalAdapterManager.mRefreshHeader?.onMove(moveD)
                     if (normalAdapterManager.mRefreshHeader!!.visibleHeight > 0 && normalAdapterManager.mRefreshHeader!!.state < BaseRefreshHeader.STATE_REFRESHING) {
                         return false
                     }
@@ -216,9 +211,7 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
                 mLastX = -1f // reset
                 if (normalAdapterManager.pullRefreshEnabled && isOnTop && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     if (normalAdapterManager.mRefreshHeader!!.releaseAction()) {
-                        if (normalAdapterManager.mLoadingListener != null) {
-                            normalAdapterManager.mLoadingListener!!.onRefresh()
-                        }
+                        normalAdapterManager.mLoadingListener?.onRefresh()
                     }
                 }
             }
@@ -238,10 +231,10 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
                 mLastY = ev.rawY
                 if (normalAdapterManager.pullRefreshEnabled && isOnTop && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     var moveD = deltaY / DRAG_RATE
-                    if (getCurReverseLayout(mRecyclerView!!.layoutManager)) {
+                    if (getCurReverseLayout(mRecyclerView?.layoutManager)) {
                         moveD = -moveD
                     }
-                    normalAdapterManager.mRefreshHeader!!.onMove(moveD)
+                    normalAdapterManager.mRefreshHeader?.onMove(moveD)
                     if (normalAdapterManager.mRefreshHeader!!.visibleHeight > 0 && normalAdapterManager.mRefreshHeader!!.state < BaseRefreshHeader.STATE_REFRESHING) {
                         return false
                     }
@@ -251,9 +244,7 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
                 mLastY = -1f // reset
                 if (normalAdapterManager.pullRefreshEnabled && isOnTop && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                     if (normalAdapterManager.mRefreshHeader!!.releaseAction()) {
-                        if (normalAdapterManager.mLoadingListener != null) {
-                            normalAdapterManager.mLoadingListener!!.onRefresh()
-                        }
+                        normalAdapterManager.mLoadingListener?.onRefresh()
                     }
                 }
             }
@@ -273,32 +264,21 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
     /**
      * 判断一个type是否为HeaderType
      */
-    private fun isHeaderType(itemViewType: Int): Boolean {
-        return normalAdapterManager.mHeaderViews.size > 0 && normalAdapterManager.sHeaderTypes.contains(itemViewType)
-    }
+    private fun isHeaderType(itemViewType: Int): Boolean =
+            normalAdapterManager.mHeaderViews.size > 0 && normalAdapterManager.sHeaderTypes.contains(itemViewType)
 
     /**
      * 判断是否是XRecyclerView保留的itemViewType
      */
-    private fun isReservedItemViewType(itemViewType: Int): Boolean {
-        return if (itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_FOOTER || normalAdapterManager.sHeaderTypes.contains(itemViewType)) {
-            true
-        } else {
-            false
-        }
-    }
+    private fun isReservedItemViewType(itemViewType: Int?): Boolean =
+            itemViewType == TYPE_REFRESH_HEADER || itemViewType == TYPE_FOOTER || normalAdapterManager.sHeaderTypes.contains(itemViewType)
 
     /**
      * 瀑布流里最后的一个item的位置
      */
     private fun findMax(lastPositions: IntArray): Int {
-        var max = lastPositions[0]
-        for (value in lastPositions) {
-            if (value > max) {
-                max = value
-            }
-        }
-        return max
+        return lastPositions.max()
+                ?: lastPositions[0]
     }
 
 
@@ -307,29 +287,28 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
      */
     private inner class DataObserver : RecyclerView.AdapterDataObserver() {
         override fun onChanged() {
-            if (mWrapAdapter != null) {
-                mWrapAdapter!!.notifyDataSetChanged()
-            }
+            mWrapAdapter?.notifyDataSetChanged()
+
         }
 
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-            mWrapAdapter!!.notifyItemRangeInserted(positionStart, itemCount)
+            mWrapAdapter?.notifyItemRangeInserted(positionStart, itemCount)
         }
 
         override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-            mWrapAdapter!!.notifyItemRangeChanged(positionStart, itemCount)
+            mWrapAdapter?.notifyItemRangeChanged(positionStart, itemCount)
         }
 
         override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-            mWrapAdapter!!.notifyItemRangeRemoved(positionStart, itemCount)
+            mWrapAdapter?.notifyItemRangeRemoved(positionStart, itemCount)
         }
 
         override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
-            mWrapAdapter!!.notifyItemMoved(fromPosition, toPosition)
+            mWrapAdapter?.notifyItemMoved(fromPosition, toPosition)
         }
 
         override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
-            mWrapAdapter!!.notifyItemRangeChanged(positionStart, itemCount, payload)
+            mWrapAdapter?.notifyItemRangeChanged(positionStart, itemCount, payload)
         }
     }
 
@@ -339,13 +318,13 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
      */
     inner class WrapAdapter internal constructor(val bindRecyclerAdapter: BindRecyclerAdapter?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        internal val headersCount: Int
+        val headersCount: Int
             get() = normalAdapterManager.mHeaderViews.size
 
         internal fun isHeader(position: Int): Boolean {
             val startHeader = if (normalAdapterManager.pullRefreshEnabled) 1 else 0
             val endHeader = if (normalAdapterManager.pullRefreshEnabled) normalAdapterManager.mHeaderViews.size + 1 else normalAdapterManager.mHeaderViews.size
-            return position >= startHeader && position < endHeader
+            return position in startHeader..(endHeader - 1)
         }
 
         internal fun isFooter(position: Int): Boolean {
@@ -356,19 +335,16 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
             }
         }
 
-        internal fun isRefreshHeader(position: Int): Boolean {
-            return position == 0 && normalAdapterManager.pullRefreshEnabled
-        }
+        internal fun isRefreshHeader(position: Int): Boolean =
+                position == 0 && normalAdapterManager.pullRefreshEnabled
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
-            if (viewType == TYPE_REFRESH_HEADER) {
-                return SimpleViewHolder(normalAdapterManager.mRefreshHeader!!)
-            } else if (isHeaderType(viewType)) {
-                return SimpleViewHolder(getHeaderViewByType(viewType)!!)
-            } else if (viewType == TYPE_FOOTER) {
-                return SimpleViewHolder(normalAdapterManager.mFootView!!)
+            return when {
+                viewType == TYPE_REFRESH_HEADER -> SimpleViewHolder(normalAdapterManager.mRefreshHeader)
+                isHeaderType(viewType) -> SimpleViewHolder(getHeaderViewByType(viewType))
+                viewType == TYPE_FOOTER -> SimpleViewHolder(normalAdapterManager.mFootView)
+                else -> bindRecyclerAdapter?.onCreateViewHolder(parent, viewType)
             }
-            return bindRecyclerAdapter!!.onCreateViewHolder(parent, viewType)
         }
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -408,10 +384,10 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
             }
         }
 
-        override fun getItemViewType(position: Int): Int {
-            var position = position
+        override fun getItemViewType(positionT: Int): Int {
+            var position = positionT
             val adjPosition = position - if (normalAdapterManager.pullRefreshEnabled) headersCount + 1 else headersCount
-            if (isReservedItemViewType(bindRecyclerAdapter!!.getItemViewType(adjPosition))) {
+            if (isReservedItemViewType(bindRecyclerAdapter?.getItemViewType(adjPosition))) {
                 throw IllegalStateException("require itemViewType in adapter should be less than 10000 ")
             }
             if (normalAdapterManager.pullRefreshEnabled && isRefreshHeader(position)) {
@@ -419,9 +395,9 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
             }
             if (isHeader(position)) {
                 if (normalAdapterManager.pullRefreshEnabled) {
-                    position = position - 1
+                    position -= 1
                 }
-                return normalAdapterManager.sHeaderTypes.get(position)
+                return normalAdapterManager.sHeaderTypes[position]
             }
             if (isFooter(position)) {
                 return TYPE_FOOTER
@@ -449,8 +425,8 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
 
         override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
             super.onAttachedToRecyclerView(recyclerView)
-            bindRecyclerAdapter!!.onAttachedToRecyclerView(recyclerView)
-            val manager = recyclerView!!.layoutManager
+            bindRecyclerAdapter?.onAttachedToRecyclerView(recyclerView)
+            val manager = recyclerView?.layoutManager
             if (manager is GridLayoutManager) {
                 manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
@@ -464,64 +440,57 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
         }
 
         override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
-            bindRecyclerAdapter!!.onDetachedFromRecyclerView(recyclerView)
+            bindRecyclerAdapter?.onDetachedFromRecyclerView(recyclerView)
         }
 
         override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder?) {
             super.onViewAttachedToWindow(holder)
-            val lp = holder!!.itemView.layoutParams
+            val lp = holder?.itemView?.layoutParams
             if (lp != null
                     && lp is StaggeredGridLayoutManager.LayoutParams
                     && (isHeader(holder.layoutPosition) || isRefreshHeader(holder.layoutPosition) || isFooter(holder.layoutPosition))) {
                 lp.isFullSpan = true
             }
-            bindRecyclerAdapter!!.onViewAttachedToWindow(holder)
+            bindRecyclerAdapter?.onViewAttachedToWindow(holder)
         }
 
         override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder?) {
-            bindRecyclerAdapter!!.onViewDetachedFromWindow(holder)
+            bindRecyclerAdapter?.onViewDetachedFromWindow(holder)
         }
 
         override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
-            bindRecyclerAdapter!!.onViewRecycled(holder)
+            bindRecyclerAdapter?.onViewRecycled(holder)
         }
 
-        override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder?): Boolean {
-            return bindRecyclerAdapter!!.onFailedToRecycleView(holder)
-        }
+        override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder?): Boolean =
+                bindRecyclerAdapter!!.onFailedToRecycleView(holder)
 
         override fun unregisterAdapterDataObserver(observer: RecyclerView.AdapterDataObserver) {
-            bindRecyclerAdapter!!.unregisterAdapterDataObserver(observer)
+            bindRecyclerAdapter?.unregisterAdapterDataObserver(observer)
         }
 
         override fun registerAdapterDataObserver(observer: RecyclerView.AdapterDataObserver) {
-            bindRecyclerAdapter!!.registerAdapterDataObserver(observer)
+            bindRecyclerAdapter?.registerAdapterDataObserver(observer)
         }
 
-        inner class SimpleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+        inner class SimpleViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
     }
 
-    private fun getOrientation(layoutManager: RecyclerView.LayoutManager): Int {
-        if (layoutManager is GridLayoutManager) {
-            return layoutManager.orientation
-        } else if (layoutManager is StaggeredGridLayoutManager) {
-            return layoutManager.orientation
-        } else if (layoutManager is LinearLayoutManager) {
-            return layoutManager.orientation
-        }
-        return 0
-    }
+    private fun getOrientation(layoutManager: RecyclerView.LayoutManager?): Int =
+            when (layoutManager) {
+                is GridLayoutManager -> layoutManager.orientation
+                is StaggeredGridLayoutManager -> layoutManager.orientation
+                is LinearLayoutManager -> layoutManager.orientation
+                else -> 0
+            }
 
-    private fun getCurReverseLayout(layoutManager: RecyclerView.LayoutManager): Boolean {
-        if (layoutManager is GridLayoutManager) {
-            return layoutManager.reverseLayout
-        } else if (layoutManager is StaggeredGridLayoutManager) {
-            return layoutManager.reverseLayout
-        } else if (layoutManager is LinearLayoutManager) {
-            return layoutManager.reverseLayout
-        }
-        return false
-    }
+    private fun getCurReverseLayout(layoutManager: RecyclerView.LayoutManager?): Boolean =
+            when (layoutManager) {
+                is GridLayoutManager -> layoutManager.reverseLayout
+                is StaggeredGridLayoutManager -> layoutManager.reverseLayout
+                is LinearLayoutManager -> layoutManager.reverseLayout
+                else -> false
+            }
 
     companion object {
 
