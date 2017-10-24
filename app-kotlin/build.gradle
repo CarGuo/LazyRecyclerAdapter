@@ -48,9 +48,14 @@ dependencies {
     compile viewDependencies.glideProcessor
 
     compile other.dagger
+    //apt other.daggerCompile
     kapt other.kaptDagger
     provided other.glassfishAnnotation
 
     compile other.rxjava
     compile other.rxandroid
+
+
+    kapt 'io.realm:realm-annotations:3.7.1'
+    kapt 'io.realm:realm-annotations-processor:3.7.1'
 }

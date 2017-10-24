@@ -74,13 +74,13 @@
         </LinearLayout>
     </com.shuyu.textutillib.KeyBoardLockLayout>
 
-    <com.shuyu.apprecycler.chat.detail.view.ChatDetailEmojiLayout
+    <example.shuyu.recycler.kotlin.chat.detail.view.ChatDetailEmojiLayout
         android:id="@+id/chat_detail_activity_send_emojiLayout"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:visibility="gone" />
 
-    <com.shuyu.apprecycler.chat.detail.view.ChatDetailBottomView
+    <example.shuyu.recycler.kotlin.chat.detail.view.ChatDetailBottomView
         android:id="@+id/chat_detail_activity_bottom_menu"
         android:layout_width="match_parent"
         android:layout_height="220dp"

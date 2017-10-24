@@ -1,24 +1,26 @@
 package example.shuyu.recycler.kotlin.chat.data.factory.vo
 
 
-
 import io.realm.RealmObject
+import io.realm.annotations.RealmClass
 
 /**
  * Created by guoshuyu on 2017/9/8.
  */
 
+@RealmClass
 open class ChatMessageModel : RealmObject() {
 
-    var id: String? = null
 
-    var chatId: String? = null
+    open var id: String? = null
 
-    var content: String? = null
+    open var chatId: String? = null
 
-    var userModel: ChatUserModel? = null
+    open var content: String? = null
 
-    var type: Int = 0
+    open var userModel: ChatUserModel? = null
 
-    var createTime: Long = 0
+    open var type: Int = 0
+
+    open var createTime: Long = 0
 }

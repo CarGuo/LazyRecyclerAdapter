@@ -20,6 +20,7 @@ import com.shuyu.commonrecycler.listener.OnItemClickListener
 import java.util.ArrayList
 
 import example.shuyu.recycler.kotlin.R
+import kotlinx.android.synthetic.main.chat_detail_bottom_view.view.*
 
 /**
  * Created by guoshuyu on 2017/9/7.
@@ -27,10 +28,7 @@ import example.shuyu.recycler.kotlin.R
 
 open class ChatDetailBottomView : LinearLayout {
 
-
-    internal var mChatDetailBottomRecycler: RecyclerView? = null
-
-    internal var mBindSuperAdapter: BindSuperAdapter?=null
+    internal var mBindSuperAdapter: BindSuperAdapter? = null
 
     internal var mDataList: ArrayList<Any> = ArrayList()
 
@@ -50,7 +48,6 @@ open class ChatDetailBottomView : LinearLayout {
 
     private fun init() {
         LayoutInflater.from(context).inflate(R.layout.chat_detail_bottom_view, this)
-        //ButterKnife.bind(this);
 
         val bindSuperAdapterManager = BindSuperAdapterManager()
         bindSuperAdapterManager
@@ -65,25 +62,26 @@ open class ChatDetailBottomView : LinearLayout {
                     }
                 })
         mBindSuperAdapter = BindSuperAdapter(context, bindSuperAdapterManager, mDataList)
-        mChatDetailBottomRecycler!!.layoutManager = GridLayoutManager(context, 4)
-        mChatDetailBottomRecycler!!.adapter = mBindSuperAdapter
+        chat_detail_bottom_recycler.layoutManager = GridLayoutManager(context, 4)
+        chat_detail_bottom_recycler.adapter = mBindSuperAdapter
     }
 
     class ChatDetailBottomMenuHolder(v: View) : BindRecyclerBaseHolder(v) {
 
 
-        internal var mChatDetailBottomMenuItemImg: ImageView? = null
+        lateinit var mChatDetailBottomMenuItemImg: ImageView
 
-        internal var mChatDetailBottomMenuItemTxt: TextView? = null
+        lateinit var mChatDetailBottomMenuItemTxt: TextView
 
         override fun createView(v: View) {
-            //ButterKnife.bind(this, v);
+            mChatDetailBottomMenuItemImg = v.findViewById(R.id.chat_detail_bottom_menu_item_img) as ImageView
+            mChatDetailBottomMenuItemTxt = v.findViewById(R.id.chat_detail_bottom_menu_item_txt) as TextView
         }
 
         override fun onBind(model: Any, position: Int) {
             val chatDetailBottomMenuModel = model as ChatDetailBottomMenuModel
-            mChatDetailBottomMenuItemImg!!.setImageResource(chatDetailBottomMenuModel.menuRes)
-            mChatDetailBottomMenuItemTxt!!.text = chatDetailBottomMenuModel.menuName
+            mChatDetailBottomMenuItemImg.setImageResource(chatDetailBottomMenuModel.menuRes)
+            mChatDetailBottomMenuItemTxt.text = chatDetailBottomMenuModel.menuName
 
         }
     }
