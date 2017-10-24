@@ -55,6 +55,10 @@
         <activity
             android:name=".bind.BindHomeActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".chat.detail.ChatDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeTitle" />
 
     </application>
 

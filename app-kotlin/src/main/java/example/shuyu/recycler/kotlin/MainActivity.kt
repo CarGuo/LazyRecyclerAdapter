@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
 import example.shuyu.recycler.kotlin.bind.BindHomeActivity
+import example.shuyu.recycler.kotlin.chat.detail.ChatDetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -21,5 +22,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
         normalBtn.setOnClickListener { startActivity(Intent(this@MainActivity, BindHomeActivity::class.java)) }
+        chatBtn.setOnClickListener { startActivity(Intent(this@MainActivity, ChatDetailActivity::class.java)) }
     }
 }

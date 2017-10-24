@@ -1,6 +1,6 @@
 package com.shuyu.apprecycler.chat.data.factory;
 
-import android.util.Log;
+import android.support.annotation.NonNull;
 
 import com.shuyu.apprecycler.chat.data.factory.vo.ChatMessageModel;
 import com.shuyu.apprecycler.chat.data.factory.vo.ChatUserModel;
@@ -18,7 +18,6 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -48,7 +47,7 @@ public class LocalChatBDRealmManager implements ILocalChatDBManager {
     public void saveChatMessage(final ChatBaseModel baseModel) {
         getRealmDB().executeTransactionAsync(new Realm.Transaction() {
             @Override
-            public void execute(Realm bgRealm) {
+            public void execute(@NonNull Realm bgRealm) {
                 ChatMessageModel chatMessage = bgRealm.createObject(ChatMessageModel.class);
                 RealmResults<ChatUserModel> userList = bgRealm.where(ChatUserModel.class).equalTo("userId", baseModel.getUserModel().getUserId()).findAll();
                 ChatUserModel chatUser;

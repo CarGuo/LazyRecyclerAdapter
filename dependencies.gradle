@@ -48,6 +48,7 @@ ext {
     other = [
             dagger             : "com.google.dagger:dagger:${dagger}",
             daggerCompiler     : "com.google.dagger:dagger-compiler:${dagger}",
+            kaptDagger         : "com.google.dagger:dagger-compiler:${dagger}",
             rxandroid          : "io.reactivex.rxjava2:rxandroid:${rxandroid}",
             rxjava             : "io.reactivex.rxjava2:rxjava:${rxjava}",
             glassfishAnnotation: "org.glassfish:javax.annotation:10.0-b28",
