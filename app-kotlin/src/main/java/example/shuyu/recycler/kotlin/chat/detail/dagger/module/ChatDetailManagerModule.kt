@@ -13,20 +13,14 @@ import dagger.Provides
  * Created by guoshuyu on 2017/9/7.
  */
 @Module
-open class ChatDetailManagerModule(private val mOnItemClickListener: OnItemClickListener, private val mLoadingListener: OnLoadingListener, private val mOnTouchListener: View.OnTouchListener) {
+open class ChatDetailManagerModule(private val onItemClickListener: OnItemClickListener, private val loadingListener: OnLoadingListener, private val  onTouchListener: View.OnTouchListener) {
 
     @Provides
-    fun provideOnItemClickListener(): OnItemClickListener {
-        return mOnItemClickListener
-    }
+    fun provideOnItemClickListener(): OnItemClickListener = onItemClickListener
 
     @Provides
-    fun provideOnLoadingListener(): OnLoadingListener {
-        return mLoadingListener
-    }
+    fun provideOnLoadingListener(): OnLoadingListener = loadingListener
 
     @Provides
-    fun provideOnTouchListener(): View.OnTouchListener {
-        return mOnTouchListener
-    }
+    fun provideOnTouchListener(): View.OnTouchListener = onTouchListener
 }

@@ -12,16 +12,12 @@ import example.shuyu.recycler.kotlin.chat.detail.ChatDetailContract
  * Created by guoshuyu on 2017/9/5.
  */
 @Module
-open class ChatDetailPresenterModule(val mView: ChatDetailContract.IChatDetailView) {
+open class ChatDetailPresenterModule(private val chatView: ChatDetailContract.IChatDetailView) {
 
     @Provides
-    fun provideChatDetailView(): ChatDetailContract.IChatDetailView {
-        return mView
-    }
+    fun provideChatDetailView(): ChatDetailContract.IChatDetailView = chatView
 
     @Provides
-    fun provideContext(): Context {
-        return mView.context
-    }
+    fun provideContext(): Context = chatView.context
 
 }

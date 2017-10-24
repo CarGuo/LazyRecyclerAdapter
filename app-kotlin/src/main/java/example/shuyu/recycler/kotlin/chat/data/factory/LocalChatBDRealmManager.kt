@@ -47,11 +47,10 @@ open class LocalChatBDRealmManager private constructor() : ILocalChatDBManager {
         realmDB?.executeTransactionAsync { bgRealm ->
             val chatMessage = bgRealm.createObject(ChatMessageModel::class.java)
             val userList = bgRealm.where(ChatUserModel::class.java).equalTo("userId", baseModel?.userModel?.userId).findAll()
-            val chatUser: ChatUserModel
-            if (userList != null && userList.size > 0) {
-                chatUser = userList[0]
+            val chatUser = if (userList != null && userList.size > 0) {
+                userList[0]
             } else {
-                chatUser = bgRealm.createObject(ChatUserModel::class.java, baseModel?.userModel?.userId)
+                bgRealm.createObject(ChatUserModel::class.java, baseModel?.userModel?.userId)
             }
             cloneToChatMessageModel(chatUser, chatMessage, baseModel)
             if (baseModel is ChatTextModel) {
@@ -92,26 +91,28 @@ open class LocalChatBDRealmManager private constructor() : ILocalChatDBManager {
 
     override fun closeDB() {
         if (mRealmDB != null) {
-            mRealmDB!!.close()
+            mRealmDB?.close()
             mRealmDB = null
         }
     }
 
     private fun resolveMessageList(chatMessageModels: RealmResults<ChatMessageModel>?): List<ChatBaseModel> {
         val list = ArrayList<ChatBaseModel>()
-        for (chatMessage in chatMessageModels!!) {
-            when (chatMessage.type) {
-                ChatConst.TYPE_TEXT -> {
-                    val chatText = ChatTextModel()
-                    chatText.content = chatMessage.content
-                    cloneChatBaseModel(chatText, chatMessage)
-                    list.add(chatText)
-                }
-                ChatConst.TYPE_IMAGE -> {
-                    val chatImg = ChatImageModel()
-                    chatImg.imgUrl = chatMessage.content ?: ""
-                    cloneChatBaseModel(chatImg, chatMessage)
-                    list.add(chatImg)
+        chatMessageModels?.let {
+            for (chatMessage in it) {
+                when (chatMessage.type) {
+                    ChatConst.TYPE_TEXT -> {
+                        val chatText = ChatTextModel()
+                        chatText.content = chatMessage.content
+                        cloneChatBaseModel(chatText, chatMessage)
+                        list.add(chatText)
+                    }
+                    ChatConst.TYPE_IMAGE -> {
+                        val chatImg = ChatImageModel()
+                        chatImg.imgUrl = chatMessage.content ?: ""
+                        cloneChatBaseModel(chatImg, chatMessage)
+                        list.add(chatImg)
+                    }
                 }
             }
         }
