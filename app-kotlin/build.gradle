@@ -47,15 +47,16 @@ dependencies {
     compile viewDependencies.glide
     compile viewDependencies.glideProcessor
 
+    //dagger 与 dagger kotlin支持
     compile other.dagger
-    //apt other.daggerCompile
     kapt other.kaptDagger
     provided other.glassfishAnnotation
 
+    //rx
     compile other.rxjava
     compile other.rxandroid
 
-
-    kapt 'io.realm:realm-annotations:3.7.1'
-    kapt 'io.realm:realm-annotations-processor:3.7.1'
+    //realm的kotlin支持
+    kapt other.realmAnnotations
+    kapt other.realmProcessor
 }
