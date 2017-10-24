@@ -10,7 +10,7 @@ import example.shuyu.recycler.kotlin.chat.data.model.ChatBaseModel
 
 open interface ILocalChatDBManager {
 
-    fun saveChatMessage(baseModel: ChatBaseModel)
+    fun saveChatMessage(baseModel: ChatBaseModel?)
 
     fun getChatMessage(chatId: String, page: Int, listener: ILocalChatDetailGetListener)
 

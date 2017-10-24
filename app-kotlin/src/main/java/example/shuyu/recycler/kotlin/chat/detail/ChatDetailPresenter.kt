@@ -112,14 +112,14 @@ constructor(val mView: ChatDetailContract.IChatDetailView) : ChatDetailContract.
     /**
      * 聊天基础数据同意处理
      */
-    private fun resolveBaseData(chatBaseModel: ChatBaseModel, chatUserModel: UserModel, type: Int, isMe: Boolean) {
-        chatBaseModel.chatId = ChatConst.CHAT_ID
-        chatBaseModel.chatType = type
-        chatBaseModel.id = UUID.randomUUID().toString()
-        chatBaseModel.isMe = isMe
-        chatBaseModel.createTime = Date().time
-        chatBaseModel.userModel = chatUserModel
-        mDataList.add(0, chatBaseModel)
+    private fun resolveBaseData(chatBaseModel: ChatBaseModel?, chatUserModel: UserModel?, type: Int, isMe: Boolean) {
+        chatBaseModel?.chatId = ChatConst.CHAT_ID
+        chatBaseModel?.chatType = type
+        chatBaseModel?.id = UUID.randomUUID().toString()
+        chatBaseModel?.isMe = isMe
+        chatBaseModel?.createTime = Date().time
+        chatBaseModel?.userModel = chatUserModel
+        mDataList.add(0, chatBaseModel!!)
         mView.sendSuccess()
         LocalChatDBFactory.chatDBManager.saveChatMessage(chatBaseModel)
     }

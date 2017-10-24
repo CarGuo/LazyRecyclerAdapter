@@ -43,15 +43,15 @@ open class LocalChatBDRealmManager private constructor() : ILocalChatDBManager {
         }
 
 
-    override fun saveChatMessage(baseModel: ChatBaseModel) {
+    override fun saveChatMessage(baseModel: ChatBaseModel?) {
         realmDB?.executeTransactionAsync { bgRealm ->
             val chatMessage = bgRealm.createObject(ChatMessageModel::class.java)
-            val userList = bgRealm.where(ChatUserModel::class.java).equalTo("userId", baseModel.userModel!!.userId).findAll()
+            val userList = bgRealm.where(ChatUserModel::class.java).equalTo("userId", baseModel?.userModel?.userId).findAll()
             val chatUser: ChatUserModel
             if (userList != null && userList.size > 0) {
                 chatUser = userList[0]
             } else {
-                chatUser = bgRealm.createObject(ChatUserModel::class.java, baseModel.userModel!!.userId)
+                chatUser = bgRealm.createObject(ChatUserModel::class.java, baseModel?.userModel?.userId)
             }
             cloneToChatMessageModel(chatUser, chatMessage, baseModel)
             if (baseModel is ChatTextModel) {
@@ -109,7 +109,7 @@ open class LocalChatBDRealmManager private constructor() : ILocalChatDBManager {
                 }
                 ChatConst.TYPE_IMAGE -> {
                     val chatImg = ChatImageModel()
-                    chatImg.imgUrl = chatMessage.content?:""
+                    chatImg.imgUrl = chatMessage.content ?: ""
                     cloneChatBaseModel(chatImg, chatMessage)
                     list.add(chatImg)
                 }
@@ -118,27 +118,27 @@ open class LocalChatBDRealmManager private constructor() : ILocalChatDBManager {
         return list
     }
 
-    private fun cloneChatBaseModel(chatBase: ChatBaseModel, chatMessage: ChatMessageModel) {
-        chatBase.chatId = chatMessage.chatId
-        chatBase.isMe = ChatConst.defaultUser.userId == chatMessage.userModel!!.userId
-        chatBase.id = chatMessage.id
-        chatBase.chatType = chatMessage.type
-        chatBase.createTime = chatMessage.createTime
+    private fun cloneChatBaseModel(chatBase: ChatBaseModel?, chatMessage: ChatMessageModel?) {
+        chatBase?.chatId = chatMessage?.chatId
+        chatBase?.isMe = ChatConst.defaultUser?.userId == chatMessage?.userModel?.userId
+        chatBase?.id = chatMessage?.id
+        chatBase?.chatType = chatMessage?.type ?: 0
+        chatBase?.createTime = chatMessage?.createTime ?: 0
         val user = UserModel()
-        user.userId = chatMessage.userModel!!.userId
-        user.userPic = chatMessage.userModel!!.userPic
-        user.userName = chatMessage.userModel!!.userName
-        chatBase.userModel = user
+        user.userId = chatMessage?.userModel?.userId
+        user.userPic = chatMessage?.userModel?.userPic
+        user.userName = chatMessage?.userModel?.userName
+        chatBase?.userModel = user
     }
 
-    private fun cloneToChatMessageModel(chatUser: ChatUserModel, message: ChatMessageModel, chatBase: ChatBaseModel) {
-        message.id = chatBase.id
-        message.chatId = chatBase.chatId
-        message.type = chatBase.chatType
-        message.createTime = chatBase.createTime
-        chatUser.userName = chatBase.userModel!!.userName
-        chatUser.userPic = chatBase.userModel!!.userPic
-        message.userModel = chatUser
+    private fun cloneToChatMessageModel(chatUser: ChatUserModel?, message: ChatMessageModel?, chatBase: ChatBaseModel?) {
+        message?.id = chatBase?.id
+        message?.chatId = chatBase?.chatId
+        message?.type = chatBase?.chatType ?: 0
+        message?.createTime = chatBase?.createTime ?: 0
+        chatUser?.userName = chatBase?.userModel?.userName
+        chatUser?.userPic = chatBase?.userModel?.userPic
+        message?.userModel = chatUser
     }
 
     companion object {
