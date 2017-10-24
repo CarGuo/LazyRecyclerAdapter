@@ -11,6 +11,7 @@ class ChatDetailContract {
     interface IChatDetailView {
 
         val context: Context
+
         fun notifyView()
 
         fun sendSuccess()

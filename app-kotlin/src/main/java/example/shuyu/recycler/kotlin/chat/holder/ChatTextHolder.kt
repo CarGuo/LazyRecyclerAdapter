@@ -14,7 +14,7 @@ import example.shuyu.recycler.kotlin.chat.data.model.ChatTextModel
 
 open class ChatTextHolder(v: View) : ChatBaseHolder(v) {
 
-    private var mChatDetailHolderText: TextView? = null
+    private lateinit var mChatDetailHolderText: TextView
 
     override fun createView(v: View) {
         super.createView(v)

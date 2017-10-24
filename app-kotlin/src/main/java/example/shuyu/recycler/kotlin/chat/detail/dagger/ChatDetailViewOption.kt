@@ -22,27 +22,15 @@ open class ChatDetailViewOption {
     var mChatDetailActivityBottomMenu: ChatDetailBottomView? = null
     var recyclerView: RecyclerView? = null
 
-
-    fun getChatDetailActivityEdit(): RichEditText {
-        return mChatDetailActivityEdit!!
-    }
-
     fun setChatDetailActivityEdit(chatDetailActivityEdit: RichEditText): ChatDetailViewOption {
         this.mChatDetailActivityEdit = chatDetailActivityEdit
         return this
     }
 
-    fun getChatDetailActivityKeyboardLayout(): KeyBoardLockLayout {
-        return mChatDetailActivityKeyboardLayout!!
-    }
 
     fun setChatDetailActivityKeyboardLayout(chatDetailActivityKeyboardLayout: KeyBoardLockLayout): ChatDetailViewOption {
         this.mChatDetailActivityKeyboardLayout = chatDetailActivityKeyboardLayout
         return this
-    }
-
-    fun getChatDetailActivitySendEmojiLayout(): EmojiLayout {
-        return mChatDetailActivitySendEmojiLayout!!
     }
 
     fun setChatDetailActivitySendEmojiLayout(chatDetailActivitySendEmojiLayout: EmojiLayout): ChatDetailViewOption {
@@ -50,12 +38,14 @@ open class ChatDetailViewOption {
         return this
     }
 
-    fun getChatDetailActivityBottomMenu(): ChatDetailBottomView {
-        return mChatDetailActivityBottomMenu!!
-    }
 
     fun setChatDetailActivityBottomMenu(chatDetailActivityBottomMenu: ChatDetailBottomView): ChatDetailViewOption {
         this.mChatDetailActivityBottomMenu = chatDetailActivityBottomMenu
+        return this
+    }
+
+    fun setRecyclerViewOption(recyclerView: RecyclerView): ChatDetailViewOption {
+        this.recyclerView = recyclerView
         return this
     }
 }

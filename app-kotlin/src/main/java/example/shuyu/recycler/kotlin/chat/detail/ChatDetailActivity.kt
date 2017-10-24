@@ -43,9 +43,6 @@ class ChatDetailActivity : AppCompatActivity(), ChatDetailContract.IChatDetailVi
     @Inject
     lateinit var mChatDetailViewControl: ChatDetailViewControl
 
-    override val context: Context
-        get() = this
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_detail)
@@ -55,8 +52,8 @@ class ChatDetailActivity : AppCompatActivity(), ChatDetailContract.IChatDetailVi
     }
 
     private fun initTitle() {
-        chat_detail_activity_toolbar!!.title = "聊天详情"
-        chat_detail_activity_toolbar!!.setTitleTextColor(Color.WHITE)
+        chat_detail_activity_toolbar?.title = "聊天详情"
+        chat_detail_activity_toolbar?.setTitleTextColor(Color.WHITE)
         setSupportActionBar(chat_detail_activity_toolbar)
     }
 
@@ -66,8 +63,8 @@ class ChatDetailActivity : AppCompatActivity(), ChatDetailContract.IChatDetailVi
         option.setChatDetailActivityBottomMenu(chat_detail_activity_bottom_menu as ChatDetailBottomView)
                 .setChatDetailActivityKeyboardLayout(chat_detail_activity_keyboard_layout)
                 .setChatDetailActivitySendEmojiLayout(chat_detail_activity_send_emojiLayout as EmojiLayout)
-                .setChatDetailActivityEdit(chat_detail_activity_edit!!)
-                .recyclerView = chat_detail_activity_recycler
+                .setChatDetailActivityEdit(chat_detail_activity_edit)
+                .setRecyclerViewOption(chat_detail_activity_recycler)
 
         DaggerChatDetailComponent.builder()
                 .chatDetailPresenterModule(ChatDetailPresenterModule(this))
@@ -88,7 +85,7 @@ class ChatDetailActivity : AppCompatActivity(), ChatDetailContract.IChatDetailVi
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.chat_detail_activity_send -> {
-                mPresenter.sendMsg(chat_detail_activity_edit!!.text.toString())
+                mPresenter.sendMsg(chat_detail_activity_edit?.text.toString())
             }
             R.id.chat_detail_activity_edit -> {
                 mChatDetailViewControl.showKeyBoradOnly()
@@ -138,8 +135,10 @@ class ChatDetailActivity : AppCompatActivity(), ChatDetailContract.IChatDetailVi
     }
 
     override fun sendSuccess() {
-        chat_detail_activity_edit!!.setText("")
+        chat_detail_activity_edit?.setText("")
         mAdapter.notifyDataSetChanged()
     }
 
+    override val context: Context
+        get() = this
 }

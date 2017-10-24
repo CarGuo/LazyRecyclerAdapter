@@ -15,7 +15,7 @@ import example.shuyu.recycler.kotlin.chat.utils.img.LoadOption
 
 open class ChatImageHolder(v: View) : ChatBaseHolder(v) {
 
-    private var mChatDetailHolderImage: ImageView? = null
+    private lateinit var mChatDetailHolderImage: ImageView
 
     override fun createView(v: View) {
         super.createView(v)
@@ -30,7 +30,7 @@ open class ChatImageHolder(v: View) : ChatBaseHolder(v) {
                         .setCircleCrop(true)
                         .setPlaceholderRes(R.drawable.a2)
                         .setErrorRes(R.drawable.a1)
-                        .setImageView(mChatDetailHolderImage!!)
+                        .setImageView(mChatDetailHolderImage)
                         .setUrl(chatImageModel.imgUrl))
     }
 }

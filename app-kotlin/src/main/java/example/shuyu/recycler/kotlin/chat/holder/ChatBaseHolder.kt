@@ -17,8 +17,8 @@ import example.shuyu.recycler.kotlin.chat.utils.img.LoadOption
 open abstract class ChatBaseHolder(v: View) : BindRecyclerBaseHolder(v) {
 
 
-    private var mChatDetailHolderAvatar: ImageView? = null
-    private var mChatDetailHolderName: TextView? = null
+    private lateinit  var mChatDetailHolderAvatar: ImageView
+    private lateinit var mChatDetailHolderName: TextView
 
     override fun createView(v: View) {
         mChatDetailHolderName = v.findViewById(R.id.chat_detail_holder_name) as TextView
@@ -27,13 +27,13 @@ open abstract class ChatBaseHolder(v: View) : BindRecyclerBaseHolder(v) {
 
     override fun onBind(model: Any, position: Int) {
         val chatBaseModel = model as ChatBaseModel
-        mChatDetailHolderName?.text = chatBaseModel.userModel?.userName
+        mChatDetailHolderName.text = chatBaseModel.userModel?.userName
         ImageLoaderManager.imageLoaderManager.loadImage(context!!,
                 LoadOption()
                         .setCircleCrop(true)
                         .setPlaceholderRes(R.drawable.a2)
                         .setErrorRes(R.drawable.a1)
-                        .setImageView(mChatDetailHolderAvatar!!)
+                        .setImageView(mChatDetailHolderAvatar)
                         .setUrl(chatBaseModel.userModel?.userPic!!))
     }
 

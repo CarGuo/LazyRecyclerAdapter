@@ -2,11 +2,9 @@ package example.shuyu.recycler.kotlin.chat.detail.view
 
 import android.content.Context
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -28,9 +26,9 @@ import kotlinx.android.synthetic.main.chat_detail_bottom_view.view.*
 
 open class ChatDetailBottomView : LinearLayout {
 
-    internal var mBindSuperAdapter: BindSuperAdapter? = null
+    private var mBindSuperAdapter: BindSuperAdapter? = null
 
-    internal var mDataList: ArrayList<Any> = ArrayList()
+    private var mDataList: ArrayList<Any> = ArrayList()
 
     internal var mClickListener: OnItemClickListener? = null
 
@@ -56,9 +54,7 @@ open class ChatDetailBottomView : LinearLayout {
                 .bind(ChatDetailBottomMenuModel::class.java, R.layout.chat_detail_bottom_menu_item, ChatDetailBottomMenuHolder::class.java)
                 .setOnItemClickListener(object : OnItemClickListener {
                     override fun onItemClick(context: Context, position: Int) {
-                        if (mClickListener != null) {
-                            mClickListener!!.onItemClick(context, position)
-                        }
+                        mClickListener?.onItemClick(context, position)
                     }
                 })
         mBindSuperAdapter = BindSuperAdapter(context, bindSuperAdapterManager, mDataList)
