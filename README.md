@@ -22,6 +22,7 @@
 **支持**|**一种数据实体对应多种Item**
 **支持**|**侧滑、拖拽**
 **支持**|**快速实现聊天模式(DEMO包含Dagger2、MVP、RxJava2、Realm、键盘弹出优化处理)**
+**支持**|**Kotlin与Kotlin Demo（Dagger2、MVP、RxJava2、Realm）**
 待支持|内置更多自定义Manager
 
 ## 二、依赖
@@ -38,7 +39,15 @@ allprojects {
 ### 在module下的build.gradle添加依赖
 ```
 dependencies {
-    compile 'com.github.CarGuo:LazyRecyclerAdapter:v3.0.1'
+    compile 'com.github.CarGuo:LazyRecyclerAdapter:CommonRecycler:v3.0.2'
+}
+
+```
+
+### (Kotlin)在module下的build.gradle添加依赖
+```
+dependencies {
+    compile 'com.github.CarGuo:LazyRecyclerAdapter:CommonRecycler:CommonRecycler-Kotlin:v3.0.2'
 }
 
 ```
