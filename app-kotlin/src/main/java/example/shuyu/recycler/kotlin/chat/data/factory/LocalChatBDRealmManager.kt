@@ -24,6 +24,11 @@ import io.realm.Sort
 
 open class LocalChatBDRealmManager private constructor() : ILocalChatDBManager {
 
+    companion object {
+        const val PAGESIZE = 10
+        val newInstance: LocalChatBDRealmManager = LocalChatBDRealmManager()
+    }
+
     private var mRealmDB: Realm? = null
 
     private val realmDB: Realm?
@@ -62,11 +67,12 @@ open class LocalChatBDRealmManager private constructor() : ILocalChatDBManager {
     }
 
     /**
-     * TODO
      * 因为懒加载，所以realm没有分页改变
      * 所以需要对realmResults进行分页读取，读取完毕才可以close当前线程的realm
+     * realm有线程限制，比如realmResults在Schedulers.io()中不可用到其他线程
      */
     override fun getChatMessage(chatId: String, page: Int, listener: ILocalChatDetailGetListener) {
+
 
         realm.subscribeOn(Schedulers.io())
                 .map { realm ->
@@ -76,7 +82,7 @@ open class LocalChatBDRealmManager private constructor() : ILocalChatDBManager {
                     val list = if (realmResults == null) {
                         ArrayList()
                     } else {
-                        resolveMessageList(realmResults)
+                        resolveMessageList(realmResults, page)
                     }
                     realm.close()
                     list
@@ -85,8 +91,11 @@ open class LocalChatBDRealmManager private constructor() : ILocalChatDBManager {
                 .subscribe { chatBaseModels ->
                     if (chatBaseModels != null && chatBaseModels.isNotEmpty()) {
                         listener.getData(chatBaseModels)
+                    } else {
+                        listener.getData(ArrayList())
                     }
                 }
+
     }
 
     override fun closeDB() {
@@ -96,25 +105,31 @@ open class LocalChatBDRealmManager private constructor() : ILocalChatDBManager {
         }
     }
 
-    private fun resolveMessageList(chatMessageModels: RealmResults<ChatMessageModel>?): List<ChatBaseModel> {
+    private fun resolveMessageList(chatMessageModels: RealmResults<ChatMessageModel>?, page: Int): List<ChatBaseModel> {
         val list = ArrayList<ChatBaseModel>()
         chatMessageModels?.let {
-            for (chatMessage in it) {
-                when (chatMessage.type) {
-                    ChatConst.TYPE_TEXT -> {
-                        val chatText = ChatTextModel()
-                        chatText.content = chatMessage.content
-                        cloneChatBaseModel(chatText, chatMessage)
-                        list.add(chatText)
+            val startIndex = PAGESIZE * page
+            val end = PAGESIZE * (page + 1) - 1
+            val dataLength = chatMessageModels.size - 1
+            val endIndex = if (end > dataLength) dataLength else end
+            (startIndex..endIndex)
+                    .map { i -> it[i] }
+                    .forEach {
+                        when (it.type) {
+                            ChatConst.TYPE_TEXT -> {
+                                val chatText = ChatTextModel()
+                                chatText.content = it.content
+                                cloneChatBaseModel(chatText, it)
+                                list.add(chatText)
+                            }
+                            ChatConst.TYPE_IMAGE -> {
+                                val chatImg = ChatImageModel()
+                                chatImg.imgUrl = it.content ?: ""
+                                cloneChatBaseModel(chatImg, it)
+                                list.add(chatImg)
+                            }
+                        }
                     }
-                    ChatConst.TYPE_IMAGE -> {
-                        val chatImg = ChatImageModel()
-                        chatImg.imgUrl = chatMessage.content ?: ""
-                        cloneChatBaseModel(chatImg, chatMessage)
-                        list.add(chatImg)
-                    }
-                }
-            }
         }
         return list
     }
@@ -140,10 +155,5 @@ open class LocalChatBDRealmManager private constructor() : ILocalChatDBManager {
         chatUser?.userName = chatBase?.userModel?.userName
         chatUser?.userPic = chatBase?.userModel?.userPic
         message?.userModel = chatUser
-    }
-
-    companion object {
-
-        fun newInstance(): LocalChatBDRealmManager = LocalChatBDRealmManager()
     }
 }

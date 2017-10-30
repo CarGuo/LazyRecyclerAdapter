@@ -42,7 +42,7 @@ open class ChatSuperAdapterManager @Inject constructor() : BindSuperAdapterManag
                     }
                 })
                 .setPullRefreshEnabled(false)
-                .setLoadingMoreEnabled(false)
+                .setLoadingMoreEnabled(true)
                 .setFootView(BindCustomLoadMoreFooter(context))
                 .setNeedAnimation(true)
                 .setTouchListener(onTouchListener)

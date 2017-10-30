@@ -15,6 +15,10 @@ class ChatDetailContract {
         fun notifyView()
 
         fun sendSuccess()
+
+        fun loadMoreComplete()
+
+        fun loadMoreEnd()
     }
 
     interface IChatDetailPresenter<T> {
@@ -23,7 +27,7 @@ class ChatDetailContract {
 
         val menuList: List<*>
 
-        fun loadMoreData(page: Int)
+        fun loadMoreData()
 
         fun sendMsg(text: String)
 

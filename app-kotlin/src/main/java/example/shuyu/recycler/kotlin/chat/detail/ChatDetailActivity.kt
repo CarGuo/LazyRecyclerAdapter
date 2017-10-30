@@ -83,7 +83,7 @@ class ChatDetailActivity : AppCompatActivity(), ChatDetailContract.IChatDetailVi
     }
 
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
             R.id.chat_detail_activity_send -> {
                 mPresenter.sendMsg(chat_detail_activity_edit?.text.toString())
             }
@@ -127,11 +127,21 @@ class ChatDetailActivity : AppCompatActivity(), ChatDetailContract.IChatDetailVi
     }
 
     override fun onLoadMore() {
-
+        mPresenter.loadMoreData()
     }
 
     override fun notifyView() {
         mAdapter.notifyDataSetChanged()
+    }
+
+
+    override fun loadMoreComplete() {
+        mNormalAdapterManager.loadMoreComplete()
+    }
+
+    override fun loadMoreEnd() {
+
+        mNormalAdapterManager.setNoMore(true)
     }
 
     override fun sendSuccess() {

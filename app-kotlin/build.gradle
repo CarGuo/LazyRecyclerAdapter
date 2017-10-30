@@ -42,6 +42,8 @@ dependencies {
     def viewDependencies = rootProject.ext.viewDependencies
     def other = rootProject.ext.other
     compile androidDependencies.kotlin
+    compile androidDependencies.kotlinAnko
+
     compile viewDependencies.rich
     compile viewDependencies.bubble
     compile viewDependencies.glide

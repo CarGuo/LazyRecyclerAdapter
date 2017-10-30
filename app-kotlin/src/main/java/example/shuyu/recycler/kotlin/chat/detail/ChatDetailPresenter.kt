@@ -35,6 +35,8 @@ constructor(val mView: ChatDetailContract.IChatDetailView) : ChatDetailContract.
 
     private val mHandler = Handler()
 
+    private var mPage = 0
+
     override val dataList: ArrayList<Any>
         get() = mDataList
 
@@ -45,8 +47,19 @@ constructor(val mView: ChatDetailContract.IChatDetailView) : ChatDetailContract.
         init()
     }
 
-    override fun loadMoreData(page: Int) {
-
+    override fun loadMoreData() {
+        LocalChatDBFactory.chatDBManager.getChatMessage(ChatConst.CHAT_ID, mPage, object : ILocalChatDetailGetListener {
+            override fun getData(datList: List<ChatBaseModel>) {
+                if (datList.isNotEmpty()) {
+                    mDataList.addAll(datList)
+                    mView.notifyView()
+                    mView.loadMoreComplete()
+                    mPage++
+                } else {
+                    mView.loadMoreEnd()
+                }
+            }
+        })
     }
 
     override fun sendMsg(text: String) {
@@ -78,14 +91,19 @@ constructor(val mView: ChatDetailContract.IChatDetailView) : ChatDetailContract.
     }
 
     private fun init() {
+        mPage = 0
         //初始化底部menu
         mMenuList.add(ChatDetailBottomView.ChatDetailBottomMenuModel("图片", R.mipmap.ic_launcher))
         //初始化读取本地数据库
-        LocalChatDBFactory.chatDBManager.getChatMessage(ChatConst.CHAT_ID, 0, object : ILocalChatDetailGetListener{
+        LocalChatDBFactory.chatDBManager.getChatMessage(ChatConst.CHAT_ID, mPage, object : ILocalChatDetailGetListener {
             override fun getData(datList: List<ChatBaseModel>) {
                 if (datList.isNotEmpty()) {
                     mDataList.addAll(datList)
                     mView.notifyView()
+                    mView.loadMoreComplete()
+                    mPage = 1
+                } else {
+                    mView.loadMoreEnd()
                 }
             }
         })
