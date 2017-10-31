@@ -1,5 +1,7 @@
 package example.shuyu.recycler.kotlin.chat.data.factory
 
+import example.shuyu.recycler.kotlin.chat.data.factory.realm.LocalChatBDRealmManager
+
 /**
  * 数据库工厂对象
  * Created by guoshuyu on 2017/9/11.
