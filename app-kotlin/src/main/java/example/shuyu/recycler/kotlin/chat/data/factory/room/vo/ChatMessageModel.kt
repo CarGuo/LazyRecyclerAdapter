@@ -29,6 +29,6 @@ open class ChatMessageModel {
     var type: Int = 0
 
     @ColumnInfo(name = "createTime")
-    var createTime: Long = 0;
+    var createTime: Long = 0
 
 }

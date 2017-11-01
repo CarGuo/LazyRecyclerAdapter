@@ -13,7 +13,7 @@ interface ChatUserModelDao {
 
 
     @Query("SELECT * FROM ChatUserModel WHERE userId = :arg0")
-    fun getUserById(userId: String): Flowable<ChatUserModel>
+    fun getUserById(userId: String): List<ChatUserModel>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

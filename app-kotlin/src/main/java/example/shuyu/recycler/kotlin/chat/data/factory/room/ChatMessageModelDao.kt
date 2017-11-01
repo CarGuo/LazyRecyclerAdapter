@@ -11,8 +11,8 @@ import io.reactivex.Flowable
 interface ChatMessageModelDao {
 
 
-    @Query("SELECT * FROM ChatMessageModel WHERE chatId = :arg0")
-    fun getChatMessageList(chatId: String): Flowable<List<ChatMessageModel>>
+    @Query("SELECT * FROM ChatMessageModel WHERE chatId = :arg0 order by createTime desc LIMIT 10 OFFSET :arg1 ")
+    fun getChatMessageList(chatId: String, page : Int): Flowable<List<ChatMessageModel>>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
