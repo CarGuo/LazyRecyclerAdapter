@@ -22,7 +22,7 @@
 **支持**|**一种数据实体对应多种Item**
 **支持**|**侧滑、拖拽**
 **支持**|**快速实现聊天模式(DEMO包含Dagger2、MVP、RxJava2、Realm、键盘弹出优化处理)**
-**支持**|**Kotlin与Kotlin Demo（Dagger2、MVP、RxJava2、Realm）**
+**支持**|**Kotlin与Kotlin Demo（Dagger2、MVP、RxJava2、(Realm、Room)）**
 待支持|内置更多自定义Manager
 
 ## 二、依赖

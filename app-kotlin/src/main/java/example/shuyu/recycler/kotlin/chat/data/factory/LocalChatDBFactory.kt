@@ -12,6 +12,8 @@ public object LocalChatDBFactory {
 
     //需要替换数据库框架，只需要替换这个实例化即可
     val chatDBManager: ILocalChatDBManager
+            //realm
         //get() = LocalChatBDRealmManager.newInstance
+            // room
         get() = LocalChatDBRoomManager.newInstance
 }

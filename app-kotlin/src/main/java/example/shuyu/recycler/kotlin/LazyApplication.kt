@@ -11,7 +11,7 @@ import example.shuyu.recycler.kotlin.chat.utils.ChatConst
 open class LazyApplication : Application() {
 
     companion object {
-        @Volatile var INSTANCE: LazyApplication? = null
+        @Volatile lateinit var INSTANCE: LazyApplication
     }
 
     override fun onCreate() {

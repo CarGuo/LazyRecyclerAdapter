@@ -23,46 +23,42 @@ class LocalChatDBRoomManager private constructor() : ILocalChatDBManager {
 
 
     companion object {
-        const val PAGESIZE = 10
         val newInstance: LocalChatDBRoomManager = LocalChatDBRoomManager()
     }
 
     private val disposable = CompositeDisposable()
 
-    private var messageDao: ChatMessageModelDao? = null
-    private var userDao: ChatUserModelDao? = null
+    private var messageDao: ChatMessageModelDao = Injection.provideChatMessageModelSource()
 
-    init {
-        messageDao = Injection.provideChatMessageModelSource()
-        userDao = Injection.provideChatUserModelSource()
-    }
+    private var userDao: ChatUserModelDao = Injection.provideChatUserModelSource()
 
     override fun saveChatMessage(baseModel: ChatBaseModel?) {
         async {
             val chatMessage = ChatMessageModel()
-            val userList = userDao?.getUserById(baseModel?.userModel?.userId!!)
-            val chatUser = if (userList != null && userList.isNotEmpty()) {
+            val userId = baseModel?.userModel?.userId ?: ""
+            val userList = userDao.getUserById(userId)
+            val chatUser = if (userList.isNotEmpty()) {
                 userList[0]
             } else {
                 val user = ChatUserModel()
-                user.userId = baseModel?.userModel?.userId!!
-                user.userName = baseModel.userModel?.userName!!
-                user.userPic = baseModel.userModel?.userPic!!
-                userDao?.insertUser(user)
+                user.userId = baseModel?.userModel?.userId ?: ""
+                user.userName = baseModel?.userModel?.userName ?: ""
+                user.userPic = baseModel?.userModel?.userPic ?: ""
+                userDao.insertUser(user)
                 user
             }
             cloneToChatMessageModel(chatUser, chatMessage, baseModel)
             if (baseModel is ChatTextModel) {
-                chatMessage.content = baseModel.content!!
+                chatMessage.content = baseModel.content ?: ""
             } else if (baseModel is ChatImageModel) {
                 chatMessage.content = baseModel.imgUrl
             }
-            messageDao?.insertMessage(chatMessage)
+            messageDao.insertMessage(chatMessage)
         }
     }
 
     override fun getChatMessage(chatId: String, page: Int, listener: ILocalChatDetailGetListener) {
-        disposable.add(messageDao!!.getChatMessageList(chatId, page * 10)
+        disposable.add(messageDao.getChatMessageList(chatId, page * 10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -112,12 +108,12 @@ class LocalChatDBRoomManager private constructor() : ILocalChatDBManager {
     }
 
     private fun cloneToChatMessageModel(chatUser: ChatUserModel?, message: ChatMessageModel?, chatBase: ChatBaseModel?) {
-        message?.id = chatBase?.id!!
-        message?.chatId = chatBase?.chatId!!
-        message?.type = chatBase?.chatType
-        message?.createTime = chatBase?.createTime
-        chatUser?.userName = chatBase?.userModel?.userName!!
-        chatUser?.userPic = chatBase?.userModel?.userPic!!
+        message?.id = chatBase?.id ?: ""
+        message?.chatId = chatBase?.chatId ?: ""
+        message?.type = chatBase?.chatType ?: 0
+        message?.createTime = chatBase?.createTime ?: 0
+        chatUser?.userName = chatBase?.userModel?.userName ?: ""
+        chatUser?.userPic = chatBase?.userModel?.userPic ?: ""
         message?.userModel = chatUser!!
     }
 }

@@ -12,12 +12,12 @@ import example.shuyu.recycler.kotlin.LazyApplication
 object Injection {
 
     fun provideChatUserModelSource(): ChatUserModelDao {
-        val database = ChatMessageDatabase.getInstance(LazyApplication.INSTANCE!!)
+        val database = ChatMessageDatabase.getInstance(LazyApplication.INSTANCE)
         return database.chatUserModelDao()
     }
 
     fun provideChatMessageModelSource(): ChatMessageModelDao {
-        val database = ChatMessageDatabase.getInstance(LazyApplication.INSTANCE!!)
+        val database = ChatMessageDatabase.getInstance(LazyApplication.INSTANCE)
         return database.chatMessageModelDao()
     }
 }
