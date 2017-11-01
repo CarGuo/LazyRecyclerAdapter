@@ -10,9 +10,14 @@ import example.shuyu.recycler.kotlin.chat.utils.ChatConst
 
 open class LazyApplication : Application() {
 
+    companion object {
+        @Volatile var INSTANCE: LazyApplication? = null
+    }
+
     override fun onCreate() {
         super.onCreate()
         ChatConst.ChatInit(this)
+        INSTANCE = this
     }
 
 }

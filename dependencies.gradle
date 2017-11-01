@@ -2,6 +2,7 @@ allprojects {
     repositories {
         jcenter()
         mavenLocal()
+        maven { url 'https://maven.google.com' }
     }
 }
 
@@ -31,14 +32,23 @@ ext {
 
     realm = '3.7.1'
 
+    arch = "1.0.0-rc1"
+
+
     androidDependencies = [
-            recyclerView: "com.android.support:recyclerview-v7:${supportLibraryVersion}",
-            appcompat_v7: "com.android.support:appcompat-v7:${otherLibraryVersion}",
-            cardview_v7 : "com.android.support:cardview-v7:23.2.0",
-            support_v4  : "com.android.support:support-v4:${supportLibraryVersion}",
-            design      : "com.android.support:design:${otherLibraryVersion}",
-            kotlin      : "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version",
-            kotlinAnko  : "org.jetbrains.anko:anko-common:$anko_version"
+            recyclerView       : "com.android.support:recyclerview-v7:${supportLibraryVersion}",
+            appcompat_v7       : "com.android.support:appcompat-v7:${otherLibraryVersion}",
+            cardview_v7        : "com.android.support:cardview-v7:23.2.0",
+            support_v4         : "com.android.support:support-v4:${supportLibraryVersion}",
+            design             : "com.android.support:design:${otherLibraryVersion}",
+            kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version",
+            kotlinAnko         : "org.jetbrains.anko:anko-common:$anko_version",
+            roomRuntime        : "android.arch.persistence.room:runtime:$arch",
+            roomCompiler       : "android.arch.persistence.room:compiler:$arch",
+            roomRxjava2        : "android.arch.persistence.room:rxjava2:$arch",
+            lifecycleRuntime   : "android.arch.lifecycle:runtime:$arch",
+            lifecycleExtensions: "android.arch.lifecycle:extensions:$arch",
+            lifecycleCompiler  : "android.arch.lifecycle:compiler:$arch"
     ]
 
     viewDependencies = [

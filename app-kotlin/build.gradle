@@ -17,6 +17,7 @@ android {
 
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
     }
     buildTypes {
@@ -61,4 +62,12 @@ dependencies {
     //realm的kotlin支持
     kapt other.realmAnnotations
     kapt other.realmProcessor
+
+    //Architecture components
+    compile androidDependencies.lifecycleRuntime
+    compile androidDependencies.lifecycleExtensions
+    kapt androidDependencies.lifecycleCompiler
+    compile androidDependencies.roomRuntime
+    kapt androidDependencies.roomCompiler
+    compile androidDependencies.roomRxjava2
 }
