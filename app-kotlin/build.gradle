@@ -70,4 +70,7 @@ dependencies {
     compile androidDependencies.roomRuntime
     kapt androidDependencies.roomCompiler
     compile androidDependencies.roomRxjava2
+    
+    //stetho
+    debugCompile other.stetho
 }

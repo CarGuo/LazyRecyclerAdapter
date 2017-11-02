@@ -1,6 +1,7 @@
 package example.shuyu.recycler.kotlin
 
 import android.app.Application
+import com.facebook.stetho.Stetho
 
 import example.shuyu.recycler.kotlin.chat.utils.ChatConst
 
@@ -17,6 +18,7 @@ open class LazyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         ChatConst.ChatInit(this)
+        Stetho.initializeWithDefaults(this)
         INSTANCE = this
     }
 

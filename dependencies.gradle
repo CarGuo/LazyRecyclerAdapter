@@ -69,5 +69,6 @@ ext {
             glassfishAnnotation: "org.glassfish:javax.annotation:10.0-b28",
             realmAnnotations   : "io.realm:realm-annotations:$realm",
             realmProcessor     : "io.realm:realm-annotations-processor:$realm",
+            stetho             : "com.facebook.stetho:stetho:1.4.2"
     ]
 }
