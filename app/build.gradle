@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'realm-android'
 
 android {
@@ -16,6 +15,9 @@ android {
 
         versionCode 1
         versionName "1.0"
+        javaCompileOptions {
+            annotationProcessorOptions.includeCompileClasspath = true
+        }
 
     }
     buildTypes {
@@ -37,7 +39,7 @@ dependencies {
     compile project(':CommonRecycler')
     def viewDependencies = rootProject.ext.viewDependencies
     def other = rootProject.ext.other
-    apt viewDependencies.apt_butterKnife
+    annotationProcessor viewDependencies.apt_butterKnife
     compile viewDependencies.butterKnife
     compile viewDependencies.rich
     compile viewDependencies.bubble
@@ -45,7 +47,7 @@ dependencies {
     compile viewDependencies.glideProcessor
 
     compile other.dagger
-    apt other.daggerCompiler
+    annotationProcessor other.daggerCompiler
     provided other.glassfishAnnotation
 
     compile other.rxjava

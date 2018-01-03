@@ -14,7 +14,9 @@ android {
         applicationId "example.shuyu.recycler.kotlin"
         minSdkVersion globalConfiguration.androidMinSdkVersion
         targetSdkVersion globalConfiguration.androidTargetSdkVersion
-
+        javaCompileOptions {
+            annotationProcessorOptions.includeCompileClasspath = true
+        }
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
