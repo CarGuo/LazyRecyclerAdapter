@@ -60,7 +60,11 @@
             android:name=".chat.detail.ChatDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeTitle" />
-
+        <activity
+            android:name=".bind.video.PlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeTitle" />
     </application>
 
 </manifest>

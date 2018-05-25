@@ -52,6 +52,10 @@ dependencies {
     compile viewDependencies.glide
     compile viewDependencies.glideProcessor
 
+    compile ('com.shuyu:GSYVideoPlayer:5.0.0-beta') {
+        exclude group: 'com.android.support'
+    }
+
     //dagger 与 dagger kotlin支持
     compile other.dagger
     kapt other.kaptDagger
