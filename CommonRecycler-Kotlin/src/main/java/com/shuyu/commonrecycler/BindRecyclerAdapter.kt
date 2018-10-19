@@ -226,7 +226,7 @@ open class BindRecyclerAdapter(context: Context, //管理器
         }
     }
 
-    internal open fun curPosition(position: Int): Int {
+    open fun curPosition(position: Int): Int {
         return if (curRecyclerView is XRecyclerView) {
             val xRecyclerView = curRecyclerView as XRecyclerView?
             val count = xRecyclerView!!.headersCount
