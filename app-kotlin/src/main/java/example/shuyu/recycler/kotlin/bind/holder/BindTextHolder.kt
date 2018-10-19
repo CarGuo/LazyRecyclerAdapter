@@ -24,7 +24,7 @@ open class BindTextHolder (v: View) : BindRecyclerBaseHolder(v) {
      * @param v layoutId实例后的View
      */
     override fun createView(v: View) {
-        itemText = v.findViewById(R.id.item_text) as TextView
+        itemText = v.findViewById(R.id.item_text)
     }
 
     /**

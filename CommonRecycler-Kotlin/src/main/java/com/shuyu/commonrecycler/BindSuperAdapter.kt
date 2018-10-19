@@ -111,7 +111,7 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
     }
 
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         val adapter = recyclerView?.adapter
         mRecyclerView = recyclerView
@@ -134,7 +134,7 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
         } else touchY(ev)
     }
 
-    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder?) {
+    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
         super.onViewAttachedToWindow(holder) //解决和CollapsingToolbarLayout冲突的问题
         var appBarLayout: AppBarLayout? = null
         var p: ViewParent? = mRecyclerView?.parent
@@ -338,12 +338,12 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
         internal fun isRefreshHeader(position: Int): Boolean =
                 position == 0 && normalAdapterManager.pullRefreshEnabled
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             return when {
                 viewType == TYPE_REFRESH_HEADER -> SimpleViewHolder(normalAdapterManager.mRefreshHeader)
                 isHeaderType(viewType) -> SimpleViewHolder(getHeaderViewByType(viewType))
                 viewType == TYPE_FOOTER -> SimpleViewHolder(normalAdapterManager.mFootView)
-                else -> bindRecyclerAdapter?.onCreateViewHolder(parent, viewType)
+                else -> bindRecyclerAdapter?.onCreateViewHolder(parent, viewType)!!
             }
         }
 
@@ -423,7 +423,7 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
             return -1
         }
 
-        override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
+        override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
             super.onAttachedToRecyclerView(recyclerView)
             bindRecyclerAdapter?.onAttachedToRecyclerView(recyclerView)
             val manager = recyclerView?.layoutManager
@@ -439,11 +439,11 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
             }
         }
 
-        override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
+        override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
             bindRecyclerAdapter?.onDetachedFromRecyclerView(recyclerView)
         }
 
-        override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder?) {
+        override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
             super.onViewAttachedToWindow(holder)
             val lp = holder?.itemView?.layoutParams
             if (lp != null
@@ -454,15 +454,15 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
             bindRecyclerAdapter?.onViewAttachedToWindow(holder)
         }
 
-        override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder?) {
+        override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
             bindRecyclerAdapter?.onViewDetachedFromWindow(holder)
         }
 
-        override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
+        override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
             bindRecyclerAdapter?.onViewRecycled(holder)
         }
 
-        override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder?): Boolean =
+        override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder): Boolean =
                 bindRecyclerAdapter!!.onFailedToRecycleView(holder)
 
         override fun unregisterAdapterDataObserver(observer: RecyclerView.AdapterDataObserver) {

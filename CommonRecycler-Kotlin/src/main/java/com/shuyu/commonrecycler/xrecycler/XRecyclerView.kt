@@ -392,7 +392,7 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
             return -1
         }
 
-        override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
+        override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
             super.onAttachedToRecyclerView(recyclerView)
             adapter.onAttachedToRecyclerView(recyclerView)
             val manager = recyclerView?.layoutManager
@@ -408,11 +408,11 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
             }
         }
 
-        override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
+        override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
             adapter.onDetachedFromRecyclerView(recyclerView)
         }
 
-        override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder?) {
+        override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
             super.onViewAttachedToWindow(holder)
             val lp = holder!!.itemView.layoutParams
             if (lp != null
@@ -423,15 +423,15 @@ open class XRecyclerView @JvmOverloads constructor(context: Context, attrs: Attr
             adapter.onViewAttachedToWindow(holder)
         }
 
-        override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder?) {
+        override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
             adapter.onViewDetachedFromWindow(holder)
         }
 
-        override fun onViewRecycled(holder: RecyclerView.ViewHolder?) {
+        override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
             adapter.onViewRecycled(holder)
         }
 
-        override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder?): Boolean =
+        override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder): Boolean =
                 adapter.onFailedToRecycleView(holder)
 
         override fun unregisterAdapterDataObserver(observer: RecyclerView.AdapterDataObserver) {

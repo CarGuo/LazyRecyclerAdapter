@@ -70,8 +70,8 @@ open class ChatDetailBottomView : LinearLayout {
         lateinit var mChatDetailBottomMenuItemTxt: TextView
 
         override fun createView(v: View) {
-            mChatDetailBottomMenuItemImg = v.findViewById(R.id.chat_detail_bottom_menu_item_img) as ImageView
-            mChatDetailBottomMenuItemTxt = v.findViewById(R.id.chat_detail_bottom_menu_item_txt) as TextView
+            mChatDetailBottomMenuItemImg = v.findViewById(R.id.chat_detail_bottom_menu_item_img)
+            mChatDetailBottomMenuItemTxt = v.findViewById(R.id.chat_detail_bottom_menu_item_txt)
         }
 
         override fun onBind(model: Any, position: Int) {

@@ -22,7 +22,7 @@ open class BindClickHolder (v: View) : BindRecyclerBaseHolder(v) {
      * @param v layoutId实例后的View
      */
     override fun createView(v: View) {
-        itemButton = v.findViewById(R.id.item_button) as Button
+        itemButton = v.findViewById(R.id.item_button)
     }
 
     /**

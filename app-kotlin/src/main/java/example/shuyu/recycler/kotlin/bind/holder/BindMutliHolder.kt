@@ -24,8 +24,8 @@ open class BindMutliHolder (v: View) : BindRecyclerBaseHolder(v) {
      * @param v layoutId实例后的View
      */
     override fun createView(v: View) {
-        itemImage1 = v.findViewById(R.id.item_image_1) as ImageView
-        itemImage2 = v.findViewById(R.id.item_image_2) as ImageView
+        itemImage1 = v.findViewById(R.id.item_image_1)
+        itemImage2 = v.findViewById(R.id.item_image_2)
     }
 
     /**

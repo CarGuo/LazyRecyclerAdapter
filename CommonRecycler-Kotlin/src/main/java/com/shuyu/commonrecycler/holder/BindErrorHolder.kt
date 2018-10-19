@@ -20,7 +20,7 @@ open class BindErrorHolder : BindRecyclerBaseHolder {
     constructor(context: Context, v: View) : super(context, v) {}
 
     override fun createView(v: View) {
-        errorText = v.findViewById(R.id.error_text) as TextView
+        errorText = v.findViewById(R.id.error_text)
     }
 
     override fun onBind(model: Any, position: Int) {

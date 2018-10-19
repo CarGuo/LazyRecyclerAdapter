@@ -18,7 +18,7 @@ open class ChatTextHolder(v: View) : ChatBaseHolder(v) {
 
     override fun createView(v: View) {
         super.createView(v)
-        mChatDetailHolderText = v.findViewById(R.id.chat_detail_holder_text) as TextView
+        mChatDetailHolderText = v.findViewById(R.id.chat_detail_holder_text)
     }
 
     override fun onBind(model: Any, position: Int) {

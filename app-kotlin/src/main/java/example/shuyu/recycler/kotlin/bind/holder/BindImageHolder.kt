@@ -28,7 +28,7 @@ open class BindImageHolder (context: Context, v: View) : BindRecyclerBaseHolder(
      * @param v layoutId实例后的View
      */
     override fun createView(v: View) {
-        itemImage = v.findViewById(R.id.item_image) as ImageView
+        itemImage = v.findViewById(R.id.item_image)
     }
 
     /**

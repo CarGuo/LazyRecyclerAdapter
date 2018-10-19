@@ -21,8 +21,8 @@ open abstract class ChatBaseHolder(v: View) : BindRecyclerBaseHolder(v) {
     private lateinit var mChatDetailHolderName: TextView
 
     override fun createView(v: View) {
-        mChatDetailHolderName = v.findViewById(R.id.chat_detail_holder_name) as TextView
-        mChatDetailHolderAvatar = v.findViewById(R.id.chat_detail_holder_avatar) as ImageView
+        mChatDetailHolderName = v.findViewById(R.id.chat_detail_holder_name)
+        mChatDetailHolderAvatar = v.findViewById(R.id.chat_detail_holder_avatar)
     }
 
     override fun onBind(model: Any, position: Int) {
