@@ -39,7 +39,7 @@ allprojects {
 ### 在module下的build.gradle添加依赖
 ```
 dependencies {
-    compile 'com.github.CarGuo.LazyRecyclerAdapter:CommonRecycler:v3.0.2'
+    compile 'com.github.CarGuo.LazyRecyclerAdapter:CommonRecycler:v4.0.0'
 }
 
 ```
@@ -47,7 +47,7 @@ dependencies {
 ### (Kotlin)在module下的build.gradle添加依赖
 ```
 dependencies {
-    compile 'com.github.CarGuo.LazyRecyclerAdapter:CommonRecycler-Kotlin:v3.0.2'
+    compile 'com.github.CarGuo.LazyRecyclerAdapter:CommonRecycler-Kotlin:v4.0.0'
 }
 
 ```
