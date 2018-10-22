@@ -34,7 +34,7 @@ class BindHomeActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        homeList = findViewById(R.id.home_list) as ListView
+        homeList = findViewById(R.id.home_list)
 
         homeList.onItemClickListener = this
 

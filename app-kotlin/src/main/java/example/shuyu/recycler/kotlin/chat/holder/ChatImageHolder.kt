@@ -19,7 +19,7 @@ open class ChatImageHolder(v: View) : ChatBaseHolder(v) {
 
     override fun createView(v: View) {
         super.createView(v)
-        mChatDetailHolderImage = v.findViewById(R.id.chat_detail_holder_image) as ImageView
+        mChatDetailHolderImage = v.findViewById(R.id.chat_detail_holder_image)
     }
 
     override fun onBind(model: Any, position: Int) {

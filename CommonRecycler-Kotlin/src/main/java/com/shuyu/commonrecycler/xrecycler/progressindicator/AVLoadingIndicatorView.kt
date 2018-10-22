@@ -89,7 +89,7 @@ open class AVLoadingIndicatorView : View {
     private var mHasAnimation: Boolean = false
 
 
-    @IntDef(flag = true, value = * longArrayOf(BallPulse.toLong(), BallGridPulse.toLong(), BallClipRotate.toLong(), BallClipRotatePulse.toLong(), SquareSpin.toLong(), BallClipRotateMultiple.toLong(), BallPulseRise.toLong(), BallRotate.toLong(), CubeTransition.toLong(), BallZigZag.toLong(), BallZigZagDeflect.toLong(), BallTrianglePath.toLong(), BallScale.toLong(), LineScale.toLong(), LineScaleParty.toLong(), BallScaleMultiple.toLong(), BallPulseSync.toLong(), BallBeat.toLong(), LineScalePulseOut.toLong(), LineScalePulseOutRapid.toLong(), BallScaleRipple.toLong(), BallScaleRippleMultiple.toLong(), BallSpinFadeLoader.toLong(), LineSpinFadeLoader.toLong(), TriangleSkewSpin.toLong(), Pacman.toLong(), BallGridBeat.toLong(), SemiCircleSpin.toLong()))
+    @IntDef(flag = true, value = * intArrayOf(BallPulse.toInt(), BallGridPulse.toInt(), BallClipRotate.toInt(), BallClipRotatePulse.toInt(), SquareSpin.toInt(), BallClipRotateMultiple.toInt(), BallPulseRise.toInt(), BallRotate.toInt(), CubeTransition.toInt(), BallZigZag.toInt(), BallZigZagDeflect.toInt(), BallTrianglePath.toInt(), BallScale.toInt(), LineScale.toInt(), LineScaleParty.toInt(), BallScaleMultiple.toInt(), BallPulseSync.toInt(), BallBeat.toInt(), LineScalePulseOut.toInt(), LineScalePulseOutRapid.toInt(), BallScaleRipple.toInt(), BallScaleRippleMultiple.toInt(), BallSpinFadeLoader.toInt(), LineSpinFadeLoader.toInt(), TriangleSkewSpin.toInt(), Pacman.toInt(), BallGridBeat.toInt(), SemiCircleSpin.toInt()))
     annotation class Indicator;
 
     constructor(context: Context) : super(context) {

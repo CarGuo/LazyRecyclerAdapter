@@ -49,7 +49,7 @@ class BindRefreshLoadActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_normal_recycler_layout)
-        recycler = findViewById(R.id.recycler) as RecyclerView
+        recycler = findViewById(R.id.recycler)
 
         init()
         refresh()

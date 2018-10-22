@@ -71,7 +71,6 @@ dependencies {
 
     //Architecture components
     compile androidDependencies.lifecycleRuntime
-    compile androidDependencies.lifecycleExtensions
     kapt androidDependencies.lifecycleCompiler
     compile androidDependencies.roomRuntime
     kapt androidDependencies.roomCompiler

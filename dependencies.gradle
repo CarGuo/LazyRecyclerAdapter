@@ -8,12 +8,12 @@ allprojects {
 
 ext {
     //Android
-    androidBuildToolsVersion = "26.0.2"
+    androidBuildToolsVersion = "27.0.2"
     androidMinSdkVersion = 16
-    androidTargetSdkVersion = 22
-    androidCompileSdkVersion = 22
-    supportLibraryVersion = '24.2.0'
-    otherLibraryVersion = '22.2.1'
+    androidTargetSdkVersion = 27
+    androidCompileSdkVersion = 27
+    supportLibraryVersion = '27.1.1'
+    otherLibraryVersion = '27.1.1'
     richVersion = 'v2.1.4'
 
     //ViewLibraries
@@ -32,7 +32,7 @@ ext {
 
     realm = '3.7.1'
 
-    arch = "1.0.0-rc1"
+    arch = "1.0.0"
 
 
     androidDependencies = [

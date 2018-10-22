@@ -163,7 +163,7 @@ open abstract class BindBaseAdapterManager<T : BindBaseAdapterManager<T>> {
     /**
      * 根据参数构造
      */
-    private fun <T> contructorHolder(context: Context, parent: ViewGroup, classType: Class<out BindRecyclerBaseHolder>?, layoutId: Int): T? {
+    open fun <T> contructorHolder(context: Context, parent: ViewGroup, classType: Class<out BindRecyclerBaseHolder>?, layoutId: Int): T? {
         var `object`: Constructor<*>? = null
         var constructorFirst = true
 

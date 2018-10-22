@@ -80,7 +80,7 @@ open class BindRecyclerAdapter(context: Context, //管理器
      */
     fun getDataList(): List<Any>? = dataList
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         curRecyclerView = recyclerView
         val manager = recyclerView?.layoutManager
@@ -96,7 +96,7 @@ open class BindRecyclerAdapter(context: Context, //管理器
         }
     }
 
-    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder?) {
+    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
         super.onViewAttachedToWindow(holder)
         val lp = holder?.itemView?.layoutParams
         if (lp != null
@@ -107,7 +107,7 @@ open class BindRecyclerAdapter(context: Context, //管理器
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         //错误数据
         if (viewType == BindErrorHolder.ID) {
@@ -117,7 +117,7 @@ open class BindRecyclerAdapter(context: Context, //管理器
 
         //是否显示没有数据页面
         if (normalAdapterManager.isShowNoData && dataList != null && dataList!!.size == 0) {
-            return normalAdapterManager.getNoDataViewTypeHolder(context!!, parent)
+            return normalAdapterManager.getNoDataViewTypeHolder(context!!, parent)!!
         }
 
         val holder = normalAdapterManager.getViewTypeHolder(context!!, parent, viewType)
@@ -132,7 +132,7 @@ open class BindRecyclerAdapter(context: Context, //管理器
         }
 
 
-        return holder
+        return holder!!
 
     }
 
@@ -226,7 +226,7 @@ open class BindRecyclerAdapter(context: Context, //管理器
         }
     }
 
-    internal open fun curPosition(position: Int): Int {
+    open fun curPosition(position: Int): Int {
         return if (curRecyclerView is XRecyclerView) {
             val xRecyclerView = curRecyclerView as XRecyclerView?
             val count = xRecyclerView!!.headersCount

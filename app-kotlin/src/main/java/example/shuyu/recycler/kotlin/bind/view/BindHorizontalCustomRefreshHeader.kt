@@ -122,8 +122,8 @@ open class BindHorizontalCustomRefreshHeader : BindBaseRefreshHeader {
         addView(container, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT))
         setGravity(Gravity.LEFT)
 
-        mCustomRefreshImg = container?.findViewById(R.id.custom_refresh_img) as ImageView
-        mCustomRefreshTxt = container.findViewById(R.id.custom_refresh_txt) as TextView
+        mCustomRefreshImg = container?.findViewById(R.id.custom_refresh_img)
+        mCustomRefreshTxt = container?.findViewById(R.id.custom_refresh_txt)
 
 
         measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)

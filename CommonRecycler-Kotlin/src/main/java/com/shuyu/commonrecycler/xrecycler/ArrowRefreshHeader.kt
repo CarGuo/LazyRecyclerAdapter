@@ -122,11 +122,11 @@ open class ArrowRefreshHeader : BaseRefreshHeader {
         addView(mContainer, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0))
         setGravity(Gravity.BOTTOM)
 
-        mArrowImageView = findViewById(R.id.listview_header_arrow) as ImageView
-        mStatusTextView = findViewById(R.id.refresh_status_textview) as TextView
+        mArrowImageView = findViewById(R.id.listview_header_arrow)
+        mStatusTextView = findViewById(R.id.refresh_status_textview)
 
         //init the progress view
-        mProgressBar = findViewById(R.id.listview_header_progressbar) as SimpleViewSwitcher
+        mProgressBar = findViewById(R.id.listview_header_progressbar)
         val progressView = AVLoadingIndicatorView(context)
         progressView.setIndicatorColor(-0x4a4a4b)
         progressView.setIndicatorId(ProgressStyle.BallSpinFadeLoader)
@@ -142,7 +142,7 @@ open class ArrowRefreshHeader : BaseRefreshHeader {
         mRotateDownAnim?.duration = ROTATE_ANIM_DURATION.toLong()
         mRotateDownAnim?.fillAfter = true
 
-        mHeaderTimeView = findViewById(R.id.last_refresh_time) as TextView
+        mHeaderTimeView = findViewById(R.id.last_refresh_time)
         measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         mMeasuredHeight = measuredHeight
     }
