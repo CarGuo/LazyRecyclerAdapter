@@ -39,11 +39,6 @@ open abstract class BindBaseRefreshHeader : BaseRefreshHeader {
     protected abstract val layoutId: Int
 
     /**
-     * item的高度
-     */
-    protected abstract val currentMeasuredHeight: Int
-
-    /**
      * 继承，view的可视高度
      */
     override var visibleHeight: Int

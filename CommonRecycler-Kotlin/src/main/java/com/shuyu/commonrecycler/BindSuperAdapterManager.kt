@@ -114,11 +114,11 @@ open class BindSuperAdapterManager : BindBaseAdapterManager<BindSuperAdapterMana
     /**
      * 是否正在刷新
      */
-    fun setRefreshing(refreshing: Boolean) {
+    open fun setRefreshing(refreshing: Boolean) {
         if (refreshing && pullRefreshEnabled && mLoadingListener != null) {
             if (mRefreshHeader != null) {
                 mRefreshHeader!!.state = BaseRefreshHeader.STATE_REFRESHING
-                mRefreshHeader!!.onMove(mRefreshHeader!!.measuredHeight.toFloat())
+                mRefreshHeader!!.onMove(mRefreshHeader!!.currentMeasuredHeight.toFloat())
             }
             mLoadingListener!!.onRefresh()
         }

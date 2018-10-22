@@ -9,6 +9,11 @@ import android.widget.LinearLayout
  */
 open abstract class BaseRefreshHeader : LinearLayout, BaseRefreshInterface {
 
+    /**
+     * item的高度
+     */
+    open var currentMeasuredHeight: Int = 0
+
     constructor(context: Context) : super(context) {}
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
