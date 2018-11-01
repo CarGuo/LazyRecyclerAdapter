@@ -84,7 +84,7 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         mRecyclerView = recyclerView;
         if (adapter instanceof BindSuperAdapter) {
-            mWrapAdapter = new WrapAdapter((BindSuperAdapter)adapter);
+            mWrapAdapter = new WrapAdapter((BindSuperAdapter) adapter);
             recyclerView.setAdapter(mWrapAdapter);
             recyclerView.setOnTouchListener(this);
             recyclerView.addOnScrollListener(mScrollListener);
@@ -343,27 +343,27 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
 
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeInserted(positionStart, itemCount);
+            mWrapAdapter.notifyItemRangeInserted(curPosition(positionStart), itemCount);
         }
 
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount);
+            mWrapAdapter.notifyItemRangeChanged(curPosition(positionStart), itemCount);
         }
 
         @Override
         public void onItemRangeRemoved(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeRemoved(positionStart, itemCount);
+            mWrapAdapter.notifyItemRangeRemoved(curPosition(positionStart), itemCount);
         }
 
         @Override
         public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-            mWrapAdapter.notifyItemMoved(fromPosition, toPosition);
+            mWrapAdapter.notifyItemMoved(curPosition(fromPosition), toPosition);
         }
 
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-            mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount, payload);
+            mWrapAdapter.notifyItemRangeChanged(curPosition(positionStart), itemCount, payload);
         }
     }
 

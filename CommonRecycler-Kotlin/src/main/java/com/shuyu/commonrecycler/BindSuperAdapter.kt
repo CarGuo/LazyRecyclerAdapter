@@ -292,23 +292,23 @@ open class BindSuperAdapter(private val context: Context, private val normalAdap
         }
 
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-            mWrapAdapter?.notifyItemRangeInserted(positionStart, itemCount)
+            mWrapAdapter?.notifyItemRangeInserted(curPosition(positionStart), itemCount)
         }
 
         override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-            mWrapAdapter?.notifyItemRangeChanged(positionStart, itemCount)
+            mWrapAdapter?.notifyItemRangeChanged(curPosition(positionStart), itemCount)
         }
 
         override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-            mWrapAdapter?.notifyItemRangeRemoved(positionStart, itemCount)
+            mWrapAdapter?.notifyItemRangeRemoved(curPosition(positionStart), itemCount)
         }
 
         override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
-            mWrapAdapter?.notifyItemMoved(fromPosition, toPosition)
+            mWrapAdapter?.notifyItemMoved(curPosition(fromPosition), toPosition)
         }
 
         override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
-            mWrapAdapter?.notifyItemRangeChanged(positionStart, itemCount, payload)
+            mWrapAdapter?.notifyItemRangeChanged(curPosition(positionStart), itemCount, payload)
         }
     }
 
