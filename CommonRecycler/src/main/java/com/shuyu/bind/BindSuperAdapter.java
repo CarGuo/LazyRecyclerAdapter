@@ -343,27 +343,27 @@ public class BindSuperAdapter extends BindRecyclerAdapter implements View.OnTouc
 
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeInserted(curPosition(positionStart), itemCount);
+            mWrapAdapter.notifyItemRangeInserted(absFirstPosition() + positionStart, itemCount);
         }
 
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeChanged(curPosition(positionStart), itemCount);
+            mWrapAdapter.notifyItemRangeChanged(absFirstPosition() + positionStart, itemCount);
         }
 
         @Override
         public void onItemRangeRemoved(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeRemoved(curPosition(positionStart), itemCount);
+            mWrapAdapter.notifyItemRangeRemoved(absFirstPosition() + positionStart, itemCount);
         }
 
         @Override
         public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-            mWrapAdapter.notifyItemMoved(curPosition(fromPosition), toPosition);
+            mWrapAdapter.notifyItemMoved(absFirstPosition() + fromPosition, toPosition);
         }
 
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-            mWrapAdapter.notifyItemRangeChanged(curPosition(positionStart), itemCount, payload);
+            mWrapAdapter.notifyItemRangeChanged(absFirstPosition() + positionStart, itemCount, payload);
         }
     }
 
