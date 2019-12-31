@@ -52,8 +52,7 @@ dependencies {
 
 ```
 
-![公众号](http://img.cdn.guoshuyu.cn/WechatIMG3024.jpeg)
-
+![公众号](http://img.cdn.guoshuyu.cn/WeChat-Code)
 
 ## 三、效果
 #### 更多效果请看DEMO
